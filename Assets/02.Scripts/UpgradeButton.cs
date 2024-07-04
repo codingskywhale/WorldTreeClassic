@@ -97,15 +97,13 @@ public class UpgradeButton : MonoBehaviour
 
     private void HandleTouchUpgrade()
     {
-        int upgradelifeCost = touchInputManager.upgradelifeCost;
-        if (lifeManager.HasSufficientWater(upgradelifeCost))
+        int upgradeLifeCost = touchInputManager.upgradeLifeCost;
+        if (lifeManager.HasSufficientWater(upgradeLifeCost))
         {
-            lifeManager.DecreaseWater(upgradelifeCost);
-            touchInputManager.touchIncreaseLevel++;
-            touchInputManager.touchIncreaseAmount *= 2;
-            touchInputManager.upgradelifeCost += 20;
-            touchInputManager.UpdateTouchIncreaseUI(); // 터치 생산량 UI 업데이트
-            uiManager.UpdateTouchUI(touchInputManager.touchIncreaseLevel, touchInputManager.touchIncreaseAmount, touchInputManager.upgradelifeCost);
+            lifeManager.DecreaseWater(upgradeLifeCost);
+            touchInputManager.UpgradeTouchGeneration(); // 조건에 따라 터치 생산량 증가
+            
+            uiManager.UpdateTouchUI(touchInputManager.touchIncreaseLevel, touchInputManager.touchIncreaseAmount, touchInputManager.upgradeLifeCost);
         }
         else
         {
@@ -143,7 +141,7 @@ public class UpgradeButton : MonoBehaviour
         }
         else if (upgradeType == UpgradeType.Touch && touchInputManager != null)
         {
-            uiManager.UpdateTouchUI(touchInputManager.touchIncreaseLevel, touchInputManager.touchIncreaseAmount, touchInputManager.upgradelifeCost);
+            uiManager.UpdateTouchUI(touchInputManager.touchIncreaseLevel, touchInputManager.touchIncreaseAmount, touchInputManager.upgradeLifeCost);
         }
         else if (upgradeType == UpgradeType.Tree && resourceManager != null)
         {

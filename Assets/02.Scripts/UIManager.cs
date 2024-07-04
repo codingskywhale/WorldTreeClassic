@@ -1,9 +1,10 @@
 using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class UIManager : MonoBehaviour
 {
+    public static UIManager Instance { get; private set; } // 싱글톤 인스턴스
+
     public TextMeshProUGUI waterText;
     public TextMeshProUGUI lifeIncreaseText;
     public TextMeshProUGUI touchLevelText;
@@ -13,26 +14,34 @@ public class UIManager : MonoBehaviour
     public TextMeshProUGUI rootUpgradeCostText;
     public TextMeshProUGUI spiritLevelText;
     public TextMeshProUGUI spiritUpgradeCostText;
-    public Image currentTreeImage;
-    public Image upgradedTreeImage;
-    public SpriteRenderer outsideTreeSpriteRenderer;
+    public MeshFilter outsideTreeMeshFilter; // 3D 오브젝트
     public TextMeshProUGUI upgradeRequirementText;
-    public SpriteRenderer groundSpriteRenderer;
-    public Sprite[] treeImages;
-    
+    public MeshFilter groundMeshFilter; // 3D 오브젝트
+    public Mesh[] treeMeshes; // 3D 모델 배열
+
+    private void Awake()
+    {
+        // 싱글톤 인스턴스 설정
+        if (Instance == null)
+        {
+            Instance = this;
+            DontDestroyOnLoad(gameObject); // 인스턴스가 파괴되지 않도록 설정
+        }
+        else
+        {
+            Destroy(gameObject); // 이미 인스턴스가 존재하면 중복 생성된 객체 파괴
+        }
+    }
 
     public void UpdateLifeUI(int waterAmount, int waterNeededForCurrentLevel)
     {
         waterText.text = $" 생명력 : {waterAmount}";
     }
 
-    public void UpdateTreeImages(int currentLevel, Sprite[] treeImages)
+    public void UpdateTreeMeshes(int currentLevel)
     {
-        int currentIndex = currentLevel / 5;
-        int nextIndex = (currentLevel + 1) / 5;
-        currentTreeImage.sprite = treeImages[currentIndex];
-        upgradedTreeImage.sprite = treeImages[nextIndex];
-        outsideTreeSpriteRenderer.sprite = treeImages[currentIndex];
+        int currentIndex = (currentLevel / 5) % treeMeshes.Length;
+        outsideTreeMeshFilter.sharedMesh = treeMeshes[currentIndex];
     }
 
     public void UpdateLifeIncreaseUI(int totalLifeIncrease)
@@ -43,6 +52,7 @@ public class UIManager : MonoBehaviour
     public void UpdateTouchUI(int touchIncreaseLevel, int touchIncreaseAmount, int upgradelifeCost)
     {
         touchLevelText.text = $"외로운 나무 레벨: {touchIncreaseLevel}";
+        touchIncreaseText.text = $"현재 터치당 얻는 생명력 : {touchIncreaseAmount}";
         upgradelifeCostText.text = $"강화 비용: {upgradelifeCost} 생명력";
     }
 
