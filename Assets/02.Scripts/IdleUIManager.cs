@@ -7,6 +7,7 @@ using System;
 public class IdleUIManager : MonoBehaviour
 {
     public GameObject mainUI;
+    public GameObject mainUI2;
     public GameObject idleUIContainer;
     public TMP_Text gameTitleText; // 게임 제목 텍스트
     public TMP_Text songTitleText; // 현재 노래 제목 텍스트
@@ -60,6 +61,7 @@ public class IdleUIManager : MonoBehaviour
     {
         isIdle = true;
         mainUI.SetActive(false);
+        mainUI2.SetActive(false);
         idleUIContainer.SetActive(true);
     }
 
@@ -72,6 +74,7 @@ public class IdleUIManager : MonoBehaviour
     private void ShowMainUI()
     {
         mainUI.SetActive(true);
+        mainUI2.SetActive(true);
         idleUIContainer.SetActive(false);
     }
 
@@ -80,11 +83,17 @@ public class IdleUIManager : MonoBehaviour
         gameTitleText.text = "세계수 키우기"; 
         songTitleText.text = GetCurrentSong(); 
         timeText.text = DateTime.Now.ToString("HH:mm:ss");
-        dateText.text = DateTime.Now.ToString("yyyy-MM-dd");
+        dateText.text = GetFormattedDate(DateTime.Now);
+    }
+
+    private string GetFormattedDate(DateTime dateTime)
+    {
+        string dayOfWeek = dateTime.ToString("dddd", new System.Globalization.CultureInfo("ko-KR")); 
+        return $"{dateTime.Month}.{dateTime.Day}.{dayOfWeek}";
     }
 
     private string GetCurrentSong()
-    {
+    {   
         // 추후에 노래 추가
         return "Sample Song";
     }
