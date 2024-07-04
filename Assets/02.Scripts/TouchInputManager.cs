@@ -5,10 +5,11 @@ using UnityEngine.EventSystems;
 public class TouchInputManager : MonoBehaviour
 {
     public LifeManager lifeManager;
-    public UIManager uIManagerBG;
+    public UIManager uiManagerBG;
     public int touchIncreaseLevel = 1;
     public int touchIncreaseAmount = 10;
-    public int upgradelifeCost = 20;
+    public int upgradeLifeCost = 20;
+    public int lifeGenerationPerLevel = 10; // 일정 증가량
 
     private void Start()
     {
@@ -20,7 +21,6 @@ public class TouchInputManager : MonoBehaviour
         if (Input.GetMouseButtonDown(0) && !isPointerOverUIElement())
         {
             lifeManager.IncreaseWater(touchIncreaseAmount);
-            UpdateTouchIncreaseUI();
         }
     }
 
@@ -34,14 +34,24 @@ public class TouchInputManager : MonoBehaviour
         return results.Count > 0;
     }
 
-    private void UpdateUI()
+    public void UpgradeTouchGeneration()
     {
-        uIManagerBG.UpdateTouchUI(touchIncreaseLevel, touchIncreaseAmount, upgradelifeCost);
-        UpdateTouchIncreaseUI();
+        touchIncreaseLevel++;
+        if (touchIncreaseLevel % 25 == 0)
+        {
+            touchIncreaseAmount *= 2; // 25레벨마다 두 배로 증가
+        }
+        else
+        {
+            touchIncreaseAmount += lifeGenerationPerLevel; // 일정하게 증가
+        }
+        upgradeLifeCost += 20; // 업그레이드 비용 증가
+        UpdateUI();
+        uiManagerBG.UpdateTreeMeshes(touchIncreaseLevel); // 나무 모습 업데이트
     }
 
-    public void UpdateTouchIncreaseUI()
+    private void UpdateUI()
     {
-        uIManagerBG.UpdateTouchIncreaseUI(touchIncreaseAmount);
+        uiManagerBG.UpdateTouchUI(touchIncreaseLevel, touchIncreaseAmount, upgradeLifeCost);
     }
 }

@@ -21,16 +21,10 @@ public class ResourceManager : MonoBehaviour
 
         UpdateTotalLifeIncreaseUI(); // 초기화 시 생명력 증가율 계산
     }
-
-    private void Update()
-    {
-        // 매 프레임마다 호출할 필요 없음
-    }
-
     public void UpdateGroundSize()
     {
         float groundScale = 8f + (lifeManager.currentLevel / 10f);
-        uiManager.groundSpriteRenderer.transform.localScale = new Vector3(groundScale, groundScale, groundScale);
+        uiManager.groundMeshFilter.transform.localScale = new Vector3(groundScale, groundScale, groundScale);
     }
 
     public void UpdateUI()
