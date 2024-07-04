@@ -5428,10 +5428,10 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Idsadsadsadsa
+  m_text: "\uC548\uB155\uD558\uC138\uC694"
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 5e83b443025082a41adb5c0e9869d0b5, type: 2}
+  m_sharedMaterial: {fileID: -4230123428673298972, guid: 5e83b443025082a41adb5c0e9869d0b5, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
