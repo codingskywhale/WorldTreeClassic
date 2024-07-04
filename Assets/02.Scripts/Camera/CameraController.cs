@@ -22,8 +22,11 @@ public class CameraController : MonoBehaviour
     private bool isFreeCamera = false;
     private bool isZooming = false;
     private bool isDragging = false;
+    private bool isAnimalTarget = false;
 
     private Transform currentTarget; // 현재 타겟
+
+    private Vector3 animalOffset = new Vector3(0, 5f, -15);
 
     private void Start()
     {
@@ -37,10 +40,16 @@ public class CameraController : MonoBehaviour
 
     private void Update()
     {
-        if (animationCompleted && isFreeCamera)
+        if (animationCompleted)
         {
-            HandleFreeCamera();
-            HandleAnimalClick(); // 동물 클릭 처리
+            if (isFreeCamera && !isAnimalTarget)
+            {
+                HandleFreeCamera();
+            }
+            else if (isAnimalTarget && currentTarget != null)
+            {
+                FollowAnimal();
+            }
         }
     }
 
@@ -95,24 +104,61 @@ public class CameraController : MonoBehaviour
         if (isDragging)
         {
             RotateCamera();
+            HandleAnimalClick();
         }
     }
 
-
     private void HandleAnimalClick()
-    {
-        if (Input.GetMouseButtonDown(0) && !isDragging)
-        {
-            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            RaycastHit hit;
-
-            if (Physics.Raycast(ray, out hit))
-            {
-                if (hit.transform.CompareTag("Animal")) // 동물 오브젝트에 "Animal" 태그를 설정해야 합니다.
-                {
-                    currentTarget = hit.transform; // 클릭된 동물을 타겟으로 설정
-                }
+    {        
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        RaycastHit hit;
+                
+        if (Physics.Raycast(ray, out hit)) 
+        {           
+            if (hit.transform.CompareTag("Animal")) // 동물 오브젝트에 "Animal" 태그를 설정해야 합니다.
+            {                
+                SetTarget(hit.transform);
             }
+        }        
+    }
+
+    private void SetTarget(Transform newTarget)
+    {
+        currentTarget = newTarget;
+        isAnimalTarget = true;                
+        StartCoroutine(ZoomToTarget(newTarget));
+    }
+
+    private IEnumerator ZoomToTarget(Transform newTarget)
+    {
+        isZooming = true;
+        float startTime = Time.time;
+        Vector3 startPosition = Camera.main.transform.position;
+        Quaternion startRotation = Camera.main.transform.rotation;
+
+        Vector3 targetPosition = newTarget.position + animalOffset; // 동물의 위치를 기준으로 카메라 위치 조정
+        Quaternion targetRotation = Quaternion.LookRotation(newTarget.position - targetPosition);
+
+        while (Time.time < startTime + zoomDuration)
+        {
+            float t = (Time.time - startTime) / zoomDuration;
+            Camera.main.transform.position = Vector3.Lerp(startPosition, targetPosition, t);
+            Camera.main.transform.rotation = Quaternion.Slerp(startRotation, targetRotation, t);
+            yield return null;
+        }
+
+        Camera.main.transform.position = targetPosition;
+        Camera.main.transform.rotation = targetRotation;
+        isZooming = false;
+    }
+
+    private void FollowAnimal()
+    {
+        if (currentTarget != null)
+        {
+            Vector3 targetPosition = currentTarget.position + animalOffset;
+            Camera.main.transform.position = targetPosition;
+            Camera.main.transform.LookAt(currentTarget);
         }
     }
 
@@ -125,12 +171,14 @@ public class CameraController : MonoBehaviour
         {
             // 자유 시점 모드에서 고정 시점 모드로 전환
             currentTarget = target; // 다시 나무를 타겟으로 설정
+            isAnimalTarget = false;
             StartCoroutine(ZoomCamera(initialPosition, finalRotation));
         }
         else
         {
             // 고정 시점 모드에서 자유 시점 모드로 전환
             currentTarget = target; // 나무를 타겟으로 설정
+            isAnimalTarget = false;
             StartCoroutine(ZoomCamera(zoomInPosition, zoomInRotation));
         }
 
