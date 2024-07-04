@@ -1,53 +1,58 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class ResourceManager : MonoBehaviour
 {
-    public LifeManager waterManager;
-    public Root root;
+    public LifeManager lifeManager;
     public UIManager uiManager;
-    //public EnergyManager energyManager;
+    private List<Root> roots = new List<Root>();
 
     private void Start()
     {
-        waterManager.OnWaterChanged += UpdateWaterUI;
-        root.OnWaterGenerated += waterManager.IncreaseWater;
-       // energyManager.OnEnergyChanged += UpdateEnergyUI;
+        lifeManager.OnWaterChanged += UpdateLifeUI;
         UpdateUI();
+
+        // 모든 Root 인스턴스를 찾고 이벤트 구독
+        foreach (var root in FindObjectsOfType<Root>())
+        {
+            roots.Add(root);
+            root.OnGenerationRateChanged += UpdateTotalLifeIncreaseUI;
+        }
+
+        UpdateTotalLifeIncreaseUI(); // 초기화 시 생명력 증가율 계산
+    }
+
+    private void Update()
+    {
+        // 매 프레임마다 호출할 필요 없음
     }
 
     public void UpdateGroundSize()
     {
-        float groundScale = 8f + (waterManager.currentLevel / 10f);
+        float groundScale = 8f + (lifeManager.currentLevel / 10f);
         uiManager.groundSpriteRenderer.transform.localScale = new Vector3(groundScale, groundScale, groundScale);
     }
 
     public void UpdateUI()
     {
-        int waterNeededForCurrentLevel = waterManager.CalculateWaterNeededForUpgrade(1);
-        uiManager.UpdateWaterUI(waterManager.lifeAmount, waterNeededForCurrentLevel);
-        uiManager.UpdateLevelUI(waterManager.currentLevel);
-        uiManager.UpdateUpgradeRequirementUI(waterManager.currentLevel, waterNeededForCurrentLevel);
-        uiManager.UpdateTreeImages(waterManager.currentLevel, uiManager.treeImages);
-        UpdateRootUI();
-        //UpdateEnergyUI(energyManager.energyAmount);
+        int lifeNeededForCurrentLevel = lifeManager.CalculateWaterNeededForUpgrade(1);
+        uiManager.UpdateLifeUI(lifeManager.lifeAmount, lifeNeededForCurrentLevel);
+        UpdateTotalLifeIncreaseUI();
     }
 
-    private void UpdateWaterUI(int newWaterAmount)
+    private void UpdateLifeUI(int newWaterAmount)
     {
-        int waterNeededForCurrentLevel = waterManager.CalculateWaterNeededForUpgrade(1);
-        uiManager.UpdateWaterUI(newWaterAmount, waterNeededForCurrentLevel);
+        int lifeNeededForCurrentLevel = lifeManager.CalculateWaterNeededForUpgrade(1);
+        uiManager.UpdateLifeUI(newWaterAmount, lifeNeededForCurrentLevel);
     }
 
-    private void UpdateRootUI()
+    public void UpdateTotalLifeIncreaseUI()
     {
-        int rootUpgradeCost = root.CalculateUpgradeCost();
-        uiManager.UpdateRootLevelUI(root.rootLevel, rootUpgradeCost);
-    }
-
-    private void UpdateEnergyUI(int newEnergyAmount)
-    {
-        //uiManager.UpdateEnergyUI(newEnergyAmount, energyManager.maxEnergy);
+        int totalLifeIncrease = 0;
+        foreach (var root in roots)
+        {
+            totalLifeIncrease += root.baseLifeGeneration;
+        }
+        uiManager.UpdateLifeIncreaseUI(totalLifeIncrease);
     }
 }
-
-
