@@ -11104,12 +11104,16 @@ MonoBehaviour:
   bgmSource: {fileID: 870979189}
   sfxSource: {fileID: 870979188}
   bgmClips:
-  - clip: {fileID: 8300000, guid: bc767e68d91880741a1700010363a771, type: 3}
-    volume: 0.16
   - clip: {fileID: 8300000, guid: 9a13f9c373d87e244a8dc2d4cc2d9055, type: 3}
     volume: 0.03
+    title: "\uBC30\uB2EC\uC758 \uBBFC\uC871 - \uD070\uC9D1 18\uCE35\uC73C\uB85C \uB5A0\uB098\uB294
+      \uC5EC\uD589"
+  - clip: {fileID: 8300000, guid: bc767e68d91880741a1700010363a771, type: 3}
+    volume: 0.16
+    title: ispeakwaves - wonderful calm beautiful piano
   - clip: {fileID: 8300000, guid: 4b630310a7e244d4494c4cbfd4e4d48d, type: 3}
     volume: 0.03
+    title: "\uBC30\uB2EC\uC758 \uBBFC\uC871 - \uBC30\uB2EC\uC740 \uC790\uC2E0\uC788\uC5B4"
   sfxClips:
   - clip: {fileID: 8300000, guid: 05fbb596028eb7946bfa932c63e4894b, type: 3}
     volume: 0.05
@@ -20884,6 +20888,7 @@ MonoBehaviour:
   timeText: {fileID: 1603668952}
   dateText: {fileID: 1323885783}
   idleTime: 10
+  scrollSpeed: 0.5
 --- !u!4 &1749694666
 Transform:
   m_ObjectHideFlags: 0

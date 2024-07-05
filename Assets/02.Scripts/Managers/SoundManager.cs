@@ -5,6 +5,7 @@ public class BGMClip
 {
     public AudioClip clip;
     public float volume = 1.0f;
+    public string title;
 }
 
 [System.Serializable]
@@ -23,6 +24,8 @@ public class SoundManager : MonoBehaviour
 
     public BGMClip[] bgmClips;
     public SFXClip[] sfxClips;
+
+    private BGMClip currentBGM;
 
     private void Awake()
     {
@@ -47,6 +50,7 @@ public class SoundManager : MonoBehaviour
         bgmSource.clip = bgmClip.clip;
         bgmSource.volume = bgmClip.volume;
         bgmSource.Play();
+        currentBGM = bgmClip;
     }
 
     public void PlaySFX(SFXClip sfxClip)
@@ -54,5 +58,9 @@ public class SoundManager : MonoBehaviour
         sfxSource.clip = sfxClip.clip;
         sfxSource.volume = sfxClip.volume;
         sfxSource.PlayOneShot(sfxClip.clip);
+    }
+    public string GetCurrentBGMTitle()
+    {
+        return currentBGM != null ? currentBGM.title : "";
     }
 }
