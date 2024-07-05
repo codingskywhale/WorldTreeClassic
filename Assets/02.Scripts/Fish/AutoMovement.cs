@@ -40,7 +40,7 @@ public class AutoMovement : MonoBehaviour
         {
             float randomX = Random.Range(-maxMoveX, maxMoveX);
             float randomZ = Random.Range(minMoveZ, maxMoveZ);
-            moveVec = new Vector3(randomX, 1.5f, randomZ);
+            moveVec = new Vector3(randomX, 0.5f, randomZ);
         }
         else
             moveVec = transform.position;
