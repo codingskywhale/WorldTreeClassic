@@ -4,7 +4,6 @@ using UnityEngine;
 public class ResourceManager : MonoBehaviour
 {
     public LifeManager lifeManager;
-    public UIManager uiManager;
     private List<Root> roots = new List<Root>();
 
     private void Start()
@@ -24,20 +23,20 @@ public class ResourceManager : MonoBehaviour
     public void UpdateGroundSize()
     {
         float groundScale = 8f + (lifeManager.currentLevel / 10f);
-        uiManager.groundMeshFilter.transform.localScale = new Vector3(groundScale, groundScale, groundScale);
+        UIManager.Instance.tree.groundMeshFilter.transform.localScale = new Vector3(groundScale, groundScale, groundScale);
     }
 
     public void UpdateUI()
     {
         int lifeNeededForCurrentLevel = lifeManager.CalculateWaterNeededForUpgrade(1);
-        uiManager.UpdateLifeUI(lifeManager.lifeAmount, lifeNeededForCurrentLevel);
+        UIManager.Instance.status.UpdateLifeUI(lifeManager.lifeAmount, lifeNeededForCurrentLevel);
         UpdateTotalLifeIncreaseUI();
     }
 
-    private void UpdateLifeUI(int newWaterAmount)
+    private void UpdateLifeUI(float newWaterAmount)
     {
         int lifeNeededForCurrentLevel = lifeManager.CalculateWaterNeededForUpgrade(1);
-        uiManager.UpdateLifeUI(newWaterAmount, lifeNeededForCurrentLevel);
+        UIManager.Instance.status.UpdateLifeUI(newWaterAmount, lifeNeededForCurrentLevel);
     }
 
     public void UpdateTotalLifeIncreaseUI()
@@ -47,6 +46,6 @@ public class ResourceManager : MonoBehaviour
         {
             totalLifeIncrease += root.baseLifeGeneration;
         }
-        uiManager.UpdateLifeIncreaseUI(totalLifeIncrease);
+        UIManager.Instance.status.UpdateLifeIncreaseUI(totalLifeIncrease);
     }
 }

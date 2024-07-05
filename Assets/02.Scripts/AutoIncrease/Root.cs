@@ -1,25 +1,27 @@
+using TMPro;
 using UnityEngine;
 
 public class Root : MonoBehaviour
 {
-    public LifeManager lifeManager;
-    public UIManager uiManager;
     public int rootLevel = 1;
     public int baseLifeGeneration = 1; // 초기 생성량 1로 설정
     public int lifeGenerationPerLevel = 1;
     public int upgradeLifeCost = 20;
     public float generationInterval = 1f; // 초 단위로 설정
+    public TextMeshProUGUI rootLevelText;
+    public TextMeshProUGUI rootUpgradeCostText;
+
     private float timer;
 
-    public delegate void LifeGenerated(int amount);
+    public delegate void LifeGenerated(float amount);
     public event LifeGenerated OnLifeGenerated;
     public event System.Action OnGenerationRateChanged; // 생명력 증가율 변경 이벤트
 
     private void Start()
     {
         // OnLifeGenerated 이벤트 중복 구독 방지
-        OnLifeGenerated -= lifeManager.IncreaseWater;
-        OnLifeGenerated += lifeManager.IncreaseWater;
+        OnLifeGenerated -= LifeManager.Instance.IncreaseWater;
+        OnLifeGenerated += LifeManager.Instance.IncreaseWater;
 
         UpdateUI();
     }
@@ -64,7 +66,13 @@ public class Root : MonoBehaviour
     public void UpdateUI()
     {
         int totalLifeIncrease = baseLifeGeneration; // 총 증가량 계산 수정
-        uiManager.UpdateRootLevelUI(rootLevel, upgradeLifeCost);
-        uiManager.UpdateLifeIncreaseUI(totalLifeIncrease);
+        UIManager.Instance.root.UpdateRootLevelUI(rootLevel, upgradeLifeCost);
+        UIManager.Instance.status.UpdateLifeIncreaseUI(totalLifeIncrease);
+    }
+
+    public void UpdateRootLevelUI(int rootLevel, int upgradeCost)
+    {
+        rootLevelText.text = $"뿌리 레벨: {rootLevel}";
+        rootUpgradeCostText.text = $"강화 비용: {upgradeCost} 물";
     }
 }

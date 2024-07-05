@@ -12,7 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 800bd3ef680550d49883bb83d8765e37, type: 3}
   m_Name: Animal_0
   m_EditorClassIdentifier: 
-  animalIcon: {fileID: 0}
-  animalName: 
-  animalUnlockConditions: []
+  animalIcon: {fileID: 10901, guid: 0000000000000000f000000000000000, type: 0}
+  animalName: "\uD14C\uC2A4\uD2B8\uC6A9 \uBB3C\uACE0\uAE30"
+  animalUnlockConditions:
+  - 
   animalPrefab: {fileID: 0}

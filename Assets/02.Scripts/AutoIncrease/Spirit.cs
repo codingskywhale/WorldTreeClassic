@@ -1,15 +1,18 @@
+using TMPro;
 using UnityEngine;
 
 public class Spirit : MonoBehaviour
 {
     public LifeManager waterManager;
-    public UIManager uiManager;
     public int spiritLevel = 1;
     public int baseEnergyGeneration = 1;
     public int energyGenerationPerLevel = 1;
     public int upgradeEnergyCost = 20;
     public float generationInterval = 60f;
     private float timer;
+
+    public TextMeshProUGUI spiritLevelText;
+    public TextMeshProUGUI spiritUpgradeCostText;
 
     public delegate void EnergyGenerated(int amount);
     public event EnergyGenerated OnEnergyGenerated;
@@ -45,6 +48,12 @@ public class Spirit : MonoBehaviour
 
     public void UpdateUI()
     {
-        uiManager.UpdateSpiritLevelUI(spiritLevel, upgradeEnergyCost);
+        UIManager.Instance.spiritData.UpdateSpiritLevelUI(spiritLevel, upgradeEnergyCost);
+    }
+
+    public void UpdateSpiritLevelUI(int spiritLevel, int upgradeCost)
+    {
+        spiritLevelText.text = $"정령 레벨: {spiritLevel}";
+        spiritUpgradeCostText.text = $"강화 비용: {upgradeCost} 에너지";
     }
 }

@@ -4,7 +4,6 @@ using UnityEngine.UI;
 public class UpgradeButton : MonoBehaviour
 {
     public LifeManager lifeManager;
-    public UIManager uiManager;
     public ResourceManager resourceManager;
     public Root root;
     public Spirit spirit;
@@ -97,13 +96,15 @@ public class UpgradeButton : MonoBehaviour
 
     private void HandleTouchUpgrade()
     {
-        int upgradeLifeCost = touchInputManager.upgradeLifeCost;
+        TouchData touchData = LifeManager.Instance.touchData;
+
+        int upgradeLifeCost = LifeManager.Instance.touchData.upgradeLifeCost;
         if (lifeManager.HasSufficientWater(upgradeLifeCost))
         {
             lifeManager.DecreaseWater(upgradeLifeCost);
-            touchInputManager.UpgradeTouchGeneration(); // 조건에 따라 터치 생산량 증가
+            LifeManager.Instance.touchData.UpgradeTouchGeneration(); // 조건에 따라 터치 생산량 증가
             
-            uiManager.UpdateTouchUI(touchInputManager.touchIncreaseLevel, touchInputManager.touchIncreaseAmount, touchInputManager.upgradeLifeCost);
+            UIManager.Instance.touchData.UpdateTouchUI(touchData.touchIncreaseLevel, touchData.touchIncreaseAmount, touchData.upgradeLifeCost);
         }
         else
         {
@@ -132,16 +133,18 @@ public class UpgradeButton : MonoBehaviour
         if (upgradeType == UpgradeType.Root && root != null)
         {
             int upgradeCost = root.upgradeLifeCost;
-            uiManager.UpdateRootLevelUI(root.rootLevel, upgradeCost);
+            UIManager.Instance.root.UpdateRootLevelUI(root.rootLevel, upgradeCost);
         }
         else if (upgradeType == UpgradeType.Spirit && spirit != null)
         {
             int upgradeCost = spirit.upgradeEnergyCost;
-            uiManager.UpdateSpiritLevelUI(spirit.spiritLevel, upgradeCost);
+            UIManager.Instance.spiritData.UpdateSpiritLevelUI(spirit.spiritLevel, upgradeCost);
         }
         else if (upgradeType == UpgradeType.Touch && touchInputManager != null)
         {
-            uiManager.UpdateTouchUI(touchInputManager.touchIncreaseLevel, touchInputManager.touchIncreaseAmount, touchInputManager.upgradeLifeCost);
+            UIManager.Instance.touchData.UpdateTouchUI(LifeManager.Instance.touchData.touchIncreaseLevel, 
+                                    LifeManager.Instance.touchData.touchIncreaseAmount, 
+                                    LifeManager.Instance.touchData.upgradeLifeCost);
         }
         else if (upgradeType == UpgradeType.Tree && resourceManager != null)
         {
