@@ -41,7 +41,7 @@ public class ResourceManager : MonoBehaviour
 
     public void UpdateTotalLifeIncreaseUI()
     {
-        int totalLifeIncrease = 0;
+        float totalLifeIncrease = 0;
         foreach (var root in roots)
         {
             totalLifeIncrease += root.baseLifeGeneration;

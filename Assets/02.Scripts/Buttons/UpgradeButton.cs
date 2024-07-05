@@ -3,7 +3,6 @@ using UnityEngine.UI;
 
 public class UpgradeButton : MonoBehaviour
 {
-    public LifeManager lifeManager;
     public ResourceManager resourceManager;
     public Root root;
     public Spirit spirit;
@@ -65,9 +64,9 @@ public class UpgradeButton : MonoBehaviour
     private void HandleRootUpgrade()
     {
         int upgradeCost = root.CalculateUpgradeCost();
-        if (lifeManager.HasSufficientWater(upgradeCost))
+        if (LifeManager.Instance.HasSufficientWater(upgradeCost))
         {
-            lifeManager.DecreaseWater(upgradeCost);
+            LifeManager.Instance.DecreaseWater(upgradeCost);
             root.UpgradeLifeGeneration(); // 조건에 따라 자동 생산량 증가
             root.UpdateUI();
             resourceManager.UpdateTotalLifeIncreaseUI(); // 총 생명력 증가량 UI 업데이트
@@ -81,9 +80,9 @@ public class UpgradeButton : MonoBehaviour
     private void HandleSpiritUpgrade()
     {
         int upgradeCost = spirit.CalculateUpgradeCost();
-        if (lifeManager.HasSufficientWater(upgradeCost))
+        if (LifeManager.Instance.HasSufficientWater(upgradeCost))
         {
-            lifeManager.DecreaseWater(upgradeCost);
+            LifeManager.Instance.DecreaseWater(upgradeCost);
             spirit.spiritLevel++;
             spirit.upgradeEnergyCost *= 2;
             spirit.UpdateUI();
@@ -99,9 +98,9 @@ public class UpgradeButton : MonoBehaviour
         TouchData touchData = LifeManager.Instance.touchData;
 
         int upgradeLifeCost = LifeManager.Instance.touchData.upgradeLifeCost;
-        if (lifeManager.HasSufficientWater(upgradeLifeCost))
+        if (LifeManager.Instance.HasSufficientWater(upgradeLifeCost))
         {
-            lifeManager.DecreaseWater(upgradeLifeCost);
+            LifeManager.Instance.DecreaseWater(upgradeLifeCost);
             LifeManager.Instance.touchData.UpgradeTouchGeneration(); // 조건에 따라 터치 생산량 증가
             
             UIManager.Instance.touchData.UpdateTouchUI(touchData.touchIncreaseLevel, touchData.touchIncreaseAmount, touchData.upgradeLifeCost);
@@ -114,11 +113,11 @@ public class UpgradeButton : MonoBehaviour
 
     private void HandleGeneralUpgrade()
     {
-        int waterNeededForUpgrade = lifeManager.CalculateWaterNeededForUpgrade(upgradeAmount);
-        if (lifeManager.HasSufficientWater(waterNeededForUpgrade))
+        int waterNeededForUpgrade = LifeManager.Instance.CalculateWaterNeededForUpgrade(upgradeAmount);
+        if (LifeManager.Instance.HasSufficientWater(waterNeededForUpgrade))
         {
-            lifeManager.DecreaseWater(waterNeededForUpgrade);
-            lifeManager.currentLevel += upgradeAmount;
+            LifeManager.Instance.DecreaseWater(waterNeededForUpgrade);
+            LifeManager.Instance.currentLevel += upgradeAmount;
             resourceManager.UpdateUI();
             resourceManager.UpdateGroundSize();
         }

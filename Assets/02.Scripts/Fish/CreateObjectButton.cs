@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -25,13 +23,16 @@ public class CreateObjectButton : MonoBehaviour
 
     public void ClickCreateAnimal()
     {
+        //if (LifeManager.Instance.HasSufficientWater())
+        //{
+        //    // 구매 비용 적용 LifeManager.DecreaseWater(구매 비용);
+        //}
         // 가격 적용 필요
-        if(LifeManager.Instance.lifeAmount >= 0)
-        {
-            GameObject go = Instantiate(animalData.animalPrefab);
-            go.transform.position = (new Vector3(0, 0.5f, 10f));
-            LifeManager.Instance.touchData.ApplyIncreaseRate(1f);
-            //LifeManager.Instance.spiritData.ApplyIncreaseRate();
-        }
+
+        GameObject go = Instantiate(animalData.animalPrefab);
+        go.transform.position = (new Vector3(0, 0.5f, 10f));
+        LifeManager.Instance.touchData.ApplyIncreaseRate(1f);
+        LifeManager.Instance.rootData.ApplyIncreaseRate(1f);
+
     }
 }

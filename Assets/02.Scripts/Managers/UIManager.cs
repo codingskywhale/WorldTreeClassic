@@ -23,7 +23,5 @@ public class UIManager : MonoBehaviour
         {
             Destroy(gameObject); // 이미 인스턴스가 존재하면 중복 생성된 객체 파괴
         }
-
-        LifeManager.Instance.touchData.UpdateUI();
     }
 }

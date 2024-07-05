@@ -14,7 +14,7 @@ public class Status : MonoBehaviour
         waterText.text = $" 생명력 : {waterAmount}";
     }
 
-    public void UpdateLifeIncreaseUI(int totalLifeIncrease)
+    public void UpdateLifeIncreaseUI(float totalLifeIncrease)
     {
         lifeIncreaseText.text = "Life Increase Per Second: " + totalLifeIncrease.ToString();
     }

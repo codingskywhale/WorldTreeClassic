@@ -4,7 +4,7 @@ using UnityEngine;
 public class Root : MonoBehaviour
 {
     public int rootLevel = 1;
-    public int baseLifeGeneration = 1; // 초기 생성량 1로 설정
+    public float baseLifeGeneration = 1; // 초기 생성량 1로 설정
     public int lifeGenerationPerLevel = 1;
     public int upgradeLifeCost = 20;
     public float generationInterval = 1f; // 초 단위로 설정
@@ -38,7 +38,7 @@ public class Root : MonoBehaviour
 
     private void GenerateLife()
     {
-        int generatedLife = baseLifeGeneration; // 기본 생성량만 사용
+        float generatedLife = baseLifeGeneration; // 기본 생성량만 사용
         OnLifeGenerated?.Invoke(generatedLife);
     }
 
@@ -65,11 +65,16 @@ public class Root : MonoBehaviour
 
     public void UpdateUI()
     {
-        int totalLifeIncrease = baseLifeGeneration; // 총 증가량 계산 수정
+        float totalLifeIncrease = baseLifeGeneration; // 총 증가량 계산 수정
         UIManager.Instance.root.UpdateRootLevelUI(rootLevel, upgradeLifeCost);
         UIManager.Instance.status.UpdateLifeIncreaseUI(totalLifeIncrease);
     }
+    public void ApplyIncreaseRate(float rate)
+    {
+        baseLifeGeneration *= 1 + rate;
 
+        UpdateUI();
+    }
     public void UpdateRootLevelUI(int rootLevel, int upgradeCost)
     {
         rootLevelText.text = $"뿌리 레벨: {rootLevel}";
