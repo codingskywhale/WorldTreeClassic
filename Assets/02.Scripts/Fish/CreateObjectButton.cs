@@ -22,4 +22,16 @@ public class CreateObjectButton : MonoBehaviour
         nameText.text = animalData.animalName;
         conditionText.text = animalData.animalUnlockConditions[0];
     }
+
+    public void ClickCreateAnimal()
+    {
+        // 가격 적용 필요
+        if(LifeManager.Instance.lifeAmount >= 0)
+        {
+            GameObject go = Instantiate(animalData.animalPrefab);
+            go.transform.position = (new Vector3(0, 0.5f, 10f));
+            LifeManager.Instance.touchData.ApplyIncreaseRate(1f);
+            //LifeManager.Instance.spiritData.ApplyIncreaseRate();
+        }
+    }
 }

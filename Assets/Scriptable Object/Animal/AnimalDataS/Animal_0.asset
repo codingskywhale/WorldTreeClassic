@@ -16,4 +16,4 @@ MonoBehaviour:
   animalName: "\uD14C\uC2A4\uD2B8\uC6A9 \uBB3C\uACE0\uAE30"
   animalUnlockConditions:
   - 
-  animalPrefab: {fileID: 0}
+  animalPrefab: {fileID: 7914183073765119427, guid: 23da912508981ee40a30a06a57cc7fbf, type: 3}
