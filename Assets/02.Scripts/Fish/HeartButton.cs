@@ -27,6 +27,8 @@ public class HeartButton : MonoBehaviour
 
     public void TouchHeartBubble()
     {
+        // 화면 터치시 효과음 재생
+        SoundManager.instance.PlaySFX(SoundManager.instance.sfxClips[0]);
         // 재화를 획득한다.
         LifeManager.Instance.IncreaseWater(LifeManager.Instance.touchData.touchIncreaseAmount);
         // 사라진다.
