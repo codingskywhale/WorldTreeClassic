@@ -4,22 +4,44 @@ using UnityEngine;
 public class ResourceManager : MonoBehaviour
 {
     public LifeManager lifeManager;
-    private List<Root> roots = new List<Root>();
+    private List<RootBase> roots = new List<RootBase>();
 
     private void Start()
     {
         lifeManager.OnWaterChanged += UpdateLifeUI;
         UpdateUI();
 
+        RegisterAllRoots();
+        UpdateTotalLifeIncreaseUI(); // 초기화 시 생명력 증가율 계산
+    }
+
+    private void RegisterAllRoots()
+    {
         // 모든 Root 인스턴스를 찾고 이벤트 구독
-        foreach (var root in FindObjectsOfType<Root>())
+        foreach (var root in FindObjectsOfType<RootBase>())
+        {
+            RegisterRoot(root);
+        }
+    }
+
+    private void RegisterRoot(RootBase root)
+    {
+        if (!roots.Contains(root))
         {
             roots.Add(root);
             root.OnGenerationRateChanged += UpdateTotalLifeIncreaseUI;
         }
-
-        UpdateTotalLifeIncreaseUI(); // 초기화 시 생명력 증가율 계산
     }
+
+    private void UnregisterRoot(RootBase root)
+    {
+        if (roots.Contains(root))
+        {
+            roots.Remove(root);
+            root.OnGenerationRateChanged -= UpdateTotalLifeIncreaseUI;
+        }
+    }
+
     public void UpdateGroundSize()
     {
         float groundScale = 8f + (lifeManager.currentLevel / 10f);
@@ -44,8 +66,17 @@ public class ResourceManager : MonoBehaviour
         float totalLifeIncrease = 0;
         foreach (var root in roots)
         {
-            totalLifeIncrease += root.baseLifeGeneration;
+            totalLifeIncrease += root.GetTotalLifeGeneration();
         }
         UIManager.Instance.status.UpdateLifeIncreaseUI(totalLifeIncrease);
+    }
+
+    private void OnDestroy()
+    {
+        lifeManager.OnWaterChanged -= UpdateLifeUI;
+        foreach (var root in roots)
+        {
+            root.OnGenerationRateChanged -= UpdateTotalLifeIncreaseUI;
+        }
     }
 }

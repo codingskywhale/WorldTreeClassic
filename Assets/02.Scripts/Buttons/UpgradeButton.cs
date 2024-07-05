@@ -4,7 +4,7 @@ using UnityEngine.UI;
 public class UpgradeButton : MonoBehaviour
 {
     public ResourceManager resourceManager;
-    public Root root;
+    public RootBase root;
     public Spirit spirit;
     public TouchInputManager touchInputManager;
 
