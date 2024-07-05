@@ -33,13 +33,13 @@ public class CameraController : MonoBehaviour
     {
         if (cameraTransition.animationCompleted)
         {
-            if (isFreeCamera && !cameraTargetHandler.isAnimalTarget)
+            if (isFreeCamera && !cameraTargetHandler.isObjectTarget)
             {
                 HandleFreeCamera();
             }
-            else if (cameraTargetHandler.isAnimalTarget && cameraTargetHandler.currentTarget != null)
+            else if (cameraTargetHandler.isObjectTarget && cameraTargetHandler.currentTarget != null)
             {
-                cameraTargetHandler.FollowAnimal();
+                cameraTargetHandler.FollowObject();
             }
         }
     }
@@ -60,9 +60,13 @@ public class CameraController : MonoBehaviour
         if (isDragging)
         {
             RotateCamera();
-            cameraTargetHandler.HandleAnimalClick();
+        }
+        else
+        {
+            //cameraTargetHandler.HandleObjectClick();
         }
     }
+
 
     private void RotateCamera()
     {
@@ -77,6 +81,11 @@ public class CameraController : MonoBehaviour
 
             // 타겟을 계속 바라보도록 카메라의 로컬 회전 조정
             Camera.main.transform.LookAt(cameraTargetHandler.currentTarget);
+
+            // 카메라의 각도 제한
+            Vector3 angles = Camera.main.transform.eulerAngles;
+            angles.x = Mathf.Clamp(angles.x, cameraTargetHandler.minVerticalAngle, cameraTargetHandler.maxVerticalAngle);
+            Camera.main.transform.eulerAngles = angles;
         }
     }
 
@@ -89,14 +98,14 @@ public class CameraController : MonoBehaviour
         {
             // 자유 시점 모드에서 고정 시점 모드로 전환
             cameraTargetHandler.SetTarget(target);
-            cameraTargetHandler.isAnimalTarget = false;
+            cameraTargetHandler.isObjectTarget = false;
             StartCoroutine(cameraTransition.ZoomCamera(cameraTransition.initialPosition, cameraTransition.finalRotation));
         }
         else
-        {   
+        {
             // 고정 시점 모드에서 자유 시점 모드로 전환
             cameraTargetHandler.SetTarget(target);
-            cameraTargetHandler.isAnimalTarget = false;
+            cameraTargetHandler.isObjectTarget = false;
             StartCoroutine(cameraTransition.ZoomCamera(cameraTransition.zoomInPosition, cameraTransition.zoomInRotation));
         }
 

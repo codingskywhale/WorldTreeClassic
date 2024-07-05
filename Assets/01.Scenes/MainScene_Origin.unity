@@ -23046,6 +23046,7 @@ GameObject:
   - component: {fileID: 1932504320}
   - component: {fileID: 1932504322}
   - component: {fileID: 1932504321}
+  - component: {fileID: 1932504323}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -23176,7 +23177,23 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentTarget: {fileID: 0}
-  isAnimalTarget: 0
+  isObjectTarget: 0
+--- !u!114 &1932504323
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1932504316}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c49b4cc203aa6414fae5c798d1d0e7d6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_EventMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_MaxRayIntersections: 0
 --- !u!1 &1962186366
 GameObject:
   m_ObjectHideFlags: 0
