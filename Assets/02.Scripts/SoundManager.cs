@@ -25,17 +25,17 @@ public class SoundManager : MonoBehaviour
         }
     }
 
-    private void Start()
-    {        
-        PlayBGM(bgmClips[0]);
-    }
+    //private void Start()
+    //{        
+    //    PlayBGM(bgmClips[0]);
+    //}
 
-    public void PlayBGM(BGMClip bgmClip)
-    {
-        bgmSource.clip = bgmClip.clip;
-        bgmSource.volume = bgmClip.volume;
-        bgmSource.Play();
-    }
+    //public void PlayBGM(BGMClip bgmClip)
+    //{
+    //    bgmSource.clip = bgmClip.clip;
+    //    bgmSource.volume = bgmClip.volume;
+    //    bgmSource.Play();
+    //}
 
     public void PlaySFX(AudioClip clip)
     {
