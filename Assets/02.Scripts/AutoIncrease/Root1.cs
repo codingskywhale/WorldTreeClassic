@@ -1,11 +1,5 @@
-using System;
-using TMPro;
-using UnityEngine;
-
 public class Root1 : RootBase
 {
-    
-
     protected override void Start()
     {
         base.Start();
@@ -26,6 +20,6 @@ public class Root1 : RootBase
 
     public override float GetTotalLifeGeneration()
     {
-        return baseLifeGeneration;
+        return base.GetTotalLifeGeneration(); // 기본 클래스의 동작을 유지
     }
 }

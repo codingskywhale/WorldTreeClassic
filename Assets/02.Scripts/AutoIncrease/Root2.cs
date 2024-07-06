@@ -25,6 +25,6 @@ public class Root2 : RootBase
 
     public override float GetTotalLifeGeneration()
     {
-        return baseLifeGeneration;
+        return base.GetTotalLifeGeneration(); // 기본 클래스의 동작을 유지
     }
 }

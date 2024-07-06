@@ -8,11 +8,12 @@ public class ResourceManager : MonoBehaviour
 
     private void Start()
     {
-        lifeManager.OnWaterChanged += UpdateLifeUI;
-        UpdateUI();
-
         RegisterAllRoots();
-        UpdateTotalLifeIncreaseUI(); // 초기화 시 생명력 증가율 계산
+        lifeManager.OnWaterChanged += UpdateLifeUI;
+
+        // 모든 Root를 등록한 후 생명력 증가율 업데이트
+        UpdateTotalLifeIncreaseUI();
+        UpdateUI();
     }
 
     private void RegisterAllRoots()

@@ -5,11 +5,12 @@ public interface IRoot
 {
     void ApplyIncreaseRate(float rate);
     float GetTotalLifeGeneration();
+    void Unlock();
 }
 
 public class RootBase : MonoBehaviour, IRoot
 {
-    public int rootLevel = 1;
+    public int rootLevel = 0; // 초기 레벨을 0으로 설정
     public float baseLifeGeneration = 1;
     public int lifeGenerationPerLevel = 1;
     public int upgradeLifeCost = 20;
@@ -17,6 +18,7 @@ public class RootBase : MonoBehaviour, IRoot
     public TextMeshProUGUI rootLevelText;
     public TextMeshProUGUI rootUpgradeCostText;
     public TextMeshProUGUI generationRateText; // 생산률을 나타내는 텍스트 추가
+    public bool isUnlocked = false; // 잠금 상태를 나타내는 변수 추가
 
     private float timer;
 
@@ -28,21 +30,26 @@ public class RootBase : MonoBehaviour, IRoot
     {
         OnLifeGenerated -= LifeManager.Instance.IncreaseWater;
         OnLifeGenerated += LifeManager.Instance.IncreaseWater;
+        OnGenerationRateChanged?.Invoke(); // 초기화 시 이벤트 트리거
         UpdateUI();
     }
 
     protected virtual void Update()
     {
-        timer += Time.deltaTime;
-        if (timer >= generationInterval)
+        if (isUnlocked && rootLevel > 0)
         {
-            GenerateLife();
-            timer = 0f;
+            timer += Time.deltaTime;
+            if (timer >= generationInterval)
+            {
+                GenerateLife();
+                timer = 0f;
+            }
         }
     }
 
     protected virtual void GenerateLife()
     {
+        if (!isUnlocked || rootLevel == 0) return; // 잠금 해제된 경우에만 생명력 생성
         float generatedLife = GetTotalLifeGeneration();
         InvokeLifeGenerated(generatedLife);
     }
@@ -54,11 +61,12 @@ public class RootBase : MonoBehaviour, IRoot
 
     public int CalculateUpgradeCost()
     {
-        return rootLevel * 20;
+        return (rootLevel + 1) * 20; // 업그레이드 비용은 다음 레벨 기준으로 계산
     }
 
     public virtual void UpgradeLifeGeneration()
     {
+        if (!isUnlocked) return; // 잠금 해제된 경우에만 업그레이드 가능
         rootLevel++;
         if (rootLevel % 25 == 0)
         {
@@ -68,7 +76,7 @@ public class RootBase : MonoBehaviour, IRoot
         {
             baseLifeGeneration += lifeGenerationPerLevel;
         }
-        upgradeLifeCost += 20;
+        upgradeLifeCost = CalculateUpgradeCost();
         OnGenerationRateChanged?.Invoke();
         UpdateUI();
     }
@@ -81,6 +89,7 @@ public class RootBase : MonoBehaviour, IRoot
 
     public virtual void ApplyIncreaseRate(float rate)
     {
+        if (!isUnlocked) return; // 잠금 해제된 경우에만 적용 가능
         baseLifeGeneration *= 1 + rate;
         OnGenerationRateChanged?.Invoke();
         UpdateUI();
@@ -88,8 +97,22 @@ public class RootBase : MonoBehaviour, IRoot
 
     public virtual void UpdateRootLevelUI(int rootLevel, int upgradeCost)
     {
-        rootLevelText.text = $"뿌리 레벨: {rootLevel}";
-        rootUpgradeCostText.text = $"강화 비용: {upgradeCost} 물";
+        if (rootLevelText != null)
+        {
+            if (isUnlocked)
+            {
+                rootLevelText.text = $"뿌리 레벨: {rootLevel}";
+            }
+            else
+            {
+                rootLevelText.text = $"뿌리 레벨: 0";
+            }
+        }
+
+        if (rootUpgradeCostText != null)
+        {
+            rootUpgradeCostText.text = $"강화 비용: {upgradeCost} 물";
+        }
     }
 
     public virtual void UpdateGenerationRateUI(float generationRate)
@@ -102,6 +125,15 @@ public class RootBase : MonoBehaviour, IRoot
 
     public virtual float GetTotalLifeGeneration()
     {
-        return baseLifeGeneration;
+        return isUnlocked && rootLevel > 0 ? baseLifeGeneration : 0; // 잠금 해제되고 레벨이 1 이상인 경우에만 생산
+    }
+
+    public void Unlock()
+    {
+        isUnlocked = true;
+        rootLevel = 1; // 잠금 해제 시 레벨 1로 설정
+        OnGenerationRateChanged?.Invoke(); // 잠금 해제 시 이벤트 트리거
+        UpdateUI();
     }
 }
+

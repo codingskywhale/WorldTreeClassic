@@ -11478,7 +11478,7 @@ MonoBehaviour:
   lifePerLevel: 10
   touchData: {fileID: 0}
   spiritData: {fileID: 0}
-  RootData: {fileID: 0}
+  RootData: {fileID: 2024283645}
 --- !u!114 &935140181
 MonoBehaviour:
   m_ObjectHideFlags: 0

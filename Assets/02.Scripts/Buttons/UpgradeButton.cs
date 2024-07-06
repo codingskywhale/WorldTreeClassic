@@ -47,7 +47,7 @@ public class UpgradeButton : MonoBehaviour
         switch (upgradeType)
         {
             case UpgradeType.Root:
-                HandleRootUpgrade();
+                HandleRootUpgradeOrUnlock();
                 break;
             case UpgradeType.Spirit:
                 HandleSpiritUpgrade();
@@ -61,15 +61,45 @@ public class UpgradeButton : MonoBehaviour
         }
     }
 
+    private void HandleRootUpgradeOrUnlock()
+    {
+        if (root == null) return;
+
+        if (!root.isUnlocked)
+        {
+            HandleRootUnlock();
+        }
+        else
+        {
+            HandleRootUpgrade();
+        }
+    }
+
+    private void HandleRootUnlock()
+    {
+        int unlockCost = root.CalculateUpgradeCost(); // 해금 비용을 계산 (처음 업그레이드 비용)
+        if (LifeManager.Instance.HasSufficientWater(unlockCost))
+        {
+            LifeManager.Instance.DecreaseWater(unlockCost);
+            root.Unlock();
+            root.UpdateUI();
+            resourceManager.UpdateTotalLifeIncreaseUI();
+        }
+        else
+        {
+            Debug.Log("물이 부족하여 해금할 수 없습니다.");
+        }
+    }
+
     private void HandleRootUpgrade()
     {
         int upgradeCost = root.CalculateUpgradeCost();
         if (LifeManager.Instance.HasSufficientWater(upgradeCost))
         {
             LifeManager.Instance.DecreaseWater(upgradeCost);
-            root.UpgradeLifeGeneration(); // 조건에 따라 자동 생산량 증가
+            root.UpgradeLifeGeneration();
             root.UpdateUI();
-            resourceManager.UpdateTotalLifeIncreaseUI(); // 총 생명력 증가량 UI 업데이트
+            resourceManager.UpdateTotalLifeIncreaseUI();
         }
         else
         {
@@ -101,8 +131,8 @@ public class UpgradeButton : MonoBehaviour
         if (LifeManager.Instance.HasSufficientWater(upgradeLifeCost))
         {
             LifeManager.Instance.DecreaseWater(upgradeLifeCost);
-            LifeManager.Instance.touchData.UpgradeTouchGeneration(); // 조건에 따라 터치 생산량 증가
-            
+            LifeManager.Instance.touchData.UpgradeTouchGeneration();
+
             UIManager.Instance.touchData.UpdateTouchUI(touchData.touchIncreaseLevel, touchData.touchIncreaseAmount, touchData.upgradeLifeCost);
         }
         else
@@ -131,7 +161,7 @@ public class UpgradeButton : MonoBehaviour
     {
         if (upgradeType == UpgradeType.Root && root != null)
         {
-            int upgradeCost = root.upgradeLifeCost;
+            int upgradeCost = root.CalculateUpgradeCost();
             UIManager.Instance.root.UpdateRootLevelUI(root.rootLevel, upgradeCost);
         }
         else if (upgradeType == UpgradeType.Spirit && spirit != null)
@@ -141,8 +171,8 @@ public class UpgradeButton : MonoBehaviour
         }
         else if (upgradeType == UpgradeType.Touch && touchInputManager != null)
         {
-            UIManager.Instance.touchData.UpdateTouchUI(LifeManager.Instance.touchData.touchIncreaseLevel, 
-                                    LifeManager.Instance.touchData.touchIncreaseAmount, 
+            UIManager.Instance.touchData.UpdateTouchUI(LifeManager.Instance.touchData.touchIncreaseLevel,
+                                    LifeManager.Instance.touchData.touchIncreaseAmount,
                                     LifeManager.Instance.touchData.upgradeLifeCost);
         }
         else if (upgradeType == UpgradeType.Tree && resourceManager != null)
