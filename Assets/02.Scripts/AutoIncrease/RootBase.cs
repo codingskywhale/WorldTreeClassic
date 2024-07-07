@@ -21,6 +21,8 @@ public class RootBase : MonoBehaviour, IRoot
     public bool isUnlocked = false; // 잠금 상태를 나타내는 변수 추가
 
     private float timer;
+    public TouchData touchData; // TouchData 참조
+    public int unlockThreshold = 5; // 잠금 해제에 필요한 터치 레벨
 
     public delegate void LifeGenerated(float amount);
     protected event LifeGenerated OnLifeGenerated;
@@ -36,6 +38,7 @@ public class RootBase : MonoBehaviour, IRoot
 
     protected virtual void Update()
     {
+        CheckUnlockCondition(); // 업데이트 시 잠금 해제 조건 확인
         if (isUnlocked && rootLevel > 0)
         {
             timer += Time.deltaTime;
@@ -111,7 +114,7 @@ public class RootBase : MonoBehaviour, IRoot
 
         if (rootUpgradeCostText != null)
         {
-            rootUpgradeCostText.text = $"강화 비용: {upgradeCost} 물";
+            rootUpgradeCostText.text = isUnlocked ? $"강화 비용: {upgradeCost} 물" : $"해금 비용: {upgradeCost} 물 (레벨: {unlockThreshold} 필요)";
         }
     }
 
@@ -119,7 +122,7 @@ public class RootBase : MonoBehaviour, IRoot
     {
         if (generationRateText != null)
         {
-            generationRateText.text = $"생산률: {generationRate} 물/초";
+            generationRateText.text = isUnlocked ? $"생산률: {generationRate} 물/초" : $"잠금 해제 조건: 세계수 레벨 {unlockThreshold}";
         }
     }
 
@@ -130,10 +133,27 @@ public class RootBase : MonoBehaviour, IRoot
 
     public void Unlock()
     {
-        isUnlocked = true;
-        rootLevel = 1; // 잠금 해제 시 레벨 1로 설정
-        OnGenerationRateChanged?.Invoke(); // 잠금 해제 시 이벤트 트리거
-        UpdateUI();
+        int unlockCost = CalculateUpgradeCost(); // 해금 비용 계산 (처음 업그레이드 비용)
+        if (LifeManager.Instance.HasSufficientWater(unlockCost))
+        {
+            LifeManager.Instance.DecreaseWater(unlockCost);
+            isUnlocked = true;
+            rootLevel = 1; // 잠금 해제 시 레벨 1로 설정
+            OnGenerationRateChanged?.Invoke(); // 잠금 해제 시 이벤트 트리거
+            UpdateUI();
+        }
+        else
+        {
+            Debug.Log("물이 부족하여 해금할 수 없습니다.");
+        }
+    }
+
+    private void CheckUnlockCondition()
+    {
+        // 버튼 활성화 처리를 위해 조건 확인 로직을 유지
+        if (!isUnlocked && touchData != null && touchData.touchIncreaseLevel >= unlockThreshold)
+        {
+            UpdateUI();
+        }
     }
 }
-

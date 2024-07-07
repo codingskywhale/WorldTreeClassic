@@ -13397,6 +13397,9 @@ MonoBehaviour:
   rootLevelText: {fileID: 222933588}
   rootUpgradeCostText: {fileID: 1074358172}
   generationRateText: {fileID: 998116355}
+  isUnlocked: 0
+  touchData: {fileID: 935140181}
+  unlockThreshold: 10
 --- !u!4 &1087770352
 Transform:
   m_ObjectHideFlags: 0
@@ -13839,6 +13842,7 @@ MonoBehaviour:
   root: {fileID: 1087770351}
   spirit: {fileID: 0}
   touchInputManager: {fileID: 1987132685}
+  touchData: {fileID: 935140181}
   upgradeType: 0
   upgradeAmount: 1
 --- !u!1 &1175032009
@@ -17589,6 +17593,9 @@ MonoBehaviour:
   rootLevelText: {fileID: 791990094}
   rootUpgradeCostText: {fileID: 705430303}
   generationRateText: {fileID: 1403027543}
+  isUnlocked: 0
+  touchData: {fileID: 0}
+  unlockThreshold: 10
 --- !u!4 &1490925825
 Transform:
   m_ObjectHideFlags: 0
@@ -17948,6 +17955,7 @@ MonoBehaviour:
   root: {fileID: 2024283645}
   spirit: {fileID: 0}
   touchInputManager: {fileID: 1987132685}
+  touchData: {fileID: 0}
   upgradeType: 2
   upgradeAmount: 1
 --- !u!114 &1563148305
@@ -21148,6 +21156,7 @@ MonoBehaviour:
   root: {fileID: 2145113708}
   spirit: {fileID: 0}
   touchInputManager: {fileID: 0}
+  touchData: {fileID: 935140181}
   upgradeType: 0
   upgradeAmount: 1
 --- !u!1 &1790458749
@@ -23199,6 +23208,7 @@ MonoBehaviour:
   root: {fileID: 2024283645}
   spirit: {fileID: 0}
   touchInputManager: {fileID: 1987132685}
+  touchData: {fileID: 935140181}
   upgradeType: 0
   upgradeAmount: 1
 --- !u!114 &1962360435
@@ -23925,6 +23935,9 @@ MonoBehaviour:
   rootLevelText: {fileID: 1439970685}
   rootUpgradeCostText: {fileID: 1604519969}
   generationRateText: {fileID: 4188827}
+  isUnlocked: 0
+  touchData: {fileID: 0}
+  unlockThreshold: 10
 --- !u!4 &2024283646
 Transform:
   m_ObjectHideFlags: 0
@@ -25045,6 +25058,9 @@ MonoBehaviour:
   rootLevelText: {fileID: 1439970685}
   rootUpgradeCostText: {fileID: 1604519969}
   generationRateText: {fileID: 4188827}
+  isUnlocked: 0
+  touchData: {fileID: 935140181}
+  unlockThreshold: 10
 --- !u!4 &2145113709
 Transform:
   m_ObjectHideFlags: 0

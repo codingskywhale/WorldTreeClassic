@@ -6,6 +6,7 @@ public class Root2 : RootBase
 {
     protected override void Start()
     {
+        unlockThreshold = 20; // 5레벨이 되어야 해금
         baseLifeGeneration = 3;
         base.Start();
         LifeManager.Instance.RegisterRoot(this);

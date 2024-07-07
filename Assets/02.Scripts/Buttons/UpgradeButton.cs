@@ -7,6 +7,7 @@ public class UpgradeButton : MonoBehaviour
     public RootBase root;
     public Spirit spirit;
     public TouchInputManager touchInputManager;
+    public TouchData touchData;
 
     public enum UpgradeType
     {
@@ -40,6 +41,35 @@ public class UpgradeButton : MonoBehaviour
         {
             UpdateUpgradeCostUI(resourceManager.lifeManager.currentLevel);
         }
+    }
+
+    private void Update()
+    {
+        UpdateButtonInteractable();
+    }
+
+    private void UpdateButtonInteractable()
+    {
+        bool canUpgrade = false;
+
+        switch (upgradeType)
+        {
+            case UpgradeType.Root:
+                canUpgrade = root != null && (!root.isUnlocked && touchData.touchIncreaseLevel >= root.unlockThreshold && LifeManager.Instance.HasSufficientWater(root.CalculateUpgradeCost()))
+                    || (root.isUnlocked && LifeManager.Instance.HasSufficientWater(root.CalculateUpgradeCost()));
+                break;
+            case UpgradeType.Spirit:
+                canUpgrade = spirit != null && LifeManager.Instance.HasSufficientWater(spirit.CalculateUpgradeCost());
+                break;
+            case UpgradeType.Touch:
+                canUpgrade = LifeManager.Instance.HasSufficientWater(LifeManager.Instance.touchData.upgradeLifeCost);
+                break;
+            case UpgradeType.Tree:
+                canUpgrade = LifeManager.Instance.HasSufficientWater(LifeManager.Instance.CalculateWaterNeededForUpgrade(upgradeAmount));
+                break;
+        }
+
+        upgradeButton.interactable = canUpgrade;
     }
 
     private void OnUpgradeButtonClicked()
@@ -77,7 +107,9 @@ public class UpgradeButton : MonoBehaviour
 
     private void HandleRootUnlock()
     {
-        int unlockCost = root.CalculateUpgradeCost(); // 해금 비용을 계산 (처음 업그레이드 비용)
+        if (root == null || root.isUnlocked) return;
+
+        int unlockCost = root.CalculateUpgradeCost();
         if (LifeManager.Instance.HasSufficientWater(unlockCost))
         {
             LifeManager.Instance.DecreaseWater(unlockCost);
@@ -93,6 +125,8 @@ public class UpgradeButton : MonoBehaviour
 
     private void HandleRootUpgrade()
     {
+        if (root == null || !root.isUnlocked) return;
+
         int upgradeCost = root.CalculateUpgradeCost();
         if (LifeManager.Instance.HasSufficientWater(upgradeCost))
         {
