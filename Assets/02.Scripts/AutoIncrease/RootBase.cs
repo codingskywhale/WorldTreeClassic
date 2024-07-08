@@ -20,7 +20,6 @@ public class RootBase : MonoBehaviour, IRoot
     public TextMeshProUGUI rootLevelText;
     public TextMeshProUGUI rootUpgradeCostText;
     public TextMeshProUGUI generationRateText; // 생산률을 나타내는 텍스트 추가
-    public TextMeshProUGUI unlockCostText; // 해금 비용을 나타내는 텍스트 추가
     public bool isUnlocked = false; // 잠금 상태를 나타내는 변수 추가
 
     private float timer;
@@ -99,7 +98,6 @@ public class RootBase : MonoBehaviour, IRoot
     {
         UpdateRootLevelUI(rootLevel, upgradeLifeCost);
         UpdateGenerationRateUI(GetTotalLifeGeneration()); // 생산률 업데이트 추가
-        UpdateUnlockCostUI(unlockCost); // 해금 비용 업데이트 추가
     }
 
     public virtual void ApplyIncreaseRate(BigInteger rate)
@@ -128,14 +126,6 @@ public class RootBase : MonoBehaviour, IRoot
         if (generationRateText != null)
         {
             generationRateText.text = isUnlocked ? $"생산률: {BigIntegerUtils.FormatBigInteger(generationRate)} 물/초" : $"잠금 해제 조건: 세계수 레벨 {unlockThreshold}\n식물 해금 시 배치 가능 동물 수 + 5";
-        }
-    }
-
-    public virtual void UpdateUnlockCostUI(BigInteger unlockCost)
-    {
-        if (unlockCostText != null)
-        {
-            unlockCostText.text = $"해금 비용: {BigIntegerUtils.FormatBigInteger(unlockCost)} 물";
         }
     }
 
@@ -180,7 +170,7 @@ public class RootBase : MonoBehaviour, IRoot
             Debug.Log("Object created at position: " + spawnPosition);
             if (cameraTransition != null)
             {
-               // StartCoroutine(cameraTransition.ZoomCamera(newObject.transform)); // 줌 효과 시작
+                // StartCoroutine(cameraTransition.ZoomCamera(newObject.transform)); // 줌 효과 시작
             }
         }
         else
@@ -189,4 +179,3 @@ public class RootBase : MonoBehaviour, IRoot
         }
     }
 }
-

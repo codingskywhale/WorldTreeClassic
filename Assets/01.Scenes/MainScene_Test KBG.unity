@@ -2695,6 +2695,59 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 192131021}
   m_CullTransparentMesh: 1
+--- !u!1 &203961734
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 203961736}
+  - component: {fileID: 203961735}
+  m_Layer: 0
+  m_Name: Root5
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &203961735
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 203961734}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bdc02b3afc6373043938024e8458c0a6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rootLevel: 0
+  generationInterval: 1
+  rootLevelText: {fileID: 1214266543}
+  rootUpgradeCostText: {fileID: 497815960}
+  generationRateText: {fileID: 944272756}
+  isUnlocked: 0
+  touchData: {fileID: 935140181}
+  unlockThreshold: 5
+  objectPrefab: {fileID: 0}
+--- !u!4 &203961736
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 203961734}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 445.24854, y: 525.37445, z: -448.32678}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &205015413
 GameObject:
   m_ObjectHideFlags: 0
@@ -4893,7 +4946,7 @@ GameObject:
   - component: {fileID: 415155577}
   - component: {fileID: 415155576}
   m_Layer: 5
-  m_Name: UpgradeBackGround (1)
+  m_Name: Root2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6198,8 +6251,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Button
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 5e83b443025082a41adb5c0e9869d0b5, type: 2}
+  m_sharedMaterial: {fileID: -4230123428673298972, guid: 5e83b443025082a41adb5c0e9869d0b5, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -6285,7 +6338,7 @@ GameObject:
   - component: {fileID: 504794772}
   - component: {fileID: 504794771}
   m_Layer: 5
-  m_Name: UpgradeBackGround
+  m_Name: Root1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -10600,7 +10653,7 @@ GameObject:
   - component: {fileID: 851790471}
   - component: {fileID: 851790470}
   m_Layer: 5
-  m_Name: UpgradeBackGround (4)
+  m_Name: Root5
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -11868,8 +11921,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Idsadsadsadsa
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 5e83b443025082a41adb5c0e9869d0b5, type: 2}
+  m_sharedMaterial: {fileID: -4230123428673298972, guid: 5e83b443025082a41adb5c0e9869d0b5, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -13235,8 +13288,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Idsadsadsadsa
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 5e83b443025082a41adb5c0e9869d0b5, type: 2}
+  m_sharedMaterial: {fileID: -4230123428673298972, guid: 5e83b443025082a41adb5c0e9869d0b5, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -13344,7 +13397,6 @@ MonoBehaviour:
   rootLevelText: {fileID: 222933588}
   rootUpgradeCostText: {fileID: 1074358172}
   generationRateText: {fileID: 998116355}
-  unlockCostText: {fileID: 0}
   isUnlocked: 0
   touchData: {fileID: 935140181}
   unlockThreshold: 10
@@ -14229,6 +14281,7 @@ GameObject:
   - component: {fileID: 1191729033}
   - component: {fileID: 1191729032}
   - component: {fileID: 1191729031}
+  - component: {fileID: 1191729034}
   m_Layer: 5
   m_Name: Button
   m_TagString: Untagged
@@ -14338,6 +14391,24 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1191729029}
   m_CullTransparentMesh: 1
+--- !u!114 &1191729034
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1191729029}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aacb8e2714c6edb48bcda875218a9ca5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  resourceManager: {fileID: 525614631}
+  root: {fileID: 2024283645}
+  touchInputManager: {fileID: 1987132685}
+  touchData: {fileID: 935140181}
+  upgradeType: 0
+  upgradeAmount: 1
 --- !u!1 &1212945828
 GameObject:
   m_ObjectHideFlags: 0
@@ -14473,8 +14544,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Idsadsadsadsa
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 5e83b443025082a41adb5c0e9869d0b5, type: 2}
+  m_sharedMaterial: {fileID: -4230123428673298972, guid: 5e83b443025082a41adb5c0e9869d0b5, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -14694,7 +14765,7 @@ GameObject:
   - component: {fileID: 1238273859}
   - component: {fileID: 1238273858}
   m_Layer: 5
-  m_Name: UpgradeBackGround (2)
+  m_Name: Root3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -14907,7 +14978,7 @@ GameObject:
   - component: {fileID: 1269803647}
   - component: {fileID: 1269803646}
   m_Layer: 5
-  m_Name: UpgradeBackGround (3)
+  m_Name: Root4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -15946,6 +16017,59 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1365986638}
   m_CullTransparentMesh: 1
+--- !u!1 &1385921511
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1385921513}
+  - component: {fileID: 1385921512}
+  m_Layer: 0
+  m_Name: Root4
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1385921512
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1385921511}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8fd0f2ac5f4dc01409e35f96aabe6e5c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rootLevel: 0
+  generationInterval: 1
+  rootLevelText: {fileID: 1867633272}
+  rootUpgradeCostText: {fileID: 2072616231}
+  generationRateText: {fileID: 1074790171}
+  isUnlocked: 0
+  touchData: {fileID: 935140181}
+  unlockThreshold: 5
+  objectPrefab: {fileID: 0}
+--- !u!4 &1385921513
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1385921511}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 445.24854, y: 525.37445, z: -448.32678}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1403027541
 GameObject:
   m_ObjectHideFlags: 0
@@ -16288,6 +16412,7 @@ GameObject:
   - component: {fileID: 1410447674}
   - component: {fileID: 1410447673}
   - component: {fileID: 1410447672}
+  - component: {fileID: 1410447675}
   m_Layer: 5
   m_Name: Button
   m_TagString: Untagged
@@ -16397,6 +16522,24 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1410447670}
   m_CullTransparentMesh: 1
+--- !u!114 &1410447675
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1410447670}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aacb8e2714c6edb48bcda875218a9ca5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  resourceManager: {fileID: 525614631}
+  root: {fileID: 2024283645}
+  touchInputManager: {fileID: 1987132685}
+  touchData: {fileID: 935140181}
+  upgradeType: 0
+  upgradeAmount: 1
 --- !u!1 &1410577395
 GameObject:
   m_ObjectHideFlags: 0
@@ -17513,36 +17656,14 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1490925825}
-  - component: {fileID: 1490925824}
+  - component: {fileID: 1490925826}
   m_Layer: 0
   m_Name: Root3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
---- !u!114 &1490925824
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1490925823}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c0d8c353ac7172f44a5618c92e527826, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  rootLevel: 1
-  generationInterval: 1
-  rootLevelText: {fileID: 791990094}
-  rootUpgradeCostText: {fileID: 705430303}
-  generationRateText: {fileID: 1403027543}
-  unlockCostText: {fileID: 0}
-  isUnlocked: 0
-  touchData: {fileID: 935140181}
-  unlockThreshold: 10
-  objectPrefab: {fileID: 1226896354247008, guid: f1ac1674b1044b940a5e6f1e32750350, type: 3}
+  m_IsActive: 1
 --- !u!4 &1490925825
 Transform:
   m_ObjectHideFlags: 0
@@ -17558,6 +17679,27 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1490925826
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1490925823}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0c0813ee45c6f3048b5cd101042e9697, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rootLevel: 0
+  generationInterval: 1
+  rootLevelText: {fileID: 791990094}
+  rootUpgradeCostText: {fileID: 705430303}
+  generationRateText: {fileID: 1403027543}
+  isUnlocked: 0
+  touchData: {fileID: 935140181}
+  unlockThreshold: 5
+  objectPrefab: {fileID: 0}
 --- !u!1 &1498903903
 GameObject:
   m_ObjectHideFlags: 0
@@ -19712,6 +19854,7 @@ GameObject:
   - component: {fileID: 1699922898}
   - component: {fileID: 1699922897}
   - component: {fileID: 1699922896}
+  - component: {fileID: 1699922899}
   m_Layer: 5
   m_Name: Button
   m_TagString: Untagged
@@ -19821,6 +19964,24 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1699922894}
   m_CullTransparentMesh: 1
+--- !u!114 &1699922899
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1699922894}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aacb8e2714c6edb48bcda875218a9ca5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  resourceManager: {fileID: 525614631}
+  root: {fileID: 2024283645}
+  touchInputManager: {fileID: 1987132685}
+  touchData: {fileID: 935140181}
+  upgradeType: 0
+  upgradeAmount: 1
 --- !u!1 &1700231557
 GameObject:
   m_ObjectHideFlags: 0
@@ -22019,8 +22180,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Idsadsadsadsa
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 5e83b443025082a41adb5c0e9869d0b5, type: 2}
+  m_sharedMaterial: {fileID: -4230123428673298972, guid: 5e83b443025082a41adb5c0e9869d0b5, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -23731,7 +23892,6 @@ MonoBehaviour:
   rootLevelText: {fileID: 1439970685}
   rootUpgradeCostText: {fileID: 1604519969}
   generationRateText: {fileID: 4188827}
-  unlockCostText: {fileID: 0}
   isUnlocked: 0
   touchData: {fileID: 0}
   unlockThreshold: 10
@@ -24007,8 +24167,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Button
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 5e83b443025082a41adb5c0e9869d0b5, type: 2}
+  m_sharedMaterial: {fileID: -4230123428673298972, guid: 5e83b443025082a41adb5c0e9869d0b5, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -24853,7 +25013,6 @@ MonoBehaviour:
   rootLevelText: {fileID: 1439970685}
   rootUpgradeCostText: {fileID: 1604519969}
   generationRateText: {fileID: 4188827}
-  unlockCostText: {fileID: 0}
   isUnlocked: 0
   touchData: {fileID: 935140181}
   unlockThreshold: 10
@@ -25511,3 +25670,5 @@ SceneRoots:
   - {fileID: 2145113709}
   - {fileID: 1087770352}
   - {fileID: 1490925825}
+  - {fileID: 1385921513}
+  - {fileID: 203961736}
