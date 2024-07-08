@@ -14,6 +14,8 @@ public class CameraTargetHandler : MonoBehaviour
     public float minHeight = 1f; // 카메라의 최소 높이 제한
     public float maxHeight = 10f; // 카메라의 최대 높이 제한
 
+    private bool isFreeCamera = false;
+
     private void Awake()
     {
         if (Instance == null)
@@ -71,6 +73,16 @@ public class CameraTargetHandler : MonoBehaviour
             // 카메라가 타겟을 계속 바라보도록 설정
             Camera.main.transform.LookAt(currentTarget);
         }
+    }
+
+    public void SetFreeCameraMode(bool isFree)
+    {
+        isFreeCamera = isFree;
+    }
+
+    public bool IsFreeCamera()
+    {
+        return isFreeCamera;
     }
 }
 

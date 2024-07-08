@@ -106,7 +106,7 @@ public class CameraController : MonoBehaviour
         }
     }
 
-    public void ToggleFreeCamera()
+    public void ToggleCameraMode()
     {
         if (cameraTransition.isZooming || !cameraTransition.animationCompleted) return;
 
@@ -128,6 +128,8 @@ public class CameraController : MonoBehaviour
 
         // 모드 전환
         isFreeCamera = !isFreeCamera;
+
+        cameraTargetHandler.SetFreeCameraMode(isFreeCamera);
 
         // 1초 후 버튼 다시 활성화
         StartCoroutine(EnableButtonAfterDelay(1.0f));

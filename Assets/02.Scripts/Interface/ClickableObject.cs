@@ -5,6 +5,9 @@ public class ClickableObject : MonoBehaviour, IClickableObject
 {
     public void OnPointerClick(PointerEventData eventData)
     {
-        CameraTargetHandler.Instance.SetTarget(transform);
+        if (CameraTargetHandler.Instance.IsFreeCamera())
+        {
+            CameraTargetHandler.Instance.SetTarget(transform);
+        }
     }
 }
