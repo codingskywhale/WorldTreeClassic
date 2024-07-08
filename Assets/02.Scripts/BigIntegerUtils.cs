@@ -2,6 +2,11 @@ using System.Numerics;
 
 public static class BigIntegerUtils
 {
+    /// <summary>
+    /// BigInteger 값을 적절한 단위로 포맷하여 문자열로 반환합니다.
+    /// </summary>
+    /// <param name="number">포맷할 BigInteger 값</param>
+    /// <returns>포맷된 문자열</returns>
     public static string FormatBigInteger(BigInteger number)
     {
         if (number >= BigInteger.Pow(10, 33))

@@ -2732,7 +2732,7 @@ MonoBehaviour:
   isUnlocked: 0
   touchData: {fileID: 935140181}
   unlockThreshold: 5
-  objectPrefab: {fileID: 0}
+  objectPrefab: {fileID: 1139572726157748, guid: 3c98bb4bee2f2ba4b92a2fbca7b8831f, type: 3}
 --- !u!4 &203961736
 Transform:
   m_ObjectHideFlags: 0
@@ -2742,7 +2742,7 @@ Transform:
   m_GameObject: {fileID: 203961734}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 445.24854, y: 525.37445, z: -448.32678}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -14404,7 +14404,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   resourceManager: {fileID: 525614631}
-  root: {fileID: 2024283645}
+  root: {fileID: 1490925826}
   touchInputManager: {fileID: 1987132685}
   touchData: {fileID: 935140181}
   upgradeType: 0
@@ -16054,7 +16054,7 @@ MonoBehaviour:
   isUnlocked: 0
   touchData: {fileID: 935140181}
   unlockThreshold: 5
-  objectPrefab: {fileID: 0}
+  objectPrefab: {fileID: 1139572726157748, guid: 3c98bb4bee2f2ba4b92a2fbca7b8831f, type: 3}
 --- !u!4 &1385921513
 Transform:
   m_ObjectHideFlags: 0
@@ -16064,7 +16064,7 @@ Transform:
   m_GameObject: {fileID: 1385921511}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 445.24854, y: 525.37445, z: -448.32678}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -16535,7 +16535,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   resourceManager: {fileID: 525614631}
-  root: {fileID: 2024283645}
+  root: {fileID: 203961735}
   touchInputManager: {fileID: 1987132685}
   touchData: {fileID: 935140181}
   upgradeType: 0
@@ -17699,7 +17699,7 @@ MonoBehaviour:
   isUnlocked: 0
   touchData: {fileID: 935140181}
   unlockThreshold: 5
-  objectPrefab: {fileID: 0}
+  objectPrefab: {fileID: 1139572726157748, guid: 3c98bb4bee2f2ba4b92a2fbca7b8831f, type: 3}
 --- !u!1 &1498903903
 GameObject:
   m_ObjectHideFlags: 0
@@ -19977,7 +19977,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   resourceManager: {fileID: 525614631}
-  root: {fileID: 2024283645}
+  root: {fileID: 1385921512}
   touchInputManager: {fileID: 1987132685}
   touchData: {fileID: 935140181}
   upgradeType: 0
