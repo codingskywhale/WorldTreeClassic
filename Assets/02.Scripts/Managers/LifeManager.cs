@@ -10,6 +10,7 @@ public class LifeManager : MonoBehaviour
     public TouchData touchData;
     public Spirit spiritData;
     public Root rootData;
+    public AnimalData animalData;
 
     public delegate void WaterChanged(float newAmount);
     public event WaterChanged OnWaterChanged;
@@ -29,6 +30,7 @@ public class LifeManager : MonoBehaviour
         touchData = GetComponent<TouchData>();
 
         touchData.UpdateUI();
+        animalData = new AnimalData();
     }
 
     public void IncreaseWater(float amount)
