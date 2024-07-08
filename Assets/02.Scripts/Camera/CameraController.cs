@@ -33,7 +33,7 @@ public class CameraController : MonoBehaviour
     {
         if (cameraTransition.animationCompleted)
         {
-            if (isFreeCamera && !cameraTargetHandler.isObjectTarget)
+            if (isFreeCamera)
             {
                 HandleFreeCamera();
             }
@@ -61,31 +61,48 @@ public class CameraController : MonoBehaviour
         {
             RotateCamera();
         }
-        else
-        {
-            //cameraTargetHandler.HandleObjectClick();
+        else if (cameraTargetHandler.currentTarget != null)
+        {            
+            Camera.main.transform.LookAt(cameraTargetHandler.currentTarget);
         }
     }
-
 
     private void RotateCamera()
     {
         float horizontal = Input.GetAxis("Mouse X") * rotationSpeed * Time.deltaTime;
         float vertical = Input.GetAxis("Mouse Y") * rotationSpeed * Time.deltaTime;
 
-        // 카메라가 현재 타겟 주변을 회전하도록 설정
         if (cameraTargetHandler.currentTarget != null)
         {
+            // 기존 위치와 회전을 백업
+            Vector3 originalPosition = Camera.main.transform.position;
+            Quaternion originalRotation = Camera.main.transform.rotation;
+
+            // 카메라의 위치 이동
             Camera.main.transform.RotateAround(cameraTargetHandler.currentTarget.position, Vector3.up, horizontal);
             Camera.main.transform.RotateAround(cameraTargetHandler.currentTarget.position, Camera.main.transform.right, -vertical);
 
-            // 타겟을 계속 바라보도록 카메라의 로컬 회전 조정
-            Camera.main.transform.LookAt(cameraTargetHandler.currentTarget);
-
-            // 카메라의 각도 제한
+            // 카메라의 각도 제한 적용
             Vector3 angles = Camera.main.transform.eulerAngles;
             angles.x = Mathf.Clamp(angles.x, cameraTargetHandler.minVerticalAngle, cameraTargetHandler.maxVerticalAngle);
+
+            // 카메라의 높이 제한 적용
+            Vector3 position = Camera.main.transform.position;
+            position.y = Mathf.Clamp(position.y, cameraTargetHandler.minHeight, cameraTargetHandler.maxHeight);
+
+            // 제한된 각도 및 높이로 카메라 설정
             Camera.main.transform.eulerAngles = angles;
+            Camera.main.transform.position = position;
+
+            // 각도나 높이가 제한을 벗어나면 회전을 취소하고 원래 상태로 되돌리기
+            if (position.y != Camera.main.transform.position.y || angles.x != Camera.main.transform.eulerAngles.x)
+            {
+                Camera.main.transform.position = originalPosition;
+                Camera.main.transform.rotation = originalRotation;
+            }
+
+            // 카메라가 타겟을 계속 바라보도록 설정
+            Camera.main.transform.LookAt(cameraTargetHandler.currentTarget);
         }
     }
 

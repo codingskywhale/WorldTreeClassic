@@ -9,8 +9,10 @@ public class CameraTargetHandler : MonoBehaviour
     private Vector3 offset = new Vector3(0, 5f, -15); // 타겟에 대한 카메라 오프셋
     private CameraTransition cameraTransition;
 
-    public float minVerticalAngle = -30f; // 최소 각도 제한
-    public float maxVerticalAngle = 60f; // 최대 각도 제한
+    public float minVerticalAngle = 0f; // 최소 각도 제한
+    public float maxVerticalAngle = 30f; // 최대 각도 제한
+    public float minHeight = 1f; // 카메라의 최소 높이 제한
+    public float maxHeight = 10f; // 카메라의 최대 높이 제한
 
     private void Awake()
     {
@@ -28,7 +30,6 @@ public class CameraTargetHandler : MonoBehaviour
     {
         cameraTransition = GetComponent<CameraTransition>();
     }
-
 
     public void SetTarget(Transform newTarget)
     {
@@ -66,6 +67,8 @@ public class CameraTargetHandler : MonoBehaviour
         {
             Vector3 targetPosition = currentTarget.position + offset;
             Camera.main.transform.position = targetPosition;
+
+            // 카메라가 타겟을 계속 바라보도록 설정
             Camera.main.transform.LookAt(currentTarget);
         }
     }
