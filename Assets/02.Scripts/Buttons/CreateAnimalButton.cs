@@ -12,6 +12,6 @@ public class CreateAnimalButton : MonoBehaviour
         GameObject go = data[idx].animalPrefab;
         Instantiate(go);
         go.transform.position = spawnVector;
-        LifeManager.Instance.touchData.ApplyIncreaseRate(1f);
+        LifeManager.Instance.touchData.ApplyIncreaseRate(1);
     }
 }

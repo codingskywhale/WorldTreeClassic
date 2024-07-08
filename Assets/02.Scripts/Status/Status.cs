@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Numerics;
 using TMPro;
 using UnityEngine;
 
@@ -9,13 +10,13 @@ public class Status : MonoBehaviour
     public TextMeshProUGUI lifeIncreaseText;
 
 
-    public void UpdateLifeUI(float waterAmount, int waterNeededForCurrentLevel)
+    public void UpdateLifeUI(BigInteger waterAmount, BigInteger waterNeededForCurrentLevel)
     {
-        waterText.text = $" 생명력 : {waterAmount}";
+        waterText.text = $" 생명력 : {BigIntegerUtils.FormatBigInteger(waterAmount)}";
     }
 
-    public void UpdateLifeIncreaseUI(float totalLifeIncrease)
+    public void UpdateLifeIncreaseUI(BigInteger totalLifeIncrease)
     {
-        lifeIncreaseText.text = "Life Increase Per Second: " + totalLifeIncrease.ToString();
+        lifeIncreaseText.text = $"초당 생명력 생산률 : {BigIntegerUtils.FormatBigInteger(totalLifeIncrease)}";
     }
 }

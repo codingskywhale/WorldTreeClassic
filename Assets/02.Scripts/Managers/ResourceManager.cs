@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Numerics;
 using UnityEngine;
 
 public class ResourceManager : MonoBehaviour
@@ -46,25 +47,25 @@ public class ResourceManager : MonoBehaviour
     public void UpdateGroundSize()
     {
         float groundScale = 8f + (lifeManager.currentLevel / 10f);
-        UIManager.Instance.tree.groundMeshFilter.transform.localScale = new Vector3(groundScale, groundScale, groundScale);
+        UIManager.Instance.tree.groundMeshFilter.transform.localScale = new UnityEngine.Vector3(groundScale, groundScale, groundScale);
     }
 
     public void UpdateUI()
     {
-        int lifeNeededForCurrentLevel = lifeManager.CalculateWaterNeededForUpgrade(1);
+        BigInteger lifeNeededForCurrentLevel = lifeManager.CalculateWaterNeededForUpgrade(1);
         UIManager.Instance.status.UpdateLifeUI(lifeManager.lifeAmount, lifeNeededForCurrentLevel);
         UpdateTotalLifeIncreaseUI();
     }
 
-    private void UpdateLifeUI(float newWaterAmount)
+    private void UpdateLifeUI(BigInteger newWaterAmount)
     {
-        int lifeNeededForCurrentLevel = lifeManager.CalculateWaterNeededForUpgrade(1);
+        BigInteger lifeNeededForCurrentLevel = lifeManager.CalculateWaterNeededForUpgrade(1);
         UIManager.Instance.status.UpdateLifeUI(newWaterAmount, lifeNeededForCurrentLevel);
     }
 
     public void UpdateTotalLifeIncreaseUI()
     {
-        float totalLifeIncrease = 0;
+        BigInteger totalLifeIncrease = 0;
         foreach (var root in roots)
         {
             totalLifeIncrease += root.GetTotalLifeGeneration();

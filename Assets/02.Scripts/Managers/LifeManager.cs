@@ -1,18 +1,18 @@
 using System.Collections.Generic;
+using System.Numerics;
 using UnityEngine;
 
 public class LifeManager : MonoBehaviour
 {
     public static LifeManager Instance { get; private set; } // 싱글톤 인스턴스
 
-    public float lifeAmount = 0;
+    public BigInteger lifeAmount = 100000000;
     public int currentLevel = 1;
     public int lifePerLevel = 10;
     public TouchData touchData;
-    public Spirit spiritData;
     public RootBase RootData;
     public List<IRoot> rootData = new List<IRoot>();
-    public delegate void WaterChanged(float newAmount);
+    public delegate void WaterChanged(BigInteger newAmount);
     public event WaterChanged OnWaterChanged;
 
     private void Awake()
@@ -32,24 +32,24 @@ public class LifeManager : MonoBehaviour
         touchData.UpdateUI();
     }
 
-    public void IncreaseWater(float amount)
+    public void IncreaseWater(BigInteger amount)
     {
         lifeAmount += amount;
         OnWaterChanged?.Invoke(lifeAmount);
     }
 
-    public void DecreaseWater(int amount)
+    public void DecreaseWater(BigInteger amount)
     {
         lifeAmount -= amount;
         OnWaterChanged?.Invoke(lifeAmount);
     }
 
-    public bool HasSufficientWater(int requiredAmount)
+    public bool HasSufficientWater(BigInteger requiredAmount)
     {
         return lifeAmount >= requiredAmount;
     }
 
-    public int CalculateWaterNeededForUpgrade(int amount)
+    public BigInteger CalculateWaterNeededForUpgrade(int amount)
     {
         return (currentLevel + amount) * lifePerLevel;
     }
@@ -62,7 +62,7 @@ public class LifeManager : MonoBehaviour
         }
     }
 
-    public void ApplyIncreaseRateToAllRoots(float rate)
+    public void ApplyIncreaseRateToAllRoots(BigInteger rate)
     {
         foreach (var root in rootData)
         {

@@ -8,7 +8,6 @@ public class UIManager : MonoBehaviour
     public Status status;
     public RootBase root;
     public TouchData touchData;
-    public Spirit spiritData;
     public WorldTree tree;
 
     private void Awake()

@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Numerics;
 using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -7,9 +8,9 @@ using UnityEngine;
 public class TouchData : MonoBehaviour
 {
     public int touchIncreaseLevel = 1;
-    public float touchIncreaseAmount = 10;
-    public int upgradeLifeCost = 20;
-    public int lifeGenerationPerLevel = 10; // 일정 증가량
+    public BigInteger touchIncreaseAmount = 10;
+    public BigInteger upgradeLifeCost = 20;
+    public BigInteger lifeGenerationPerLevel = 10; // 일정 증가량
 
     public TextMeshProUGUI touchLevelText;
     public TextMeshProUGUI touchIncreaseText; // 추가된 텍스트 UI 요소
@@ -31,7 +32,7 @@ public class TouchData : MonoBehaviour
         UIManager.Instance.tree.UpdateTreeMeshes(touchIncreaseLevel); // 나무 모습 업데이트
     }
 
-    public void ApplyIncreaseRate(float rate)
+    public void ApplyIncreaseRate(BigInteger rate)
     {
         touchIncreaseAmount *= 1 + rate;
         
@@ -43,10 +44,10 @@ public class TouchData : MonoBehaviour
         UIManager.Instance.touchData.UpdateTouchUI(touchIncreaseLevel, touchIncreaseAmount, upgradeLifeCost);
     }
 
-    public void UpdateTouchUI(int touchIncreaseLevel, float touchIncreaseAmount, int upgradelifeCost)
+    public void UpdateTouchUI(int touchIncreaseLevel, BigInteger touchIncreaseAmount, BigInteger upgradelifeCost)
     {
-        touchLevelText.text = $"외로운 나무 레벨: {touchIncreaseLevel}";
-        touchIncreaseText.text = $"현재 터치당 얻는 생명력 : {touchIncreaseAmount}";
-        upgradelifeCostText.text = $"강화 비용: {upgradelifeCost} 생명력";
+        touchLevelText.text = $"외로운 나무 레벨:{BigIntegerUtils.FormatBigInteger(touchIncreaseLevel)}";
+        touchIncreaseText.text = $"현재 터치당 얻는 생명력 : {BigIntegerUtils.FormatBigInteger(touchIncreaseAmount)}";
+        upgradelifeCostText.text = $"강화 비용: {BigIntegerUtils.FormatBigInteger(upgradelifeCost)} 생명력";
     }
 }

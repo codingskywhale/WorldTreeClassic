@@ -31,8 +31,8 @@ public class CreateObjectButton : MonoBehaviour
 
         GameObject go = Instantiate(animalData.animalPrefab);
         go.transform.position = (new Vector3(0, 0.5f, 10f));
-        LifeManager.Instance.touchData.ApplyIncreaseRate(1f);
-        LifeManager.Instance.ApplyIncreaseRateToAllRoots(1f);
+        LifeManager.Instance.touchData.ApplyIncreaseRate(1);
+        LifeManager.Instance.ApplyIncreaseRateToAllRoots(1);
 
     }
 }
