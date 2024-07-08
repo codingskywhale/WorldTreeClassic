@@ -44,6 +44,12 @@ public class CreateObjectButton : MonoBehaviour
                 GameObject go = Instantiate(animalData.animalPrefab);
                 go.transform.position = (new Vector3(0, 0.5f, 10f));
             }
+
+            // 여유 공간이 없을 때
+            else
+            {
+                // 가방으로 이동하도록 해야함
+            }
             // 생산량 2배 증가.
             LifeManager.Instance.touchData.ApplyIncreaseRate(1f);
             LifeManager.Instance.rootData.ApplyIncreaseRate(1f);

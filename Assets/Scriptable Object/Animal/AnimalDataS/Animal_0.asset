@@ -15,5 +15,5 @@ MonoBehaviour:
   animalIcon: {fileID: 10901, guid: 0000000000000000f000000000000000, type: 0}
   animalName: "\uD14C\uC2A4\uD2B8\uC6A9 \uBB3C\uACE0\uAE30"
   animalUnlockConditions:
-  - 
+  - "\uC774\uC804 \uBC84\uD2BC \uD574\uAE08\uD558\uAE30"
   animalPrefab: {fileID: 6040825781364759821, guid: 6c118fbcc1a0fda4199639530f77480b, type: 3}
