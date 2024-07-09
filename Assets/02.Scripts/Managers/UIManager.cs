@@ -7,9 +7,8 @@ public class UIManager : MonoBehaviour
     public static UIManager Instance { get; private set; } // 싱글톤 인스턴스
 
     public Status status;
-    public Root root;
+    public RootBase root;
     public TouchData touchData;
-    public Spirit spiritData;
     public WorldTree tree;
     public CreateObjectButton[] createAnimalButtons;
     public int createObjectButtonUnlockCount = 1;

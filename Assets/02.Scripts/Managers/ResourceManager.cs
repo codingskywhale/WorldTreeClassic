@@ -1,51 +1,84 @@
 using System.Collections.Generic;
+using System.Numerics;
 using UnityEngine;
 
 public class ResourceManager : MonoBehaviour
 {
     public LifeManager lifeManager;
-    private List<Root> roots = new List<Root>();
+    private List<RootBase> roots = new List<RootBase>();
 
     private void Start()
     {
+        RegisterAllRoots();
         lifeManager.OnWaterChanged += UpdateLifeUI;
-        UpdateUI();
 
+        // 모든 Root를 등록한 후 생명력 증가율 업데이트
+        UpdateTotalLifeIncreaseUI();
+        UpdateUI();
+    }
+
+    private void RegisterAllRoots()
+    {
         // 모든 Root 인스턴스를 찾고 이벤트 구독
-        foreach (var root in FindObjectsOfType<Root>())
+        foreach (var root in FindObjectsOfType<RootBase>())
+        {
+            RegisterRoot(root);
+        }
+    }
+
+    private void RegisterRoot(RootBase root)
+    {
+        if (!roots.Contains(root))
         {
             roots.Add(root);
             root.OnGenerationRateChanged += UpdateTotalLifeIncreaseUI;
         }
-
-        UpdateTotalLifeIncreaseUI(); // 초기화 시 생명력 증가율 계산
     }
+
+    private void UnregisterRoot(RootBase root)
+    {
+        if (roots.Contains(root))
+        {
+            roots.Remove(root);
+            root.OnGenerationRateChanged -= UpdateTotalLifeIncreaseUI;
+        }
+    }
+
     public void UpdateGroundSize()
     {
         float groundScale = 8f + (lifeManager.currentLevel / 10f);
-        UIManager.Instance.tree.groundMeshFilter.transform.localScale = new Vector3(groundScale, groundScale, groundScale);
+        UIManager.Instance.tree.groundMeshFilter.transform.localScale = new UnityEngine.Vector3(groundScale, groundScale, groundScale);
     }
 
     public void UpdateUI()
     {
-        int lifeNeededForCurrentLevel = lifeManager.CalculateWaterNeededForUpgrade(1);
+        BigInteger lifeNeededForCurrentLevel = lifeManager.CalculateWaterNeededForUpgrade(1);
         UIManager.Instance.status.UpdateLifeUI(lifeManager.lifeAmount, lifeNeededForCurrentLevel);
         UpdateTotalLifeIncreaseUI();
     }
 
-    private void UpdateLifeUI(float newWaterAmount)
+    private void UpdateLifeUI(BigInteger newWaterAmount)
     {
-        int lifeNeededForCurrentLevel = lifeManager.CalculateWaterNeededForUpgrade(1);
+        BigInteger lifeNeededForCurrentLevel = lifeManager.CalculateWaterNeededForUpgrade(1);
         UIManager.Instance.status.UpdateLifeUI(newWaterAmount, lifeNeededForCurrentLevel);
     }
 
     public void UpdateTotalLifeIncreaseUI()
     {
-        float totalLifeIncrease = 0;
+        BigInteger totalLifeIncrease = 0;
         foreach (var root in roots)
         {
-            totalLifeIncrease += root.baseLifeGeneration;
+            totalLifeIncrease += root.GetTotalLifeGeneration();
         }
         UIManager.Instance.status.UpdateLifeIncreaseUI(totalLifeIncrease);
+    }
+
+    private void OnDestroy()
+    {
+        lifeManager.OnWaterChanged -= UpdateLifeUI;
+        foreach (var root in roots)
+        {
+            root.OnGenerationRateChanged -= UpdateTotalLifeIncreaseUI;
+        }
     }
 }
