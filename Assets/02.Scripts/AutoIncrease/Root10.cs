@@ -1,13 +1,13 @@
 using System.Numerics;
 using UnityEngine;
 
-public class Root4 : RootBase
+public class Root10 : RootBase
 {
     protected override void Start()
     {
-        unlockThreshold = 40;
-        baseLifeGeneration = BigInteger.Parse("320000");
-        unlockCost = BigInteger.Parse("64500000000");
+        unlockThreshold = 50;
+        baseLifeGeneration = BigInteger.Parse("29957670763179500000000000");
+        unlockCost = BigInteger.Parse("7001128979230350000000000000000000000000000000000");
         base.Start();
         LifeManager.Instance.RegisterRoot(this);
         UpdateUI();
@@ -33,7 +33,7 @@ public class Root4 : RootBase
     {
         if (objectPrefab != null)
         {
-            UnityEngine.Vector3 spawnPosition = new UnityEngine.Vector3(6, 0, 9); // 새로운 좌표로 설정
+            UnityEngine.Vector3 spawnPosition = new UnityEngine.Vector3(6, 0, 6); // 새로운 좌표로 설정
             GameObject newObject = Instantiate(objectPrefab, spawnPosition, UnityEngine.Quaternion.identity);
             Debug.Log("Root2 object created at position: " + spawnPosition);
             if (cameraTransition != null)
