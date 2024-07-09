@@ -11,6 +11,7 @@ public class LifeManager : MonoBehaviour
     public int lifePerLevel = 10;
     public TouchData touchData;
     public RootBase RootData;
+    public AnimalData animalData;
     public List<IRoot> rootData = new List<IRoot>();
     public delegate void WaterChanged(BigInteger newAmount);
     public event WaterChanged OnWaterChanged;
@@ -28,7 +29,6 @@ public class LifeManager : MonoBehaviour
             Destroy(gameObject); // 이미 인스턴스가 존재하면 중복 생성된 객체 파괴
         }
         touchData = GetComponent<TouchData>();
-
         touchData.UpdateUI();
     }
 

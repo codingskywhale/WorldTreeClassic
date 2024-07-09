@@ -1,3 +1,4 @@
+using System.Numerics;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -42,10 +43,10 @@ public class UIManager : MonoBehaviour
         }
     }
 
-    public void CheckEnoughCost(float amount = 0f)
+    public void CheckEnoughCost(BigInteger amount)
     {
         // createObjectButtonUnlockCount가 현재 버튼의 인덱스를 넘는지 확인.
-        if (LifeManager.Instance.lifeAmount > LifeManager.Instance.animalData.nowCreateCost)
+        if (LifeManager.Instance.lifeAmount > (BigInteger)LifeManager.Instance.animalData.nowCreateCost)
         {
             for(int i = 0; i < createObjectButtonUnlockCount; i++)
             {

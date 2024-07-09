@@ -6763,7 +6763,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   waterText: {fileID: 260969013}
   lifeIncreaseText: {fileID: 1700231559}
-  animalCountText: {fileID: 950476795}
 --- !u!114 &425030254
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8005,7 +8004,6 @@ MonoBehaviour:
   status: {fileID: 425030253}
   root: {fileID: 2024283645}
   touchData: {fileID: 935140181}
-  spiritData: {fileID: 0}
   tree: {fileID: 701093651}
   createAnimalButtons:
   - {fileID: 8075553827999120716}
@@ -14578,12 +14576,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3bc8f40ba9de9884d9e09eef4432b96d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  lifeAmount: 0
   currentLevel: 1
   lifePerLevel: 10
   touchData: {fileID: 935140181}
-  spiritData: {fileID: 0}
-  rootData: {fileID: 2024283645}
+  RootData: {fileID: 0}
 --- !u!114 &935140181
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -14597,9 +14593,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   touchIncreaseLevel: 1
-  touchIncreaseAmount: 10
-  upgradeLifeCost: 20
-  lifeGenerationPerLevel: 10
   touchLevelText: {fileID: 1577389404}
   touchIncreaseText: {fileID: 96467304}
   upgradelifeCostText: {fileID: 867325105}
@@ -23592,8 +23585,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   resourceManager: {fileID: 525614631}
   root: {fileID: 2024283645}
-  spirit: {fileID: 0}
   touchInputManager: {fileID: 1987132685}
+  touchData: {fileID: 0}
   upgradeType: 2
   upgradeAmount: 1
 --- !u!114 &1563148305
@@ -30210,8 +30203,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   resourceManager: {fileID: 525614631}
   root: {fileID: 2024283645}
-  spirit: {fileID: 0}
   touchInputManager: {fileID: 1987132685}
+  touchData: {fileID: 0}
   upgradeType: 0
   upgradeAmount: 1
 --- !u!114 &1962360435
@@ -31065,12 +31058,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rootLevel: 1
-  baseLifeGeneration: 1
-  lifeGenerationPerLevel: 1
-  upgradeLifeCost: 20
   generationInterval: 1
   rootLevelText: {fileID: 1439970685}
   rootUpgradeCostText: {fileID: 1604519969}
+  generationRateText: {fileID: 0}
+  isUnlocked: 0
+  touchData: {fileID: 0}
+  unlockThreshold: 5
+  objectPrefab: {fileID: 0}
 --- !u!4 &2024283646
 Transform:
   m_ObjectHideFlags: 0

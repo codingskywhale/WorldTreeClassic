@@ -1,6 +1,8 @@
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using System.Numerics;
+using Vector3 = UnityEngine.Vector3;
 
 public class CreateObjectButton : MonoBehaviour
 {
@@ -34,7 +36,7 @@ public class CreateObjectButton : MonoBehaviour
     public void ClickCreateAnimal(int buttonIdx)
     {
         // 현재 생명력이 요구치보다 높을 때.
-        if (LifeManager.Instance.lifeAmount > LifeManager.Instance.animalData.nowCreateCost)
+        if (LifeManager.Instance.lifeAmount > (BigInteger)LifeManager.Instance.animalData.nowCreateCost)
         {
             LifeManager.Instance.DecreaseWater((int)LifeManager.Instance.animalData.nowCreateCost);
 
@@ -51,12 +53,11 @@ public class CreateObjectButton : MonoBehaviour
                 // 가방으로 이동하도록 해야함
             }
             // 생산량 2배 증가.
-            LifeManager.Instance.touchData.ApplyIncreaseRate(1f);
-            LifeManager.Instance.rootData.ApplyIncreaseRate(1f);
-            // UI 적용
-            
+            LifeManager.Instance.touchData.ApplyIncreaseRate(1);
+            LifeManager.Instance.ApplyIncreaseRateToAllRoots(1);
+
             // UnlockCount는 시작할 때 1이기 때문.
-            if(buttonIdx + 1 == UIManager.Instance.createObjectButtonUnlockCount)
+            if (buttonIdx + 1 == UIManager.Instance.createObjectButtonUnlockCount)
             {
                 // 다음 걸 해금해 주어야 한다.
                 CheckConditionCleared(buttonIdx + 1);

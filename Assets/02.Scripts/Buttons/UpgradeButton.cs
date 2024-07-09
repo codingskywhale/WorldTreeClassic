@@ -48,8 +48,10 @@ public class UpgradeButton : MonoBehaviour
         switch (upgradeType)
         {
             case UpgradeType.Root:
-                canUpgrade = root != null && (!root.isUnlocked && touchData.touchIncreaseLevel >= root.unlockThreshold && LifeManager.Instance.HasSufficientWater(root.CalculateUpgradeCost()))
-                    || (root.isUnlocked && LifeManager.Instance.HasSufficientWater(root.CalculateUpgradeCost()));
+                canUpgrade = root != null && (!root.isUnlocked && 
+                                              LifeManager.Instance.touchData.touchIncreaseLevel >= root.unlockThreshold && 
+                                              LifeManager.Instance.HasSufficientWater(root.CalculateUpgradeCost())) || 
+                                              (root.isUnlocked && LifeManager.Instance.HasSufficientWater(root.CalculateUpgradeCost()));
                 break;
             case UpgradeType.Touch:
                 canUpgrade = LifeManager.Instance.HasSufficientWater(LifeManager.Instance.touchData.upgradeLifeCost);

@@ -1,3 +1,4 @@
+[System.Serializable]
 public class AnimalData
 {
     // 생성 시 가격
@@ -15,7 +16,7 @@ public class AnimalData
         nowCreateCost = createCostbase;
         maxAnimalCount = 5;
 
-        UIManager.Instance.status.UpdateAnimalCountText(nowAnimalCount, maxAnimalCount);
+        //UIManager.Instance.status.UpdateAnimalCountText(nowAnimalCount, maxAnimalCount);
     }
 
     public AnimalData(float nowCreateCost, int maxAnimalCount)
@@ -23,7 +24,7 @@ public class AnimalData
         this.nowCreateCost = nowCreateCost;
         this.maxAnimalCount = maxAnimalCount;
 
-        UIManager.Instance.status.UpdateAnimalCountText(nowAnimalCount, maxAnimalCount);
+        //UIManager.Instance.status.UpdateAnimalCountText(nowAnimalCount, maxAnimalCount);
     }
     // 동물이 추가될 때 데이터에 반영
     public bool AddAnimal()
@@ -34,7 +35,7 @@ public class AnimalData
         if (nowAnimalCount >= maxAnimalCount) return false;
 
         nowAnimalCount++;
-        UIManager.Instance.status.UpdateAnimalCountText(nowAnimalCount, maxAnimalCount);
+        //UIManager.Instance.status.UpdateAnimalCountText(nowAnimalCount, maxAnimalCount);
 
         return true;
     }
@@ -43,6 +44,6 @@ public class AnimalData
     public void AddMaxAnimalCount()
     {
         maxAnimalCount += maxAnimalCountPlus;
-        UIManager.Instance.status.UpdateAnimalCountText(nowAnimalCount, maxAnimalCount);
+        //UIManager.Instance.status.UpdateAnimalCountText(nowAnimalCount, maxAnimalCount);
     }
 }
