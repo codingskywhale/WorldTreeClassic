@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using static UnityEngine.GraphicsBuffer;
 
@@ -13,7 +14,7 @@ public class CameraController : MonoBehaviour
     private CameraTransition cameraTransition;
     private CameraTargetHandler cameraTargetHandler;
 
-    private bool isFreeCamera = false;
+    public bool isFreeCamera = false;
     private bool isDragging = false;
 
     private void Start()
@@ -33,16 +34,29 @@ public class CameraController : MonoBehaviour
     {
         if (cameraTransition.animationCompleted)
         {
-            if (isFreeCamera && !cameraTargetHandler.isAnimalTarget)
+            if (isFreeCamera)
             {
                 HandleFreeCamera();
             }
-            else if (cameraTargetHandler.isAnimalTarget && cameraTargetHandler.currentTarget != null)
+            else if (cameraTargetHandler.isObjectTarget && cameraTargetHandler.currentTarget != null)
             {
-                cameraTargetHandler.FollowAnimal();
+                cameraTargetHandler.FollowObject();
+            }
+
+            if (Input.GetMouseButtonDown(0))
+            {
+                if (isFreeCamera)
+                {
+                    HandleClick();
+                }
+                else
+                {
+                    Debug.Log("Click ignored: Not in free camera mode");
+                }
             }
         }
     }
+
 
     private void HandleFreeCamera()
     {
@@ -60,7 +74,10 @@ public class CameraController : MonoBehaviour
         if (isDragging)
         {
             RotateCamera();
-            cameraTargetHandler.HandleAnimalClick();
+        }
+        else if (cameraTargetHandler.currentTarget != null)
+        {
+            Camera.main.transform.LookAt(cameraTargetHandler.currentTarget);
         }
     }
 
@@ -69,18 +86,64 @@ public class CameraController : MonoBehaviour
         float horizontal = Input.GetAxis("Mouse X") * rotationSpeed * Time.deltaTime;
         float vertical = Input.GetAxis("Mouse Y") * rotationSpeed * Time.deltaTime;
 
-        // 카메라가 현재 타겟 주변을 회전하도록 설정
         if (cameraTargetHandler.currentTarget != null)
         {
+            // 기존 위치와 회전을 백업
+            Vector3 originalPosition = Camera.main.transform.position;
+            Quaternion originalRotation = Camera.main.transform.rotation;
+
+            // 카메라의 위치 이동
             Camera.main.transform.RotateAround(cameraTargetHandler.currentTarget.position, Vector3.up, horizontal);
             Camera.main.transform.RotateAround(cameraTargetHandler.currentTarget.position, Camera.main.transform.right, -vertical);
 
-            // 타겟을 계속 바라보도록 카메라의 로컬 회전 조정
+            // 카메라의 각도 제한 적용
+            Vector3 angles = Camera.main.transform.eulerAngles;
+            angles.x = Mathf.Clamp(angles.x, cameraTargetHandler.minVerticalAngle, cameraTargetHandler.maxVerticalAngle);
+
+            // 카메라의 높이 제한 적용
+            Vector3 position = Camera.main.transform.position;
+            position.y = Mathf.Clamp(position.y, cameraTargetHandler.minHeight, cameraTargetHandler.maxHeight);
+
+            // 제한된 각도 및 높이로 카메라 설정
+            Camera.main.transform.eulerAngles = angles;
+            Camera.main.transform.position = position;
+
+            // 각도나 높이가 제한을 벗어나면 회전을 취소하고 원래 상태로 되돌리기
+            if (position.y != Camera.main.transform.position.y || angles.x != Camera.main.transform.eulerAngles.x)
+            {
+                Camera.main.transform.position = originalPosition;
+                Camera.main.transform.rotation = originalRotation;
+            }
+
+            // 카메라가 타겟을 계속 바라보도록 설정
             Camera.main.transform.LookAt(cameraTargetHandler.currentTarget);
         }
     }
 
-    public void ToggleFreeCamera()
+    private void HandleClick()
+    {
+        Debug.Log("HandleClick called");
+
+        if (!isFreeCamera) // 자유시점 모드가 아닌 경우 클릭 이벤트 무시
+        {
+            Debug.Log("HandleClick: Not in free camera mode, ignoring click.");
+            return;
+        }
+
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        RaycastHit hit;
+        if (Physics.Raycast(ray, out hit))
+        {
+            var clickable = hit.transform.GetComponent<IClickableObject>();
+            if (clickable != null)
+            {
+                Debug.Log("HandleClick: Processing click on " + hit.transform.name);
+                clickable.OnPointerClick(new PointerEventData(EventSystem.current));
+            }
+        }
+    }
+
+    public void ToggleCameraMode()
     {
         if (cameraTransition.isZooming || !cameraTransition.animationCompleted) return;
 
@@ -89,19 +152,23 @@ public class CameraController : MonoBehaviour
         {
             // 자유 시점 모드에서 고정 시점 모드로 전환
             cameraTargetHandler.SetTarget(target);
-            cameraTargetHandler.isAnimalTarget = false;
+            cameraTargetHandler.isObjectTarget = false;
             StartCoroutine(cameraTransition.ZoomCamera(cameraTransition.initialPosition, cameraTransition.finalRotation));
         }
         else
-        {   
+        {
             // 고정 시점 모드에서 자유 시점 모드로 전환
             cameraTargetHandler.SetTarget(target);
-            cameraTargetHandler.isAnimalTarget = false;
+            cameraTargetHandler.isObjectTarget = false;
             StartCoroutine(cameraTransition.ZoomCamera(cameraTransition.zoomInPosition, cameraTransition.zoomInRotation));
         }
 
         // 모드 전환
         isFreeCamera = !isFreeCamera;
+
+        cameraTargetHandler.SetFreeCameraMode(isFreeCamera); // 자유시점 모드 설정
+
+        Debug.Log("ToggleCameraMode: isFreeCamera = " + isFreeCamera);
 
         // 1초 후 버튼 다시 활성화
         StartCoroutine(EnableButtonAfterDelay(1.0f));

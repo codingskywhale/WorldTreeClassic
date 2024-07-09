@@ -14,15 +14,19 @@ public class IdleUIManager : MonoBehaviour
     public TMP_Text timeText; // 현재 시간 텍스트
     public TMP_Text dateText; // 오늘 날짜 텍스트
     public float idleTime = 10f; // 방치 시간 (초)
+    public float scrollSpeed = 0.5f;
 
     private float timer;
     private bool isIdle;
+    private string currentSongTitle;
 
     private void Start()
     {
         timer = idleTime;
         isIdle = false;
         ShowMainUI();
+        currentSongTitle = SoundManager.instance.GetCurrentBGMTitle();
+        StartCoroutine(ScrollSongTitle());
     }
 
     private void Update()
@@ -80,8 +84,7 @@ public class IdleUIManager : MonoBehaviour
 
     private void UpdateIdleUI()
     {
-        gameTitleText.text = "세계수 키우기"; 
-        songTitleText.text = GetCurrentSong(); 
+        gameTitleText.text = "세계수 키우기";        
         timeText.text = DateTime.Now.ToString("HH:mm:ss");
         dateText.text = GetFormattedDate(DateTime.Now);
     }
@@ -92,9 +95,16 @@ public class IdleUIManager : MonoBehaviour
         return $"{dateTime.Month}.{dateTime.Day}.{dayOfWeek}";
     }
 
-    private string GetCurrentSong()
-    {   
-        // 추후에 노래 추가
-        return "Sample Song";
+    private IEnumerator ScrollSongTitle()
+    {
+        while (true)
+        {
+            string displayText = currentSongTitle + "   ";
+            for (int i = 0; i < displayText.Length; i++)
+            {
+                songTitleText.text = displayText.Substring(i) + displayText.Substring(0, i);
+                yield return new WaitForSeconds(scrollSpeed);
+            }
+        }
     }
 }

@@ -10,7 +10,9 @@ public class TouchInputManager : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(0) && !isPointerOverUIElement())
         {
-            lifeManager.IncreaseWater(LifeManager.Instance.touchData.touchIncreaseAmount);
+            // 화면 터치시 효과음 재생
+            SoundManager.instance.PlaySFX(SoundManager.instance.sfxClips[0]);
+            lifeManager.IncreaseWater(LifeManager.Instance.touchData.touchIncreaseAmount);                       
         }
     }
 
