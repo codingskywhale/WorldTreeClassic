@@ -18,7 +18,7 @@ public class CreateObjectButton : MonoBehaviour
     private string conditionX = "(X) ";
     private string conditionV = "(V) ";
 
-    private void Awake()
+    private void Start()
     {
         InitailizeSet();
     }

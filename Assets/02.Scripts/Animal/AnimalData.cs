@@ -18,8 +18,6 @@ public class AnimalData
         nowCreateCost = createCostbase;
         maxAnimalCount = 5;
 
-        Debug.Log("한개 생성됨.");
-
         if (!UIManager.Instance)
         {
             UIManager.Instance.status.UpdateAnimalCountText(nowAnimalCount, maxAnimalCount);

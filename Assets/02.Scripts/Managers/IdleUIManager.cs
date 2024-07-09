@@ -77,7 +77,7 @@ public class IdleUIManager : MonoBehaviour
 
     private void ShowMainUI()
     {
-        mainUI.SetActive(true);
+        //mainUI.SetActive(true);
         mainUI2.SetActive(true);
         idleUIContainer.SetActive(false);
     }
