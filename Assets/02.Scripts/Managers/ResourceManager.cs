@@ -5,7 +5,7 @@ using UnityEngine;
 public class ResourceManager : MonoBehaviour
 {
     public LifeManager lifeManager;
-    private List<RootBase> roots = new List<RootBase>();
+    public List<RootBase> roots = new List<RootBase>();
 
     private void Start()
     {
@@ -20,7 +20,7 @@ public class ResourceManager : MonoBehaviour
     private void RegisterAllRoots()
     {
         // 모든 Root 인스턴스를 찾고 이벤트 구독
-        foreach (var root in FindObjectsOfType<RootBase>())
+        foreach (var root in roots)
         {
             RegisterRoot(root);
         }
@@ -65,7 +65,7 @@ public class ResourceManager : MonoBehaviour
 
     public void UpdateTotalLifeIncreaseUI()
     {
-        BigInteger totalLifeIncrease = 0;
+        BigInteger totalLifeIncrease = 0;     
         foreach (var root in roots)
         {
             totalLifeIncrease += root.GetTotalLifeGeneration();
