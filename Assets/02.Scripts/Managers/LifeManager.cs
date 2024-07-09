@@ -30,6 +30,8 @@ public class LifeManager : MonoBehaviour
         }
         touchData = GetComponent<TouchData>();
         touchData.UpdateUI();
+
+        animalData = new AnimalData();
     }
 
     public void IncreaseWater(BigInteger amount)

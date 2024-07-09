@@ -25,14 +25,18 @@ public class UIManager : MonoBehaviour
         else
         {
             Destroy(gameObject); // 이미 인스턴스가 존재하면 중복 생성된 객체 파괴
-        }
-
-        
+        }    
     }
 
     private void Start()
     {
         LifeManager.Instance.OnWaterChanged += CheckEnoughCost;
+        SetAnimalCountStatus();
+    }
+
+    public void SetAnimalCountStatus()
+    {
+        status.animalCountText.text = $"{LifeManager.Instance.animalData.nowAnimalCount} / {LifeManager.Instance.animalData.maxAnimalCount}";
     }
 
     public void UpdateButtonUI()

@@ -6763,6 +6763,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   waterText: {fileID: 260969013}
   lifeIncreaseText: {fileID: 1700231559}
+  animalCountText: {fileID: 950476795}
 --- !u!114 &425030254
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10333,7 +10334,7 @@ GameObject:
   - component: {fileID: 624819072}
   - component: {fileID: 624819071}
   m_Layer: 5
-  m_Name: FishCount
+  m_Name: AnimalCount
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -15103,7 +15104,7 @@ GameObject:
   - component: {fileID: 950476796}
   - component: {fileID: 950476795}
   m_Layer: 5
-  m_Name: FishText
+  m_Name: AnimalText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -15913,7 +15914,7 @@ GameObject:
   - component: {fileID: 995074620}
   - component: {fileID: 995074619}
   m_Layer: 5
-  m_Name: FishIcon
+  m_Name: AnimalIcon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -23587,7 +23588,7 @@ MonoBehaviour:
   root: {fileID: 2024283645}
   touchInputManager: {fileID: 1987132685}
   touchData: {fileID: 0}
-  upgradeType: 2
+  upgradeType: 1
   upgradeAmount: 1
 --- !u!114 &1563148305
 MonoBehaviour:
@@ -28899,7 +28900,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1869742365
 RectTransform:
   m_ObjectHideFlags: 0

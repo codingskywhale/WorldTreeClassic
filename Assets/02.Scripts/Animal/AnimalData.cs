@@ -1,11 +1,13 @@
-[System.Serializable]
+using UnityEngine;
+using System.Numerics;
+
 public class AnimalData
 {
     // 생성 시 가격
-    public readonly float createCostbase = 250;
+    public readonly BigInteger createCostbase = 250;
     public static readonly float createCostMultiple = 4;
 
-    public float nowCreateCost;
+    public BigInteger nowCreateCost;
     public int nowAnimalCount;
     public int maxAnimalCount;
 
@@ -16,26 +18,31 @@ public class AnimalData
         nowCreateCost = createCostbase;
         maxAnimalCount = 5;
 
-        //UIManager.Instance.status.UpdateAnimalCountText(nowAnimalCount, maxAnimalCount);
+        Debug.Log("한개 생성됨.");
+
+        if (!UIManager.Instance)
+        {
+            UIManager.Instance.status.UpdateAnimalCountText(nowAnimalCount, maxAnimalCount);
+        }
     }
 
-    public AnimalData(float nowCreateCost, int maxAnimalCount)
+    public AnimalData(BigInteger nowCreateCost, int maxAnimalCount)
     {
         this.nowCreateCost = nowCreateCost;
         this.maxAnimalCount = maxAnimalCount;
 
-        //UIManager.Instance.status.UpdateAnimalCountText(nowAnimalCount, maxAnimalCount);
+        UIManager.Instance.status.UpdateAnimalCountText(nowAnimalCount, maxAnimalCount);
     }
     // 동물이 추가될 때 데이터에 반영
     public bool AddAnimal()
     {
-        nowCreateCost *= createCostMultiple;
+        nowCreateCost = (BigInteger)((float)nowCreateCost * createCostMultiple);
 
         // 카운트 늘리지 않기.
         if (nowAnimalCount >= maxAnimalCount) return false;
 
         nowAnimalCount++;
-        //UIManager.Instance.status.UpdateAnimalCountText(nowAnimalCount, maxAnimalCount);
+        UIManager.Instance.status.UpdateAnimalCountText(nowAnimalCount, maxAnimalCount);
 
         return true;
     }
@@ -44,6 +51,6 @@ public class AnimalData
     public void AddMaxAnimalCount()
     {
         maxAnimalCount += maxAnimalCountPlus;
-        //UIManager.Instance.status.UpdateAnimalCountText(nowAnimalCount, maxAnimalCount);
+        UIManager.Instance.status.UpdateAnimalCountText(nowAnimalCount, maxAnimalCount);
     }
 }

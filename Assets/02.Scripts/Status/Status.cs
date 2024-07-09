@@ -8,7 +8,7 @@ public class Status : MonoBehaviour
 {
     public TextMeshProUGUI waterText;
     public TextMeshProUGUI lifeIncreaseText;
-
+    public TextMeshProUGUI animalCountText;
 
     public void UpdateLifeUI(BigInteger waterAmount, BigInteger waterNeededForCurrentLevel)
     {
@@ -18,5 +18,10 @@ public class Status : MonoBehaviour
     public void UpdateLifeIncreaseUI(BigInteger totalLifeIncrease)
     {
         lifeIncreaseText.text = $"초당 생명력 생산률 : {BigIntegerUtils.FormatBigInteger(totalLifeIncrease)}";
+    }
+
+    public void UpdateAnimalCountText(int nowAnimalCount, int maxAnimalCount)
+    {
+        animalCountText.text = $"{nowAnimalCount} / {maxAnimalCount}";
     }
 }

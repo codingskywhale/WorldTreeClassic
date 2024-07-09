@@ -3,6 +3,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using System.Numerics;
 using Vector3 = UnityEngine.Vector3;
+using UnityEditor.Playables;
 
 public class CreateObjectButton : MonoBehaviour
 {
@@ -38,7 +39,15 @@ public class CreateObjectButton : MonoBehaviour
         // 현재 생명력이 요구치보다 높을 때.
         if (LifeManager.Instance.lifeAmount > (BigInteger)LifeManager.Instance.animalData.nowCreateCost)
         {
-            LifeManager.Instance.DecreaseWater((int)LifeManager.Instance.animalData.nowCreateCost);
+            // UnlockCount는 시작할 때 1이기 때문.
+            if (buttonIdx + 1 == UIManager.Instance.createObjectButtonUnlockCount)
+            {
+                // 다음 걸 해금해 주어야 한다.
+                UIManager.Instance.createObjectButtonUnlockCount++;
+                CheckConditionCleared(buttonIdx + 1);
+            }
+
+            LifeManager.Instance.DecreaseWater(LifeManager.Instance.animalData.nowCreateCost);
 
             // 동물을 추가할 여유 공간이 있을 때
             if (LifeManager.Instance.animalData.AddAnimal())
@@ -55,14 +64,7 @@ public class CreateObjectButton : MonoBehaviour
             // 생산량 2배 증가.
             LifeManager.Instance.touchData.ApplyIncreaseRate(1);
             LifeManager.Instance.ApplyIncreaseRateToAllRoots(1);
-
-            // UnlockCount는 시작할 때 1이기 때문.
-            if (buttonIdx + 1 == UIManager.Instance.createObjectButtonUnlockCount)
-            {
-                // 다음 걸 해금해 주어야 한다.
-                CheckConditionCleared(buttonIdx + 1);
-                UIManager.Instance.createObjectButtonUnlockCount++;
-            }
+                
             UIManager.Instance.UpdateButtonUI();
         }
     }
@@ -70,7 +72,7 @@ public class CreateObjectButton : MonoBehaviour
     // 모든 버튼에 적용 시켜야함
     public void SetCostText()
     {
-        inButtonCostText.text = LifeManager.Instance.animalData.nowCreateCost.ToString();
+        inButtonCostText.text = (BigIntegerUtils.FormatBigInteger(LifeManager.Instance.animalData.nowCreateCost)).ToString();
     }
 
     // 잠김 기능을 처리할 수 있는 메서드

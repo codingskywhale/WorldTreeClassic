@@ -105,6 +105,8 @@ public class UpgradeButton : MonoBehaviour
             root.Unlock();
             root.UpdateUI();
             resourceManager.UpdateTotalLifeIncreaseUI();
+            LifeManager.Instance.animalData.maxAnimalCount += 5;
+            UIManager.Instance.SetAnimalCountStatus();
         }
         else
         {
@@ -122,7 +124,7 @@ public class UpgradeButton : MonoBehaviour
             LifeManager.Instance.DecreaseWater(upgradeCost);
             root.UpgradeLifeGeneration();
             root.UpdateUI();
-            resourceManager.UpdateTotalLifeIncreaseUI();
+            resourceManager.UpdateTotalLifeIncreaseUI();        
         }
         else
         {
