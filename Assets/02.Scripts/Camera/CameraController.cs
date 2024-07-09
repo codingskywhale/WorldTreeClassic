@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using static UnityEngine.GraphicsBuffer;
 
@@ -13,7 +14,7 @@ public class CameraController : MonoBehaviour
     private CameraTransition cameraTransition;
     private CameraTargetHandler cameraTargetHandler;
 
-    private bool isFreeCamera = false;
+    public bool isFreeCamera = false;
     private bool isDragging = false;
 
     private void Start()
@@ -41,8 +42,21 @@ public class CameraController : MonoBehaviour
             {
                 cameraTargetHandler.FollowObject();
             }
+
+            if (Input.GetMouseButtonDown(0))
+            {
+                if (isFreeCamera)
+                {
+                    HandleClick();
+                }
+                else
+                {
+                    Debug.Log("Click ignored: Not in free camera mode");
+                }
+            }
         }
     }
+
 
     private void HandleFreeCamera()
     {
@@ -62,7 +76,7 @@ public class CameraController : MonoBehaviour
             RotateCamera();
         }
         else if (cameraTargetHandler.currentTarget != null)
-        {            
+        {
             Camera.main.transform.LookAt(cameraTargetHandler.currentTarget);
         }
     }
@@ -106,6 +120,29 @@ public class CameraController : MonoBehaviour
         }
     }
 
+    private void HandleClick()
+    {
+        Debug.Log("HandleClick called");
+
+        if (!isFreeCamera) // 자유시점 모드가 아닌 경우 클릭 이벤트 무시
+        {
+            Debug.Log("HandleClick: Not in free camera mode, ignoring click.");
+            return;
+        }
+
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        RaycastHit hit;
+        if (Physics.Raycast(ray, out hit))
+        {
+            var clickable = hit.transform.GetComponent<IClickableObject>();
+            if (clickable != null)
+            {
+                Debug.Log("HandleClick: Processing click on " + hit.transform.name);
+                clickable.OnPointerClick(new PointerEventData(EventSystem.current));
+            }
+        }
+    }
+
     public void ToggleCameraMode()
     {
         if (cameraTransition.isZooming || !cameraTransition.animationCompleted) return;
@@ -129,7 +166,9 @@ public class CameraController : MonoBehaviour
         // 모드 전환
         isFreeCamera = !isFreeCamera;
 
-        cameraTargetHandler.SetFreeCameraMode(isFreeCamera);
+        cameraTargetHandler.SetFreeCameraMode(isFreeCamera); // 자유시점 모드 설정
+
+        Debug.Log("ToggleCameraMode: isFreeCamera = " + isFreeCamera);
 
         // 1초 후 버튼 다시 활성화
         StartCoroutine(EnableButtonAfterDelay(1.0f));

@@ -14,7 +14,7 @@ public class CameraTargetHandler : MonoBehaviour
     public float minHeight = 1f; // 카메라의 최소 높이 제한
     public float maxHeight = 10f; // 카메라의 최대 높이 제한
 
-    private bool isFreeCamera = false;
+    private bool isFreeCamera = false; // 자유시점 모드 여부
 
     private void Awake()
     {
