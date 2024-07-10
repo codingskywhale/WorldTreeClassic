@@ -19,13 +19,12 @@ public class IdleUIManager : MonoBehaviour
     private float timer;
     private bool isIdle;
     private string currentSongTitle;
-    private UIOpenCloseManager uiOpenCloseManager;
+    public UIOpenCloseManager uiOpenCloseManager;
 
     private void Start()
     {
         timer = idleTime;
-        isIdle = false;
-        uiOpenCloseManager = FindObjectOfType<UIOpenCloseManager>();
+        isIdle = false;        
         ShowMainUI();
         currentSongTitle = SoundManager.instance.GetCurrentBGMTitle();
         StartCoroutine(ScrollSongTitle());
@@ -99,8 +98,7 @@ public class IdleUIManager : MonoBehaviour
     {
         gameTitleText.text = "세계수 키우기";        
         timeText.text = DateTime.Now.ToString("HH:mm:ss");
-        dateText.text = GetFormattedDate(DateTime.Now);
-        //songTitleText.text = currentSongTitle;
+        dateText.text = GetFormattedDate(DateTime.Now);        
     }
 
     private string GetFormattedDate(DateTime dateTime)

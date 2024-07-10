@@ -16422,6 +16422,7 @@ MonoBehaviour:
   dateText: {fileID: 1323885783}
   idleTime: 10
   scrollSpeed: 0.5
+  uiOpenCloseManager: {fileID: 1749694667}
 --- !u!4 &1749694666
 Transform:
   m_ObjectHideFlags: 0
