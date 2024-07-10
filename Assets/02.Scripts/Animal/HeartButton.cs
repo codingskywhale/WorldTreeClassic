@@ -33,5 +33,11 @@ public class HeartButton : MonoBehaviour
         LifeManager.Instance.IncreaseWater(LifeManager.Instance.touchData.touchIncreaseAmount);
         // 사라진다.
         gameObject.SetActive(false);
+        // 일정 시간 후 다시 활성화
+        Invoke("ReactivateBubble", 5f); // 예: 5초 후 다시 활성화
+    }
+    private void ReactivateBubble()
+    {
+        gameObject.SetActive(true);
     }
 }
