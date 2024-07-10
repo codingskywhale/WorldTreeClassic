@@ -6,6 +6,7 @@ public class HeartButton : MonoBehaviour
 {
     // 클릭하면 생명력을 얻을 수 있는 버블
     Camera cam;
+    public int heartIdx;
 
     private void Awake()
     {
@@ -37,7 +38,7 @@ public class HeartButton : MonoBehaviour
         // 재화를 획득한다.
         LifeManager.Instance.IncreaseWater(LifeManager.Instance.touchData.touchIncreaseAmount);
 
-        LifeManager.Instance.bubbleGenerator.nowHeartCount--;
+        LifeManager.Instance.bubbleGenerator.RemoveIdxFromBubbleList(heartIdx);
         // 사라진다.
         gameObject.SetActive(false);
     }

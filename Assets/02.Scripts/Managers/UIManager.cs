@@ -55,7 +55,6 @@ public class UIManager : MonoBehaviour
             for(int i = 0; i < createObjectButtonUnlockCount; i++)
             {
                 createAnimalButtons[i].createButton.interactable = true;
-                Debug.Log(createAnimalButtons[i].createButton.interactable);
             }
         }
         else

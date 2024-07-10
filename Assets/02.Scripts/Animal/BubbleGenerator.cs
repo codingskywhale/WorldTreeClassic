@@ -1,41 +1,76 @@
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
-using Unity.VisualScripting.Dependencies.Sqlite;
 using UnityEngine;
 
 public class BubbleGenerator : MonoBehaviour
 {
     private List<HeartButton> heartBubbleList = new List<HeartButton>();
-    public int nowHeartCount = 0;
+    private List<int> nowBubbleIdx = new List<int>();
     private readonly int maxHeartCount = 2;
     private int nowOnHeartIndex;
+    private readonly float heartGenerateDelay = 2f;
+    private int buttonIdx = 0;
 
+    public void StartGenerateHeart()
+    {
+        StartCoroutine(GenerateHeart());
+    }
     public void AddAnimalHeartBubbleList(HeartButton bubble)
     {
         heartBubbleList.Add(bubble);
+        bubble.heartIdx = buttonIdx++;
     }
 
     public void HeartOnRandomAnimal()
     {
-        // 동물이 없거나 1마리면 돌아가지 않음.
-        if (LifeManager.Instance.animalGenerateData.nowAnimalCount > 2)
+        foreach (int i in nowBubbleIdx)
         {
-            // 하트가 이미 다 생성되었거나 랜덤으로 돌렸을 때 인덱스가 같지 않으면
-            while (nowHeartCount != 2 && nowOnHeartIndex != Random.Range(0, heartBubbleList.Count))
-            {
-                nowOnHeartIndex = Random.Range(0, heartBubbleList.Count);
-            }
-
-            for (int i = nowHeartCount; i < maxHeartCount;)
-            {
-                heartBubbleList[Random.Range(0, heartBubbleList.Count)].SetBubbleOn();
-                nowHeartCount++;
-            }
+            Debug.Log(i);
         }
+        
+        // 동물이 없으면 돌아가지 않음.
+        if (heartBubbleList.Count == 0) return;
+
+        int randomIdx;
+
+        // 1마리만 존재한다면 Idx는 0.
+        if(heartBubbleList.Count == 1)
+        {
+            randomIdx = 0;
+        }
+
+        // 2마리 이상이라면. 랜덤 Idx
         else
         {
-            heartBubbleList[Random.Range(0, heartBubbleList.Count)].SetBubbleOn();
+            randomIdx = Random.Range(0, buttonIdx);
+            // 이미 있는 경우
+            while (nowBubbleIdx.Contains(randomIdx))
+            {
+                Debug.Log(randomIdx);
+                randomIdx = Random.Range(0, buttonIdx);
+            }
         }
+        nowBubbleIdx.Add(randomIdx);
+
+        heartBubbleList[randomIdx].SetBubbleOn();
+    }
+
+    // 클릭한 동물의 인덱스를 가져와야 함.
+    public void RemoveIdxFromBubbleList(int idx)
+    {
+        nowBubbleIdx.Remove(idx);
+    }
+
+    // 최초 실행을 위해.
+    public void GenerateNewHeart()
+    {
+        StartCoroutine(GenerateHeart());
+    }
+
+    IEnumerator GenerateHeart()
+    {
+        yield return new WaitForSeconds(heartGenerateDelay);
+
+        HeartOnRandomAnimal();
     }
 }

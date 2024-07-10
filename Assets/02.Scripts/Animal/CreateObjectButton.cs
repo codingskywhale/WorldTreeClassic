@@ -32,7 +32,6 @@ public class CreateObjectButton : MonoBehaviour
         // 일단 첫 번째 버튼은 해금된 상태여야 함.
         CheckConditionCleared(0);
         UIManager.Instance.UpdateButtonUI();
-        Debug.Log("지금 실행됨");
         SetButtonLock();
     }
 
@@ -58,6 +57,11 @@ public class CreateObjectButton : MonoBehaviour
                 go.transform.position = (new Vector3(0, 0.5f, 10f));
                 // 하트 버블 리스트에 추가
                 LifeManager.Instance.bubbleGenerator.AddAnimalHeartBubbleList(go.GetComponent<Animal>().heart);
+
+                if(LifeManager.Instance.animalGenerateData.nowAnimalCount == 1 || LifeManager.Instance.animalGenerateData.nowAnimalCount == 2)
+                {
+                    LifeManager.Instance.bubbleGenerator.StartGenerateHeart();
+                }
             }
 
             // 여유 공간이 없을 때

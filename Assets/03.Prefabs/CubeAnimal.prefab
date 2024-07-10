@@ -239,7 +239,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   heart: {fileID: 5754092214199546460}
-  heartOnDelay: 3
 --- !u!1 &8785178981246282457
 GameObject:
   m_ObjectHideFlags: 0
@@ -259,7 +258,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &4445710164004232065
 RectTransform:
   m_ObjectHideFlags: 0
@@ -385,3 +384,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 452bbe8a6ecf677489cf23159647ea23, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  heartIdx: 0
