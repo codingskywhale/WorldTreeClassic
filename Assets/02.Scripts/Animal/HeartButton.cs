@@ -21,8 +21,13 @@ public class HeartButton : MonoBehaviour
     private void LookCamera()
     {
         transform.LookAt(cam.transform);
-        transform.rotation = Quaternion.Euler(transform.rotation.eulerAngles.x,
+        transform.rotation = Quaternion.Euler(-transform.rotation.eulerAngles.x,
                                               transform.rotation.eulerAngles.y + 180, transform.rotation.eulerAngles.z);
+    }
+
+    public void SetBubbleOn()
+    {
+        gameObject.SetActive(true);
     }
 
     public void TouchHeartBubble()
@@ -31,6 +36,8 @@ public class HeartButton : MonoBehaviour
         SoundManager.instance.PlaySFX(SoundManager.instance.sfxClips[0]);
         // 재화를 획득한다.
         LifeManager.Instance.IncreaseWater(LifeManager.Instance.touchData.touchIncreaseAmount);
+
+        LifeManager.Instance.bubbleGenerator.nowHeartCount--;
         // 사라진다.
         gameObject.SetActive(false);
     }

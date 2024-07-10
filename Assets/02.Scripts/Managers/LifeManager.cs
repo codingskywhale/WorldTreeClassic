@@ -6,13 +6,14 @@ public class LifeManager : MonoBehaviour
 {
     public static LifeManager Instance { get; private set; } // 싱글톤 인스턴스
 
-    public BigInteger lifeAmount = 100000000;
+    public BigInteger lifeAmount = 0;
     public int currentLevel = 1;
     public int lifePerLevel = 10;
     public TouchData touchData;
     public RootBase RootData;
-    public AnimalData animalData;
+    public AnimalGenerateData animalGenerateData;
     public List<IRoot> rootData = new List<IRoot>();
+    public BubbleGenerator bubbleGenerator;
     public delegate void WaterChanged(BigInteger newAmount);
     public event WaterChanged OnWaterChanged;
 
@@ -31,7 +32,8 @@ public class LifeManager : MonoBehaviour
         touchData = GetComponent<TouchData>();
         touchData.UpdateUI();
 
-        animalData = new AnimalData();
+        animalGenerateData = new AnimalGenerateData();
+        bubbleGenerator = GetComponent<BubbleGenerator>();
     }
 
     public void IncreaseWater(BigInteger amount)

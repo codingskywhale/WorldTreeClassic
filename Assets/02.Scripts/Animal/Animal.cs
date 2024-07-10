@@ -6,7 +6,7 @@ using UnityEngine.EventSystems;
 
 public class Animal : MonoBehaviour, IClickableObject //카메라 적용 인터페이스
 {
-    [SerializeField] private HeartButton heart;
+    public HeartButton heart;
     // 테스트용 
     public float heartOnDelay = 30f;
 

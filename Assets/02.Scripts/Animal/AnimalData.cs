@@ -1,7 +1,7 @@
 using UnityEngine;
 using System.Numerics;
 
-public class AnimalData
+public class AnimalGenerateData
 {
     // 생성 시 가격
     public readonly BigInteger createCostbase = 250;
@@ -13,7 +13,7 @@ public class AnimalData
 
     public int maxAnimalCountPlus = 5;
 
-    public AnimalData()
+    public AnimalGenerateData()
     {
         nowCreateCost = createCostbase;
         maxAnimalCount = 5;
@@ -24,7 +24,7 @@ public class AnimalData
         }
     }
 
-    public AnimalData(BigInteger nowCreateCost, int maxAnimalCount)
+    public AnimalGenerateData(BigInteger nowCreateCost, int maxAnimalCount)
     {
         this.nowCreateCost = nowCreateCost;
         this.maxAnimalCount = maxAnimalCount;

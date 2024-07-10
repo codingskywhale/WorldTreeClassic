@@ -4,6 +4,8 @@ using UnityEngine.UI;
 using System.Numerics;
 using Vector3 = UnityEngine.Vector3;
 using UnityEditor.Playables;
+using System.Linq;
+using Unity.VisualScripting;
 
 public class CreateObjectButton : MonoBehaviour
 {
@@ -18,7 +20,7 @@ public class CreateObjectButton : MonoBehaviour
     private string conditionX = "(X) ";
     private string conditionV = "(V) ";
 
-    private void Start()
+    private void Awake()
     {
         InitailizeSet();
     }
@@ -30,14 +32,14 @@ public class CreateObjectButton : MonoBehaviour
         // 일단 첫 번째 버튼은 해금된 상태여야 함.
         CheckConditionCleared(0);
         UIManager.Instance.UpdateButtonUI();
-
+        Debug.Log("지금 실행됨");
         SetButtonLock();
     }
 
     public void ClickCreateAnimal(int buttonIdx)
     {
         // 현재 생명력이 요구치보다 높을 때.
-        if (LifeManager.Instance.lifeAmount > (BigInteger)LifeManager.Instance.animalData.nowCreateCost)
+        if (LifeManager.Instance.lifeAmount >= (BigInteger)LifeManager.Instance.animalGenerateData.nowCreateCost)
         {
             // UnlockCount는 시작할 때 1이기 때문.
             if (buttonIdx + 1 == UIManager.Instance.createObjectButtonUnlockCount)
@@ -47,13 +49,15 @@ public class CreateObjectButton : MonoBehaviour
                 CheckConditionCleared(buttonIdx + 1);
             }
 
-            LifeManager.Instance.DecreaseWater(LifeManager.Instance.animalData.nowCreateCost);
+            LifeManager.Instance.DecreaseWater(LifeManager.Instance.animalGenerateData.nowCreateCost);
 
             // 동물을 추가할 여유 공간이 있을 때
-            if (LifeManager.Instance.animalData.AddAnimal())
+            if (LifeManager.Instance.animalGenerateData.AddAnimal())
             {
                 GameObject go = Instantiate(animalData.animalPrefab);
                 go.transform.position = (new Vector3(0, 0.5f, 10f));
+                // 하트 버블 리스트에 추가
+                LifeManager.Instance.bubbleGenerator.AddAnimalHeartBubbleList(go.GetComponent<Animal>().heart);
             }
 
             // 여유 공간이 없을 때
@@ -72,20 +76,14 @@ public class CreateObjectButton : MonoBehaviour
     // 모든 버튼에 적용 시켜야함
     public void SetCostText()
     {
-        inButtonCostText.text = (BigIntegerUtils.FormatBigInteger(LifeManager.Instance.animalData.nowCreateCost)).ToString();
+        inButtonCostText.text = (BigIntegerUtils.FormatBigInteger(LifeManager.Instance.animalGenerateData.nowCreateCost)).ToString();
     }
 
-    // 잠김 기능을 처리할 수 있는 메서드
+    // 초기 잠김 기능을 처리할 수 있는 메서드
     public void SetButtonLock()
     {
-        for(int i = 0; i< UIManager.Instance.createAnimalButtons.Length; i++)
-        {
-            if (i > UIManager.Instance.createObjectButtonUnlockCount)
-            {
-                createButton.interactable = false;
-                inButtonCostText.text = "잠김";
-            }
-        }
+        createButton.interactable = false;
+        inButtonCostText.text = "잠김";
     }
 
     // 뭔가 버튼을 누르는 이벤트가 일어났을 때?
