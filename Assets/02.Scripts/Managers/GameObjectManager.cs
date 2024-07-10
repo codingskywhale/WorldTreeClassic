@@ -2,26 +2,26 @@ using UnityEngine;
 
 public class GameObjectManager : MonoBehaviour
 {
-    public GameObject[] gameObjects; // °ÔÀÓ ¿ÀºêÁ§Æ®µéÀ» ÀúÀåÇÒ ¹è¿­
-    private GameObject currentActiveObject; // ÇöÀç È°¼ºÈ­µÈ ¿ÀºêÁ§Æ®
+    public GameObject[] gameObjects; // ê²Œì„ ì˜¤ë¸Œì íŠ¸ë“¤ì„ ì €ì¥í•  ë°°ì—´
+    private GameObject currentActiveObject; // í˜„ì¬ í™œì„±í™”ëœ ì˜¤ë¸Œì íŠ¸
 
-    // ¹öÆ° Å¬¸¯ ½Ã È£ÃâµÉ ¸Ş¼­µå
+    // ë²„íŠ¼ í´ë¦­ ì‹œ í˜¸ì¶œë  ë©”ì„œë“œ
     public void ShowGameObject(int index)
     {
-        // À¯È¿ÇÑ ÀÎµ¦½ºÀÎÁö È®ÀÎ
+        // ìœ íš¨í•œ ì¸ë±ìŠ¤ì¸ì§€ í™•ì¸
         if (index < 0 || index >= gameObjects.Length)
         {
             Debug.LogError("Invalid game object index");
             return;
         }
 
-        // ÀÌÀü È°¼ºÈ­µÈ ¿ÀºêÁ§Æ®¸¦ ºñÈ°¼ºÈ­
+        // ì´ì „ í™œì„±í™”ëœ ì˜¤ë¸Œì íŠ¸ë¥¼ ë¹„í™œì„±í™”
         if (currentActiveObject != null)
         {
             currentActiveObject.SetActive(false);
         }
 
-        // »õ·Î¿î ¿ÀºêÁ§Æ®¸¦ È°¼ºÈ­
+        // ìƒˆë¡œìš´ ì˜¤ë¸Œì íŠ¸ë¥¼ í™œì„±í™”
         currentActiveObject = gameObjects[index];
         currentActiveObject.SetActive(true);
     }

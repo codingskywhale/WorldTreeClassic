@@ -18135,7 +18135,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_EventMask:
     serializedVersion: 2
-    m_Bits: 23
+    m_Bits: 51
   m_MaxRayIntersections: 0
 --- !u!1 &1962186366
 GameObject:
@@ -24405,7 +24405,7 @@ GameObject:
   - component: {fileID: 8602208332099609688}
   - component: {fileID: 8175135975212359684}
   - component: {fileID: 1441852608795266698}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Plane
   m_TagString: Untagged
   m_Icon: {fileID: 0}
