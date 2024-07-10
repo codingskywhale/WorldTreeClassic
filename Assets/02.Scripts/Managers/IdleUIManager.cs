@@ -19,15 +19,18 @@ public class IdleUIManager : MonoBehaviour
     private float timer;
     private bool isIdle;
     private string currentSongTitle;
+    private UIOpenCloseManager uiOpenCloseManager;
 
     private void Start()
     {
         timer = idleTime;
         isIdle = false;
+        uiOpenCloseManager = FindObjectOfType<UIOpenCloseManager>();
         ShowMainUI();
         currentSongTitle = SoundManager.instance.GetCurrentBGMTitle();
         StartCoroutine(ScrollSongTitle());
     }
+
 
     private void Update()
     {
@@ -39,7 +42,7 @@ public class IdleUIManager : MonoBehaviour
         {
             timer -= Time.deltaTime;
 
-            if (timer <= 0)
+            if (timer <= 0 && !uiOpenCloseManager.IsPanelOpen)
             {
                 EnterIdleMode();
             }
@@ -50,6 +53,7 @@ public class IdleUIManager : MonoBehaviour
             ResetTimer();
         }
     }
+
 
     private void ResetTimer()
     {
@@ -77,7 +81,7 @@ public class IdleUIManager : MonoBehaviour
 
     private void ShowMainUI()
     {
-        //mainUI.SetActive(true);
+        mainUI.SetActive(true);
         mainUI2.SetActive(true);
         idleUIContainer.SetActive(false);
     }

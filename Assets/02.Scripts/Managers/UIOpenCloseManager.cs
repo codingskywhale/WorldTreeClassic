@@ -19,6 +19,8 @@ public class UIOpenCloseManager : MonoBehaviour
     private Vector2[] buttonOriginalPositions;
     private bool isPanelOpen = true; // 패널이 열려 있는지 여부
 
+    public bool IsPanelOpen => isPanelOpen;
+
     private void Start()
     {
         panelOriginalPosition1 = bottomUIPanel1.anchoredPosition;
@@ -32,13 +34,14 @@ public class UIOpenCloseManager : MonoBehaviour
             buttonOriginalPositions[i] = otherButtons[i].anchoredPosition;
         }
 
-
         // 초기에는 열기 버튼 비활성화
         openButton.gameObject.SetActive(false);
 
         // 버튼 클릭 이벤트 등록
         closeButton.onClick.AddListener(ClosePanel);
         openButton.onClick.AddListener(OpenPanels);
+
+        StartCoroutine(ClosePanelCoroutine(true));
     }
 
     private void ClosePanel()
@@ -51,28 +54,43 @@ public class UIOpenCloseManager : MonoBehaviour
         StartCoroutine(OpenPanelsCoroutine());
     }
 
-    private IEnumerator ClosePanelCoroutine()
+    private IEnumerator ClosePanelCoroutine(bool instant = false)
     {
         Vector2 targetPosition1 = panelOriginalPosition1 - new Vector2(0, bottomUIPanel1.rect.height);
         Vector2 targetPosition2 = panelOriginalPosition2 - new Vector2(0, bottomUIPanel2.rect.height);
         Vector2 targetPosition3 = panelOriginalPosition3 - new Vector2(0, bottomUIPanel2.rect.height);
 
-        StartCoroutine(MoveUIPanel(bottomUIPanel1, targetPosition1));
-        StartCoroutine(MoveUIPanel(bottomUIPanel2, targetPosition2));
-        StartCoroutine(MoveUIPanel(bottomUIPanel3, targetPosition3));
-
-        foreach (var button in otherButtons)
+        if (instant)
         {
-            Vector2 targetPosition = button.anchoredPosition - new Vector2(0, bottomUIPanel1.rect.height);
-            StartCoroutine(MoveUIPanel(button, targetPosition));
+            bottomUIPanel1.anchoredPosition = targetPosition1;
+            bottomUIPanel2.anchoredPosition = targetPosition2;
+            bottomUIPanel3.anchoredPosition = targetPosition3;
+            foreach (var button in otherButtons)
+            {
+                button.anchoredPosition -= new Vector2(0, bottomUIPanel1.rect.height);
+            }
         }
+        else
+        {
+            StartCoroutine(MoveUIPanel(bottomUIPanel1, targetPosition1));
+            StartCoroutine(MoveUIPanel(bottomUIPanel2, targetPosition2));
+            StartCoroutine(MoveUIPanel(bottomUIPanel3, targetPosition3));
 
-        yield return new WaitForSeconds(animationDuration);
+            foreach (var button in otherButtons)
+            {
+                Vector2 targetPosition = button.anchoredPosition - new Vector2(0, bottomUIPanel1.rect.height);
+                StartCoroutine(MoveUIPanel(button, targetPosition));
+            }
+
+            yield return new WaitForSeconds(animationDuration);
+        }
 
         // 열기 버튼 활성화
         openButton.gameObject.SetActive(true);
         // 닫기 버튼 비활성화
         closeButton.gameObject.SetActive(false);
+
+        isPanelOpen = false;
     }
 
     private IEnumerator OpenPanelsCoroutine()
@@ -92,6 +110,8 @@ public class UIOpenCloseManager : MonoBehaviour
 
         // 닫기 버튼 활성화
         closeButton.gameObject.SetActive(true);
+
+        isPanelOpen = true;
     }
 
     private IEnumerator MoveUIPanel(RectTransform panel, Vector2 targetPosition)
