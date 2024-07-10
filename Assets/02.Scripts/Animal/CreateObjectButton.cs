@@ -11,6 +11,7 @@ public class CreateObjectButton : MonoBehaviour
 {
     public AnimalDataSO animalData;
     public Image characterIcon;
+    public Button characterIconButton;
     public TextMeshProUGUI nameText;
     public TextMeshProUGUI conditionText;
     // 생명 창조 ~~ cost
@@ -45,6 +46,7 @@ public class CreateObjectButton : MonoBehaviour
             {
                 // 다음 걸 해금해 주어야 한다.
                 UIManager.Instance.createObjectButtonUnlockCount++;
+                characterIconButton.interactable = true;
                 CheckConditionCleared(buttonIdx + 1);
             }
 
@@ -62,17 +64,20 @@ public class CreateObjectButton : MonoBehaviour
                 {
                     LifeManager.Instance.bubbleGenerator.StartGenerateHeart();
                 }
+
+                LifeManager.Instance.animalGenerateData.AddAnimalToDictionary(animalData.animalName, true);
             }
 
             // 여유 공간이 없을 때
             else
             {
                 // 가방으로 이동하도록 해야함
+                LifeManager.Instance.animalGenerateData.AddAnimalToDictionary(animalData.animalName, false);
             }
             // 생산량 2배 증가.
             LifeManager.Instance.touchData.ApplyIncreaseRate(1);
             LifeManager.Instance.ApplyIncreaseRateToAllRoots(1);
-                
+
             UIManager.Instance.UpdateButtonUI();
         }
     }
@@ -86,6 +91,7 @@ public class CreateObjectButton : MonoBehaviour
     // 초기 잠김 기능을 처리할 수 있는 메서드
     public void SetButtonLock()
     {
+        characterIconButton.interactable = false;
         createButton.interactable = false;
         inButtonCostText.text = "잠김";
     }
@@ -95,5 +101,10 @@ public class CreateObjectButton : MonoBehaviour
     public void CheckConditionCleared(int buttonIdx)
     {
         UIManager.Instance.createAnimalButtons[buttonIdx].conditionText.text = conditionV + animalData.animalUnlockConditions[0];
+    }
+
+    public void ClickAnimalIcon()
+    {
+        WindowsManager.Instance.animalInfoWnd.SetAnimalInfoWindowData(animalData);
     }
 }

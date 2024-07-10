@@ -23,11 +23,6 @@ public class BubbleGenerator : MonoBehaviour
 
     public void HeartOnRandomAnimal()
     {
-        foreach (int i in nowBubbleIdx)
-        {
-            Debug.Log(i);
-        }
-        
         // 동물이 없으면 돌아가지 않음.
         if (heartBubbleList.Count == 0) return;
 
