@@ -52,8 +52,17 @@ public class IdleUIManager : MonoBehaviour
         {
             ResetTimer();
         }
+        UpdateCurrentSongTitle();
     }
 
+    private void UpdateCurrentSongTitle()
+    {
+        var currentBGM = SoundManager.instance.GetCurrentBGM();
+        if (currentBGM != null)
+        {
+            currentSongTitle = currentBGM.Idletitle;
+        }
+    }
 
     private void ResetTimer()
     {
@@ -91,6 +100,7 @@ public class IdleUIManager : MonoBehaviour
         gameTitleText.text = "세계수 키우기";        
         timeText.text = DateTime.Now.ToString("HH:mm:ss");
         dateText.text = GetFormattedDate(DateTime.Now);
+        //songTitleText.text = currentSongTitle;
     }
 
     private string GetFormattedDate(DateTime dateTime)

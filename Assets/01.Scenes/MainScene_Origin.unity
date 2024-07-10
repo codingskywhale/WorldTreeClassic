@@ -16485,6 +16485,8 @@ MonoBehaviour:
   - {fileID: 642427382}
   scrollRect: {fileID: 1342234173}
   rotationSpeed: 10
+  deactivationButton: {fileID: 1122089921}
+  uiOpenCloseManager: {fileID: 1749694667}
 --- !u!1 &1790458749
 GameObject:
   m_ObjectHideFlags: 0

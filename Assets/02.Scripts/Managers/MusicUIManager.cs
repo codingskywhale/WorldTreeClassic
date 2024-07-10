@@ -19,7 +19,11 @@ public class MusicUIManager : MonoBehaviour
     public ScrollRect scrollRect; // 스크롤뷰
     public float rotationSpeed = 10f; // 회전 속도
 
+    public Button deactivationButton;
+
     private int currentIndex = 0;
+
+    public UIOpenCloseManager uiOpenCloseManager;
 
     private void Start()
     {
@@ -27,7 +31,7 @@ public class MusicUIManager : MonoBehaviour
         Initialize();
 
         openMusicButton.onClick.AddListener(OpenMusicPanel);
-        closeMusicButton.onClick.AddListener(CloseMusicPanel);
+        closeMusicButton.onClick.AddListener(CloseMusicPanel);                
     }
 
     private void Update()
@@ -115,10 +119,25 @@ public class MusicUIManager : MonoBehaviour
     private void OpenMusicPanel()
     {
         musicPanel.SetActive(true);
+        if (deactivationButton != null)
+        {
+            deactivationButton.gameObject.SetActive(false); 
+        }
     }
 
     private void CloseMusicPanel()
     {
         musicPanel.SetActive(false);
+        if (deactivationButton != null)
+        {
+            if (uiOpenCloseManager != null && uiOpenCloseManager.IsPanelOpen)
+            {
+                deactivationButton.gameObject.SetActive(false); // 패널이 열려 있는 경우 비활성화
+            }
+            else
+            {
+                deactivationButton.gameObject.SetActive(true); // 패널이 닫혀 있는 경우 활성화
+            }
+        }
     }
 }
