@@ -53,13 +53,24 @@ public abstract class Skill : MonoBehaviour
     {
         if (cooldownText != null)
         {
-            cooldownText.text = $"{Mathf.CeilToInt(remaining)}s";
+            if (remaining > 0)
+            {
+                int minutes = Mathf.FloorToInt(remaining / 60); // 분 계산
+                int seconds = Mathf.CeilToInt(remaining % 60);  // 초 계산
+                cooldownText.text = $"{minutes:D2}:{seconds:D2}"; // 분:초 형식으로 텍스트 설정
+            }
+            else
+            {
+                cooldownText.text = ""; // 00:00일 때는 텍스트를 빈 문자열로 설정
+            }
         }
 
         if (cooldownImage != null)
         {
             float fillAmount = 1 - (remaining / cooldownTime);
-            cooldownImage.fillAmount = fillAmount;            
+            cooldownImage.fillAmount = fillAmount;
         }
     }
+
+
 }
