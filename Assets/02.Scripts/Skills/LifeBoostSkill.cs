@@ -11,12 +11,13 @@ public class LifeBoostSkill : Skill
     protected override void Start()
     {
         cooldownTime = 10f; // 스킬 쿨타임 30분
-
+        currentLevel = 0;
         // TouchData 컴포넌트를 찾아서 참조합니다.
         touchData = FindObjectOfType<TouchData>();
-
+        unlockCost = 300;
         // 초기 UI 설정
         UpdateCooldownUI(0);
+        UpdateUI();
     }
 
     public override void ActivateSkill()
@@ -37,6 +38,19 @@ public class LifeBoostSkill : Skill
         }
 
         yield return null; // 즉시 완료
+    }
+
+    protected override void LevelUI()
+    {
+        currentLevelText.text = currentLevel > 0
+            ? $"즉시 획득 스킬 레벨: {currentLevel}"
+            : "즉시 획득 스킬이 해금되지 않았습니다";
+    }
+    protected override void NowskillInfoUI()
+    {
+        skillInfoText.text = currentLevel > 0
+            ? $"현재 즉시 획득 생명력: {skillMultiplier}"
+            : "스킬이 해금되지 않았습니다";
     }
 }
 

@@ -2,6 +2,7 @@ using System.Collections;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using System.Numerics;
 
 public abstract class Skill : MonoBehaviour
 {
@@ -10,12 +11,24 @@ public abstract class Skill : MonoBehaviour
     public TextMeshProUGUI cooldownText; // 쿨타임을 표시할 텍스트
     public Image cooldownImage; // 회전할 이미지
 
+    public Button skillButton; // 스킬 버튼
+    public Button upgradeButton; // 해금/업그레이드 버튼
+
     protected bool onCooldown = false;
     protected float cooldownRemaining;
+
+    public int currentLevel = 0; // 현재 스킬 레벨 (0 = 잠금 상태)
+    public TextMeshProUGUI upgradeCostText; // 업그레이드 비용을 표시할 텍스트
+    public TextMeshProUGUI currentLevelText; // 현재 스킬 레벨 텍스트
+    public TextMeshProUGUI skillInfoText; // 현재 스킬 설명 텍스트
+    public BigInteger unlockCost = 200; // 해금 비용
 
     protected virtual void Start()
     {
         // 각 스킬의 지속시간과 쿨타임은 서브 클래스에서 설정됩니다.
+        UpdateUpgradeCostUI(); // 초기 업그레이드 비용 UI 설정
+        UpdateUI(); // 스킬 설명과 레벨 UI 업데이트
+        CheckUnlockStatus(); // 해금 상태 확인 및 UI 업데이트
     }
 
     private void Update()
@@ -26,6 +39,37 @@ public abstract class Skill : MonoBehaviour
             if (cooldownRemaining < 0) cooldownRemaining = 0;
 
             UpdateCooldownUI(cooldownRemaining);
+        }
+
+        CheckUnlockStatus();
+    }
+
+    public void UnlockOrUpgradeSkill()
+    {
+        if (currentLevel == 0)
+        {
+            UnlockSkill();
+        }
+        else
+        {
+            UpgradeSkill();
+        }
+    }
+
+    private void UnlockSkill()
+    {
+        if (DiamondManager.Instance.HasSufficientDiamond(unlockCost))
+        {
+            DiamondManager.Instance.DecreaseDiamond(unlockCost);
+            currentLevel = 1;
+            UpdateClickValues();
+            UpdateUpgradeCostUI(); // 업그레이드 비용 UI 업데이트
+            UpdateUI(); // UI 업데이트
+            CheckUnlockStatus(); // 해금 후 상태 확인 및 UI 업데이트
+        }
+        else
+        {
+            Debug.Log("Not enough diamonds to unlock.");
         }
     }
 
@@ -46,8 +90,6 @@ public abstract class Skill : MonoBehaviour
         onCooldown = false;
         UpdateCooldownUI(0);
     }
-
-    protected abstract IEnumerator ApplySkillEffect();
 
     public void UpdateCooldownUI(float remaining)
     {
@@ -72,5 +114,93 @@ public abstract class Skill : MonoBehaviour
         }
     }
 
+    protected abstract IEnumerator ApplySkillEffect();
 
+    private void UpgradeSkill()
+    {
+        BigInteger upgradeCost = CalculateUpgradeCost(currentLevel);
+        if (DiamondManager.Instance.HasSufficientDiamond(upgradeCost))
+        {
+            DiamondManager.Instance.DecreaseDiamond(upgradeCost);
+            currentLevel++;
+            UpdateClickValues(); // 필요 시 업데이트
+            UpdateUpgradeCostUI(); // 업그레이드 비용 UI 업데이트
+            UpdateUI();
+        }
+        else
+        {
+            Debug.Log("Not enough diamonds to upgrade.");
+        }
+    }
+
+    public BigInteger CalculateUpgradeCost(int level)
+    {
+        if (level >= 1 && level <= 10)
+        {
+            return (level - 1) + 10;
+        }
+        else if (level >= 11 && level <= 21)
+        {
+            return (level - 1) + 100;
+        }
+        else
+        {
+            return BigInteger.Zero; // 임의로 추가한 범위 외의 레벨은 업그레이드 불가
+        }
+    }
+
+    public virtual void UpdateUI()
+    {
+        UpdateUpgradeCostUI();
+        NowskillInfoUI();
+        LevelUI();
+    }
+
+    protected void UpdateUpgradeCostUI()
+    {
+        if (upgradeCostText != null)
+        {
+            BigInteger nextCost = currentLevel > 0 ? CalculateUpgradeCost(currentLevel) : unlockCost;
+            upgradeCostText.text = currentLevel > 0
+                ? $"업그레이드 비용: {BigIntegerUtils.FormatBigInteger(nextCost)} 다이아"
+                : $"해금 비용: {BigIntegerUtils.FormatBigInteger(nextCost)} 다이아";
+        }
+    }
+
+    protected virtual void LevelUI()
+    {
+        if (currentLevelText != null)
+        {
+            currentLevelText.text = currentLevel > 0
+                ? $"현재 스킬 레벨: {currentLevel}"
+                : "스킬이 해금되지 않았습니다";
+        }
+    }
+
+    protected virtual void NowskillInfoUI()
+    {
+        if (skillInfoText != null)
+        {
+            skillInfoText.text = currentLevel > 0
+                ? $"현재 스킬 능력치: "
+                : "스킬이 해금되지 않았습니다";
+        }
+    }
+
+    protected virtual void UpdateClickValues() { }
+
+    private void CheckUnlockStatus()
+    {
+        if (upgradeButton != null)
+        {
+            upgradeButton.interactable = currentLevel == 0
+                ? DiamondManager.Instance.HasSufficientDiamond(unlockCost)
+                : DiamondManager.Instance.HasSufficientDiamond(CalculateUpgradeCost(currentLevel));
+        }
+
+        if (skillButton != null)
+        {
+            skillButton.interactable = currentLevel > 0 && !onCooldown;
+        }
+    }
 }

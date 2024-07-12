@@ -11,12 +11,13 @@ public class RootBoostSkill : Skill
     protected override void Start()
     {
         cooldownTime = 1800f; // 스킬 쿨타임 30분
-
+        currentLevel = 0;
         // IRoot 컴포넌트를 찾아서 참조합니다.
         roots = FindObjectsOfType<RootBase>();
         
         // 초기 UI 설정
         UpdateCooldownUI(0);
+        UpdateUI();
     }
 
     public override void ActivateSkill()
