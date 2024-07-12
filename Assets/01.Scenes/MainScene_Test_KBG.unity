@@ -583,7 +583,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 211497326}
+      - m_Target: {fileID: 1957252525}
         m_TargetAssemblyTypeName: Skill, Assembly-CSharp
         m_MethodName: UnlockOrUpgradeSkill
         m_Mode: 1
@@ -2783,7 +2783,6 @@ GameObject:
   - component: {fileID: 211497325}
   - component: {fileID: 211497324}
   - component: {fileID: 211497323}
-  - component: {fileID: 211497326}
   m_Layer: 5
   m_Name: Skill3
   m_TagString: Untagged
@@ -2855,7 +2854,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 211497326}
+      - m_Target: {fileID: 1957252525}
         m_TargetAssemblyTypeName: RootBoostSkill, Assembly-CSharp
         m_MethodName: ActivateSkill
         m_Mode: 1
@@ -2905,29 +2904,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 211497320}
   m_CullTransparentMesh: 1
---- !u!114 &211497326
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 211497320}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7f0993616ff5817478d54cce26cc0667, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  skillDuration: 0
-  cooldownTime: 15
-  cooldownText: {fileID: 1934733272}
-  cooldownImage: {fileID: 999277363}
-  skillButton: {fileID: 211497323}
-  upgradeButton: {fileID: 28121727}
-  currentLevel: 1
-  upgradeCostText: {fileID: 2000364960}
-  currentLevelText: {fileID: 1628241051}
-  skillInfoText: {fileID: 2055987929}
-  boostDuration: 300
 --- !u!1 &218220941
 GameObject:
   m_ObjectHideFlags: 0
@@ -5516,7 +5492,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 2074761539}
+      - m_Target: {fileID: 1535520126}
         m_TargetAssemblyTypeName: Skill, Assembly-CSharp
         m_MethodName: UnlockOrUpgradeSkill
         m_Mode: 1
@@ -16279,7 +16255,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1962360438}
+      - m_Target: {fileID: 2035979164}
         m_TargetAssemblyTypeName: Skill, Assembly-CSharp
         m_MethodName: UnlockOrUpgradeSkill
         m_Mode: 1
@@ -16883,6 +16859,60 @@ MonoBehaviour:
   touchData: {fileID: 935140181}
   unlockThreshold: 5
   objectPrefab: {fileID: 1139572726157748, guid: 3c98bb4bee2f2ba4b92a2fbca7b8831f, type: 3}
+--- !u!1 &1535520124
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1535520125}
+  - component: {fileID: 1535520126}
+  m_Layer: 0
+  m_Name: LifeBoostSkill
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1535520125
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1535520124}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1834111679}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1535520126
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1535520124}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 02a510c5c3068ef4981548722b98649d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  skillDuration: 0
+  cooldownTime: 15
+  cooldownText: {fileID: 1227929779}
+  cooldownImage: {fileID: 1817188856}
+  skillButton: {fileID: 2074761536}
+  upgradeButton: {fileID: 504251951}
+  currentLevel: 0
+  upgradeCostText: {fileID: 1294426492}
+  currentLevelText: {fileID: 1593373789}
+  skillInfoText: {fileID: 776487209}
 --- !u!1 &1544012954
 GameObject:
   m_ObjectHideFlags: 0
@@ -19785,6 +19815,40 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1817188854}
   m_CullTransparentMesh: 1
+--- !u!1 &1834111678
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1834111679}
+  m_Layer: 0
+  m_Name: Skill
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1834111679
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1834111678}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 2035979163}
+  - {fileID: 1535520125}
+  - {fileID: 1957252524}
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1854266399
 GameObject:
   m_ObjectHideFlags: 0
@@ -21137,6 +21201,61 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1934733270}
   m_CullTransparentMesh: 1
+--- !u!1 &1957252523
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1957252524}
+  - component: {fileID: 1957252525}
+  m_Layer: 0
+  m_Name: RootBoostSkill
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1957252524
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1957252523}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1834111679}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1957252525
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1957252523}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7f0993616ff5817478d54cce26cc0667, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  skillDuration: 0
+  cooldownTime: 15
+  cooldownText: {fileID: 1934733272}
+  cooldownImage: {fileID: 999277363}
+  skillButton: {fileID: 211497323}
+  upgradeButton: {fileID: 28121727}
+  currentLevel: 0
+  upgradeCostText: {fileID: 2000364960}
+  currentLevelText: {fileID: 1628241051}
+  skillInfoText: {fileID: 2055987929}
+  boostDuration: 300
 --- !u!1 &1962186366
 GameObject:
   m_ObjectHideFlags: 0
@@ -21186,7 +21305,6 @@ GameObject:
   - component: {fileID: 1962360437}
   - component: {fileID: 1962360436}
   - component: {fileID: 1962360435}
-  - component: {fileID: 1962360438}
   m_Layer: 5
   m_Name: Skill1
   m_TagString: Untagged
@@ -21258,7 +21376,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1962360438}
+      - m_Target: {fileID: 2035979164}
         m_TargetAssemblyTypeName: BubbleClickSkill, Assembly-CSharp
         m_MethodName: ActivateSkill
         m_Mode: 1
@@ -21308,31 +21426,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1962360432}
   m_CullTransparentMesh: 1
---- !u!114 &1962360438
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1962360432}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 961d9913e9eb6354fbbe652514e8c8a8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  skillDuration: 10
-  cooldownTime: 10
-  cooldownText: {fileID: 1445285460}
-  cooldownImage: {fileID: 283780743}
-  skillButton: {fileID: 1962360435}
-  upgradeButton: {fileID: 1407454796}
-  currentLevel: 1
-  upgradeCostText: {fileID: 1868289636}
-  currentLevelText: {fileID: 1254538034}
-  skillInfoText: {fileID: 438412272}
-  clickInterval: 2
-  baseClickIntervalIncrease: 1
-  baseClickRateIncrease: 1
 --- !u!1 &1965273545
 GameObject:
   m_ObjectHideFlags: 0
@@ -22072,6 +22165,63 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2015357811}
   m_CullTransparentMesh: 1
+--- !u!1 &2035979162
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2035979163}
+  - component: {fileID: 2035979164}
+  m_Layer: 0
+  m_Name: BubbleClick
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2035979163
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2035979162}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1834111679}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2035979164
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2035979162}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 961d9913e9eb6354fbbe652514e8c8a8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  skillDuration: 0
+  cooldownTime: 15
+  cooldownText: {fileID: 1445285460}
+  cooldownImage: {fileID: 283780743}
+  skillButton: {fileID: 1962360435}
+  upgradeButton: {fileID: 1407454796}
+  currentLevel: 0
+  upgradeCostText: {fileID: 1868289636}
+  currentLevelText: {fileID: 1254538034}
+  skillInfoText: {fileID: 438412272}
+  clickInterval: 0.5
+  baseClickIntervalIncrease: 1
+  baseClickRateIncrease: 1
 --- !u!1 &2055987927
 GameObject:
   m_ObjectHideFlags: 0
@@ -22294,7 +22444,6 @@ GameObject:
   - component: {fileID: 2074761538}
   - component: {fileID: 2074761537}
   - component: {fileID: 2074761536}
-  - component: {fileID: 2074761539}
   m_Layer: 5
   m_Name: Skill2
   m_TagString: Untagged
@@ -22366,7 +22515,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 2074761539}
+      - m_Target: {fileID: 1535520126}
         m_TargetAssemblyTypeName: LifeBoostSkill, Assembly-CSharp
         m_MethodName: ActivateSkill
         m_Mode: 1
@@ -22416,28 +22565,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2074761534}
   m_CullTransparentMesh: 1
---- !u!114 &2074761539
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2074761534}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 02a510c5c3068ef4981548722b98649d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  skillDuration: 10
-  cooldownTime: 10
-  cooldownText: {fileID: 1227929779}
-  cooldownImage: {fileID: 1817188856}
-  skillButton: {fileID: 2074761536}
-  upgradeButton: {fileID: 504251951}
-  currentLevel: 1
-  upgradeCostText: {fileID: 1294426492}
-  currentLevelText: {fileID: 1593373789}
-  skillInfoText: {fileID: 776487209}
 --- !u!1 &2109808958
 GameObject:
   m_ObjectHideFlags: 0
@@ -35548,3 +35675,4 @@ SceneRoots:
   - {fileID: 153027943}
   - {fileID: 1225281113}
   - {fileID: 438191602}
+  - {fileID: 1834111679}

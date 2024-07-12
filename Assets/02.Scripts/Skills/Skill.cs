@@ -23,7 +23,6 @@ public abstract class Skill : MonoBehaviour
     public TextMeshProUGUI skillInfoText; // 현재 스킬 설명 텍스트
     public BigInteger unlockCost = 200; // 해금 비용
 
-
     protected virtual void Start()
     {
         // 각 스킬의 지속시간과 쿨타임은 서브 클래스에서 설정됩니다.
