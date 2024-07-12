@@ -12,6 +12,7 @@ public class RootBoostSkill : Skill
     {
         cooldownTime = 1800f; // 스킬 쿨타임 30분
         currentLevel = 0;
+        unlockCost = 500; // 해금 비용
         // IRoot 컴포넌트를 찾아서 참조합니다.
         roots = FindObjectsOfType<RootBase>();
         
@@ -48,5 +49,23 @@ public class RootBoostSkill : Skill
         // 부스트 지속 시간이 끝나면 원래 값으로 복원
         LifeManager.Instance.touchData.touchIncreaseAmount = originalTouchIncreaseAmount;
         LifeManager.Instance.touchData.UpdateUI();
+    }
+
+    protected override void UpdateClickValues()
+    {
+        boostMultiplier = 500 + (currentLevel - 1) * 100; // 레벨당 증가 배수 계산
+    }
+    protected override void LevelUI()
+    {
+        currentLevelText.text = currentLevel > 0
+            ? $"획득량 증가 스킬 레벨: {currentLevel}"
+            : "획득량 증가 스킬이 해금되지 않았습니다";
+    }
+
+    protected override void NowskillInfoUI()
+    {
+        skillInfoText.text = currentLevel > 0
+            ? $"현재 부스트 배수: {boostMultiplier}초 \n 부스트 지속시간 : {boostDuration}"
+            : "스킬이 해금되지 않았습니다";
     }
 }

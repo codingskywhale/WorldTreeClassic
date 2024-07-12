@@ -5,7 +5,7 @@ public class DiamondManager : MonoBehaviour
 {
     public static DiamondManager Instance { get; private set; } // 싱글톤 인스턴스
 
-    public BigInteger diamondAmount = 200; // 초기 다이아몬드 양
+    public BigInteger diamondAmount = 10000000; // 초기 다이아몬드 양
     public delegate void DiamondChanged(BigInteger newAmount);
     public event DiamondChanged OnDiamondChanged;
 

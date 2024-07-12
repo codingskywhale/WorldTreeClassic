@@ -585,7 +585,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 211497326}
         m_TargetAssemblyTypeName: Skill, Assembly-CSharp
-        m_MethodName: UpgradeSkill
+        m_MethodName: UnlockOrUpgradeSkill
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -2921,8 +2921,8 @@ MonoBehaviour:
   cooldownTime: 15
   cooldownText: {fileID: 1934733272}
   cooldownImage: {fileID: 999277363}
-  skillButton: {fileID: 0}
-  upgradeButton: {fileID: 0}
+  skillButton: {fileID: 211497323}
+  upgradeButton: {fileID: 28121727}
   currentLevel: 1
   upgradeCostText: {fileID: 2000364960}
   currentLevelText: {fileID: 1628241051}
@@ -5518,7 +5518,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 2074761539}
         m_TargetAssemblyTypeName: Skill, Assembly-CSharp
-        m_MethodName: UpgradeSkill
+        m_MethodName: UnlockOrUpgradeSkill
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -22432,8 +22432,8 @@ MonoBehaviour:
   cooldownTime: 10
   cooldownText: {fileID: 1227929779}
   cooldownImage: {fileID: 1817188856}
-  skillButton: {fileID: 0}
-  upgradeButton: {fileID: 0}
+  skillButton: {fileID: 2074761536}
+  upgradeButton: {fileID: 504251951}
   currentLevel: 1
   upgradeCostText: {fileID: 1294426492}
   currentLevelText: {fileID: 1593373789}
