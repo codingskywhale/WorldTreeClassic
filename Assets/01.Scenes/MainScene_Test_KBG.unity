@@ -5358,6 +5358,7 @@ MonoBehaviour:
   waterText: {fileID: 260969013}
   lifeIncreaseText: {fileID: 1700231559}
   animalCountText: {fileID: 950476795}
+  diamondAmountText: {fileID: 302020496}
 --- !u!114 &425030254
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5518,6 +5519,50 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 430118058}
   m_CullTransparentMesh: 1
+--- !u!1 &438191600
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 438191602}
+  - component: {fileID: 438191601}
+  m_Layer: 0
+  m_Name: DiamondManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &438191601
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 438191600}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0db7823554a77174d85f9a0db6779438, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!4 &438191602
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 438191600}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 508.08044, y: 545.84344, z: -152.17}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &438412270
 GameObject:
   m_ObjectHideFlags: 0
@@ -38766,3 +38811,4 @@ SceneRoots:
   - {fileID: 870979191}
   - {fileID: 153027943}
   - {fileID: 1225281113}
+  - {fileID: 438191602}

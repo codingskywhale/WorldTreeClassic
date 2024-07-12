@@ -9,7 +9,7 @@ public class Status : MonoBehaviour
     public TextMeshProUGUI waterText;
     public TextMeshProUGUI lifeIncreaseText;
     public TextMeshProUGUI animalCountText;
-
+    public TextMeshProUGUI diamondAmountText; // 다이아몬드 UI 요소 추가
     public void UpdateLifeUI(BigInteger waterAmount, BigInteger waterNeededForCurrentLevel)
     {
         waterText.text = $" 생명력 : {BigIntegerUtils.FormatBigInteger(waterAmount)}";
@@ -23,5 +23,10 @@ public class Status : MonoBehaviour
     public void UpdateAnimalCountText(int nowAnimalCount, int maxAnimalCount)
     {
         animalCountText.text = $"{nowAnimalCount} / {maxAnimalCount}";
+    }
+
+    public void UpdateDiamondUI(BigInteger diamondAmount)
+    {
+        diamondAmountText.text = $"다이아몬드: {BigIntegerUtils.FormatBigInteger(diamondAmount)}";
     }
 }
