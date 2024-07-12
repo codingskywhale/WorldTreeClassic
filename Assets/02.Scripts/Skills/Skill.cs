@@ -119,6 +119,11 @@ public abstract class Skill : MonoBehaviour
 
     private void UpgradeSkill()
     {
+        if (currentLevel >= 21)
+        {
+            Debug.Log("Maximum level reached.");
+            return;
+        }
         BigInteger upgradeCost = CalculateUpgradeCost(currentLevel);
         if (DiamondManager.Instance.HasSufficientDiamond(upgradeCost))
         {
@@ -161,10 +166,17 @@ public abstract class Skill : MonoBehaviour
     {
         if (upgradeCostText != null)
         {
-            BigInteger nextCost = currentLevel > 0 ? CalculateUpgradeCost(currentLevel) : unlockCost;
-            upgradeCostText.text = currentLevel > 0
-                ? $"업그레이드 비용: {BigIntegerUtils.FormatBigInteger(nextCost)} 다이아"
-                : $"해금 비용: {BigIntegerUtils.FormatBigInteger(nextCost)} 다이아";
+            if (currentLevel >= 21)
+            {
+                upgradeCostText.text = "최대 레벨";
+            }
+            else
+            {
+                BigInteger nextCost = currentLevel > 0 ? CalculateUpgradeCost(currentLevel) : unlockCost;
+                upgradeCostText.text = currentLevel > 0
+                    ? $"업그레이드 비용: {BigIntegerUtils.FormatBigInteger(nextCost)} 다이아"
+                    : $"해금 비용: {BigIntegerUtils.FormatBigInteger(nextCost)} 다이아";
+            }
         }
     }
 
@@ -194,9 +206,16 @@ public abstract class Skill : MonoBehaviour
     {
         if (upgradeButton != null)
         {
-            upgradeButton.interactable = currentLevel == 0
-                ? DiamondManager.Instance.HasSufficientDiamond(unlockCost)
-                : DiamondManager.Instance.HasSufficientDiamond(CalculateUpgradeCost(currentLevel));
+            if (currentLevel >= 21)
+            {
+                upgradeButton.interactable = false;
+            }
+            else
+            {
+                upgradeButton.interactable = currentLevel == 0
+                    ? DiamondManager.Instance.HasSufficientDiamond(unlockCost)
+                    : DiamondManager.Instance.HasSufficientDiamond(CalculateUpgradeCost(currentLevel));
+            }
         }
 
         if (skillButton != null)

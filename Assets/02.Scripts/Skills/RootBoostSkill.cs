@@ -65,7 +65,7 @@ public class RootBoostSkill : Skill
     protected override void NowskillInfoUI()
     {
         skillInfoText.text = currentLevel > 0
-            ? $"현재 부스트 배수: {boostMultiplier}초 \n 부스트 지속시간 : {boostDuration}"
+            ? $"현재 부스트 배수: {boostMultiplier} \n 부스트 지속시간 : {boostDuration}"
             : "스킬이 해금되지 않았습니다";
     }
 }
