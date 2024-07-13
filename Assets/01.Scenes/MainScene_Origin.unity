@@ -18145,7 +18145,7 @@ MonoBehaviour:
   initialPosition: {x: 0, y: 6.5, z: -11}
   initialRotation: {x: -0.57357645, y: 0, z: 0, w: 0.81915206}
   finalRotation: {x: 0.17364818, y: 0, z: 0, w: 0.9848077}
-  zoomInPosition: {x: 0, y: 5, z: -9}
+  zoomInPosition: {x: 0, y: 5, z: -10}
   zoomInRotation: {x: 0.17364818, y: 0, z: 0, w: 0.9848077}
   duration: 2.5
   zoomDuration: 1

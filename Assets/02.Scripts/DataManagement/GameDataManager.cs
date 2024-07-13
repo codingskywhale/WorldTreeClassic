@@ -62,6 +62,8 @@ public class GameDataManager
         List<RootBase> roots = resourceManager.roots;
 
         lifeManager.lifeAmount = string.IsNullOrEmpty(gameData.lifeAmount) ? BigInteger.Zero : BigInteger.Parse(gameData.lifeAmount);
+        Debug.Log($"Loaded lifeAmount: {lifeManager.lifeAmount}");
+
         lifeManager.currentLevel = gameData.currentLevel;
         lifeManager.animalData.nowAnimalCount = gameData.nowAnimalCount;
         lifeManager.animalData.maxAnimalCount = gameData.maxAnimalCount;
@@ -69,6 +71,7 @@ public class GameDataManager
         if (gameData.animalData != null)
         {
             lifeManager.animalData.nowCreateCost = string.IsNullOrEmpty(gameData.animalData.nowCreateCost) ? BigInteger.Zero : BigInteger.Parse(gameData.animalData.nowCreateCost);
+            Debug.Log($"Loaded nowCreateCost: {lifeManager.animalData.nowCreateCost}");
             lifeManager.animalData.nowAnimalCount = gameData.animalData.nowAnimalCount;
             lifeManager.animalData.maxAnimalCount = gameData.animalData.maxAnimalCount;
         }
@@ -77,6 +80,7 @@ public class GameDataManager
         {
             lifeManager.touchData.touchIncreaseLevel = gameData.touchData.touchIncreaseLevel;
             lifeManager.touchData.touchIncreaseAmount = string.IsNullOrEmpty(gameData.touchData.touchIncreaseAmount) ? BigInteger.Zero : BigInteger.Parse(gameData.touchData.touchIncreaseAmount);
+            Debug.Log($"Loaded touchIncreaseAmount: {lifeManager.touchData.touchIncreaseAmount}");
             lifeManager.touchData.upgradeLifeCost = string.IsNullOrEmpty(gameData.touchData.upgradeLifeCost) ? BigInteger.Zero : BigInteger.Parse(gameData.touchData.upgradeLifeCost);
         }
 
@@ -93,6 +97,8 @@ public class GameDataManager
             roots[i].isUnlocked = rootDataList[i].isUnlocked;
             roots[i].upgradeLifeCost = string.IsNullOrEmpty(rootDataList[i].upgradeLifeCost) ? BigInteger.Zero : BigInteger.Parse(rootDataList[i].upgradeLifeCost);
 
+            Debug.Log($"Initializing root: Level={roots[i].rootLevel}, IsUnlocked={roots[i].isUnlocked}, UpgradeCost={roots[i].upgradeLifeCost}");
+
             if (roots[i].isUnlocked)
             {
                 InitializeRoot(roots[i], rootDataList[i].rootLevel);
@@ -107,6 +113,7 @@ public class GameDataManager
         root.rootLevel = level;
         root.upgradeLifeCost = root.CalculateUpgradeCost();
         root.UpdateUI();
+        Debug.Log($"Initialized Root: Level={root.rootLevel}, UpgradeCost={root.upgradeLifeCost}");
     }
 
     private void InitializeDefaultGameData(ResourceManager resourceManager)

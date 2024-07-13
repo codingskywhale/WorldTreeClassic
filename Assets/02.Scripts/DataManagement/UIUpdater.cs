@@ -1,5 +1,6 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.Numerics;
+using UnityEngine;
 
 public class UIUpdater
 {
@@ -25,6 +26,7 @@ public class UIUpdater
         {
             if (root.isUnlocked)
             {
+                Debug.Log($"Updating UI for unlocked root: Level={root.rootLevel}, UpgradeCost={root.upgradeLifeCost}");
                 root.UpdateUI();
             }
         }
