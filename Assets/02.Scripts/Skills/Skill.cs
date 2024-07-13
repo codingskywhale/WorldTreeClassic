@@ -222,4 +222,9 @@ public abstract class Skill : MonoBehaviour
             skillButton.interactable = currentLevel > 0 && !onCooldown;
         }
     }
+
+    public void ReduceCooldown(float reductionPercentage)
+    {
+        cooldownTime = cooldownTime * (1 - (reductionPercentage / 100));
+    }
 }
