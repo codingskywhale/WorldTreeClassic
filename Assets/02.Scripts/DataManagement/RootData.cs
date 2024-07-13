@@ -1,18 +1,7 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
-public class RootData : MonoBehaviour
+[System.Serializable]
+public class RootData
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    public int rootLevel;
+    public bool isUnlocked;
+    public string upgradeLifeCost;
 }

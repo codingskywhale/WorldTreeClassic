@@ -166,8 +166,8 @@ public class UpgradeButton : MonoBehaviour
         }
     }
 
-    private void UpdateUpgradeCostUI(int newLevel)
-    {
+    public void UpdateUpgradeCostUI(int newLevel)
+    { // 저장하려고 퍼블릭으로 수정!!
         if (upgradeType == UpgradeType.Root && root != null)
         {
             BigInteger upgradeCost = root.CalculateUpgradeCost();
