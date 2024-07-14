@@ -11,6 +11,7 @@ public class UIManager : MonoBehaviour
     public RootBase root;
     public TouchData touchData;
     public WorldTree tree;
+    public Bag bag;
     public CreateObjectButton[] createAnimalButtons;
     public int createObjectButtonUnlockCount = 1;
 

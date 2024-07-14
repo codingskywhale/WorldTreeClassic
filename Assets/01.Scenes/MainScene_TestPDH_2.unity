@@ -135,6 +135,7 @@ GameObject:
   - component: {fileID: 832165}
   - component: {fileID: 832164}
   - component: {fileID: 832163}
+  - component: {fileID: 832166}
   m_Layer: 5
   m_Name: Button (6)
   m_TagString: Untagged
@@ -206,7 +207,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 832164}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 832166}
+        m_TargetAssemblyTypeName: Bag_AnimalSlot, Assembly-CSharp
+        m_MethodName: ClickAnimalIcon
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &832164
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -245,6 +258,22 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 832161}
   m_CullTransparentMesh: 1
+--- !u!114 &832166
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 832161}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ded275846d124ab44849ff1b8ae47b4f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  slotAnimalDataSO: {fileID: 11400000, guid: f978169c3de2b72498b00e062fe9f2ef, type: 2}
+  animalIcon: {fileID: 1599225192}
+  explainText: {fileID: 661832955}
+  isUnlocked: 0
 --- !u!1 &13436758
 GameObject:
   m_ObjectHideFlags: 0
@@ -1618,6 +1647,7 @@ GameObject:
   - component: {fileID: 108527022}
   - component: {fileID: 108527021}
   - component: {fileID: 108527020}
+  - component: {fileID: 108527023}
   m_Layer: 5
   m_Name: Button (3)
   m_TagString: Untagged
@@ -1689,7 +1719,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 108527021}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 108527023}
+        m_TargetAssemblyTypeName: Bag_AnimalSlot, Assembly-CSharp
+        m_MethodName: ClickAnimalIcon
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &108527021
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1728,6 +1770,22 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 108527018}
   m_CullTransparentMesh: 1
+--- !u!114 &108527023
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 108527018}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ded275846d124ab44849ff1b8ae47b4f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  slotAnimalDataSO: {fileID: 11400000, guid: fe5714a4e8607f640a477dd2e38f0e99, type: 2}
+  animalIcon: {fileID: 1856555286}
+  explainText: {fileID: 1925966366}
+  isUnlocked: 0
 --- !u!1 &124799805
 GameObject:
   m_ObjectHideFlags: 0
@@ -2074,6 +2132,7 @@ GameObject:
   m_Component:
   - component: {fileID: 153609064}
   - component: {fileID: 153609065}
+  - component: {fileID: 153609066}
   m_Layer: 5
   m_Name: Grid LayOut
   m_TagString: Untagged
@@ -2133,6 +2192,19 @@ MonoBehaviour:
   m_Spacing: {x: 10, y: 10}
   m_Constraint: 1
   m_ConstraintCount: 3
+--- !u!114 &153609066
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 153609063}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 52ad1df39533b244cbe8d725c621de8a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  slots: []
 --- !u!1 &154535981
 GameObject:
   m_ObjectHideFlags: 0
@@ -3518,6 +3590,7 @@ GameObject:
   - component: {fileID: 291271004}
   - component: {fileID: 291271003}
   - component: {fileID: 291271002}
+  - component: {fileID: 291271005}
   m_Layer: 5
   m_Name: Button (8)
   m_TagString: Untagged
@@ -3589,7 +3662,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 291271003}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 291271005}
+        m_TargetAssemblyTypeName: Bag_AnimalSlot, Assembly-CSharp
+        m_MethodName: ClickAnimalIcon
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &291271003
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3628,6 +3713,22 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 291271000}
   m_CullTransparentMesh: 1
+--- !u!114 &291271005
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 291271000}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ded275846d124ab44849ff1b8ae47b4f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  slotAnimalDataSO: {fileID: 11400000, guid: 88f1bf1e724255742aa9c2959472959a, type: 2}
+  animalIcon: {fileID: 1191706757}
+  explainText: {fileID: 912673472}
+  isUnlocked: 0
 --- !u!1 &292181648
 GameObject:
   m_ObjectHideFlags: 0
@@ -4813,6 +4914,7 @@ MonoBehaviour:
   root: {fileID: 153027942}
   touchData: {fileID: 935140181}
   tree: {fileID: 701093651}
+  bag: {fileID: 153609066}
   createAnimalButtons:
   - {fileID: 3586888559523298872}
   - {fileID: 5073213918094875638}
@@ -7303,6 +7405,7 @@ GameObject:
   - component: {fileID: 762728229}
   - component: {fileID: 762728228}
   - component: {fileID: 762728227}
+  - component: {fileID: 762728230}
   m_Layer: 5
   m_Name: Button (7)
   m_TagString: Untagged
@@ -7374,7 +7477,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 762728228}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 762728230}
+        m_TargetAssemblyTypeName: Bag_AnimalSlot, Assembly-CSharp
+        m_MethodName: ClickAnimalIcon
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &762728228
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7413,6 +7528,22 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 762728225}
   m_CullTransparentMesh: 1
+--- !u!114 &762728230
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 762728225}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ded275846d124ab44849ff1b8ae47b4f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  slotAnimalDataSO: {fileID: 11400000, guid: e392f383c42242544a1c9109c5fda00f, type: 2}
+  animalIcon: {fileID: 776655457}
+  explainText: {fileID: 692179727}
+  isUnlocked: 0
 --- !u!1 &763070041
 GameObject:
   m_ObjectHideFlags: 0
@@ -7425,6 +7556,7 @@ GameObject:
   - component: {fileID: 763070045}
   - component: {fileID: 763070044}
   - component: {fileID: 763070043}
+  - component: {fileID: 763070046}
   m_Layer: 5
   m_Name: Button (2)
   m_TagString: Untagged
@@ -7496,7 +7628,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 763070044}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 763070046}
+        m_TargetAssemblyTypeName: Bag_AnimalSlot, Assembly-CSharp
+        m_MethodName: ClickAnimalIcon
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &763070044
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7535,6 +7679,22 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 763070041}
   m_CullTransparentMesh: 1
+--- !u!114 &763070046
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 763070041}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ded275846d124ab44849ff1b8ae47b4f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  slotAnimalDataSO: {fileID: 11400000, guid: 2c92774703157354bb990bf61f0e2331, type: 2}
+  animalIcon: {fileID: 671456045}
+  explainText: {fileID: 13436760}
+  isUnlocked: 0
 --- !u!1 &772444261
 GameObject:
   m_ObjectHideFlags: 0
@@ -9465,6 +9625,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   heartBubbleList: []
+  selectedObjectIndex: 0
 --- !u!1 &937090150
 GameObject:
   m_ObjectHideFlags: 0
@@ -14253,6 +14414,7 @@ GameObject:
   - component: {fileID: 1611599514}
   - component: {fileID: 1611599513}
   - component: {fileID: 1611599512}
+  - component: {fileID: 1611599515}
   m_Layer: 5
   m_Name: Button (5)
   m_TagString: Untagged
@@ -14324,7 +14486,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1611599513}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1611599515}
+        m_TargetAssemblyTypeName: Bag_AnimalSlot, Assembly-CSharp
+        m_MethodName: ClickAnimalIcon
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1611599513
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -14363,6 +14537,22 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1611599510}
   m_CullTransparentMesh: 1
+--- !u!114 &1611599515
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1611599510}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ded275846d124ab44849ff1b8ae47b4f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  slotAnimalDataSO: {fileID: 11400000, guid: 8415b503013473f4fb6ddbb2227d6659, type: 2}
+  animalIcon: {fileID: 521992904}
+  explainText: {fileID: 1365986640}
+  isUnlocked: 0
 --- !u!1 &1626605272
 GameObject:
   m_ObjectHideFlags: 0
@@ -17481,6 +17671,7 @@ GameObject:
   - component: {fileID: 1984631545}
   - component: {fileID: 1984631544}
   - component: {fileID: 1984631543}
+  - component: {fileID: 1984631546}
   m_Layer: 5
   m_Name: Button (4)
   m_TagString: Untagged
@@ -17552,7 +17743,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1984631544}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1984631546}
+        m_TargetAssemblyTypeName: Bag_AnimalSlot, Assembly-CSharp
+        m_MethodName: ClickAnimalIcon
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1984631544
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -17591,6 +17794,22 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1984631541}
   m_CullTransparentMesh: 1
+--- !u!114 &1984631546
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1984631541}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ded275846d124ab44849ff1b8ae47b4f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  slotAnimalDataSO: {fileID: 11400000, guid: 83070f56aae5b3c49af0696ec2c090f5, type: 2}
+  animalIcon: {fileID: 99824014}
+  explainText: {fileID: 2109808960}
+  isUnlocked: 0
 --- !u!1 &1987132684
 GameObject:
   m_ObjectHideFlags: 0
@@ -17888,6 +18107,7 @@ GameObject:
   - component: {fileID: 2015357815}
   - component: {fileID: 2015357814}
   - component: {fileID: 2015357813}
+  - component: {fileID: 2015357816}
   m_Layer: 5
   m_Name: Button (1)
   m_TagString: Untagged
@@ -17959,7 +18179,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 2015357814}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 2015357816}
+        m_TargetAssemblyTypeName: Bag_AnimalSlot, Assembly-CSharp
+        m_MethodName: ClickAnimalIcon
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &2015357814
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -17998,6 +18230,22 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2015357811}
   m_CullTransparentMesh: 1
+--- !u!114 &2015357816
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2015357811}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ded275846d124ab44849ff1b8ae47b4f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  slotAnimalDataSO: {fileID: 11400000, guid: b8d3b3358fc9c9348bd6300236914032, type: 2}
+  animalIcon: {fileID: 341353715}
+  explainText: {fileID: 268482964}
+  isUnlocked: 0
 --- !u!1 &2057695901
 GameObject:
   m_ObjectHideFlags: 0
@@ -18475,6 +18723,7 @@ GameObject:
   - component: {fileID: 2129143848}
   - component: {fileID: 2129143847}
   - component: {fileID: 2129143846}
+  - component: {fileID: 2129143849}
   m_Layer: 5
   m_Name: Button (9)
   m_TagString: Untagged
@@ -18546,7 +18795,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 2129143847}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 2129143849}
+        m_TargetAssemblyTypeName: Bag_AnimalSlot, Assembly-CSharp
+        m_MethodName: ClickAnimalIcon
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &2129143847
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -18585,6 +18846,22 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2129143844}
   m_CullTransparentMesh: 1
+--- !u!114 &2129143849
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2129143844}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ded275846d124ab44849ff1b8ae47b4f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  slotAnimalDataSO: {fileID: 11400000, guid: 53687f997b677e54d88689da51f1ff0d, type: 2}
+  animalIcon: {fileID: 1806914947}
+  explainText: {fileID: 1285386252}
+  isUnlocked: 0
 --- !u!1 &2130060566
 GameObject:
   m_ObjectHideFlags: 0
@@ -26694,6 +26971,34 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 3057451167451151162}
     m_Modifications:
+    - target: {fileID: 3938370682166264679, guid: c06e39b23fb805a4ba48ab4f6424cc41, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3938370682166264679, guid: c06e39b23fb805a4ba48ab4f6424cc41, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3938370682166264679, guid: c06e39b23fb805a4ba48ab4f6424cc41, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 716478915}
+    - target: {fileID: 3938370682166264679, guid: c06e39b23fb805a4ba48ab4f6424cc41, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3938370682166264679, guid: c06e39b23fb805a4ba48ab4f6424cc41, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: TakeOutAnimalfromBag
+      objectReference: {fileID: 0}
+    - target: {fileID: 3938370682166264679, guid: c06e39b23fb805a4ba48ab4f6424cc41, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: AnimalInfoWindow, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 3938370682166264679, guid: c06e39b23fb805a4ba48ab4f6424cc41, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     - target: {fileID: 4898220990788461843, guid: c06e39b23fb805a4ba48ab4f6424cc41, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5

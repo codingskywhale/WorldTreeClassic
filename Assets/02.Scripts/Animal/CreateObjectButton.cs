@@ -51,6 +51,8 @@ public class CreateObjectButton : MonoBehaviour
                 UIManager.Instance.createObjectButtonUnlockCount++;
                 characterIconButton.interactable = true;
                 CheckConditionCleared(buttonIdx + 1);
+                //해당 버튼에 대응되는 동물을 해금시켜준다.
+                UIManager.Instance.bag.UnlockSlot(buttonIdx);
             }
 
 
