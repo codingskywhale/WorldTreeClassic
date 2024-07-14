@@ -105,7 +105,7 @@ public class UpgradeButton : MonoBehaviour
             root.Unlock();
             root.UpdateUI();
             resourceManager.UpdateTotalLifeIncreaseUI();
-            LifeManager.Instance.animalGenerateData.maxAnimalCount += 5;
+            DataManager.Instance.animalGenerateData.maxAnimalCount += 5;
             UIManager.Instance.SetAnimalCountStatus();
         }
         else

@@ -95,4 +95,9 @@ public class AnimalGenerateData
                 allTypeCountDic[name][EachCountType.Stored]++;
         }
     }
+
+    public void UpdateUIText()
+    {
+        UIManager.Instance.status.UpdateAnimalCountText(nowAnimalCount, maxAnimalCount);
+    }
 }

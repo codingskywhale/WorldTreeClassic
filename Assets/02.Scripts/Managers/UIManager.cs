@@ -36,7 +36,7 @@ public class UIManager : MonoBehaviour
 
     public void SetAnimalCountStatus()
     {
-        status.animalCountText.text = $"{LifeManager.Instance.animalGenerateData.nowAnimalCount} / {LifeManager.Instance.animalGenerateData.maxAnimalCount}";
+        status.animalCountText.text = $"{DataManager.Instance.animalGenerateData.nowAnimalCount} / {DataManager.Instance.animalGenerateData.maxAnimalCount}";
     }
 
     public void UpdateButtonUI()
@@ -50,7 +50,7 @@ public class UIManager : MonoBehaviour
     public void CheckEnoughCost(BigInteger amount)
     {
         // createObjectButtonUnlockCount가 현재 버튼의 인덱스를 넘는지 확인.
-        if (LifeManager.Instance.lifeAmount >= (BigInteger)LifeManager.Instance.animalGenerateData.nowCreateCost)
+        if (LifeManager.Instance.lifeAmount >= (BigInteger)DataManager.Instance.animalGenerateData.nowCreateCost)
         {
             for(int i = 0; i < createObjectButtonUnlockCount; i++)
             {

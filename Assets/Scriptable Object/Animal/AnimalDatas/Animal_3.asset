@@ -12,8 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 800bd3ef680550d49883bb83d8765e37, type: 3}
   m_Name: Animal_3
   m_EditorClassIdentifier: 
+  animalIndex: 3
   animalIcon: {fileID: 10901, guid: 0000000000000000f000000000000000, type: 0}
-  animalName: "\uD14C\uC2A4\uD2B8\uC6A9 \uBB3C\uACE0\uAE30"
+  animalName: "\uB3D9\uBB3C3"
   animalUnlockConditions:
   - "\uC774\uC804 \uBC84\uD2BC \uD574\uAE08\uD558\uAE30"
-  animalPrefab: {fileID: 6040825781364759821, guid: 6c118fbcc1a0fda4199639530f77480b, type: 3}
+  animalPrefab: {fileID: 6040825781364759821, guid: c3b868c26152dd14bb862b8630c3bf3c, type: 3}

@@ -17,6 +17,7 @@ public class CreateObjectButton : MonoBehaviour
     // 생명 창조 ~~ cost
     public TextMeshProUGUI inButtonCostText;
     public Button createButton;
+    public Transform animalSpawnTr;
 
     private string conditionX = "(X) ";
     private string conditionV = "(V) ";
@@ -39,8 +40,10 @@ public class CreateObjectButton : MonoBehaviour
     public void ClickCreateAnimal(int buttonIdx)
     {
         // 현재 생명력이 요구치보다 높을 때.
-        if (LifeManager.Instance.lifeAmount >= (BigInteger)LifeManager.Instance.animalGenerateData.nowCreateCost)
+        if (LifeManager.Instance.lifeAmount >= (BigInteger)DataManager.Instance.animalGenerateData.nowCreateCost)
         {
+            LifeManager.Instance.DecreaseWater(DataManager.Instance.animalGenerateData.nowCreateCost);
+
             // UnlockCount는 시작할 때 1이기 때문.
             if (buttonIdx + 1 == UIManager.Instance.createObjectButtonUnlockCount)
             {
@@ -50,34 +53,35 @@ public class CreateObjectButton : MonoBehaviour
                 CheckConditionCleared(buttonIdx + 1);
             }
 
-            LifeManager.Instance.DecreaseWater(LifeManager.Instance.animalGenerateData.nowCreateCost);
 
             // 동물을 추가할 여유 공간이 있을 때
-            if (LifeManager.Instance.animalGenerateData.AddAnimal())
+            if (DataManager.Instance.animalGenerateData.AddAnimal())
             {
-                GameObject go = Instantiate(animalData.animalPrefab);
-                go.transform.position = (new Vector3(0, 0.5f, 10f));
+                GameObject go = Instantiate(animalData.animalPrefab, animalSpawnTr);
+                DataManager.Instance.spawnData.AddAnimalSpawnData(go, animalData);
+
                 // 하트 버블 리스트에 추가
                 LifeManager.Instance.bubbleGenerator.AddAnimalHeartBubbleList(go.GetComponent<Animal>().heart);
 
-                if(LifeManager.Instance.animalGenerateData.nowAnimalCount == 1 || LifeManager.Instance.animalGenerateData.nowAnimalCount == 2)
+                if(DataManager.Instance.animalGenerateData.nowAnimalCount == 1 || DataManager.Instance.animalGenerateData.nowAnimalCount == 2)
                 {
-                    LifeManager.Instance.bubbleGenerator.StartGenerateHeart();
+                    LifeManager.Instance.bubbleGenerator.GenerateNewHeart();
                 }
 
-                LifeManager.Instance.animalGenerateData.AddAnimalToDictionary(animalData.animalName, true);
+                DataManager.Instance.animalGenerateData.AddAnimalToDictionary(animalData.animalName, true);
             }
 
             // 여유 공간이 없을 때
             else
             {
                 // 가방으로 이동하도록 해야함
-                LifeManager.Instance.animalGenerateData.AddAnimalToDictionary(animalData.animalName, false);
+                DataManager.Instance.animalGenerateData.AddAnimalToDictionary(animalData.animalName, false);
             }
             // 생산량 2배 증가.
             LifeManager.Instance.touchData.ApplyIncreaseRate(1);
             LifeManager.Instance.ApplyIncreaseRateToAllRoots(1);
 
+            UIManager.Instance.CheckEnoughCost(0);
             UIManager.Instance.UpdateButtonUI();
         }
     }
@@ -85,7 +89,7 @@ public class CreateObjectButton : MonoBehaviour
     // 모든 버튼에 적용 시켜야함
     public void SetCostText()
     {
-        inButtonCostText.text = (BigIntegerUtils.FormatBigInteger(LifeManager.Instance.animalGenerateData.nowCreateCost)).ToString();
+        inButtonCostText.text = (BigIntegerUtils.FormatBigInteger(DataManager.Instance.animalGenerateData.nowCreateCost)).ToString();
     }
 
     // 초기 잠김 기능을 처리할 수 있는 메서드

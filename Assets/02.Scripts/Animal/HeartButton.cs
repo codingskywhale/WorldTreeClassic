@@ -30,6 +30,10 @@ public class HeartButton : MonoBehaviour
     {
         gameObject.SetActive(true);
     }
+    public void SetBubbleOff()
+    {
+        gameObject.SetActive(false);
+    }
 
     public void TouchHeartBubble()
     {
@@ -38,7 +42,7 @@ public class HeartButton : MonoBehaviour
         // 재화를 획득한다.
         LifeManager.Instance.IncreaseWater(LifeManager.Instance.touchData.touchIncreaseAmount);
 
-        LifeManager.Instance.bubbleGenerator.RemoveIdxFromBubbleList(heartIdx);
+        LifeManager.Instance.bubbleGenerator.RemoveIdxFromNowBubbleList(heartIdx);
         // 사라진다.
         gameObject.SetActive(false);
     }
