@@ -92,7 +92,7 @@ public class SkillCoolDownReduction : MonoBehaviour
 
     public BigInteger CalculateUpgradeCost(int level)
     {
-        return (level - 1) + 10;
+        return level * 10;
     }
 
     private void UpdateUpgradeCostUI()
@@ -119,15 +119,15 @@ public class SkillCoolDownReduction : MonoBehaviour
         if (currentLevelText != null)
         {
             currentLevelText.text = currentLevel > 0
-                ? $"현재 스킬 레벨: {currentLevel}"
-                : "스킬이 해금되지 않았습니다";
+                ? $"스킬쿨타임 감소 스킬 레벨: {currentLevel}"
+                : "스킬쿨타임 감소 스킬이 해금되지 않았습니다";
         }
 
         if (skillInfoText != null)
         {
             skillInfoText.text = currentLevel > 0
                 ? $"현재 스킬 쿨타임 감소: {cooldownReductionPercentage * currentLevel}%"
-                : "스킬이 해금되지 않았습니다";
+                : "스킬쿨타임 감소 스킬이 해금되지 않았습니다";
         }
     }
 
