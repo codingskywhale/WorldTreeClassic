@@ -5,7 +5,10 @@ public class BGMClip
 {
     public AudioClip clip;
     public float volume = 1.0f;
+    public string Idletitle;
     public string title;
+    public string artist; // 추가: 가수 이름
+    public string description; // 추가: 노래 설명
 }
 
 [System.Serializable]
@@ -61,6 +64,11 @@ public class SoundManager : MonoBehaviour
     }
     public string GetCurrentBGMTitle()
     {
-        return currentBGM != null ? currentBGM.title : "";
+        return currentBGM != null ? currentBGM.Idletitle : "";
+    }
+
+    public BGMClip GetCurrentBGM()
+    {
+        return currentBGM;
     }
 }

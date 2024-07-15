@@ -166,11 +166,12 @@ public class UpgradeButton : MonoBehaviour
         }
     }
 
-    private void UpdateUpgradeCostUI(int newLevel)
-    {
+    public void UpdateUpgradeCostUI(int newLevel)
+    { // 저장 때문에 퍼블릭으로 수정!!
         if (upgradeType == UpgradeType.Root && root != null)
         {
             BigInteger upgradeCost = root.CalculateUpgradeCost();
+            Debug.Log($"UpdateUpgradeCostUI called for root level {root.rootLevel}, upgrade cost {upgradeCost}");
             UIManager.Instance.root.UpdateRootLevelUI(root.rootLevel, upgradeCost);
         }
         else if (upgradeType == UpgradeType.Touch && touchInputManager != null)

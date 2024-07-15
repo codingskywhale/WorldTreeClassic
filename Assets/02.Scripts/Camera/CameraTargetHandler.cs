@@ -35,10 +35,22 @@ public class CameraTargetHandler : MonoBehaviour
 
     public void SetTarget(Transform newTarget)
     {
+        if (!isFreeCamera) // 자유시점 모드가 아닌 경우 타겟 변경 무시
+        {            
+            return;
+        }
+
+        if (currentTarget == newTarget) // 이미 타겟이 설정된 경우 이벤트 무시
+        {            
+            return;
+        }
+
         currentTarget = newTarget;
         isObjectTarget = true;
+        Debug.Log("SetTarget: Target set to " + newTarget.name);
         StartCoroutine(ZoomToTarget(newTarget));
     }
+
 
     private IEnumerator ZoomToTarget(Transform newTarget)
     {

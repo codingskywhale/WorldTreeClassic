@@ -17,6 +17,10 @@ public class Animal : MonoBehaviour, IClickableObject //카메라 적용 인터�
     // 카메라 적용
     public void OnPointerClick(PointerEventData eventData)
     {
+        if (!CameraTargetHandler.Instance.IsFreeCamera())
+        {            
+            return;
+        }
         CameraTargetHandler.Instance.SetTarget(transform);
     }
 }

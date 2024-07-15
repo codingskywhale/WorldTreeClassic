@@ -45,17 +45,11 @@ public class CameraController : MonoBehaviour
 
             if (Input.GetMouseButtonDown(0))
             {
-                if (isFreeCamera)
-                {
-                    HandleClick();
-                }
-                else
-                {
-                    Debug.Log("Click ignored: Not in free camera mode");
-                }
+                HandleClick();
             }
         }
     }
+
 
 
     private void HandleFreeCamera()
@@ -121,12 +115,9 @@ public class CameraController : MonoBehaviour
     }
 
     private void HandleClick()
-    {
-        Debug.Log("HandleClick called");
-
+    {       
         if (!isFreeCamera) // 자유시점 모드가 아닌 경우 클릭 이벤트 무시
-        {
-            Debug.Log("HandleClick: Not in free camera mode, ignoring click.");
+        {            
             return;
         }
 
@@ -167,9 +158,7 @@ public class CameraController : MonoBehaviour
         isFreeCamera = !isFreeCamera;
 
         cameraTargetHandler.SetFreeCameraMode(isFreeCamera); // 자유시점 모드 설정
-
-        Debug.Log("ToggleCameraMode: isFreeCamera = " + isFreeCamera);
-
+                
         // 1초 후 버튼 다시 활성화
         StartCoroutine(EnableButtonAfterDelay(1.0f));
     }

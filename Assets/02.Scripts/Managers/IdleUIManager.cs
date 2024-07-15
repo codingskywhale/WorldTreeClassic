@@ -19,15 +19,17 @@ public class IdleUIManager : MonoBehaviour
     private float timer;
     private bool isIdle;
     private string currentSongTitle;
+    public UIOpenCloseManager uiOpenCloseManager;
 
     private void Start()
     {
         timer = idleTime;
-        isIdle = false;
+        isIdle = false;        
         ShowMainUI();
         currentSongTitle = SoundManager.instance.GetCurrentBGMTitle();
         StartCoroutine(ScrollSongTitle());
     }
+
 
     private void Update()
     {
@@ -39,7 +41,7 @@ public class IdleUIManager : MonoBehaviour
         {
             timer -= Time.deltaTime;
 
-            if (timer <= 0)
+            if (timer <= 0 && !uiOpenCloseManager.IsPanelOpen)
             {
                 EnterIdleMode();
             }
@@ -48,6 +50,16 @@ public class IdleUIManager : MonoBehaviour
         if (Input.anyKeyDown || Input.GetMouseButton(0))
         {
             ResetTimer();
+        }
+        UpdateCurrentSongTitle();
+    }
+
+    private void UpdateCurrentSongTitle()
+    {
+        var currentBGM = SoundManager.instance.GetCurrentBGM();
+        if (currentBGM != null)
+        {
+            currentSongTitle = currentBGM.Idletitle;
         }
     }
 
@@ -77,7 +89,7 @@ public class IdleUIManager : MonoBehaviour
 
     private void ShowMainUI()
     {
-        //mainUI.SetActive(true);
+        mainUI.SetActive(true);
         mainUI2.SetActive(true);
         idleUIContainer.SetActive(false);
     }
@@ -86,7 +98,7 @@ public class IdleUIManager : MonoBehaviour
     {
         gameTitleText.text = "세계수 키우기";        
         timeText.text = DateTime.Now.ToString("HH:mm:ss");
-        dateText.text = GetFormattedDate(DateTime.Now);
+        dateText.text = GetFormattedDate(DateTime.Now);        
     }
 
     private string GetFormattedDate(DateTime dateTime)
