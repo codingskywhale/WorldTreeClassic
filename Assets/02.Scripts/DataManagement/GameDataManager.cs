@@ -23,6 +23,22 @@ public class GameDataManager
 
         BigInteger totalLifeIncrease = CalculateTotalLifeIncrease(roots);
 
+        // 동물 상태 저장
+        List<AnimalDataSave.AnimalState> animalStates = new List<AnimalDataSave.AnimalState>();
+        foreach (var animal in GameObject.FindObjectsOfType<GameObject>())
+        {
+            if (animal.CompareTag("Animal"))
+            {
+                animalStates.Add(new AnimalDataSave.AnimalState
+                {
+                    animalType = "CubeAnimal", // 리소스 폴더에서 로드할 프리팹 이름
+                    posX = animal.transform.position.x,
+                    posY = animal.transform.position.y,
+                    posZ = animal.transform.position.z
+                });
+            }
+        }
+
         GameData gameData = new GameData
         {
             lifeAmount = lifeManager.lifeAmount.ToString(),
@@ -35,7 +51,8 @@ public class GameDataManager
             {
                 nowCreateCost = lifeManager.animalData.nowCreateCost.ToString(),
                 nowAnimalCount = lifeManager.animalData.nowAnimalCount,
-                maxAnimalCount = lifeManager.animalData.maxAnimalCount
+                maxAnimalCount = lifeManager.animalData.maxAnimalCount,
+                animalStates = animalStates
             },
             touchData = new TouchDataSave
             {
@@ -62,8 +79,6 @@ public class GameDataManager
         List<RootBase> roots = resourceManager.roots;
 
         lifeManager.lifeAmount = string.IsNullOrEmpty(gameData.lifeAmount) ? BigInteger.Zero : BigInteger.Parse(gameData.lifeAmount);
-        Debug.Log($"Loaded lifeAmount: {lifeManager.lifeAmount}");
-
         lifeManager.currentLevel = gameData.currentLevel;
         lifeManager.animalData.nowAnimalCount = gameData.nowAnimalCount;
         lifeManager.animalData.maxAnimalCount = gameData.maxAnimalCount;
@@ -71,16 +86,24 @@ public class GameDataManager
         if (gameData.animalData != null)
         {
             lifeManager.animalData.nowCreateCost = string.IsNullOrEmpty(gameData.animalData.nowCreateCost) ? BigInteger.Zero : BigInteger.Parse(gameData.animalData.nowCreateCost);
-            Debug.Log($"Loaded nowCreateCost: {lifeManager.animalData.nowCreateCost}");
             lifeManager.animalData.nowAnimalCount = gameData.animalData.nowAnimalCount;
             lifeManager.animalData.maxAnimalCount = gameData.animalData.maxAnimalCount;
+
+            // 동물 상태 로드
+            foreach (var animalState in gameData.animalData.animalStates)
+            {
+                GameObject animalObject = InstantiateAnimal(animalState.animalType);
+                if (animalObject != null)
+                {
+                    animalObject.transform.position = new UnityEngine.Vector3(animalState.posX, animalState.posY, animalState.posZ);
+                }                
+            }
         }
 
         if (gameData.touchData != null)
         {
             lifeManager.touchData.touchIncreaseLevel = gameData.touchData.touchIncreaseLevel;
             lifeManager.touchData.touchIncreaseAmount = string.IsNullOrEmpty(gameData.touchData.touchIncreaseAmount) ? BigInteger.Zero : BigInteger.Parse(gameData.touchData.touchIncreaseAmount);
-            Debug.Log($"Loaded touchIncreaseAmount: {lifeManager.touchData.touchIncreaseAmount}");
             lifeManager.touchData.upgradeLifeCost = string.IsNullOrEmpty(gameData.touchData.upgradeLifeCost) ? BigInteger.Zero : BigInteger.Parse(gameData.touchData.upgradeLifeCost);
         }
 
@@ -97,8 +120,6 @@ public class GameDataManager
             roots[i].isUnlocked = rootDataList[i].isUnlocked;
             roots[i].upgradeLifeCost = string.IsNullOrEmpty(rootDataList[i].upgradeLifeCost) ? BigInteger.Zero : BigInteger.Parse(rootDataList[i].upgradeLifeCost);
 
-            Debug.Log($"Initializing root: Level={roots[i].rootLevel}, IsUnlocked={roots[i].isUnlocked}, UpgradeCost={roots[i].upgradeLifeCost}");
-
             if (roots[i].isUnlocked)
             {
                 InitializeRoot(roots[i], rootDataList[i].rootLevel);
@@ -113,7 +134,6 @@ public class GameDataManager
         root.rootLevel = level;
         root.upgradeLifeCost = root.CalculateUpgradeCost();
         root.UpdateUI();
-        Debug.Log($"Initialized Root: Level={root.rootLevel}, UpgradeCost={root.upgradeLifeCost}");
     }
 
     private void InitializeDefaultGameData(ResourceManager resourceManager)
@@ -149,5 +169,15 @@ public class GameDataManager
             }
         }
         return totalLifeIncrease;
+    }
+
+    private GameObject InstantiateAnimal(string animalType)
+    {
+        GameObject animalPrefab = Resources.Load<GameObject>(animalType);
+        if (animalPrefab != null)
+        {            
+            return GameObject.Instantiate(animalPrefab);
+        }        
+        return null;
     }
 }

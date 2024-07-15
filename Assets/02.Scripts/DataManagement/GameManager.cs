@@ -15,7 +15,7 @@ public class GameManager : MonoBehaviour
     {
         gameDataManager = new GameDataManager();
         uiUpdater = new UIUpdater(resourceManager, upgradeButtons);
-        offlineProgressCalculator = new OfflineProgressCalculator();
+        offlineProgressCalculator = new OfflineProgressCalculator();                
     }
 
     private void Start()
