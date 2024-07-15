@@ -6,8 +6,8 @@ public class Root5 : RootBase
     protected override void Start()
     {
         unlockThreshold = 50;
-        baseLifeGeneration = BigInteger.Parse("1103870000");
-        unlockCost = BigInteger.Parse("108000000000"); // d 단위로 설정
+        baseLifeGeneration = BigInteger.Parse("110387500");
+        unlockCost = BigInteger.Parse("1086632462686570");
         base.Start();
         LifeManager.Instance.RegisterRoot(this);
         UpdateUI();

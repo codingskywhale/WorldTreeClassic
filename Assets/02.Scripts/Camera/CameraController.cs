@@ -32,16 +32,16 @@ public class CameraController : MonoBehaviour
 
     private void Update()
     {
-        if (cameraTransition.animationCompleted)
-        {
-            if (isFreeCamera)
-            {
-                HandleFreeCamera();
-            }
-            else if (cameraTargetHandler.isObjectTarget && cameraTargetHandler.currentTarget != null)
-            {
-                cameraTargetHandler.FollowObject();
-            }
+        //if (cameraTransition.animationCompleted)
+        //{
+        //    if (isFreeCamera)
+        //    {
+        //        HandleFreeCamera();
+        //    }
+        //    else if (cameraTargetHandler.isObjectTarget && cameraTargetHandler.currentTarget != null)
+        //    {
+        //        cameraTargetHandler.FollowObject();
+        //    }
 
             if (Input.GetMouseButtonDown(0))
             {
