@@ -47,28 +47,11 @@ public class HeartButton : MonoBehaviour
         // 재화를 획득한다.
         LifeManager.Instance.IncreaseWater(LifeManager.Instance.touchData.touchIncreaseAmount);
 
-        LifeManager.Instance.bubbleGenerator.RemoveIdxFromNowBubbleList(heartIdx);
-        if (bubbleClickSkill != null)
-        {
-            bubbleClickSkill.RemoveBubbleFromQueue(gameObject);
-        }
-        // 사라진다.
-        gameObject.SetActive(false);
-        // 일정 시간 후 다시 활성화
-        Invoke("ReactivateBubble", 5f);
+        LifeManager.Instance.bubbleGenerator.OnAutoTouchBubbleSkill();
 
-    }
-    private void ReactivateBubble()
-    {
-        gameObject.SetActive(true);
-        if (bubbleClickSkill != null)
-        {
-            Debug.Log("ReactivateBubble: Adding bubble to queue");
-            bubbleClickSkill.AddBubbleToQueue(gameObject);
-        }
-        else
-        {
-            Debug.LogError("ReactivateBubble: BubbleClickSkill not found");
-        }
+        LifeManager.Instance.bubbleGenerator.RemoveIdxFromNowBubbleList(heartIdx);
+
+        // 사라진다.
+        gameObject.SetActive(false); 
     }
 }

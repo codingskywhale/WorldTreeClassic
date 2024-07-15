@@ -20,12 +20,11 @@ public class RootBase : MonoBehaviour, IRoot
     public BigInteger upgradeLifeCost;
     public float generationInterval = 1f;
     public TextMeshProUGUI rootLevelText;
-    public TextMeshProUGUI rootUpgradeCostText;
     public TextMeshProUGUI generationRateText; // 생산률을 나타내는 텍스트 추가
+    public TextMeshProUGUI rootUpgradeCostText;
     public bool isUnlocked = false; // 잠금 상태를 나타내는 변수 추가
 
     private float timer;
-    public TouchData touchData; // TouchData 참조
     public int unlockThreshold = 5; // 잠금 해제에 필요한 터치 레벨
     public GameObject objectPrefab;
 
@@ -165,7 +164,7 @@ public class RootBase : MonoBehaviour, IRoot
     private void CheckUnlockCondition()
     {
         // 버튼 활성화 처리를 위해 조건 확인 로직을 유지
-        if (!isUnlocked && touchData != null && touchData.touchIncreaseLevel >= unlockThreshold)
+        if (!isUnlocked && LifeManager.Instance.touchData != null && LifeManager.Instance.touchData.touchIncreaseLevel >= unlockThreshold)
         {
             UpdateUI();
         }

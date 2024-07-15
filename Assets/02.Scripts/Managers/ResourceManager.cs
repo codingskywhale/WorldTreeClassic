@@ -5,7 +5,7 @@ using UnityEngine;
 public class ResourceManager : MonoBehaviour
 {
     public LifeManager lifeManager;
-    private List<RootBase> roots = new List<RootBase>();
+    public List<RootBase> roots = new List<RootBase>();
 
     private void Start()
     {

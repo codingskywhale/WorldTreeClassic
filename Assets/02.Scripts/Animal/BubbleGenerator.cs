@@ -5,13 +5,23 @@ using UnityEngine;
 public class BubbleGenerator : MonoBehaviour
 {
     public List<HeartButton> heartBubbleList = new List<HeartButton>();
-    private List<int> nowBubbleIdxList = new List<int>();
+    public List<int> nowBubbleIdxList = new List<int>();
     private readonly int maxHeartCount = 2;
     public int selectedObjectIndex;
     private int nowOnHeartIndex;
-    private readonly float heartGenerateDelay = 2f;
+    public readonly float heartGenerateDelay = 2f;
     private int buttonIdx = 0;
 
+    private int queueIdx = 0;
+
+    private Queue<int> skillIdxQueue = new Queue<int>();
+
+    public BubbleClickSkill bubbleClickSkill;
+
+    private void Start()
+    {
+        bubbleClickSkill = FindObjectOfType<BubbleClickSkill>();
+    }
     public void AddAnimalHeartBubbleList(HeartButton bubble)
     {
         heartBubbleList.Add(bubble);
@@ -26,9 +36,8 @@ public class BubbleGenerator : MonoBehaviour
 
     IEnumerator GenerateHeart()
     {
-        yield return new WaitForSeconds(heartGenerateDelay);
-
         HeartOnRandomAnimal();
+        yield return new WaitForSeconds(heartGenerateDelay);
     }
 
     public void HeartOnRandomAnimal()
@@ -56,11 +65,17 @@ public class BubbleGenerator : MonoBehaviour
             {
                 randomIdx = Random.Range(0, heartBubbleList.Count);
             }
-            // 중복되지 않은 값을 현재 리스트에 넣어줌.
+            // 중복되지 않은 값을 현재 인덱스 리스트에 넣어줌.
             nowBubbleIdxList.Add(randomIdx);
         }
 
         // 리스트에 없다?
+
+        if (bubbleClickSkill.isUseSkill)
+        {
+            queueIdx = randomIdx;
+        }
+
         heartBubbleList[randomIdx].SetBubbleOn();
     }
 
@@ -71,9 +86,10 @@ public class BubbleGenerator : MonoBehaviour
         if (nowBubbleIdxList.Contains(idx))
         {
             nowBubbleIdxList.Remove(idx);
+
             GenerateNewHeart();
         }
-        
+
         // 인덱스 밀림 방지
         for (int i = idx; i < nowBubbleIdxList.Count; i++)
         {
@@ -84,5 +100,32 @@ public class BubbleGenerator : MonoBehaviour
         }
 
         buttonIdx--;
+    }
+
+    public void OnAutoTouchBubbleSkill()
+    {
+        if (bubbleClickSkill != null && bubbleClickSkill.isUseSkill)
+        {
+            bubbleClickSkill.RemoveBubbleFromQueue(heartBubbleList[nowBubbleIdxList[0]].gameObject);
+
+            // 일정 시간 후 다시 활성화
+            StartCoroutine(ReactivateBubble());
+        }
+    }
+    IEnumerator ReactivateBubble()
+    {
+        yield return new WaitForSeconds(heartGenerateDelay);
+
+        GenerateNewHeart();
+
+        if (bubbleClickSkill != null)
+        {
+            Debug.Log("ReactivateBubble: Adding bubble to queue");
+            bubbleClickSkill.AddBubbleToQueue(heartBubbleList[queueIdx].gameObject);
+        }
+        else
+        {
+            Debug.LogError("ReactivateBubble: BubbleClickSkill not found");
+        }
     }
 }

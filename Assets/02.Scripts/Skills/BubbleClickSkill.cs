@@ -8,7 +8,11 @@ public class BubbleClickSkill : Skill
     public float baseClickIntervalIncrease = 1; // 클릭 시간 증가량
     public int baseClickRateIncrease = 1; // 클릭 횟수 증가량
 
+    public bool isUseSkill = false;
+
     private Queue<GameObject> bubbleQueue = new Queue<GameObject>();
+
+    public List<GameObject> bubbleList = new List<GameObject>();
 
     protected override void Start()
     {
@@ -31,6 +35,7 @@ public class BubbleClickSkill : Skill
     public void AddBubbleToQueue(GameObject bubble)
     {
         bubbleQueue.Enqueue(bubble);
+        bubbleList.Add(bubble);
     }
 
     public void RemoveBubbleFromQueue(GameObject bubble)
@@ -61,8 +66,21 @@ public class BubbleClickSkill : Skill
         }
     }
 
+    public void ActivateSkillTest()
+    {
+        if (!onCooldown && currentLevel > 0) // 해금된 경우에만 스킬 사용 가능
+        {
+            foreach (var bubbleIdx in LifeManager.Instance.bubbleGenerator.nowBubbleIdxList)
+            {
+                AddBubbleToQueue(LifeManager.Instance.bubbleGenerator.heartBubbleList[bubbleIdx].gameObject);
+            }
+            StartCoroutine(SkillEffect());
+        }
+    }
+
     protected override IEnumerator ApplySkillEffect()
     {
+        isUseSkill = true;
         float elapsedTime = 0f;
 
         while (elapsedTime < skillDuration)
@@ -76,6 +94,7 @@ public class BubbleClickSkill : Skill
             elapsedTime += clickInterval;
         }
 
+        isUseSkill = false;
         bubbleQueue.Clear(); // 스킬 종료 후 큐를 비웁니다.
     }
 

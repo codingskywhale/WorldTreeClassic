@@ -253,8 +253,8 @@ GameObject:
   - component: {fileID: 9212004371148347403}
   - component: {fileID: 5754092214199546460}
   m_Layer: 5
-  m_Name: HeartBubble
-  m_TagString: Untagged
+  m_Name: HeartBubble(2)
+  m_TagString: Bubble
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
