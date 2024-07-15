@@ -90,6 +90,7 @@ public class AnimalInfoWindow : MonoBehaviour
         if (DataManager.Instance.animalGenerateData.allTypeCountDic[nowAnimaldataSO.animalName][EachCountType.Stored] > 0)
         {
             DataManager.Instance.animalGenerateData.allTypeCountDic[nowAnimaldataSO.animalName][EachCountType.Stored]--;
+            DataManager.Instance.animalGenerateData.allTypeCountDic[nowAnimaldataSO.animalName][EachCountType.Active]++;
 
             if (DataManager.Instance.animalGenerateData.AddAnimal())
             {
@@ -103,8 +104,6 @@ public class AnimalInfoWindow : MonoBehaviour
                 {
                     LifeManager.Instance.bubbleGenerator.GenerateNewHeart();
                 }
-
-                DataManager.Instance.animalGenerateData.AddAnimalToDictionary(nowAnimaldataSO.animalName, true);
             }
 
             SetActiveStoreCountUI();

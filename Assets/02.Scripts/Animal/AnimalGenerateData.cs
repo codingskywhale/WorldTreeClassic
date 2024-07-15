@@ -29,11 +29,7 @@ public class AnimalGenerateData
         nowCreateCost = createCostbase;
         maxAnimalCount = 5;
         allTypeCountDic = new Dictionary<string, Dictionary<EachCountType, int>>();
-
-        if (!UIManager.Instance)
-        {
-            UIManager.Instance.status.UpdateAnimalCountText(nowAnimalCount, maxAnimalCount);
-        }
+        UIManager.Instance.status.UpdateAnimalCountText(nowAnimalCount, maxAnimalCount);
     }
 
     public AnimalGenerateData(BigInteger nowCreateCost, int maxAnimalCount)

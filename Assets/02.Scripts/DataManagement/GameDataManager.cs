@@ -43,15 +43,15 @@ public class GameDataManager
         {
             lifeAmount = lifeManager.lifeAmount.ToString(),
             totalLifeIncrease = totalLifeIncrease.ToString(),
-            nowAnimalCount = lifeManager.animalData.nowAnimalCount,
-            maxAnimalCount = lifeManager.animalData.maxAnimalCount,
+            nowAnimalCount = DataManager.Instance.animalGenerateData.nowAnimalCount,
+            maxAnimalCount = DataManager.Instance.animalGenerateData.maxAnimalCount,
             currentLevel = lifeManager.currentLevel,
             roots = rootDataList,
             animalData = new AnimalDataSave
             {
-                nowCreateCost = lifeManager.animalData.nowCreateCost.ToString(),
-                nowAnimalCount = lifeManager.animalData.nowAnimalCount,
-                maxAnimalCount = lifeManager.animalData.maxAnimalCount,
+                nowCreateCost = DataManager.Instance.animalGenerateData.nowCreateCost.ToString(),
+                nowAnimalCount = DataManager.Instance.animalGenerateData.nowAnimalCount,
+                maxAnimalCount = DataManager.Instance.animalGenerateData.maxAnimalCount,
                 animalStates = animalStates
             },
             touchData = new TouchDataSave
@@ -80,14 +80,14 @@ public class GameDataManager
 
         lifeManager.lifeAmount = string.IsNullOrEmpty(gameData.lifeAmount) ? BigInteger.Zero : BigInteger.Parse(gameData.lifeAmount);
         lifeManager.currentLevel = gameData.currentLevel;
-        lifeManager.animalData.nowAnimalCount = gameData.nowAnimalCount;
-        lifeManager.animalData.maxAnimalCount = gameData.maxAnimalCount;
+        DataManager.Instance.animalGenerateData.nowAnimalCount = gameData.nowAnimalCount;
+        DataManager.Instance.animalGenerateData.maxAnimalCount = gameData.maxAnimalCount;
 
         if (gameData.animalData != null)
         {
-            lifeManager.animalData.nowCreateCost = string.IsNullOrEmpty(gameData.animalData.nowCreateCost) ? BigInteger.Zero : BigInteger.Parse(gameData.animalData.nowCreateCost);
-            lifeManager.animalData.nowAnimalCount = gameData.animalData.nowAnimalCount;
-            lifeManager.animalData.maxAnimalCount = gameData.animalData.maxAnimalCount;
+            DataManager.Instance.animalGenerateData.nowCreateCost = string.IsNullOrEmpty(gameData.animalData.nowCreateCost) ? BigInteger.Zero : BigInteger.Parse(gameData.animalData.nowCreateCost);
+            DataManager.Instance.animalGenerateData.nowAnimalCount = gameData.animalData.nowAnimalCount;
+            DataManager.Instance.animalGenerateData.maxAnimalCount = gameData.animalData.maxAnimalCount;
 
             // 동물 상태 로드
             foreach (var animalState in gameData.animalData.animalStates)
@@ -141,9 +141,9 @@ public class GameDataManager
         LifeManager lifeManager = resourceManager.lifeManager;
         lifeManager.lifeAmount = BigInteger.Zero;
         lifeManager.currentLevel = 1;
-        lifeManager.animalData.nowAnimalCount = 0;
-        lifeManager.animalData.maxAnimalCount = 5;
-        lifeManager.animalData.nowCreateCost = lifeManager.animalData.createCostbase;
+        DataManager.Instance.animalGenerateData.nowAnimalCount = 0;
+        DataManager.Instance.animalGenerateData.maxAnimalCount = 5;
+        DataManager.Instance.animalGenerateData.nowCreateCost = DataManager.Instance.animalGenerateData.createCostbase;
         lifeManager.touchData.touchIncreaseLevel = 1;
         lifeManager.touchData.touchIncreaseAmount = 10;
         lifeManager.touchData.upgradeLifeCost = 20;

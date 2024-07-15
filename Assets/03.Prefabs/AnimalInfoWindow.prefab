@@ -2048,7 +2048,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &4898220990788461843
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2378,7 +2378,7 @@ GameObject:
   - component: {fileID: 2024736593119245206}
   - component: {fileID: 3938370682166264679}
   m_Layer: 5
-  m_Name: Button (1)
+  m_Name: PlaceButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2485,7 +2485,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 2024736593119245206}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 5596230972879468393}
+        m_TargetAssemblyTypeName: AnimalInfoWindow, Assembly-CSharp
+        m_MethodName: TakeOutAnimalfromBag
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &6800106224024691380
 GameObject:
   m_ObjectHideFlags: 0
@@ -2710,7 +2722,7 @@ GameObject:
   - component: {fileID: 5385640226270181067}
   - component: {fileID: 6368950859819079393}
   m_Layer: 5
-  m_Name: Button
+  m_Name: StorageButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2817,7 +2829,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 5385640226270181067}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 5596230972879468393}
+        m_TargetAssemblyTypeName: AnimalInfoWindow, Assembly-CSharp
+        m_MethodName: AnimalToBag
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &8675357151042585459
 GameObject:
   m_ObjectHideFlags: 0

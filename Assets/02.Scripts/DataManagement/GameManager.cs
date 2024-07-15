@@ -14,15 +14,16 @@ public class GameManager : MonoBehaviour
     private void Awake()
     {
         gameDataManager = new GameDataManager();
-        uiUpdater = new UIUpdater(resourceManager, upgradeButtons);
-        offlineProgressCalculator = new OfflineProgressCalculator();                
+        //uiUpdater = new UIUpdater(resourceManager, upgradeButtons);
+        offlineProgressCalculator = new OfflineProgressCalculator();
+        //SaveSystem.DeleteSave();
     }
 
     private void Start()
     {
-        gameDataManager.LoadGameData(resourceManager);
-        CalculateOfflineProgress();
-        uiUpdater.UpdateAllUI();
+        //CalculateOfflineProgress();
+        //gameDataManager.LoadGameData(resourceManager);
+        //uiUpdater.UpdateAllUI();
     }
 
     private void CalculateOfflineProgress()
@@ -37,6 +38,6 @@ public class GameManager : MonoBehaviour
 
     private void OnApplicationQuit()
     {
-        gameDataManager.SaveGameData(resourceManager);
+        //gameDataManager.SaveGameData(resourceManager);
     }
 }

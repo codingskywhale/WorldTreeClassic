@@ -33,8 +33,8 @@ public class CreateObjectButton : MonoBehaviour
         conditionText.text = conditionX + animalData.animalUnlockConditions[0];
         // 일단 첫 번째 버튼은 해금된 상태여야 함.
         CheckConditionCleared(0);
-        UIManager.Instance.UpdateButtonUI();
         SetButtonLock();
+        UIManager.Instance.UpdateButtonUI();
     }
 
     public void ClickCreateAnimal(int buttonIdx)
