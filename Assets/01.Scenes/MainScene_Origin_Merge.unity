@@ -2478,6 +2478,7 @@ MonoBehaviour:
   - {fileID: 1079943225}
   - {fileID: 564631443}
   - {fileID: 1780361236808267187}
+  currentActiveObject: {fileID: 1079943225}
 --- !u!4 &137116702
 Transform:
   m_ObjectHideFlags: 0
@@ -4695,7 +4696,6 @@ MonoBehaviour:
   resourceManager: {fileID: 525614631}
   root: {fileID: 990194075}
   touchInputManager: {fileID: 1987132685}
-  touchData: {fileID: 935140181}
   upgradeType: 0
   upgradeAmount: 1
 --- !u!114 &317095069
@@ -6688,7 +6688,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   status: {fileID: 425030253}
   root: {fileID: 153027942}
-  touchData: {fileID: 935140181}
+  touchData: {fileID: 0}
   tree: {fileID: 701093651}
   bag: {fileID: 364809205}
   createAnimalButtons:
@@ -12975,10 +12975,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aacb8e2714c6edb48bcda875218a9ca5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  resourceManager: {fileID: 0}
+  resourceManager: {fileID: 525614631}
   root: {fileID: 0}
-  touchInputManager: {fileID: 0}
-  touchData: {fileID: 0}
+  touchInputManager: {fileID: 1987132685}
   upgradeType: 1
   upgradeAmount: 1
 --- !u!114 &873930992
@@ -13767,7 +13766,6 @@ GameObject:
   m_Component:
   - component: {fileID: 935140182}
   - component: {fileID: 935140180}
-  - component: {fileID: 935140181}
   - component: {fileID: 935140183}
   m_Layer: 0
   m_Name: LifeManager
@@ -13790,25 +13788,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   currentLevel: 1
   lifePerLevel: 10
-  touchData: {fileID: 935140181}
   RootData: {fileID: 153027942}
   bubbleGenerator: {fileID: 0}
---- !u!114 &935140181
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 935140179}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 79d831d5b528d8a4eb56391e4a67431d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  touchIncreaseLevel: 1
-  touchLevelText: {fileID: 1111805504}
-  touchIncreaseText: {fileID: 252581316}
-  upgradelifeCostText: {fileID: 86883175}
 --- !u!4 &935140182
 Transform:
   m_ObjectHideFlags: 0
@@ -15574,6 +15555,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   resourceManager: {fileID: 525614631}
   upgradeButtons: []
+  animalDataList: []
 --- !u!1 &1030702570
 GameObject:
   m_ObjectHideFlags: 0
@@ -15889,7 +15871,6 @@ MonoBehaviour:
   resourceManager: {fileID: 525614631}
   root: {fileID: 866107451}
   touchInputManager: {fileID: 1987132685}
-  touchData: {fileID: 935140181}
   upgradeType: 0
   upgradeAmount: 1
 --- !u!114 &1062155682
@@ -17029,7 +17010,6 @@ MonoBehaviour:
   resourceManager: {fileID: 525614631}
   root: {fileID: 1486323988}
   touchInputManager: {fileID: 1987132685}
-  touchData: {fileID: 935140181}
   upgradeType: 0
   upgradeAmount: 1
 --- !u!114 &1131502367
@@ -17517,7 +17497,6 @@ MonoBehaviour:
   resourceManager: {fileID: 525614631}
   root: {fileID: 1474580548}
   touchInputManager: {fileID: 1987132685}
-  touchData: {fileID: 935140181}
   upgradeType: 0
   upgradeAmount: 1
 --- !u!114 &1159708269
@@ -19109,7 +19088,6 @@ MonoBehaviour:
   resourceManager: {fileID: 525614631}
   root: {fileID: 1058648819}
   touchInputManager: {fileID: 1987132685}
-  touchData: {fileID: 935140181}
   upgradeType: 0
   upgradeAmount: 1
 --- !u!114 &1263395573
@@ -19249,7 +19227,6 @@ MonoBehaviour:
   resourceManager: {fileID: 525614631}
   root: {fileID: 145072085}
   touchInputManager: {fileID: 1987132685}
-  touchData: {fileID: 935140181}
   upgradeType: 0
   upgradeAmount: 1
 --- !u!114 &1265012653
@@ -19885,7 +19862,6 @@ MonoBehaviour:
   resourceManager: {fileID: 525614631}
   root: {fileID: 468112742}
   touchInputManager: {fileID: 1987132685}
-  touchData: {fileID: 935140181}
   upgradeType: 0
   upgradeAmount: 1
 --- !u!114 &1311065290
@@ -22175,7 +22151,6 @@ MonoBehaviour:
   resourceManager: {fileID: 525614631}
   root: {fileID: 2089163036}
   touchInputManager: {fileID: 1987132685}
-  touchData: {fileID: 935140181}
   upgradeType: 0
   upgradeAmount: 1
 --- !u!114 &1500233801
@@ -22679,7 +22654,6 @@ MonoBehaviour:
   resourceManager: {fileID: 525614631}
   root: {fileID: 1925851964}
   touchInputManager: {fileID: 1987132685}
-  touchData: {fileID: 935140181}
   upgradeType: 0
   upgradeAmount: 1
 --- !u!114 &1537068560
@@ -25416,6 +25390,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1783155104}
   - component: {fileID: 1783155103}
+  - component: {fileID: 1783155105}
   m_Layer: 0
   m_Name: DataManager
   m_TagString: Untagged
@@ -25436,6 +25411,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spawnData: {fileID: 1864715110}
+  touchData: {fileID: 0}
 --- !u!4 &1783155104
 Transform:
   m_ObjectHideFlags: 0
@@ -25451,6 +25427,22 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1783155105
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1783155102}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 79d831d5b528d8a4eb56391e4a67431d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  touchIncreaseLevel: 1
+  touchLevelText: {fileID: 1111805504}
+  touchIncreaseText: {fileID: 252581316}
+  upgradelifeCostText: {fileID: 86883175}
 --- !u!1 &1819610168
 GameObject:
   m_ObjectHideFlags: 0
@@ -27784,7 +27776,6 @@ MonoBehaviour:
   resourceManager: {fileID: 525614631}
   root: {fileID: 131668842}
   touchInputManager: {fileID: 1987132685}
-  touchData: {fileID: 935140181}
   upgradeType: 0
   upgradeAmount: 1
 --- !u!114 &1981350019

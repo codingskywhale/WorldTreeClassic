@@ -3,7 +3,7 @@ using UnityEngine;
 public class GameObjectManager : MonoBehaviour
 {
     public GameObject[] gameObjects; // 게임 오브젝트들을 저장할 배열
-    private GameObject currentActiveObject; // 현재 활성화된 오브젝트
+    public GameObject currentActiveObject; // 현재 활성화된 오브젝트
 
     // 버튼 클릭 시 호출될 메서드
     public void ShowGameObject(int index)

@@ -34,9 +34,9 @@ public class RootBoostSkill : Skill
     protected override IEnumerator ApplySkillEffect()
     {
         // 터치 데이터의 증가량에 부스트 적용
-        BigInteger originalTouchIncreaseAmount = LifeManager.Instance.touchData.touchIncreaseAmount;
-        LifeManager.Instance.touchData.touchIncreaseAmount *= boostMultiplier;
-        LifeManager.Instance.touchData.UpdateUI();
+        BigInteger originalTouchIncreaseAmount = DataManager.Instance.touchData.touchIncreaseAmount;
+        DataManager.Instance.touchData.touchIncreaseAmount *= boostMultiplier;
+        DataManager.Instance.touchData.UpdateUI();
         Debug.Log("실행됨");
         // 5분간 생산량을 500배로 증가
         foreach (var root in roots)
@@ -47,8 +47,8 @@ public class RootBoostSkill : Skill
         yield return new WaitForSeconds(boostDuration); // 부스트 지속 시간 동안 대기
 
         // 부스트 지속 시간이 끝나면 원래 값으로 복원
-        LifeManager.Instance.touchData.touchIncreaseAmount = originalTouchIncreaseAmount;
-        LifeManager.Instance.touchData.UpdateUI();
+        DataManager.Instance.touchData.touchIncreaseAmount = originalTouchIncreaseAmount;
+        DataManager.Instance.touchData.UpdateUI();
     }
 
     protected override void UpdateClickValues()

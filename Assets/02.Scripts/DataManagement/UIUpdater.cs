@@ -15,9 +15,8 @@ public class UIUpdater
 
     public void UpdateAllUI()
     {
-        LifeManager lifeManager = resourceManager.lifeManager;
-        UIManager.Instance.touchData.UpdateUI();
-        UIManager.Instance.status.UpdateLifeUI(lifeManager.lifeAmount, lifeManager.CalculateWaterNeededForUpgrade(1));
+        DataManager.Instance.touchData.UpdateUI();
+        UIManager.Instance.status.UpdateLifeUI(LifeManager.Instance.lifeAmount, LifeManager.Instance.CalculateWaterNeededForUpgrade(1));
         UIManager.Instance.status.UpdateAnimalCountText(DataManager.Instance.animalGenerateData.nowAnimalCount, DataManager.Instance.animalGenerateData.maxAnimalCount);
 
         foreach (var root in resourceManager.roots)
@@ -37,11 +36,11 @@ public class UIUpdater
             }
             else if (button.upgradeType == UpgradeButton.UpgradeType.Tree)
             {
-                button.UpdateUpgradeCostUI(lifeManager.currentLevel);
+                button.UpdateUpgradeCostUI(LifeManager.Instance.currentLevel);
             }
             else if (button.upgradeType == UpgradeButton.UpgradeType.Touch)
             {
-                button.UpdateUpgradeCostUI(lifeManager.touchData.touchIncreaseLevel);
+                button.UpdateUpgradeCostUI(DataManager.Instance.touchData.touchIncreaseLevel);
             }
         }
 

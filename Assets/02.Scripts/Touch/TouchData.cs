@@ -41,7 +41,7 @@ public class TouchData : MonoBehaviour
 
     public void UpdateUI()
     {
-        UIManager.Instance.touchData.UpdateTouchUI(touchIncreaseLevel, touchIncreaseAmount, upgradeLifeCost);
+        UpdateTouchUI(touchIncreaseLevel, touchIncreaseAmount, upgradeLifeCost);
     }
 
     public void UpdateTouchUI(int touchIncreaseLevel, BigInteger touchIncreaseAmount, BigInteger upgradelifeCost)

@@ -165,7 +165,7 @@ public class RootBase : MonoBehaviour, IRoot
     private void CheckUnlockCondition()
     {
         // 버튼 활성화 처리를 위해 조건 확인 로직을 유지
-        if (!isUnlocked && LifeManager.Instance.touchData != null && LifeManager.Instance.touchData.touchIncreaseLevel >= unlockThreshold)
+        if (!isUnlocked && DataManager.Instance.touchData != null && DataManager.Instance.touchData.touchIncreaseLevel >= unlockThreshold)
         {
             UpdateUI();
         }

@@ -9,7 +9,6 @@ public class GameDataManager
 
     public void SaveGameData(ResourceManager resourceManager)
     {
-        LifeManager lifeManager = resourceManager.lifeManager;
         List<RootBase> roots = resourceManager.roots;
 
         List<RootData> rootDataList = new List<RootData>();
@@ -47,11 +46,11 @@ public class GameDataManager
 
         GameData gameData = new GameData
         {
-            lifeAmount = lifeManager.lifeAmount.ToString(),
+            lifeAmount = LifeManager.Instance.lifeAmount.ToString(),
             totalLifeIncrease = totalLifeIncrease.ToString(),
             nowAnimalCount = DataManager.Instance.animalGenerateData.nowAnimalCount,
             maxAnimalCount = DataManager.Instance.animalGenerateData.maxAnimalCount,
-            currentLevel = lifeManager.currentLevel,
+            currentLevel = LifeManager.Instance.currentLevel,
             roots = rootDataList,
             animalData = new AnimalDataSave
             {
@@ -63,9 +62,9 @@ public class GameDataManager
             },
             touchData = new TouchDataSave
             {
-                touchIncreaseLevel = lifeManager.touchData.touchIncreaseLevel,
-                touchIncreaseAmount = lifeManager.touchData.touchIncreaseAmount.ToString(),
-                upgradeLifeCost = lifeManager.touchData.upgradeLifeCost.ToString()
+                touchIncreaseLevel = DataManager.Instance.touchData.touchIncreaseLevel,
+                touchIncreaseAmount = DataManager.Instance.touchData.touchIncreaseAmount.ToString(),
+                upgradeLifeCost = DataManager.Instance.touchData.upgradeLifeCost.ToString()
             },
             lastSaveTime = DateTime.UtcNow.ToString("o"),
             lifeGenerationRatePerSecond = resourceManager.GetTotalLifeGenerationPerSecond().ToString() // 초당 생명력 생성률 저장
@@ -111,9 +110,9 @@ public class GameDataManager
 
         if (gameData.touchData != null)
         {
-            lifeManager.touchData.touchIncreaseLevel = gameData.touchData.touchIncreaseLevel;
-            lifeManager.touchData.touchIncreaseAmount = string.IsNullOrEmpty(gameData.touchData.touchIncreaseAmount) ? BigInteger.Zero : BigInteger.Parse(gameData.touchData.touchIncreaseAmount);
-            lifeManager.touchData.upgradeLifeCost = string.IsNullOrEmpty(gameData.touchData.upgradeLifeCost) ? BigInteger.Zero : BigInteger.Parse(gameData.touchData.upgradeLifeCost);
+            DataManager.Instance.touchData.touchIncreaseLevel = gameData.touchData.touchIncreaseLevel;
+            DataManager.Instance.touchData.touchIncreaseAmount = string.IsNullOrEmpty(gameData.touchData.touchIncreaseAmount) ? BigInteger.Zero : BigInteger.Parse(gameData.touchData.touchIncreaseAmount);
+            DataManager.Instance.touchData.upgradeLifeCost = string.IsNullOrEmpty(gameData.touchData.upgradeLifeCost) ? BigInteger.Zero : BigInteger.Parse(gameData.touchData.upgradeLifeCost);
         }
 
         InitializeRoots(resourceManager, gameData.roots);
@@ -123,7 +122,7 @@ public class GameDataManager
         {
             resourceManager.SetLifeGenerationRatePerSecond(BigInteger.Parse(gameData.lifeGenerationRatePerSecond));
         }
-        Debug.Log($"LoadGameData - LifeAmount: {lifeManager.lifeAmount}");
+        Debug.Log($"LoadGameData - LifeAmount: {LifeManager.Instance.lifeAmount}");
         // 초기화 후 모든 루트의 UI 업데이트
         foreach (var root in roots)
         {
@@ -167,9 +166,9 @@ public class GameDataManager
         DataManager.Instance.animalGenerateData.nowAnimalCount = 0;
         DataManager.Instance.animalGenerateData.maxAnimalCount = 5;
         DataManager.Instance.animalGenerateData.nowCreateCost = DataManager.Instance.animalGenerateData.createCostbase;
-        lifeManager.touchData.touchIncreaseLevel = 1;
-        lifeManager.touchData.touchIncreaseAmount = 10;
-        lifeManager.touchData.upgradeLifeCost = 20;
+        DataManager.Instance.touchData.touchIncreaseLevel = 1;
+        DataManager.Instance.touchData.touchIncreaseAmount = 10;
+        DataManager.Instance.touchData.upgradeLifeCost = 20;
 
         List<RootBase> roots = resourceManager.roots;
         foreach (var root in roots)

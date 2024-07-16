@@ -80,7 +80,7 @@ public class CreateObjectButton : MonoBehaviour
                 DataManager.Instance.animalGenerateData.AddAnimalToDictionary(animalData.animalName, false);
             }
             // 생산량 2배 증가.
-            LifeManager.Instance.touchData.ApplyIncreaseRate(1);
+            DataManager.Instance.touchData.ApplyIncreaseRate(1);
             LifeManager.Instance.ApplyIncreaseRateToAllRoots(1);
 
             UIManager.Instance.CheckEnoughCost(0);

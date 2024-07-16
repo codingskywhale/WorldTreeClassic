@@ -12,7 +12,7 @@ public class TouchInputManager : MonoBehaviour
         {
             // 화면 터치시 효과음 재생
             SoundManager.instance.PlaySFX(SoundManager.instance.sfxClips[0]);
-            lifeManager.IncreaseWater(LifeManager.Instance.touchData.touchIncreaseAmount);                       
+            lifeManager.IncreaseWater(DataManager.Instance.touchData.touchIncreaseAmount);                       
         }
     }
 

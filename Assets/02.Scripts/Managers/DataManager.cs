@@ -8,6 +8,7 @@ public class DataManager : MonoBehaviour
 
     public AnimalGenerateData animalGenerateData;
     public AnimalSpawnData spawnData;
+    public TouchData touchData;
 
     private void Awake()
     {
@@ -22,6 +23,8 @@ public class DataManager : MonoBehaviour
             Destroy(gameObject); // 이미 인스턴스가 존재하면 중복 생성된 객체 파괴
         }
         animalGenerateData = new AnimalGenerateData();
+
+        touchData = GetComponent<TouchData>();
     }
 
     // 지정 동물을 파괴하는 기능

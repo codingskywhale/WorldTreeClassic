@@ -7,7 +7,6 @@ public class UpgradeButton : MonoBehaviour
     public ResourceManager resourceManager;
     public RootBase root;
     public TouchInputManager touchInputManager;
-    public TouchData touchData;
 
     public enum UpgradeType
     {
@@ -49,13 +48,13 @@ public class UpgradeButton : MonoBehaviour
         switch (upgradeType)
         {
             case UpgradeType.Root:
-                canUpgrade = root != null && (!root.isUnlocked && 
-                                              LifeManager.Instance.touchData.touchIncreaseLevel >= root.unlockThreshold && 
+                canUpgrade = root != null && (!root.isUnlocked &&
+                                              DataManager.Instance.touchData.touchIncreaseLevel >= root.unlockThreshold && 
                                               LifeManager.Instance.HasSufficientWater(root.CalculateUpgradeCost())) || 
                                               (root.isUnlocked && LifeManager.Instance.HasSufficientWater(root.CalculateUpgradeCost()));
                 break;
             case UpgradeType.Touch:
-                canUpgrade = LifeManager.Instance.HasSufficientWater(LifeManager.Instance.touchData.upgradeLifeCost);
+                canUpgrade = LifeManager.Instance.HasSufficientWater(DataManager.Instance.touchData.upgradeLifeCost);
                 break;
             case UpgradeType.Tree:
                 canUpgrade = LifeManager.Instance.HasSufficientWater(LifeManager.Instance.CalculateWaterNeededForUpgrade(upgradeAmount));
@@ -138,13 +137,13 @@ public class UpgradeButton : MonoBehaviour
 
     private void HandleTouchUpgrade()
     {
-        TouchData touchData = LifeManager.Instance.touchData;
+        TouchData touchData = DataManager.Instance.touchData;
 
-        BigInteger upgradeLifeCost = LifeManager.Instance.touchData.upgradeLifeCost;
+        BigInteger upgradeLifeCost = DataManager.Instance.touchData.upgradeLifeCost;
         if (LifeManager.Instance.HasSufficientWater(upgradeLifeCost))
         {
             LifeManager.Instance.DecreaseWater(upgradeLifeCost);
-            LifeManager.Instance.touchData.UpgradeTouchGeneration();
+            DataManager.Instance.touchData.UpgradeTouchGeneration();
             UIManager.Instance.touchData.UpdateTouchUI(touchData.touchIncreaseLevel, touchData.touchIncreaseAmount, touchData.upgradeLifeCost);
         }
         else
@@ -178,9 +177,9 @@ public class UpgradeButton : MonoBehaviour
         }
         else if (upgradeType == UpgradeType.Touch && touchInputManager != null)
         {
-            UIManager.Instance.touchData.UpdateTouchUI(LifeManager.Instance.touchData.touchIncreaseLevel,
-                                    LifeManager.Instance.touchData.touchIncreaseAmount,
-                                    LifeManager.Instance.touchData.upgradeLifeCost);
+            UIManager.Instance.touchData.UpdateTouchUI(DataManager.Instance.touchData.touchIncreaseLevel,
+                                    DataManager.Instance.touchData.touchIncreaseAmount,
+                                    DataManager.Instance.touchData.upgradeLifeCost);
         }
         else if (upgradeType == UpgradeType.Tree && resourceManager != null)
         {
