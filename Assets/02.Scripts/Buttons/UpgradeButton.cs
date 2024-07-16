@@ -98,11 +98,13 @@ public class UpgradeButton : MonoBehaviour
     {
         if (root == null || root.isUnlocked) return;
 
-        BigInteger unlockCost = root.CalculateUpgradeCost();
+        BigInteger unlockCost = root.unlockCost; // CalculateUpgradeCost가 아닌 unlockCost 사용
+        Debug.Log($"HandleRootUnlock - Unlock Cost: {unlockCost}, Current Water: {LifeManager.Instance.lifeAmount}");
         if (LifeManager.Instance.HasSufficientWater(unlockCost))
         {
             LifeManager.Instance.DecreaseWater(unlockCost);
             root.Unlock();
+            resourceManager.UpdateLifeGenerationRatePerSecond();  // 초당 생명력 생성률 업데이트
             root.UpdateUI();
             resourceManager.UpdateUI();
             resourceManager.GetTotalLifeGenerationPerSecond();
@@ -138,13 +140,18 @@ public class UpgradeButton : MonoBehaviour
     private void HandleTouchUpgrade()
     {
         TouchData touchData = DataManager.Instance.touchData;
-
+        if (touchData == null)
+        {
+            Debug.LogError("touchData is null in HandleTouchUpgrade.");
+            return;
+        }
         BigInteger upgradeLifeCost = DataManager.Instance.touchData.upgradeLifeCost;
         if (LifeManager.Instance.HasSufficientWater(upgradeLifeCost))
         {
             LifeManager.Instance.DecreaseWater(upgradeLifeCost);
             DataManager.Instance.touchData.UpgradeTouchGeneration();
-            UIManager.Instance.touchData.UpdateTouchUI(touchData.touchIncreaseLevel, touchData.touchIncreaseAmount, touchData.upgradeLifeCost);
+            UIManager.Instance.touchData.UpdateTouchUI(touchData.touchIncreaseLevel, touchData.touchIncreaseAmount, 
+                                                        touchData.upgradeLifeCost);
         }
         else
         {

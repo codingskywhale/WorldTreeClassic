@@ -70,7 +70,7 @@ public class OfflineRewardSkill : MonoBehaviour
 
     public BigInteger CalculateUpgradeCost(int level)
     {
-        return (level - 1) + 10;
+        return unlockCost + (level * 10);;
     }
 
     private void UpdateUI()

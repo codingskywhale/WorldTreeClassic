@@ -7,15 +7,17 @@ public class OfflineRewardManager
     private ResourceManager resourceManager;
     private OfflineProgressCalculator offlineProgressCalculator;
     private OfflineRewardSkill offlineRewardSkill;
+    private OfflineRewardAmountSkill offlineRewardAmountSkill;
 
     // AdditionalOfflineRewardMinutes 변수 선언
     public int AdditionalOfflineRewardMinutes { get; private set; } = 0;
-
-    public OfflineRewardManager(ResourceManager resourceManager, OfflineProgressCalculator offlineProgressCalculator, OfflineRewardSkill offlineRewardSkill)
+    public OfflineRewardManager(ResourceManager resourceManager, OfflineProgressCalculator offlineProgressCalculator, 
+                                OfflineRewardSkill offlineRewardSkill, OfflineRewardAmountSkill offlineRewardAmountSkill)
     {
         this.resourceManager = resourceManager;
         this.offlineProgressCalculator = offlineProgressCalculator;
         this.offlineRewardSkill = offlineRewardSkill;
+        this.offlineRewardAmountSkill = offlineRewardAmountSkill;
         UpdateAdditionalRewardMinutes();
     }
 
@@ -59,6 +61,15 @@ public class OfflineRewardManager
         Debug.Log($"초당 생명력 생성률: {lifePerSecond}");
 
         BigInteger totalLifeIncrease = lifePerSecond * (BigInteger)totalOfflineDuration.TotalSeconds;
+
+        // 오프라인 보상량 증가 스킬 적용
+        if (offlineRewardAmountSkill != null && offlineRewardAmountSkill.currentLevel > 0)
+        {
+            float rewardMultiplier = 1.0f + (offlineRewardAmountSkill.currentLevel * 0.10f);
+            totalLifeIncrease = BigInteger.Multiply(totalLifeIncrease, new BigInteger(rewardMultiplier));
+            Debug.Log($"오프라인 보상량 증가 적용 후: {totalLifeIncrease}");
+        }
+
         Debug.Log($"총 오프라인 생명력 증가량: {totalLifeIncrease}");
 
         return totalLifeIncrease;
