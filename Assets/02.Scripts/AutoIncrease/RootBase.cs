@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Numerics;
 using TMPro;
 using UnityEngine;
@@ -7,6 +8,7 @@ public interface IRoot
     void ApplyIncreaseRate(BigInteger rate);
     BigInteger GetTotalLifeGeneration();
     void Unlock();
+    void ApplyTemporaryBoost(BigInteger multiplier, float duration); // 임시 부스트 메서드 추가
 }
 
 public class RootBase : MonoBehaviour, IRoot
@@ -18,12 +20,11 @@ public class RootBase : MonoBehaviour, IRoot
     public BigInteger upgradeLifeCost;
     public float generationInterval = 1f;
     public TextMeshProUGUI rootLevelText;
-    public TextMeshProUGUI rootUpgradeCostText;
     public TextMeshProUGUI generationRateText; // 생산률을 나타내는 텍스트 추가
+    public TextMeshProUGUI rootUpgradeCostText;
     public bool isUnlocked = false; // 잠금 상태를 나타내는 변수 추가
 
     private float timer;
-    public TouchData touchData; // TouchData 참조
     public int unlockThreshold = 5; // 잠금 해제에 필요한 터치 레벨
     public GameObject objectPrefab;
 
@@ -32,16 +33,21 @@ public class RootBase : MonoBehaviour, IRoot
     public event System.Action OnGenerationRateChanged;
 
     protected CameraTransition cameraTransition; // CameraTransition 참조 추가
+    private BigInteger currentMultiplier; // 현재 적용 중인 배수
+    private Coroutine boostCoroutine; // 부스트 코루틴 참조 변수
 
     protected virtual void Start()
     {
         OnLifeGenerated -= LifeManager.Instance.IncreaseWater;
         OnLifeGenerated += LifeManager.Instance.IncreaseWater;
+        OnGenerationRateChanged += UpdateUI; // 이벤트 핸들러 추가
         OnGenerationRateChanged?.Invoke(); // 초기화 시 이벤트 트리거
         UpdateUI();
         cameraTransition = FindObjectOfType<CameraTransition>(); // CameraTransition 컴포넌트 참조 초기화
         upgradeLifeCost = initialUpgradeCost; // 초기 레벨업 비용 설정
+        currentMultiplier = 1;
     }
+
 
     protected virtual void Update()
     {
@@ -60,7 +66,7 @@ public class RootBase : MonoBehaviour, IRoot
     protected virtual void GenerateLife()
     {
         if (!isUnlocked || rootLevel == 0) return; // 잠금 해제된 경우에만 생명력 생성
-        BigInteger generatedLife = GetTotalLifeGeneration();
+        BigInteger generatedLife = GetTotalLifeGeneration(); // currentMultiplier는 이미 GetTotalLifeGeneration에 반영됨
         InvokeLifeGenerated(generatedLife);
     }
 
@@ -132,7 +138,10 @@ public class RootBase : MonoBehaviour, IRoot
     public virtual BigInteger GetTotalLifeGeneration()
     {
         if (!isUnlocked || rootLevel == 0) return 0; // 잠금 해제 전이나 레벨이 0일 때는 0
-        return baseLifeGeneration * BigInteger.Pow(103, rootLevel - 1) / BigInteger.Pow(100, rootLevel - 1); // 1.03^rootLevel-1
+        BigInteger baseGeneration = baseLifeGeneration * BigInteger.Pow(103, rootLevel - 1) / BigInteger.Pow(100, rootLevel - 1); // 1.03^rootLevel-1
+        BigInteger totalGeneration = baseGeneration * currentMultiplier; // currentMultiplier를 곱하여 반환
+        Debug.Log($"Total Generation ({this.name}): " + totalGeneration);
+        return totalGeneration;
     }
 
     public void Unlock()
@@ -155,10 +164,30 @@ public class RootBase : MonoBehaviour, IRoot
     private void CheckUnlockCondition()
     {
         // 버튼 활성화 처리를 위해 조건 확인 로직을 유지
-        if (!isUnlocked && touchData != null && touchData.touchIncreaseLevel >= unlockThreshold)
+        if (!isUnlocked && LifeManager.Instance.touchData != null && LifeManager.Instance.touchData.touchIncreaseLevel >= unlockThreshold)
         {
             UpdateUI();
         }
+    }
+
+    public void ApplyTemporaryBoost(BigInteger multiplier, float duration)
+    {
+        if (boostCoroutine != null)
+        {
+            StopCoroutine(boostCoroutine);
+        }
+        boostCoroutine = StartCoroutine(TemporaryBoost(multiplier, duration));
+    }
+
+    private IEnumerator TemporaryBoost(BigInteger multiplier, float duration)
+    {
+        currentMultiplier = multiplier;
+        OnGenerationRateChanged?.Invoke(); // 부스트 시작 시 생산률 업데이트 이벤트 호출
+        UpdateUI(); // 부스트 시작 시 UI 업데이트
+        yield return new WaitForSeconds(duration);
+        currentMultiplier = 1; // 부스트가 끝나면 배수를 초기값으로 되돌림
+        OnGenerationRateChanged?.Invoke(); // 생산률 업데이트 이벤트 호출
+        UpdateUI(); // 부스트가 끝난 후 UI 업데이트
     }
 
     protected virtual void CreateAndZoomObject()

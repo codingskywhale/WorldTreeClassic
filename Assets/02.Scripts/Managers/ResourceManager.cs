@@ -19,8 +19,9 @@ public class ResourceManager : MonoBehaviour
 
     private void RegisterAllRoots()
     {
-        // 모든 Root 인스턴스를 찾고 이벤트 구독
-        foreach (var root in roots)
+        // 모든 Root 인스턴스를 찾아서 리스트에 추가하고 이벤트를 구독합니다.
+        RootBase[] rootBases = FindObjectsOfType<RootBase>();
+        foreach (var root in rootBases)
         {
             RegisterRoot(root);
         }
@@ -65,7 +66,7 @@ public class ResourceManager : MonoBehaviour
 
     public void UpdateTotalLifeIncreaseUI()
     {
-        BigInteger totalLifeIncrease = 0;     
+        BigInteger totalLifeIncrease = 0;
         foreach (var root in roots)
         {
             totalLifeIncrease += root.GetTotalLifeGeneration();

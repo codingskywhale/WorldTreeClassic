@@ -6,19 +6,12 @@ using UnityEngine.EventSystems;
 
 public class Animal : MonoBehaviour, IClickableObject //카메라 적용 인터페이스
 {
-    [SerializeField] private HeartButton heart;
-    // 테스트용 
-    public float heartOnDelay = 30f;
+    public HeartButton heart;
 
     public void HeartTouch()
     {
         heart.TouchHeartBubble();
-        StartCoroutine(heartGenerateDelay());
-    }
-    IEnumerator heartGenerateDelay()
-    {
-        yield return new WaitForSeconds(heartOnDelay);
-        heart.gameObject.SetActive(true);
+        LifeManager.Instance.bubbleGenerator.GenerateNewHeart();
     }
 
     // 카메라 적용

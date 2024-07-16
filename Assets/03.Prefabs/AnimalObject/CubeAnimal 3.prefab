@@ -117,7 +117,7 @@ GameObject:
   - component: {fileID: 1560065488168310848}
   - component: {fileID: 9211374444721260418}
   m_Layer: 0
-  m_Name: CubeAnimal
+  m_Name: CubeAnimal 3
   m_TagString: Animal
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -167,7 +167,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 69927baa22732804e93e9bc161db38f2, type: 2}
+  - {fileID: 2100000, guid: 2baa52d9d2a026441b9df27b18e89116, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -239,7 +239,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   heart: {fileID: 5754092214199546460}
-  heartOnDelay: 3
 --- !u!1 &8785178981246282457
 GameObject:
   m_ObjectHideFlags: 0
@@ -254,12 +253,12 @@ GameObject:
   - component: {fileID: 9212004371148347403}
   - component: {fileID: 5754092214199546460}
   m_Layer: 5
-  m_Name: HeartBubble
-  m_TagString: Untagged
+  m_Name: HeartBubble(3)
+  m_TagString: Bubble
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &4445710164004232065
 RectTransform:
   m_ObjectHideFlags: 0
@@ -385,3 +384,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 452bbe8a6ecf677489cf23159647ea23, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  heartIdx: 0

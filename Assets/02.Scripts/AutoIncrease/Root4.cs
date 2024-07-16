@@ -7,7 +7,7 @@ public class Root4 : RootBase
     {
         unlockThreshold = 40;
         baseLifeGeneration = BigInteger.Parse("320000");
-        unlockCost = BigInteger.Parse("645000"); // c 단위로 설정
+        unlockCost = BigInteger.Parse("64500000000");
         base.Start();
         LifeManager.Instance.RegisterRoot(this);
         UpdateUI();

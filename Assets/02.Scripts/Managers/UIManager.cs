@@ -11,6 +11,7 @@ public class UIManager : MonoBehaviour
     public RootBase root;
     public TouchData touchData;
     public WorldTree tree;
+    public Bag bag;
     public CreateObjectButton[] createAnimalButtons;
     public int createObjectButtonUnlockCount = 1;
 
@@ -36,7 +37,7 @@ public class UIManager : MonoBehaviour
 
     public void SetAnimalCountStatus()
     {
-        status.animalCountText.text = $"{LifeManager.Instance.animalData.nowAnimalCount} / {LifeManager.Instance.animalData.maxAnimalCount}";
+        status.animalCountText.text = $"{DataManager.Instance.animalGenerateData.nowAnimalCount} / {DataManager.Instance.animalGenerateData.maxAnimalCount}";
     }
 
     public void UpdateButtonUI()
@@ -50,7 +51,7 @@ public class UIManager : MonoBehaviour
     public void CheckEnoughCost(BigInteger amount)
     {
         // createObjectButtonUnlockCount가 현재 버튼의 인덱스를 넘는지 확인.
-        if (LifeManager.Instance.lifeAmount > (BigInteger)LifeManager.Instance.animalData.nowCreateCost)
+        if (LifeManager.Instance.lifeAmount >= (BigInteger)DataManager.Instance.animalGenerateData.nowCreateCost)
         {
             for(int i = 0; i < createObjectButtonUnlockCount; i++)
             {
@@ -59,9 +60,9 @@ public class UIManager : MonoBehaviour
         }
         else
         {
-            foreach (CreateObjectButton button in createAnimalButtons)
+            for (int i = 0; i < createObjectButtonUnlockCount; i++)
             {
-                button.createButton.interactable = false;
+                createAnimalButtons[i].createButton.interactable = false;
             }
         }
     }

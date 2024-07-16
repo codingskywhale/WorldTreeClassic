@@ -20,7 +20,7 @@ public class UIUpdater
         UIManager.Instance.touchData.UpdateUI();
         UIManager.Instance.status.UpdateLifeUI(lifeManager.lifeAmount, lifeManager.CalculateWaterNeededForUpgrade(1));
         UIManager.Instance.status.UpdateLifeIncreaseUI(CalculateTotalLifeIncrease(resourceManager.roots));
-        UIManager.Instance.status.UpdateAnimalCountText(lifeManager.animalData.nowAnimalCount, lifeManager.animalData.maxAnimalCount);
+        UIManager.Instance.status.UpdateAnimalCountText(DataManager.Instance.animalGenerateData.nowAnimalCount, DataManager.Instance.animalGenerateData.maxAnimalCount);
 
         foreach (var root in resourceManager.roots)
         {

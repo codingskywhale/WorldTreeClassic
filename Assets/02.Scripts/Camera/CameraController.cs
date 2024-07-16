@@ -51,7 +51,6 @@ public class CameraController : MonoBehaviour
     }
 
 
-
     private void HandleFreeCamera()
     {
         if (cameraTransition.isZooming) return;
