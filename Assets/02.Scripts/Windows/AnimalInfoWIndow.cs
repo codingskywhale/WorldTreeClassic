@@ -62,7 +62,7 @@ public class AnimalInfoWindow : MonoBehaviour
                 if (animalDataSO.animalName == nowAnimaldataSO.animalName)
                 {
                     DataManager.Instance.DestroyAnimal(animalDataSO, count);
-                    LifeManager.Instance.bubbleGenerator.RemoveIdxFromNowBubbleList(count);
+                    LifeManager.Instance.bubbleGenerator.RemoveBubble(count);
 
                     break;
                 }

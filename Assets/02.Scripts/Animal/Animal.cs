@@ -11,7 +11,6 @@ public class Animal : MonoBehaviour, IClickableObject //카메라 적용 인터�
     public void HeartTouch()
     {
         heart.TouchHeartBubble();
-        LifeManager.Instance.bubbleGenerator.GenerateNewHeart();
     }
 
     // 카메라 적용
