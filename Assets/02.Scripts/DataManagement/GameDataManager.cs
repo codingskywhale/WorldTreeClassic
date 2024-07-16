@@ -67,7 +67,8 @@ public class GameDataManager
                 touchIncreaseAmount = lifeManager.touchData.touchIncreaseAmount.ToString(),
                 upgradeLifeCost = lifeManager.touchData.upgradeLifeCost.ToString()
             },
-            lastSaveTime = DateTime.UtcNow.ToString("o")
+            lastSaveTime = DateTime.UtcNow.ToString("o"),
+            lifeGenerationRatePerSecond = resourceManager.GetTotalLifeGenerationPerSecond().ToString() // 초당 생명력 생성률 저장
         };
         SaveSystem.Save(gameData);
     }
@@ -116,6 +117,18 @@ public class GameDataManager
         }
 
         InitializeRoots(resourceManager, gameData.roots);
+
+        // 초당 생명력 생성률 로드
+        if (!string.IsNullOrEmpty(gameData.lifeGenerationRatePerSecond))
+        {
+            resourceManager.SetLifeGenerationRatePerSecond(BigInteger.Parse(gameData.lifeGenerationRatePerSecond));
+        }
+        Debug.Log($"LoadGameData - LifeAmount: {lifeManager.lifeAmount}");
+        // 초기화 후 모든 루트의 UI 업데이트
+        foreach (var root in roots)
+        {
+            root.UpdateUI();
+        }
     }
 
     private void InitializeRoots(ResourceManager resourceManager, List<RootData> rootDataList)
@@ -142,6 +155,8 @@ public class GameDataManager
         root.rootLevel = level;
         root.upgradeLifeCost = root.CalculateUpgradeCost();
         root.UpdateUI();
+        // 디버그 로그 추가
+        Debug.Log($"Root initialized: {root.name}, Level: {level}, UpgradeCost: {root.upgradeLifeCost}");
     }
 
     private void InitializeDefaultGameData(ResourceManager resourceManager)
@@ -164,6 +179,8 @@ public class GameDataManager
             root.upgradeLifeCost = root.CalculateUpgradeCost();
             root.UpdateUI();
         }
+
+        resourceManager.SetLifeGenerationRatePerSecond(BigInteger.Zero); // 초기 값 설정
     }
 
     private BigInteger CalculateTotalLifeIncrease(List<RootBase> roots)

@@ -10,6 +10,8 @@ public class Root2 : RootBase
         unlockCost = BigInteger.Parse("78400");
         base.Start();
         LifeManager.Instance.RegisterRoot(this);
+        // 업그레이드 비용을 다시 계산하여 UI 업데이트
+        upgradeLifeCost = CalculateUpgradeCost();
         UpdateUI();
     }
 
@@ -18,7 +20,11 @@ public class Root2 : RootBase
         BigInteger generatedLife = GetTotalLifeGeneration();
         InvokeLifeGenerated(generatedLife);
     }
-
+    public override void UpdateRootLevelUI(int rootLevel, BigInteger upgradeCost)
+    {
+        rootUpgradeCostText.text = isUnlocked ? $"강화 비용: {BigIntegerUtils.FormatBigInteger(upgradeCost)} 물" : $"해금 비용: {BigIntegerUtils.FormatBigInteger(unlockCost)} 물 (레벨: {unlockThreshold} 필요)";
+        Debug.Log($"강화비용 : {BigIntegerUtils.FormatBigInteger(upgradeCost)}");
+    }
     public override void UpdateUI()
     {
         base.UpdateUI();

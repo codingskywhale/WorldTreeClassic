@@ -6974,7 +6974,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   lifeManager: {fileID: 935140180}
-  roots: []
+  roots:
+  - {fileID: 131668842}
+  - {fileID: 1925851964}
+  - {fileID: 1058648819}
+  - {fileID: 468112742}
+  - {fileID: 1474580548}
+  - {fileID: 866107451}
+  - {fileID: 145072085}
+  - {fileID: 2089163036}
+  - {fileID: 1486323988}
+  - {fileID: 990194075}
 --- !u!4 &525614632
 Transform:
   m_ObjectHideFlags: 0
@@ -11980,10 +11990,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aacb8e2714c6edb48bcda875218a9ca5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  resourceManager: {fileID: 0}
+  resourceManager: {fileID: 525614631}
   root: {fileID: 0}
-  touchInputManager: {fileID: 0}
-  touchData: {fileID: 0}
+  touchInputManager: {fileID: 1987132685}
+  touchData: {fileID: 935140181}
   upgradeType: 1
   upgradeAmount: 1
 --- !u!114 &873930992
@@ -13785,7 +13795,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 990194073}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0c93b3b0d8379bb428c52742abb57b8e, type: 3}
+  m_Script: {fileID: 11500000, guid: 844c7353dd4aa3143a1e7d27dffd3399, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   rootLevel: 0
@@ -13795,7 +13805,7 @@ MonoBehaviour:
   rootUpgradeCostText: {fileID: 513035660}
   isUnlocked: 0
   unlockThreshold: 5
-  objectPrefab: {fileID: 1139572726157748, guid: 3c98bb4bee2f2ba4b92a2fbca7b8831f, type: 3}
+  objectPrefab: {fileID: 701093650}
 --- !u!1 &993243311
 GameObject:
   m_ObjectHideFlags: 0
@@ -14409,17 +14419,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   resourceManager: {fileID: 525614631}
   upgradeButtons: []
-  animalDataList:
-  - {fileID: 11400000, guid: b8d3b3358fc9c9348bd6300236914032, type: 2}
-  - {fileID: 11400000, guid: 2c92774703157354bb990bf61f0e2331, type: 2}
-  - {fileID: 11400000, guid: fe5714a4e8607f640a477dd2e38f0e99, type: 2}
-  - {fileID: 11400000, guid: 83070f56aae5b3c49af0696ec2c090f5, type: 2}
-  - {fileID: 11400000, guid: 8415b503013473f4fb6ddbb2227d6659, type: 2}
-  - {fileID: 11400000, guid: f978169c3de2b72498b00e062fe9f2ef, type: 2}
-  - {fileID: 11400000, guid: 84b2af70e7308b540a947dabab70d1b2, type: 2}
-  - {fileID: 11400000, guid: e392f383c42242544a1c9109c5fda00f, type: 2}
-  - {fileID: 11400000, guid: 88f1bf1e724255742aa9c2959472959a, type: 2}
-  - {fileID: 11400000, guid: 53687f997b677e54d88689da51f1ff0d, type: 2}
 --- !u!1 &1030702570
 GameObject:
   m_ObjectHideFlags: 0

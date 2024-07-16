@@ -25,6 +25,7 @@ public class UpgradeButton : MonoBehaviour
     {
         upgradeButton = GetComponent<Button>();
         upgradeButton.onClick.AddListener(OnUpgradeButtonClicked);
+        resourceManager.UpdateUI();
 
         if (upgradeType == UpgradeType.Root && root != null)
         {
@@ -104,7 +105,8 @@ public class UpgradeButton : MonoBehaviour
             LifeManager.Instance.DecreaseWater(unlockCost);
             root.Unlock();
             root.UpdateUI();
-            resourceManager.UpdateTotalLifeIncreaseUI();
+            resourceManager.UpdateUI();
+            resourceManager.GetTotalLifeGenerationPerSecond();
             DataManager.Instance.animalGenerateData.maxAnimalCount += 5;
             UIManager.Instance.SetAnimalCountStatus();
         }
@@ -124,7 +126,9 @@ public class UpgradeButton : MonoBehaviour
             LifeManager.Instance.DecreaseWater(upgradeCost);
             root.UpgradeLifeGeneration();
             root.UpdateUI();
-            resourceManager.UpdateTotalLifeIncreaseUI();        
+            resourceManager.UpdateLifeGenerationRatePerSecond();  // 초당 생명력 생성률 업데이트
+            resourceManager.UpdateUI();
+            resourceManager.GetTotalLifeGenerationPerSecond();        
         }
         else
         {
@@ -141,7 +145,6 @@ public class UpgradeButton : MonoBehaviour
         {
             LifeManager.Instance.DecreaseWater(upgradeLifeCost);
             LifeManager.Instance.touchData.UpgradeTouchGeneration();
-
             UIManager.Instance.touchData.UpdateTouchUI(touchData.touchIncreaseLevel, touchData.touchIncreaseAmount, touchData.upgradeLifeCost);
         }
         else
@@ -157,7 +160,6 @@ public class UpgradeButton : MonoBehaviour
         {
             LifeManager.Instance.DecreaseWater(waterNeededForUpgrade);
             LifeManager.Instance.currentLevel += upgradeAmount;
-            resourceManager.UpdateUI();
             resourceManager.UpdateGroundSize();
         }
         else
@@ -171,7 +173,7 @@ public class UpgradeButton : MonoBehaviour
         if (upgradeType == UpgradeType.Root && root != null)
         {
             BigInteger upgradeCost = root.CalculateUpgradeCost();
-            Debug.Log($"UpdateUpgradeCostUI called for root level {root.rootLevel}, upgrade cost {upgradeCost}");
+            Debug.Log($"UpdateUpgradeCostUI called for root level {this.name}, {root.rootLevel}, upgrade cost {upgradeCost}");
             UIManager.Instance.root.UpdateRootLevelUI(root.rootLevel, upgradeCost);
         }
         else if (upgradeType == UpgradeType.Touch && touchInputManager != null)

@@ -1,4 +1,5 @@
-﻿using System;
+using System;
+using UnityEngine;
 
 public class OfflineProgressCalculator
 {
@@ -8,7 +9,9 @@ public class OfflineProgressCalculator
         {
             DateTime lastSave = DateTime.Parse(lastSaveTime, null, System.Globalization.DateTimeStyles.RoundtripKind);
             DateTime currentTime = DateTime.UtcNow;
-            return currentTime - lastSave;
+            TimeSpan offlineDuration = currentTime - lastSave;
+            Debug.Log($"오프라인 기간: {offlineDuration.TotalSeconds}초");
+            return offlineDuration;
         }
         return TimeSpan.Zero;
     }

@@ -12,4 +12,5 @@ public class GameData
     public AnimalDataSave animalData;
     public TouchDataSave touchData;
     public string lastSaveTime;
+    public string lifeGenerationRatePerSecond;  // 추가된 필드
 }

@@ -1,30 +1,33 @@
 using System.Collections.Generic;
 using System.Numerics;
 using UnityEngine;
+using Vector3 = UnityEngine.Vector3;
 
 public class ResourceManager : MonoBehaviour
 {
     public LifeManager lifeManager;
     public List<RootBase> roots = new List<RootBase>();
+    public BigInteger lifeGenerationRatePerSecond;
 
     private void Start()
     {
         RegisterAllRoots();
         lifeManager.OnWaterChanged += UpdateLifeUI;
 
-        // 모든 Root를 등록한 후 생명력 증가율 업데이트
-        UpdateTotalLifeIncreaseUI();
+        // 초당 생명력 생성률을 로드
+        LoadLifeGenerationRate();
+        Debug.Log($"로드된 초당 생명력 생성률 (시작 시): {lifeGenerationRatePerSecond}");
         UpdateUI();
     }
 
     private void RegisterAllRoots()
     {
-        // 모든 Root 인스턴스를 찾아서 리스트에 추가하고 이벤트를 구독합니다.
-        RootBase[] rootBases = FindObjectsOfType<RootBase>();
-        foreach (var root in rootBases)
+        //RootBase[] rootBases = FindObjectsOfType<RootBase>();
+        foreach (var root in roots)
         {
             RegisterRoot(root);
         }
+        UpdateLifeGenerationRatePerSecond();
     }
 
     private void RegisterRoot(RootBase root)
@@ -32,7 +35,7 @@ public class ResourceManager : MonoBehaviour
         if (!roots.Contains(root))
         {
             roots.Add(root);
-            root.OnGenerationRateChanged += UpdateTotalLifeIncreaseUI;
+            root.OnGenerationRateChanged += UpdateLifeGenerationRatePerSecond;
         }
     }
 
@@ -41,21 +44,21 @@ public class ResourceManager : MonoBehaviour
         if (roots.Contains(root))
         {
             roots.Remove(root);
-            root.OnGenerationRateChanged -= UpdateTotalLifeIncreaseUI;
+            root.OnGenerationRateChanged -= UpdateLifeGenerationRatePerSecond;
         }
     }
 
     public void UpdateGroundSize()
     {
         float groundScale = 8f + (lifeManager.currentLevel / 10f);
-        UIManager.Instance.tree.groundMeshFilter.transform.localScale = new UnityEngine.Vector3(groundScale, groundScale, groundScale);
+        UIManager.Instance.tree.groundMeshFilter.transform.localScale = new Vector3(groundScale, groundScale, groundScale);
     }
 
     public void UpdateUI()
     {
         BigInteger lifeNeededForCurrentLevel = lifeManager.CalculateWaterNeededForUpgrade(1);
         UIManager.Instance.status.UpdateLifeUI(lifeManager.lifeAmount, lifeNeededForCurrentLevel);
-        UpdateTotalLifeIncreaseUI();
+        UIManager.Instance.status.UpdateLifeIncreaseUI(lifeGenerationRatePerSecond);
     }
 
     private void UpdateLifeUI(BigInteger newWaterAmount)
@@ -64,14 +67,45 @@ public class ResourceManager : MonoBehaviour
         UIManager.Instance.status.UpdateLifeUI(newWaterAmount, lifeNeededForCurrentLevel);
     }
 
-    public void UpdateTotalLifeIncreaseUI()
+    public void UpdateLifeGenerationRatePerSecond()
+    {
+        lifeGenerationRatePerSecond = GetTotalLifeGenerationPerSecond();
+        Debug.Log($"초당 생명력 생성률: {lifeGenerationRatePerSecond}");
+    }
+
+    public BigInteger GetTotalLifeGenerationPerSecond()
     {
         BigInteger totalLifeIncrease = 0;
         foreach (var root in roots)
         {
             totalLifeIncrease += root.GetTotalLifeGeneration();
         }
-        UIManager.Instance.status.UpdateLifeIncreaseUI(totalLifeIncrease);
+        Debug.Log($"토탈 : {totalLifeIncrease}");
+        return totalLifeIncrease;
+    }
+
+    public BigInteger GetLifeGenerationRatePerSecond()
+    {
+        return lifeGenerationRatePerSecond;
+    }
+
+    public void SetLifeGenerationRatePerSecond(BigInteger rate)
+    {
+        lifeGenerationRatePerSecond = rate;
+    }
+
+    public void LoadLifeGenerationRate()
+    {
+        GameData gameData = SaveSystem.Load();
+        if (gameData != null && !string.IsNullOrEmpty(gameData.lifeGenerationRatePerSecond))
+        {
+            lifeGenerationRatePerSecond = BigInteger.Parse(gameData.lifeGenerationRatePerSecond);
+            Debug.Log($"로드된 초당 생명력 생성률: {lifeGenerationRatePerSecond}");
+        }
+        else
+        {
+            UpdateLifeGenerationRatePerSecond();  // 초기 값을 계산
+        }
     }
 
     private void OnDestroy()
@@ -79,7 +113,7 @@ public class ResourceManager : MonoBehaviour
         lifeManager.OnWaterChanged -= UpdateLifeUI;
         foreach (var root in roots)
         {
-            root.OnGenerationRateChanged -= UpdateTotalLifeIncreaseUI;
+            root.OnGenerationRateChanged -= UpdateLifeGenerationRatePerSecond;
         }
     }
 }

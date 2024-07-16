@@ -104,6 +104,7 @@ public class RootBase : MonoBehaviour, IRoot
     {
         UpdateRootLevelUI(rootLevel, upgradeLifeCost);
         UpdateGenerationRateUI(GetTotalLifeGeneration()); // 생산률 업데이트 추가
+        //Debug.Log($"UI Updated for root: {this.name}, Level: {rootLevel}, Upgrade Cost: {upgradeLifeCost}, Generation Rate: {GetTotalLifeGeneration()}");
     }
 
     public virtual void ApplyIncreaseRate(BigInteger rate)
@@ -140,7 +141,7 @@ public class RootBase : MonoBehaviour, IRoot
         if (!isUnlocked || rootLevel == 0) return 0; // 잠금 해제 전이나 레벨이 0일 때는 0
         BigInteger baseGeneration = baseLifeGeneration * BigInteger.Pow(103, rootLevel - 1) / BigInteger.Pow(100, rootLevel - 1); // 1.03^rootLevel-1
         BigInteger totalGeneration = baseGeneration * currentMultiplier; // currentMultiplier를 곱하여 반환
-        Debug.Log($"Total Generation ({this.name}): " + totalGeneration);
+        //Debug.Log($"Total Generation ({this.name}): " + totalGeneration);
         return totalGeneration;
     }
 
