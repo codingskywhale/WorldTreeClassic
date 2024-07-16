@@ -14,13 +14,16 @@ public class GameManager : MonoBehaviour
     private UIUpdater uiUpdater;
     private OfflineProgressCalculator offlineProgressCalculator;
     private OfflineRewardManager offlineRewardManager;
+    private OfflineRewardSkill offlineRewardSkill;
 
     private void Awake()
     {
         gameDataManager = new GameDataManager();
         uiUpdater = new UIUpdater(resourceManager, upgradeButtons);
         offlineProgressCalculator = new OfflineProgressCalculator();
-        offlineRewardManager = new OfflineRewardManager(resourceManager, offlineProgressCalculator);
+        // OfflineRewardSkill 인스턴스 생성 및 초기화
+        offlineRewardSkill = FindObjectOfType<OfflineRewardSkill>();
+        offlineRewardManager = new OfflineRewardManager(resourceManager, offlineProgressCalculator, offlineRewardSkill);
         //SaveSystem.DeleteSave();  // 개발 중에만 사용
         touchInput = GetComponent<TouchInput>();
     }
