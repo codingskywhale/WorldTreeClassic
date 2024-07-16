@@ -30,7 +30,6 @@ public class DataManager : MonoBehaviour
         Destroy(spawnData.animalObjectList[count]);
         spawnData.animalObjectList.Remove(spawnData.animalObjectList[count]);
         spawnData.animalDataSOList.Remove(animalDataSO);
-        LifeManager.Instance.bubbleGenerator.heartBubbleList.Remove(LifeManager.Instance.bubbleGenerator.heartBubbleList[count]);
     }
 
     // 가방에 보관하는 기능.

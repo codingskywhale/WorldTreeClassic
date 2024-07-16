@@ -47,7 +47,7 @@ public class HeartButton : MonoBehaviour
         // 재화를 획득한다.
         LifeManager.Instance.IncreaseWater(LifeManager.Instance.touchData.touchIncreaseAmount);
 
-        LifeManager.Instance.bubbleGenerator.OnAutoTouchBubbleSkill();
+        //LifeManager.Instance.bubbleGenerator.OnAutoTouchBubbleSkill(heartIdx);
 
         LifeManager.Instance.bubbleGenerator.RemoveIdxFromNowBubbleList(heartIdx);
 
