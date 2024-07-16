@@ -24,8 +24,9 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
-        CalculateOfflineProgress();
         gameDataManager.LoadGameData(resourceManager);
+        Debug.Log($"초기 생명력: {LifeManager.Instance.lifeAmount}");
+        CalculateOfflineProgress();              
         uiUpdater.UpdateAllUI();
     }
 
@@ -46,6 +47,8 @@ public class GameManager : MonoBehaviour
             Debug.Log($"계산된 오프라인 보상 생명력: {totalLifeIncrease}");
 
             LifeManager.Instance.IncreaseWater(totalLifeIncrease);
+            Debug.Log($"보상 적용 후 생명력: {LifeManager.Instance.lifeAmount}");
+
             // 오프라인 보상 계산 로직 추가
         }
     }

@@ -115,6 +115,7 @@ public class GameDataManager
         {
             resourceManager.SetLifeGenerationRatePerSecond(BigInteger.Parse(gameData.lifeGenerationRatePerSecond));
         }
+        Debug.Log($"LoadGameData - LifeAmount: {lifeManager.lifeAmount}");
         // 초기화 후 모든 루트의 UI 업데이트
         foreach (var root in roots)
         {
