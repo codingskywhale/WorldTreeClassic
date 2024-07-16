@@ -25,14 +25,11 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
+        gameDataManager.LoadGameData(resourceManager);
         gameDataManager.animalDataList = animalDataList;
         CalculateOfflineProgress();
-        gameDataManager.LoadGameData(resourceManager);
         uiUpdater.UpdateAllUI();
-        gameDataManager.LoadGameData(resourceManager);
-        Debug.Log($"초기 생명력: {LifeManager.Instance.lifeAmount}");
-        CalculateOfflineProgress();              
-        uiUpdater.UpdateAllUI();
+        Debug.Log($"초기 생명력: {LifeManager.Instance.lifeAmount}");          
     }
 
     private void CalculateOfflineProgress()
@@ -45,7 +42,7 @@ public class GameManager : MonoBehaviour
 
             // lifeGenerationRatePerSecond 값을 로드된 데이터에서 가져옵니다.
             resourceManager.LoadLifeGenerationRate();
-    }
+        
             BigInteger lifeGenerationRatePerSecond = resourceManager.GetLifeGenerationRatePerSecond();
             Debug.Log($"로드된 초당 생명력 생성률: {lifeGenerationRatePerSecond}");
 
@@ -64,3 +61,4 @@ public class GameManager : MonoBehaviour
         gameDataManager.SaveGameData(resourceManager);
     }
 }
+
