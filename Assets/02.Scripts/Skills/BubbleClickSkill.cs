@@ -10,10 +10,6 @@ public class BubbleClickSkill : Skill
 
     public bool isUseSkill = false;
 
-    private Queue<GameObject> bubbleQueue = new Queue<GameObject>();
-
-    public List<GameObject> bubbleList = new List<GameObject>();
-
     protected override void Start()
     {
         skillDuration = 300f; // 스킬 지속 시간
@@ -23,60 +19,16 @@ public class BubbleClickSkill : Skill
         // 초기 UI 설정
         UpdateUI();
         UpdateCooldownUI(0);
-
-        // 현재 활성화된 모든 버블을 큐에 추가
-        GameObject[] bubbles = GameObject.FindGameObjectsWithTag("Bubble");
-        foreach (GameObject bubble in bubbles)
-        {
-            AddBubbleToQueue(bubble);
-        }
-    }
-
-    public void AddBubbleToQueue(GameObject bubble)
-    {
-        bubbleQueue.Enqueue(bubble);
-        bubbleList.Add(bubble);
-    }
-
-    public void RemoveBubbleFromQueue(GameObject bubble)
-    {
-        Queue<GameObject> tempQueue = new Queue<GameObject>();
-        while (bubbleQueue.Count > 0)
-        {
-            GameObject currentBubble = bubbleQueue.Dequeue();
-            if (currentBubble != bubble)
-            {
-                tempQueue.Enqueue(currentBubble);
-            }
-        }
-        bubbleQueue = tempQueue;
     }
 
     public override void ActivateSkill()
     {
         if (!onCooldown && currentLevel > 0) // 해금된 경우에만 스킬 사용 가능
         {
-            // 현재 활성화된 모든 버블을 큐에 추가
-            GameObject[] bubbles = GameObject.FindGameObjectsWithTag("Bubble");
-            foreach (GameObject bubble in bubbles)
-            {
-                AddBubbleToQueue(bubble);
-            }
             StartCoroutine(SkillEffect());
         }
     }
 
-    public void ActivateSkillTest()
-    {
-        if (!onCooldown && currentLevel > 0) // 해금된 경우에만 스킬 사용 가능
-        {
-            foreach (var bubbleIdx in LifeManager.Instance.bubbleGenerator.nowBubbleIdxList)
-            {
-                AddBubbleToQueue(LifeManager.Instance.bubbleGenerator.heartBubbleList[bubbleIdx].gameObject);
-            }
-            StartCoroutine(SkillEffect());
-        }
-    }
 
     protected override IEnumerator ApplySkillEffect()
     {
@@ -85,7 +37,7 @@ public class BubbleClickSkill : Skill
 
         while (elapsedTime < skillDuration)
         {
-            if (bubbleQueue.Count > 0)
+            if (LifeManager.Instance.bubbleGenerator.nowBubbleList.Count > 0)
             {
                 ClickNextBubble();
             }
@@ -95,18 +47,16 @@ public class BubbleClickSkill : Skill
         }
 
         isUseSkill = false;
-        bubbleQueue.Clear(); // 스킬 종료 후 큐를 비웁니다.
     }
 
     private void ClickNextBubble()
     {
-        if (bubbleQueue.Count > 0)
+        if (LifeManager.Instance.bubbleGenerator.nowBubbleList.Count > 0)
         {
-            GameObject bubble = bubbleQueue.Dequeue();
-            var heartButton = bubble.GetComponent<HeartButton>();
-            if (heartButton != null)
+            HeartButton bubble = LifeManager.Instance.bubbleGenerator.nowBubbleList[0];
+            if (bubble != null)
             {
-                heartButton.TouchHeartBubble();
+                bubble.TouchHeartBubble();
             }
         }
     }

@@ -5,16 +5,11 @@ using UnityEngine;
 public class BubbleGenerator : MonoBehaviour
 {
     public List<HeartButton> heartBubbleList = new List<HeartButton>();
-    public List<int> nowBubbleIdxList = new List<int>();
+    public List<HeartButton> nowBubbleList = new List<HeartButton>();
     private readonly int maxHeartCount = 2;
-    public int selectedObjectIndex;
     private int nowOnHeartIndex;
     public readonly float heartGenerateDelay = 2f;
     private int buttonIdx = 0;
-
-    private int queueIdx = 0;
-
-    private Queue<int> skillIdxQueue = new Queue<int>();
 
     public BubbleClickSkill bubbleClickSkill;
 
@@ -36,8 +31,8 @@ public class BubbleGenerator : MonoBehaviour
 
     IEnumerator GenerateHeart()
     {
-        HeartOnRandomAnimal();
         yield return new WaitForSeconds(heartGenerateDelay);
+        HeartOnRandomAnimal();
     }
 
     public void HeartOnRandomAnimal()
@@ -51,81 +46,49 @@ public class BubbleGenerator : MonoBehaviour
         if (heartBubbleList.Count == 1)
         {
             randomIdx = 0;
-            nowBubbleIdxList.Add(randomIdx);
+            // 가장 첫번째에 띄워주기.
+            nowBubbleList.Add(heartBubbleList[0].GetComponent<HeartButton>());
         }
 
         // 하트 버블이 2개 이상이라면. 전체 중 랜덤 Idx를 뽑아야 한다.
         else
         {
-            if (nowBubbleIdxList.Count == 2) return;
+            // 현재 nowBubble이 2개라면 뽑을 필요가 없다. (이론상 나오면 안되는 경우긴함.)
+            if (nowBubbleList.Count == 2) return;
 
             randomIdx = Random.Range(0, heartBubbleList.Count);
             // 현재 버블이 켜져 있는 오브젝트를 제외하기 위해.
-            while (nowBubbleIdxList.Contains(randomIdx))
+            while (nowBubbleList.Contains(heartBubbleList[randomIdx].GetComponent<HeartButton>()))
             {
                 randomIdx = Random.Range(0, heartBubbleList.Count);
             }
-            // 중복되지 않은 값을 현재 인덱스 리스트에 넣어줌.
-            nowBubbleIdxList.Add(randomIdx);
+            // 중복되지 않은 값을 현재 버블 리스트에 넣어줌.
+            nowBubbleList.Add(heartBubbleList[randomIdx].GetComponent<HeartButton>());
         }
 
         // 리스트에 없다?
-
-        if (bubbleClickSkill.isUseSkill)
-        {
-            queueIdx = randomIdx;
-        }
-
         heartBubbleList[randomIdx].SetBubbleOn();
     }
 
-    // 클릭한 동물의 인덱스를 가져와야 함.
+    // nowBubbleList에서 해당 인덱스의 데이터를 제거. (터치한 경우 nowBubbleList에서 제거 시켜주는 기능)
     public void RemoveIdxFromNowBubbleList(int idx)
     {
-        // 현재 버블이 켜져 있는 상태인 오브젝트일 때
-        if (nowBubbleIdxList.Contains(idx))
-        {
-            nowBubbleIdxList.Remove(idx);
-
-            GenerateNewHeart();
-        }
-
-        // 인덱스 밀림 방지
-        for (int i = idx; i < nowBubbleIdxList.Count; i++)
-        {
-            if (nowBubbleIdxList[i] > idx)
-            {
-                nowBubbleIdxList[i]--;
-            }
-        }
-
-        buttonIdx--;
-    }
-
-    public void OnAutoTouchBubbleSkill()
-    {
-        if (bubbleClickSkill != null && bubbleClickSkill.isUseSkill)
-        {
-            bubbleClickSkill.RemoveBubbleFromQueue(heartBubbleList[nowBubbleIdxList[0]].gameObject);
-
-            // 일정 시간 후 다시 활성화
-            StartCoroutine(ReactivateBubble());
-        }
-    }
-    IEnumerator ReactivateBubble()
-    {
-        yield return new WaitForSeconds(heartGenerateDelay);
+        nowBubbleList.Remove(heartBubbleList[idx].GetComponent<HeartButton>());
 
         GenerateNewHeart();
-
-        if (bubbleClickSkill != null)
+    }
+    
+    // heartBubbleList에서 해당 인덱스의 데이터 제거 (넣기 기능 수행 시 heartBubbleList / nowBubbleList에서 모두 빼주는 기능)
+    public void RemoveBubble(int idx)
+    {
+        HeartButton heartBubble = heartBubbleList[idx];     
+        // 현재 버블이 떠 있는 오브젝트를 삭제하는 경우.
+        if (nowBubbleList.Contains(heartBubble.GetComponent<HeartButton>()))
         {
-            Debug.Log("ReactivateBubble: Adding bubble to queue");
-            bubbleClickSkill.AddBubbleToQueue(heartBubbleList[queueIdx].gameObject);
+            nowBubbleList.Remove(heartBubble.GetComponent<HeartButton>());
+            GenerateNewHeart();
         }
-        else
-        {
-            Debug.LogError("ReactivateBubble: BubbleClickSkill not found");
-        }
+        heartBubbleList.Remove(heartBubble);
+        buttonIdx--;
     }
 }
