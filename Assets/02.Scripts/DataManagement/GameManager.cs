@@ -6,6 +6,7 @@ public class GameManager : MonoBehaviour
 {
     public ResourceManager resourceManager;
     public List<UpgradeButton> upgradeButtons;
+    public List<AnimalDataSO> animalDataList;
 
     private GameDataManager gameDataManager;
     private UIUpdater uiUpdater;
@@ -14,16 +15,17 @@ public class GameManager : MonoBehaviour
     private void Awake()
     {
         gameDataManager = new GameDataManager();
-        //uiUpdater = new UIUpdater(resourceManager, upgradeButtons);
+        uiUpdater = new UIUpdater(resourceManager, upgradeButtons);
         offlineProgressCalculator = new OfflineProgressCalculator();
         //SaveSystem.DeleteSave();
     }
 
     private void Start()
     {
-        //CalculateOfflineProgress();
-        //gameDataManager.LoadGameData(resourceManager);
-        //uiUpdater.UpdateAllUI();
+        gameDataManager.animalDataList = animalDataList;
+        CalculateOfflineProgress();
+        gameDataManager.LoadGameData(resourceManager);
+        uiUpdater.UpdateAllUI();
     }
 
     private void CalculateOfflineProgress()
@@ -38,6 +40,6 @@ public class GameManager : MonoBehaviour
 
     private void OnApplicationQuit()
     {
-        //gameDataManager.SaveGameData(resourceManager);
+        gameDataManager.SaveGameData(resourceManager);
     }
 }

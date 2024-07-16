@@ -5,6 +5,8 @@ using UnityEngine;
 
 public class GameDataManager
 {
+    public List<AnimalDataSO> animalDataList; 
+
     public void SaveGameData(ResourceManager resourceManager)
     {
         LifeManager lifeManager = resourceManager.lifeManager;
@@ -29,13 +31,17 @@ public class GameDataManager
         {
             if (animal.CompareTag("Animal"))
             {
-                animalStates.Add(new AnimalDataSave.AnimalState
+                AnimalDataSO animalData = FindAnimalDataByGameObject(animal);
+                if (animalData != null)
                 {
-                    animalType = "CubeAnimal", // 리소스 폴더에서 로드할 프리팹 이름
-                    posX = animal.transform.position.x,
-                    posY = animal.transform.position.y,
-                    posZ = animal.transform.position.z
-                });
+                    animalStates.Add(new AnimalDataSave.AnimalState
+                    {
+                        animalIndex = animalData.animalIndex,
+                        posX = animal.transform.position.x,
+                        posY = animal.transform.position.y,
+                        posZ = animal.transform.position.z
+                    });
+                }
             }
         }
 
@@ -52,7 +58,8 @@ public class GameDataManager
                 nowCreateCost = DataManager.Instance.animalGenerateData.nowCreateCost.ToString(),
                 nowAnimalCount = DataManager.Instance.animalGenerateData.nowAnimalCount,
                 maxAnimalCount = DataManager.Instance.animalGenerateData.maxAnimalCount,
-                animalStates = animalStates
+                animalStates = animalStates,
+                animalTypeCount = DataManager.Instance.animalGenerateData.allTypeCountDic
             },
             touchData = new TouchDataSave
             {
@@ -92,12 +99,13 @@ public class GameDataManager
             // 동물 상태 로드
             foreach (var animalState in gameData.animalData.animalStates)
             {
-                GameObject animalObject = InstantiateAnimal(animalState.animalType);
+                GameObject animalObject = InstantiateAnimal(animalState.animalIndex);
                 if (animalObject != null)
                 {
                     animalObject.transform.position = new UnityEngine.Vector3(animalState.posX, animalState.posY, animalState.posZ);
-                }                
+                }
             }
+            DataManager.Instance.animalGenerateData.allTypeCountDic = gameData.animalData.animalTypeCount;
         }
 
         if (gameData.touchData != null)
@@ -171,13 +179,32 @@ public class GameDataManager
         return totalLifeIncrease;
     }
 
-    private GameObject InstantiateAnimal(string animalType)
+    private GameObject InstantiateAnimal(int animalIndex)
     {
-        GameObject animalPrefab = Resources.Load<GameObject>(animalType);
-        if (animalPrefab != null)
-        {            
-            return GameObject.Instantiate(animalPrefab);
-        }        
+        AnimalDataSO animalData = GetAnimalDataByIndex(animalIndex);
+        if (animalData != null)
+        {
+            Debug.Log($"Animal prefab found for index: {animalIndex}");
+            return GameObject.Instantiate(animalData.animalPrefab);
+        }
+        Debug.LogError($"Animal prefab not found for index: {animalIndex}");
+        return null;
+    }
+
+    private AnimalDataSO GetAnimalDataByIndex(int index)
+    {
+        return animalDataList.Find(data => data.animalIndex == index);
+    }
+
+    private AnimalDataSO FindAnimalDataByGameObject(GameObject animal)
+    {
+        foreach (var data in animalDataList)
+        {
+            if (animal.name.Contains(data.animalPrefab.name))
+            {
+                return data;
+            }
+        }
         return null;
     }
 }

@@ -7,11 +7,12 @@ public class AnimalDataSave
     public int nowAnimalCount;
     public int maxAnimalCount;
     public List<AnimalState> animalStates = new List<AnimalState>();
+    public Dictionary<string, Dictionary<EachCountType, int>> animalTypeCount;
 
     [System.Serializable]
     public class AnimalState
     {
-        public string animalType;
+        public int animalIndex;
         public float posX;
         public float posY;
         public float posZ;
