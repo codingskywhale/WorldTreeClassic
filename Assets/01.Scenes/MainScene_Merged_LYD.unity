@@ -15666,7 +15666,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   resourceManager: {fileID: 525614631}
   upgradeButtons: []
-  animalDataList: []
+  animalDataList:
+  - {fileID: 11400000, guid: b8d3b3358fc9c9348bd6300236914032, type: 2}
+  - {fileID: 11400000, guid: 2c92774703157354bb990bf61f0e2331, type: 2}
+  - {fileID: 11400000, guid: fe5714a4e8607f640a477dd2e38f0e99, type: 2}
+  - {fileID: 11400000, guid: 83070f56aae5b3c49af0696ec2c090f5, type: 2}
+  - {fileID: 11400000, guid: 8415b503013473f4fb6ddbb2227d6659, type: 2}
+  - {fileID: 11400000, guid: f978169c3de2b72498b00e062fe9f2ef, type: 2}
+  - {fileID: 11400000, guid: 84b2af70e7308b540a947dabab70d1b2, type: 2}
+  - {fileID: 11400000, guid: e392f383c42242544a1c9109c5fda00f, type: 2}
+  - {fileID: 11400000, guid: 88f1bf1e724255742aa9c2959472959a, type: 2}
+  - {fileID: 11400000, guid: 53687f997b677e54d88689da51f1ff0d, type: 2}
   touchInput: {fileID: 0}
 --- !u!114 &1028150610
 MonoBehaviour:

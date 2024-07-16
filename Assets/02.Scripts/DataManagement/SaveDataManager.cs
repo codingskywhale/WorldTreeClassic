@@ -26,21 +26,28 @@ public class SaveDataManager
 
         // 동물 상태 저장
         List<AnimalDataSave.AnimalState> animalStates = new List<AnimalDataSave.AnimalState>();
-        foreach (var animal in GameObject.FindObjectsOfType<GameObject>())
+        GameObject[] animalObjects = GameObject.FindGameObjectsWithTag("Animal");
+        Debug.Log($"Found {animalObjects.Length} animals with 'Animal' tag");
+
+        foreach (var animal in animalObjects)
         {
-            if (animal.CompareTag("Animal"))
+            AnimalDataSO animalData = FindAnimalDataByGameObject(animal);
+            UniqueID uniqueID = animal.GetComponent<UniqueID>();
+            if (animalData != null && uniqueID != null)
             {
-                AnimalDataSO animalData = FindAnimalDataByGameObject(animal);
-                if (animalData != null)
+                animalStates.Add(new AnimalDataSave.AnimalState
                 {
-                    animalStates.Add(new AnimalDataSave.AnimalState
-                    {
-                        animalIndex = animalData.animalIndex,
-                        posX = animal.transform.position.x,
-                        posY = animal.transform.position.y,
-                        posZ = animal.transform.position.z
-                    });
-                }
+                    uniqueID = uniqueID.uniqueID,
+                    animalIndex = animalData.animalIndex,
+                    posX = animal.transform.position.x,
+                    posY = animal.transform.position.y,
+                    posZ = animal.transform.position.z
+                });
+                Debug.Log($"Animal state saved: {animalData.animalName}, Index: {animalData.animalIndex}, Position: ({animal.transform.position.x}, {animal.transform.position.y}, {animal.transform.position.z})");
+            }
+            else
+            {
+                Debug.LogError($"Animal data not found or UniqueID component missing for game object: {animal.name}");
             }
         }
 
@@ -57,6 +64,20 @@ public class SaveDataManager
                 Stored = counts[EachCountType.Stored]
             };
             animalTypeCountSerialized.Add(serializedCount);
+        }
+
+        // 활성화된 허트버블 인덱스 저장
+        var activeHeartBubbles = new List<int>();
+        if (LifeManager.Instance?.bubbleGenerator?.nowBubbleList != null)
+        {
+            foreach (var heartBubble in LifeManager.Instance.bubbleGenerator.nowBubbleList)
+            {
+                activeHeartBubbles.Add(heartBubble.heartIdx);
+            }
+        }
+        else
+        {
+            Debug.LogError("LifeManager.Instance.bubbleGenerator.nowBubbleList is null");
         }
 
         // 게임 데이터 생성 및 저장
@@ -83,11 +104,13 @@ public class SaveDataManager
                 upgradeLifeCost = DataManager.Instance.touchData.upgradeLifeCost.ToString()
             },
             lastSaveTime = DateTime.UtcNow.ToString("o"),
-            lifeGenerationRatePerSecond = resourceManager.GetTotalLifeGenerationPerSecond().ToString()
+            lifeGenerationRatePerSecond = resourceManager.GetTotalLifeGenerationPerSecond().ToString(),
+            activeHeartBubbles = activeHeartBubbles // 활성화된 허트버블 인덱스 저장
         };
         Debug.Log("Saving JSON: " + JsonUtility.ToJson(gameData, true)); // 저장되는 JSON 출력
         SaveSystem.Save(gameData);
     }
+
 
     public void LoadGameData(ResourceManager resourceManager)
     {
@@ -119,8 +142,20 @@ public class SaveDataManager
                 GameObject animalObject = InstantiateAnimal(animalState.animalIndex);
                 if (animalObject != null)
                 {
+                    UniqueID uniqueID = animalObject.AddComponent<UniqueID>();
+                    uniqueID.uniqueID = animalState.uniqueID; // 고유 ID 설정
                     animalObject.transform.position = new UnityEngine.Vector3(animalState.posX, animalState.posY, animalState.posZ);
                     Debug.Log($"Animal instantiated at position {animalObject.transform.position}");
+
+                    // 스폰 트랜스폼 설정
+                    animalObject.transform.SetParent(DataManager.Instance.spawnData.spawnTr);
+
+                    // 하트 버블 추가
+                    var heartButton = animalObject.GetComponent<HeartButton>();
+                    if (heartButton != null)
+                    {
+                        LifeManager.Instance.bubbleGenerator.AddAnimalHeartBubbleList(heartButton);
+                    }
                 }
                 else
                 {
@@ -140,6 +175,24 @@ public class SaveDataManager
                 animalTypeCountDeserialized[serializedCount.AnimalName] = counts;
             }
             DataManager.Instance.animalGenerateData.allTypeCountDic = animalTypeCountDeserialized;
+
+            // 도감 슬롯 해금 상태 로드
+            foreach (var kvp in animalTypeCountDeserialized)
+            {
+                var animalDataSO = DataManager.Instance.animalDataList.Find(data => data.animalName == kvp.Key);
+                if (animalDataSO != null)
+                {
+                    var animalSlot = Array.Find(DataManager.Instance.bag.slots, slot => slot.slotAnimalDataSO == animalDataSO);
+                    if (animalSlot != null)
+                    {
+                        animalSlot.isUnlocked = kvp.Value[EachCountType.Active] > 0 || kvp.Value[EachCountType.Stored] > 0;
+                        if (animalSlot.isUnlocked)
+                        {
+                            animalSlot.SetSlotData();
+                        }
+                    }
+                }
+            }
         }
 
         if (gameData.touchData != null)
@@ -162,7 +215,20 @@ public class SaveDataManager
         {
             root.UpdateUI();
         }
+
+        // 활성화된 허트버블 인덱스 로드
+        LifeManager.Instance.bubbleGenerator.nowBubbleList.Clear();
+        foreach (var heartIdx in gameData.activeHeartBubbles)
+        {
+            var heartButton = LifeManager.Instance.bubbleGenerator.heartBubbleList.Find(h => h.heartIdx == heartIdx);
+            if (heartButton != null)
+            {
+                LifeManager.Instance.bubbleGenerator.nowBubbleList.Add(heartButton);
+                heartButton.SetBubbleOn();
+            }
+        }
     }
+
 
     private void InitializeRoots(ResourceManager resourceManager, List<RootData> rootDataList)
     {
@@ -234,9 +300,10 @@ public class SaveDataManager
         if (animalData != null)
         {
             Debug.Log($"Animal prefab found for index: {animalIndex}");
-            GameObject animalObject = GameObject.Instantiate(animalData.animalPrefab);
+            GameObject animalObject = GameObject.Instantiate(animalData.animalPrefab, DataManager.Instance.spawnData.spawnTr); // 부모 설정 추가
             if (animalObject != null)
             {
+                animalObject.name = animalData.animalPrefab.name; // 프리팹 이름으로 설정
                 Debug.Log($"Animal instantiated successfully at index: {animalIndex}");
             }
             else
@@ -251,18 +318,33 @@ public class SaveDataManager
 
     private AnimalDataSO GetAnimalDataByIndex(int index)
     {
-        return animalDataList.Find(data => data.animalIndex == index);
+        Debug.Log($"GetAnimalDataByIndex - Start for index: {index}");
+        AnimalDataSO animalData = animalDataList.Find(data => data.animalIndex == index);
+        if (animalData == null)
+        {
+            Debug.LogError($"GetAnimalDataByIndex - No animal data found for index: {index}");
+        }
+        else
+        {
+            Debug.Log($"GetAnimalDataByIndex - Animal data found for index: {index}");
+        }
+        return animalData;
     }
 
     private AnimalDataSO FindAnimalDataByGameObject(GameObject animal)
     {
+        string animalNameWithoutClone = animal.name.Replace("(Clone)", "").Trim();
+        Debug.Log($"Searching AnimalDataSO for game object name: {animalNameWithoutClone}");
         foreach (var data in animalDataList)
         {
-            if (animal.name.Contains(data.animalPrefab.name))
+            Debug.Log($"Comparing with AnimalDataSO name: {data.animalPrefab.name}");
+            if (animalNameWithoutClone.Equals(data.animalPrefab.name, StringComparison.OrdinalIgnoreCase))
             {
+                Debug.Log($"Found matching AnimalDataSO: {data.animalPrefab.name} for game object name: {animalNameWithoutClone}");
                 return data;
             }
         }
+        Debug.LogError($"AnimalDataSO not found for game object name: {animalNameWithoutClone}");
         return null;
     }
 }

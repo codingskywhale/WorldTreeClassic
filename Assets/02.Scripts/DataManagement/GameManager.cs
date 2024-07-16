@@ -18,6 +18,7 @@ public class GameManager : MonoBehaviour
     private void Awake()
     {
         saveDataManager = new SaveDataManager();
+        saveDataManager.animalDataList = animalDataList;
         uiUpdater = new UIUpdater(resourceManager, upgradeButtons);
         offlineProgressCalculator = new OfflineProgressCalculator();
         offlineRewardManager = new OfflineRewardManager(resourceManager, offlineProgressCalculator);
@@ -63,4 +64,3 @@ public class GameManager : MonoBehaviour
         saveDataManager.SaveGameData(resourceManager);
     }
 }
-

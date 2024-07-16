@@ -9,6 +9,8 @@ public class DataManager : MonoBehaviour
     public AnimalGenerateData animalGenerateData;
     public AnimalSpawnData spawnData;
     public TouchData touchData;
+    public Bag bag;
+    public List<AnimalDataSO> animalDataList;
 
     private void Awake()
     {
@@ -24,7 +26,7 @@ public class DataManager : MonoBehaviour
         }
         animalGenerateData = new AnimalGenerateData();
 
-        touchData = GetComponent<TouchData>();
+        touchData = GetComponent<TouchData>();        
     }
 
     // 지정 동물을 파괴하는 기능
