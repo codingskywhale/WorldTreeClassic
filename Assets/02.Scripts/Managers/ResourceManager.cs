@@ -5,14 +5,13 @@ using Vector3 = UnityEngine.Vector3;
 
 public class ResourceManager : MonoBehaviour
 {
-    public LifeManager lifeManager;
     public List<RootBase> roots = new List<RootBase>();
     public BigInteger lifeGenerationRatePerSecond;
 
     private void Start()
     {
         RegisterAllRoots();
-        lifeManager.OnWaterChanged += UpdateLifeUI;
+        LifeManager.Instance.OnWaterChanged += UpdateLifeUI;
 
         // 초당 생명력 생성률을 로드
         LoadLifeGenerationRate();
@@ -50,20 +49,20 @@ public class ResourceManager : MonoBehaviour
 
     public void UpdateGroundSize()
     {
-        float groundScale = 8f + (lifeManager.currentLevel / 10f);
+        float groundScale = 8f + (LifeManager.Instance.currentLevel / 10f);
         UIManager.Instance.tree.groundMeshFilter.transform.localScale = new Vector3(groundScale, groundScale, groundScale);
     }
 
     public void UpdateUI()
     {
-        BigInteger lifeNeededForCurrentLevel = lifeManager.CalculateWaterNeededForUpgrade(1);
-        UIManager.Instance.status.UpdateLifeUI(lifeManager.lifeAmount, lifeNeededForCurrentLevel);
+        BigInteger lifeNeededForCurrentLevel = LifeManager.Instance.CalculateWaterNeededForUpgrade(1);
+        UIManager.Instance.status.UpdateLifeUI(LifeManager.Instance.lifeAmount, lifeNeededForCurrentLevel);
         UIManager.Instance.status.UpdateLifeIncreaseUI(lifeGenerationRatePerSecond);
     }
 
     private void UpdateLifeUI(BigInteger newWaterAmount)
     {
-        BigInteger lifeNeededForCurrentLevel = lifeManager.CalculateWaterNeededForUpgrade(1);
+        BigInteger lifeNeededForCurrentLevel = LifeManager.Instance.CalculateWaterNeededForUpgrade(1);
         UIManager.Instance.status.UpdateLifeUI(newWaterAmount, lifeNeededForCurrentLevel);
     }
 
@@ -110,7 +109,7 @@ public class ResourceManager : MonoBehaviour
 
     private void OnDestroy()
     {
-        lifeManager.OnWaterChanged -= UpdateLifeUI;
+        LifeManager.Instance.OnWaterChanged -= UpdateLifeUI;
         foreach (var root in roots)
         {
             root.OnGenerationRateChanged -= UpdateLifeGenerationRatePerSecond;

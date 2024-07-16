@@ -8,6 +8,7 @@ public class GameManager : MonoBehaviour
     public ResourceManager resourceManager;
     public List<UpgradeButton> upgradeButtons;
     public List<AnimalDataSO> animalDataList;
+    public TouchInput touchInput;
 
     private GameDataManager gameDataManager;
     private UIUpdater uiUpdater;
@@ -21,6 +22,7 @@ public class GameManager : MonoBehaviour
         offlineProgressCalculator = new OfflineProgressCalculator();
         offlineRewardManager = new OfflineRewardManager(resourceManager, offlineProgressCalculator);
         //SaveSystem.DeleteSave();  // 개발 중에만 사용
+        touchInput = GetComponent<TouchInput>();
     }
 
     private void Start()

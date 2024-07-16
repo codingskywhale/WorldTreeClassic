@@ -6,7 +6,7 @@ public class UpgradeButton : MonoBehaviour
 {
     public ResourceManager resourceManager;
     public RootBase root;
-    public TouchInputManager touchInputManager;
+    //public TouchInputManager touchInputManager;
 
     public enum UpgradeType
     {
@@ -32,7 +32,7 @@ public class UpgradeButton : MonoBehaviour
         }
         else if (upgradeType == UpgradeType.Tree && resourceManager != null)
         {
-            UpdateUpgradeCostUI(resourceManager.lifeManager.currentLevel);
+            UpdateUpgradeCostUI(LifeManager.Instance.currentLevel);
         }
     }
 
@@ -173,9 +173,10 @@ public class UpgradeButton : MonoBehaviour
         {
             BigInteger upgradeCost = root.CalculateUpgradeCost();
             Debug.Log($"UpdateUpgradeCostUI called for root level {this.name}, {root.rootLevel}, upgrade cost {upgradeCost}");
-            UIManager.Instance.root.UpdateRootLevelUI(root.rootLevel, upgradeCost);
+            //UIManager.Instance.root.UpdateRootLevelUI(root.rootLevel, upgradeCost);
+            root.UpdateRootLevelUI(root.rootLevel, upgradeCost);
         }
-        else if (upgradeType == UpgradeType.Touch && touchInputManager != null)
+        else if (upgradeType == UpgradeType.Touch) //&& touchInputManager != null
         {
             UIManager.Instance.touchData.UpdateTouchUI(DataManager.Instance.touchData.touchIncreaseLevel,
                                     DataManager.Instance.touchData.touchIncreaseAmount,
@@ -183,7 +184,7 @@ public class UpgradeButton : MonoBehaviour
         }
         else if (upgradeType == UpgradeType.Tree && resourceManager != null)
         {
-            BigInteger waterNeededForCurrentLevel = resourceManager.lifeManager.CalculateWaterNeededForUpgrade(1);
+            BigInteger waterNeededForCurrentLevel = LifeManager.Instance.CalculateWaterNeededForUpgrade(1);
             // uiManager.UpdateUpgradeRequirementUI(resourceManager.lifeManager.currentLevel, waterNeededForCurrentLevel);
         }
     }

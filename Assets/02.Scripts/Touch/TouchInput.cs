@@ -2,9 +2,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class TouchInputManager : MonoBehaviour
+public class TouchInput : MonoBehaviour
 {
-    public LifeManager lifeManager;
 
     void Update()
     {
@@ -12,7 +11,7 @@ public class TouchInputManager : MonoBehaviour
         {
             // 화면 터치시 효과음 재생
             SoundManager.instance.PlaySFX(SoundManager.instance.sfxClips[0]);
-            lifeManager.IncreaseWater(DataManager.Instance.touchData.touchIncreaseAmount);                       
+            LifeManager.Instance.IncreaseWater(DataManager.Instance.touchData.touchIncreaseAmount);                       
         }
     }
 

@@ -82,11 +82,10 @@ public class GameDataManager
             return;
         }
 
-        LifeManager lifeManager = resourceManager.lifeManager;
         List<RootBase> roots = resourceManager.roots;
 
-        lifeManager.lifeAmount = string.IsNullOrEmpty(gameData.lifeAmount) ? BigInteger.Zero : BigInteger.Parse(gameData.lifeAmount);
-        lifeManager.currentLevel = gameData.currentLevel;
+        LifeManager.Instance.lifeAmount = string.IsNullOrEmpty(gameData.lifeAmount) ? BigInteger.Zero : BigInteger.Parse(gameData.lifeAmount);
+        LifeManager.Instance.currentLevel = gameData.currentLevel;
         DataManager.Instance.animalGenerateData.nowAnimalCount = gameData.nowAnimalCount;
         DataManager.Instance.animalGenerateData.maxAnimalCount = gameData.maxAnimalCount;
 
@@ -160,9 +159,8 @@ public class GameDataManager
 
     private void InitializeDefaultGameData(ResourceManager resourceManager)
     {
-        LifeManager lifeManager = resourceManager.lifeManager;
-        lifeManager.lifeAmount = BigInteger.Zero;
-        lifeManager.currentLevel = 1;
+        LifeManager.Instance.lifeAmount = BigInteger.Zero;
+        LifeManager.Instance.currentLevel = 1;
         DataManager.Instance.animalGenerateData.nowAnimalCount = 0;
         DataManager.Instance.animalGenerateData.maxAnimalCount = 5;
         DataManager.Instance.animalGenerateData.nowCreateCost = DataManager.Instance.animalGenerateData.createCostbase;
