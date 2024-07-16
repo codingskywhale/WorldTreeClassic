@@ -26,11 +26,11 @@ public static class SaveSystem
         return new GameData(); // 새로운 데이터를 리턴
     }
 
-    //public static void DeleteSave()
-    //{
-    //    if (File.Exists(savePath))
-    //    {
-    //        File.Delete(savePath);
-    //    }
-    //}
+    public static void DeleteSave()
+    {
+        if (File.Exists(savePath))
+        {
+            File.Delete(savePath);
+        }
+    }
 }

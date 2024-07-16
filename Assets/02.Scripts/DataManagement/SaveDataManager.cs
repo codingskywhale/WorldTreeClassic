@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Numerics;
 using UnityEngine;
 
-public class GameDataManager
+public class SaveDataManager
 {
-    public List<AnimalDataSO> animalDataList; 
+    public List<AnimalDataSO> animalDataList;
 
     public void SaveGameData(ResourceManager resourceManager)
     {
@@ -44,6 +44,22 @@ public class GameDataManager
             }
         }
 
+        // animalTypeCount 직렬화
+        var animalTypeCountSerialized = new List<AnimalDataSave.SerializedAnimalTypeCount>();
+        foreach (var kvp in DataManager.Instance.animalGenerateData.allTypeCountDic)
+        {
+            var counts = kvp.Value;
+            var serializedCount = new AnimalDataSave.SerializedAnimalTypeCount
+            {
+                AnimalName = kvp.Key,
+                Total = counts[EachCountType.Total],
+                Active = counts[EachCountType.Active],
+                Stored = counts[EachCountType.Stored]
+            };
+            animalTypeCountSerialized.Add(serializedCount);
+        }
+
+        // 게임 데이터 생성 및 저장
         GameData gameData = new GameData
         {
             lifeAmount = LifeManager.Instance.lifeAmount.ToString(),
@@ -58,7 +74,7 @@ public class GameDataManager
                 nowAnimalCount = DataManager.Instance.animalGenerateData.nowAnimalCount,
                 maxAnimalCount = DataManager.Instance.animalGenerateData.maxAnimalCount,
                 animalStates = animalStates,
-                animalTypeCount = DataManager.Instance.animalGenerateData.allTypeCountDic
+                animalTypeCountSerialized = animalTypeCountSerialized // 직렬화된 데이터를 저장
             },
             touchData = new TouchDataSave
             {
@@ -67,8 +83,9 @@ public class GameDataManager
                 upgradeLifeCost = DataManager.Instance.touchData.upgradeLifeCost.ToString()
             },
             lastSaveTime = DateTime.UtcNow.ToString("o"),
-            lifeGenerationRatePerSecond = resourceManager.GetTotalLifeGenerationPerSecond().ToString() // 초당 생명력 생성률 저장
+            lifeGenerationRatePerSecond = resourceManager.GetTotalLifeGenerationPerSecond().ToString()
         };
+        Debug.Log("Saving JSON: " + JsonUtility.ToJson(gameData, true)); // 저장되는 JSON 출력
         SaveSystem.Save(gameData);
     }
 
@@ -96,15 +113,33 @@ public class GameDataManager
             DataManager.Instance.animalGenerateData.maxAnimalCount = gameData.animalData.maxAnimalCount;
 
             // 동물 상태 로드
+            Debug.Log($"Loading {gameData.animalData.animalStates.Count} animal states");
             foreach (var animalState in gameData.animalData.animalStates)
             {
                 GameObject animalObject = InstantiateAnimal(animalState.animalIndex);
                 if (animalObject != null)
                 {
                     animalObject.transform.position = new UnityEngine.Vector3(animalState.posX, animalState.posY, animalState.posZ);
+                    Debug.Log($"Animal instantiated at position {animalObject.transform.position}");
+                }
+                else
+                {
+                    Debug.LogError($"Failed to instantiate animal with index {animalState.animalIndex}");
                 }
             }
-            DataManager.Instance.animalGenerateData.allTypeCountDic = gameData.animalData.animalTypeCount;
+
+            var animalTypeCountDeserialized = new Dictionary<string, Dictionary<EachCountType, int>>();
+            foreach (var serializedCount in gameData.animalData.animalTypeCountSerialized)
+            {
+                var counts = new Dictionary<EachCountType, int>
+            {
+                { EachCountType.Total, serializedCount.Total },
+                { EachCountType.Active, serializedCount.Active },
+                { EachCountType.Stored, serializedCount.Stored }
+            };
+                animalTypeCountDeserialized[serializedCount.AnimalName] = counts;
+            }
+            DataManager.Instance.animalGenerateData.allTypeCountDic = animalTypeCountDeserialized;
         }
 
         if (gameData.touchData != null)
@@ -199,7 +234,16 @@ public class GameDataManager
         if (animalData != null)
         {
             Debug.Log($"Animal prefab found for index: {animalIndex}");
-            return GameObject.Instantiate(animalData.animalPrefab);
+            GameObject animalObject = GameObject.Instantiate(animalData.animalPrefab);
+            if (animalObject != null)
+            {
+                Debug.Log($"Animal instantiated successfully at index: {animalIndex}");
+            }
+            else
+            {
+                Debug.LogError($"Failed to instantiate animal at index: {animalIndex}");
+            }
+            return animalObject;
         }
         Debug.LogError($"Animal prefab not found for index: {animalIndex}");
         return null;

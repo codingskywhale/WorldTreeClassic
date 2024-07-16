@@ -7,7 +7,7 @@ public class AnimalDataSave
     public int nowAnimalCount;
     public int maxAnimalCount;
     public List<AnimalState> animalStates = new List<AnimalState>();
-    public Dictionary<string, Dictionary<EachCountType, int>> animalTypeCount;
+    public List<SerializedAnimalTypeCount> animalTypeCountSerialized;
 
     [System.Serializable]
     public class AnimalState
@@ -16,5 +16,14 @@ public class AnimalDataSave
         public float posX;
         public float posY;
         public float posZ;
+    }
+
+    [System.Serializable]
+    public class SerializedAnimalTypeCount
+    {
+        public string AnimalName;
+        public int Total;
+        public int Active;
+        public int Stored;
     }
 }
