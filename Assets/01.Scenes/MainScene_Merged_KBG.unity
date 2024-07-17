@@ -4944,17 +4944,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &277711633 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 5600156984325069955, guid: 2c216aceeeea4cb4994f9766e4513c6a, type: 3}
-  m_PrefabInstance: {fileID: 769555868}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ded275846d124ab44849ff1b8ae47b4f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &284344260
 GameObject:
   m_ObjectHideFlags: 0
@@ -5035,28 +5024,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 284344260}
   m_CullTransparentMesh: 1
---- !u!114 &286362671 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 3752737518687819464, guid: 2c216aceeeea4cb4994f9766e4513c6a, type: 3}
-  m_PrefabInstance: {fileID: 769555868}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ded275846d124ab44849ff1b8ae47b4f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &300520918 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 1529383694211874986, guid: 2c216aceeeea4cb4994f9766e4513c6a, type: 3}
-  m_PrefabInstance: {fileID: 769555868}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ded275846d124ab44849ff1b8ae47b4f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &302020494
 GameObject:
   m_ObjectHideFlags: 0
@@ -5556,17 +5523,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 320095957}
   m_CullTransparentMesh: 1
---- !u!114 &330991645 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 1858965866418519402, guid: 2c216aceeeea4cb4994f9766e4513c6a, type: 3}
-  m_PrefabInstance: {fileID: 769555868}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ded275846d124ab44849ff1b8ae47b4f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &345786145
 GameObject:
   m_ObjectHideFlags: 0
@@ -5931,17 +5887,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 362703228}
   m_CullTransparentMesh: 1
---- !u!114 &364809205 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 8475431506124329637, guid: 2c216aceeeea4cb4994f9766e4513c6a, type: 3}
-  m_PrefabInstance: {fileID: 769555868}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 52ad1df39533b244cbe8d725c621de8a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &369248640
 GameObject:
   m_ObjectHideFlags: 0
@@ -8039,9 +7984,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   status: {fileID: 425030253}
   root: {fileID: 153027942}
-  touchData: {fileID: 0}
+  touchData: {fileID: 1783155105}
   tree: {fileID: 701093651}
-  bag: {fileID: 364809205}
+  bag: {fileID: 0}
   createAnimalButtons:
   - {fileID: 675866183719881068}
   - {fileID: 7329486179872649514}
@@ -13405,39 +13350,39 @@ PrefabInstance:
     - target: {fileID: 8475431506124329637, guid: 2c216aceeeea4cb4994f9766e4513c6a, type: 3}
       propertyPath: slots.Array.data[0]
       value: 
-      objectReference: {fileID: 277711633}
+      objectReference: {fileID: 0}
     - target: {fileID: 8475431506124329637, guid: 2c216aceeeea4cb4994f9766e4513c6a, type: 3}
       propertyPath: slots.Array.data[1]
       value: 
-      objectReference: {fileID: 996331985}
+      objectReference: {fileID: 0}
     - target: {fileID: 8475431506124329637, guid: 2c216aceeeea4cb4994f9766e4513c6a, type: 3}
       propertyPath: slots.Array.data[2]
       value: 
-      objectReference: {fileID: 330991645}
+      objectReference: {fileID: 0}
     - target: {fileID: 8475431506124329637, guid: 2c216aceeeea4cb4994f9766e4513c6a, type: 3}
       propertyPath: slots.Array.data[3]
       value: 
-      objectReference: {fileID: 1923504314}
+      objectReference: {fileID: 0}
     - target: {fileID: 8475431506124329637, guid: 2c216aceeeea4cb4994f9766e4513c6a, type: 3}
       propertyPath: slots.Array.data[4]
       value: 
-      objectReference: {fileID: 286362671}
+      objectReference: {fileID: 0}
     - target: {fileID: 8475431506124329637, guid: 2c216aceeeea4cb4994f9766e4513c6a, type: 3}
       propertyPath: slots.Array.data[5]
       value: 
-      objectReference: {fileID: 300520918}
+      objectReference: {fileID: 0}
     - target: {fileID: 8475431506124329637, guid: 2c216aceeeea4cb4994f9766e4513c6a, type: 3}
       propertyPath: slots.Array.data[6]
       value: 
-      objectReference: {fileID: 1986324427}
+      objectReference: {fileID: 0}
     - target: {fileID: 8475431506124329637, guid: 2c216aceeeea4cb4994f9766e4513c6a, type: 3}
       propertyPath: slots.Array.data[7]
       value: 
-      objectReference: {fileID: 2089992824}
+      objectReference: {fileID: 0}
     - target: {fileID: 8475431506124329637, guid: 2c216aceeeea4cb4994f9766e4513c6a, type: 3}
       propertyPath: slots.Array.data[8]
       value: 
-      objectReference: {fileID: 1603632419}
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -15829,7 +15774,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   heartBubbleList: []
-  nowBubbleList: []
   bubbleClickSkill: {fileID: 0}
 --- !u!1 &941060310
 GameObject:
@@ -17373,17 +17317,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 995074617}
   m_CullTransparentMesh: 1
---- !u!114 &996331985 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 7648042416113491547, guid: 2c216aceeeea4cb4994f9766e4513c6a, type: 3}
-  m_PrefabInstance: {fileID: 769555868}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ded275846d124ab44849ff1b8ae47b4f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &997439006
 GameObject:
   m_ObjectHideFlags: 0
@@ -27011,17 +26944,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1596811169}
   m_CullTransparentMesh: 1
---- !u!114 &1603632419 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 8210987693392419996, guid: 2c216aceeeea4cb4994f9766e4513c6a, type: 3}
-  m_PrefabInstance: {fileID: 769555868}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ded275846d124ab44849ff1b8ae47b4f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1603668950
 GameObject:
   m_ObjectHideFlags: 0
@@ -29479,6 +29401,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spawnData: {fileID: 1864715110}
   touchData: {fileID: 0}
+  bag: {fileID: 0}
+  animalDataList: []
 --- !u!4 &1783155104
 Transform:
   m_ObjectHideFlags: 0
@@ -30967,17 +30891,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1907958377}
   m_CullTransparentMesh: 1
---- !u!114 &1923504314 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 8781037614987733067, guid: 2c216aceeeea4cb4994f9766e4513c6a, type: 3}
-  m_PrefabInstance: {fileID: 769555868}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ded275846d124ab44849ff1b8ae47b4f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1925851963
 GameObject:
   m_ObjectHideFlags: 0
@@ -32156,17 +32069,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1986103906}
   m_CullTransparentMesh: 1
---- !u!114 &1986324427 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 2272810531494771511, guid: 2c216aceeeea4cb4994f9766e4513c6a, type: 3}
-  m_PrefabInstance: {fileID: 769555868}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ded275846d124ab44849ff1b8ae47b4f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1992437183
 GameObject:
   m_ObjectHideFlags: 0
@@ -33194,17 +33096,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1842392039}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2089992824 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 8711029620621638685, guid: 2c216aceeeea4cb4994f9766e4513c6a, type: 3}
-  m_PrefabInstance: {fileID: 769555868}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ded275846d124ab44849ff1b8ae47b4f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &2112190011
 GameObject:
   m_ObjectHideFlags: 0
@@ -34616,6 +34507,7 @@ MonoBehaviour:
   inButtonCostText: {fileID: 698152738362383371}
   createButton: {fileID: 4184785777170407521}
   animalSpawnTr: {fileID: 1864715111}
+  conditionCleared: 0
 --- !u!222 &677410308106698633
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -34849,6 +34741,7 @@ MonoBehaviour:
   inButtonCostText: {fileID: 6771814600951039339}
   createButton: {fileID: 8218433555248422544}
   animalSpawnTr: {fileID: 1864715111}
+  conditionCleared: 0
 --- !u!114 &1196754675925560047
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -37328,6 +37221,7 @@ MonoBehaviour:
   inButtonCostText: {fileID: 1709801793230976005}
   createButton: {fileID: 1968363232819111491}
   animalSpawnTr: {fileID: 1864715111}
+  conditionCleared: 0
 --- !u!222 &3994989220565286070
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -38172,6 +38066,7 @@ MonoBehaviour:
   inButtonCostText: {fileID: 5780783748294096743}
   createButton: {fileID: 8261953859962839768}
   animalSpawnTr: {fileID: 1864715111}
+  conditionCleared: 0
 --- !u!222 &5053406720814203301
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -39796,6 +39691,7 @@ MonoBehaviour:
   inButtonCostText: {fileID: 5906057104546852585}
   createButton: {fileID: 3834438809686296838}
   animalSpawnTr: {fileID: 1864715111}
+  conditionCleared: 0
 --- !u!224 &7367472453047899039
 RectTransform:
   m_ObjectHideFlags: 0
@@ -40145,6 +40041,7 @@ MonoBehaviour:
   inButtonCostText: {fileID: 4943450580242656748}
   createButton: {fileID: 3552797002381596978}
   animalSpawnTr: {fileID: 1864715111}
+  conditionCleared: 0
 --- !u!222 &7815118121092173911
 CanvasRenderer:
   m_ObjectHideFlags: 0
