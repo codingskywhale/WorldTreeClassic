@@ -62,7 +62,7 @@ public class UIUpdater
     private void UpdateAnimalButtons()
     {
         var createAnimalButtons = UIManager.Instance.createAnimalButtons; 
-        var nowAnimalCount = DataManager.Instance.animalGenerateData.nowAnimalCount; // 현재 생성된 동물
+        var nowAnimalCount = UIManager.Instance.createObjectButtonUnlockCount; // 현재 생성된 동물
 
         for (int i = 0; i < createAnimalButtons.Length; i++) 
         {
@@ -75,11 +75,13 @@ public class UIUpdater
                 button.nameText.text = animalData.animalName; // 버튼의 이름을 동물 이름으로 설정
 
                 // 해금 상태에 따라 설명 텍스트 업데이트
-                bool conditionCleared = i < nowAnimalCount; 
+                bool conditionCleared = i < nowAnimalCount - 1; 
                 button.conditionText.text = conditionCleared ? "(V) " + animalData.animalUnlockConditions[0] : "(X) " + animalData.animalUnlockConditions[0];
 
                 // 비용 텍스트 업데이트
                 button.SetCostText(); 
+
+                button.conditionCleared = conditionCleared;
 
                 // 버튼 상호작용 가능 여부 업데이트
                 button.createButton.interactable = conditionCleared && LifeManager.Instance.lifeAmount >= (BigInteger)DataManager.Instance.animalGenerateData.nowCreateCost;
