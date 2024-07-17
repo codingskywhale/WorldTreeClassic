@@ -15,7 +15,7 @@ public abstract class Skill : MonoBehaviour
     public Button upgradeButton; // 해금/업그레이드 버튼
 
     protected bool onCooldown = false;
-    protected float cooldownRemaining;
+    public float cooldownRemaining;
 
     public int currentLevel = 0; // 현재 스킬 레벨 (0 = 잠금 상태)
     public TextMeshProUGUI upgradeCostText; // 업그레이드 비용을 표시할 텍스트
