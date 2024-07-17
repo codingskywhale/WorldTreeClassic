@@ -225,7 +225,6 @@ public class SaveDataManager
         UIManager.Instance.UpdateButtonUI();
     }
 
-
     private void InitializeRoots(ResourceManager resourceManager, List<RootData> rootDataList)
     {
         List<RootBase> roots = resourceManager.roots;
