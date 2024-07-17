@@ -8,16 +8,19 @@ public class OfflineRewardManager
     private OfflineProgressCalculator offlineProgressCalculator;
     private OfflineRewardSkill offlineRewardSkill;
     private OfflineRewardAmountSkill offlineRewardAmountSkill;
+    private int maxOfflineDurationMinutes;
 
-    // AdditionalOfflineRewardMinutes 변수 선언
     public int AdditionalOfflineRewardMinutes { get; private set; } = 0;
-    public OfflineRewardManager(ResourceManager resourceManager, OfflineProgressCalculator offlineProgressCalculator, 
-                                OfflineRewardSkill offlineRewardSkill, OfflineRewardAmountSkill offlineRewardAmountSkill)
+
+    public OfflineRewardManager(ResourceManager resourceManager, OfflineProgressCalculator offlineProgressCalculator,
+                                OfflineRewardSkill offlineRewardSkill, OfflineRewardAmountSkill offlineRewardAmountSkill,
+                                int maxOfflineDurationMinutes = 120) // 기본값 120분
     {
         this.resourceManager = resourceManager;
         this.offlineProgressCalculator = offlineProgressCalculator;
         this.offlineRewardSkill = offlineRewardSkill;
         this.offlineRewardAmountSkill = offlineRewardAmountSkill;
+        this.maxOfflineDurationMinutes = maxOfflineDurationMinutes; // 최대 오프라인 기간 설정
         UpdateAdditionalRewardMinutes();
     }
 
@@ -29,7 +32,7 @@ public class OfflineRewardManager
         }
         else
         {
-            AdditionalOfflineRewardMinutes = 120; // 스킬이 해금되지 않았을 때 기본 1분
+            AdditionalOfflineRewardMinutes = 0; // 스킬이 해금되지 않았을 때 추가 시간 없음
         }
     }
 
@@ -44,15 +47,17 @@ public class OfflineRewardManager
         TimeSpan offlineDuration = offlineProgressCalculator.CalculateOfflineDuration(lastSaveTime);
         Debug.Log($"오프라인 기간 (초): {offlineDuration.TotalSeconds}");
 
-        // 스킬 적용 시간을 추가, 기본 1분 제한 적용
-        TimeSpan totalOfflineDuration = offlineDuration;
-        if (offlineRewardSkill.currentLevel == 0 && offlineDuration.TotalMinutes > AdditionalOfflineRewardMinutes)
+        TimeSpan totalOfflineDuration;
+        if (offlineRewardSkill.currentLevel == 0)
         {
-            totalOfflineDuration = TimeSpan.FromMinutes(AdditionalOfflineRewardMinutes);
+            // 스킬이 해금되지 않았을 때 최대 오프라인 기간으로 제한
+            totalOfflineDuration = TimeSpan.FromMinutes(Math.Min(maxOfflineDurationMinutes, offlineDuration.TotalMinutes));
         }
         else
         {
-            totalOfflineDuration += TimeSpan.FromMinutes(AdditionalOfflineRewardMinutes);
+            totalOfflineDuration = offlineDuration + TimeSpan.FromMinutes(AdditionalOfflineRewardMinutes);
+            // 최대 오프라인 기간으로 제한
+            totalOfflineDuration = TimeSpan.FromMinutes(Math.Min(maxOfflineDurationMinutes, totalOfflineDuration.TotalMinutes));
         }
 
         Debug.Log($"총 오프라인 기간 (스킬 적용) (초): {totalOfflineDuration.TotalSeconds}");
@@ -62,7 +67,6 @@ public class OfflineRewardManager
 
         BigInteger totalLifeIncrease = lifePerSecond * (BigInteger)totalOfflineDuration.TotalSeconds;
 
-        // 오프라인 보상량 증가 스킬 적용
         if (offlineRewardAmountSkill != null && offlineRewardAmountSkill.currentLevel > 0)
         {
             float rewardMultiplier = 1.0f + (offlineRewardAmountSkill.currentLevel * 0.10f);
@@ -73,5 +77,20 @@ public class OfflineRewardManager
         Debug.Log($"총 오프라인 생명력 증가량: {totalLifeIncrease}");
 
         return totalLifeIncrease;
+    }
+
+    public double CalculateOfflineDurationInSeconds(string lastSaveTime)
+    {
+        TimeSpan offlineDuration = offlineProgressCalculator.CalculateOfflineDuration(lastSaveTime);
+        if (offlineRewardSkill.currentLevel == 0 && offlineDuration.TotalMinutes > maxOfflineDurationMinutes)
+        {
+            offlineDuration = TimeSpan.FromMinutes(maxOfflineDurationMinutes); // 해금되지 않았을 시 최대 오프라인 기간으로 제한
+        }
+        return offlineDuration.TotalSeconds;
+    }
+
+    public double GetMaxOfflineDurationInSeconds()
+    {
+        return maxOfflineDurationMinutes * 60;
     }
 }
