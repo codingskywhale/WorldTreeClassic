@@ -12,6 +12,7 @@ public class AnimalDataSave
     [System.Serializable]
     public class AnimalState
     {
+        public AnimalDataSO dataSO;
         public string uniqueID;
         public int animalIndex;
         public float posX;
