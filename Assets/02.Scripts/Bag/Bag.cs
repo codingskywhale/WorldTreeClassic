@@ -12,7 +12,7 @@ public class Bag : MonoBehaviour
 
     private void Awake()
     {
-        slots = GetComponentsInChildren<Bag_AnimalSlot>();
+        //slots = GetComponentsInChildren<Bag_AnimalSlot>();
     }
 
     public void UnlockSlot(int slotIdx)

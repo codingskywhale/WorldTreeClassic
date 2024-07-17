@@ -22,7 +22,7 @@ public class GameManager : MonoBehaviour
         uiUpdater = new UIUpdater(resourceManager, upgradeButtons);
         offlineProgressCalculator = new OfflineProgressCalculator();
         offlineRewardManager = new OfflineRewardManager(resourceManager, offlineProgressCalculator);
-        //SaveSystem.DeleteSave();  // 개발 중에만 사용
+        SaveSystem.DeleteSave();  // 개발 중에만 사용
         touchInput = GetComponent<TouchInput>();
     }
 
