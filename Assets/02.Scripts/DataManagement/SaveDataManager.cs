@@ -80,6 +80,18 @@ public class SaveDataManager
             Debug.LogError("LifeManager.Instance.bubbleGenerator.nowBubbleList is null");
         }
 
+        // 딕셔너리 변환
+        var serializableDict = new SerializableDictionary<string, SerializableDictionary<EachCountType, int>>();
+        foreach (var kvp in DataManager.Instance.animalGenerateData.allTypeCountDic)
+        {
+            var innerDict = new SerializableDictionary<EachCountType, int>();
+            foreach (var innerKvp in kvp.Value)
+            {
+                innerDict[innerKvp.Key] = innerKvp.Value;
+            }
+            serializableDict[kvp.Key] = innerDict;
+        }
+
         // 게임 데이터 생성 및 저장
         GameData gameData = new GameData
         {
@@ -105,12 +117,12 @@ public class SaveDataManager
             },
             lastSaveTime = DateTime.UtcNow.ToString("o"),
             lifeGenerationRatePerSecond = resourceManager.GetTotalLifeGenerationPerSecond().ToString(),
-            activeHeartBubbles = activeHeartBubbles // 활성화된 허트버블 인덱스 저장
+            activeHeartBubbles = activeHeartBubbles,
+            allTypeCountDic = serializableDict // 직렬화된 딕셔너리 저장
         };
         Debug.Log("Saving JSON: " + JsonUtility.ToJson(gameData, true)); // 저장되는 JSON 출력
         SaveSystem.Save(gameData);
     }
-
 
     public void LoadGameData(ResourceManager resourceManager)
     {
@@ -163,21 +175,21 @@ public class SaveDataManager
                 }
             }
 
-            var animalTypeCountDeserialized = new Dictionary<string, Dictionary<EachCountType, int>>();
-            foreach (var serializedCount in gameData.animalData.animalTypeCountSerialized)
+            // 직렬화된 딕셔너리 로드
+            var deserializedDict = new Dictionary<string, Dictionary<EachCountType, int>>();
+            foreach (var kvp in gameData.allTypeCountDic)
             {
-                var counts = new Dictionary<EachCountType, int>
-            {
-                { EachCountType.Total, serializedCount.Total },
-                { EachCountType.Active, serializedCount.Active },
-                { EachCountType.Stored, serializedCount.Stored }
-            };
-                animalTypeCountDeserialized[serializedCount.AnimalName] = counts;
+                var innerDict = new Dictionary<EachCountType, int>();
+                foreach (var innerKvp in kvp.Value)
+                {
+                    innerDict[innerKvp.Key] = innerKvp.Value;
+                }
+                deserializedDict[kvp.Key] = innerDict;
             }
-            DataManager.Instance.animalGenerateData.allTypeCountDic = animalTypeCountDeserialized;
+            DataManager.Instance.animalGenerateData.allTypeCountDic = deserializedDict;
 
-            // 도감 슬롯 해금 상태 로드
-            foreach (var kvp in animalTypeCountDeserialized)
+            // 가방 슬롯 업데이트
+            foreach (var kvp in deserializedDict)
             {
                 var animalDataSO = DataManager.Instance.animalDataList.Find(data => data.animalName == kvp.Key);
                 if (animalDataSO != null)
@@ -228,7 +240,6 @@ public class SaveDataManager
             }
         }
     }
-
 
     private void InitializeRoots(ResourceManager resourceManager, List<RootData> rootDataList)
     {
