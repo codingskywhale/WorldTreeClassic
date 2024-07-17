@@ -25427,6 +25427,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spawnData: {fileID: 1864715110}
   touchData: {fileID: 0}
+  bag: {fileID: 364809205}
+  animalDataList: []
 --- !u!4 &1783155104
 Transform:
   m_ObjectHideFlags: 0

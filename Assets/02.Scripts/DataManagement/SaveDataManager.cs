@@ -79,6 +79,8 @@ public class SaveDataManager
             serializableDict[kvp.Key] = innerDict;
         }
 
+
+
         // 게임 데이터 생성 및 저장
         GameData gameData = new GameData
         {
@@ -104,7 +106,8 @@ public class SaveDataManager
             },
             lastSaveTime = DateTime.UtcNow.ToString("o"),
             lifeGenerationRatePerSecond = resourceManager.GetTotalLifeGenerationPerSecond().ToString(),
-            allTypeCountDic = serializableDict // 직렬화된 딕셔너리 저장
+            allTypeCountDic = serializableDict, // 직렬화된 딕셔너리 저장
+            createObjectButtonUnlockCount = UIManager.Instance.createObjectButtonUnlockCount
         };
         Debug.Log("Saving JSON: " + JsonUtility.ToJson(gameData, true)); // 저장되는 JSON 출력
         SaveSystem.Save(gameData);
@@ -117,6 +120,8 @@ public class SaveDataManager
         if (gameData == null)
         {
             InitializeDefaultGameData(resourceManager);
+            UIManager.Instance.createObjectButtonUnlockCount = 1;
+            UIManager.Instance.UpdateButtonUI();
             return;
         }
 
@@ -215,7 +220,11 @@ public class SaveDataManager
         {
             root.UpdateUI();
         }
+
+        UIManager.Instance.createObjectButtonUnlockCount = gameData.createObjectButtonUnlockCount > 0 ? gameData.createObjectButtonUnlockCount : 1;
+        UIManager.Instance.UpdateButtonUI();
     }
+
 
     private void InitializeRoots(ResourceManager resourceManager, List<RootData> rootDataList)
     {
