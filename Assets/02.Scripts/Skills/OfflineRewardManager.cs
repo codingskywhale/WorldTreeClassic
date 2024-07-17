@@ -29,7 +29,7 @@ public class OfflineRewardManager
         }
         else
         {
-            AdditionalOfflineRewardMinutes = 1; // 스킬이 해금되지 않았을 때 기본 1분
+            AdditionalOfflineRewardMinutes = 120; // 스킬이 해금되지 않았을 때 기본 1분
         }
     }
 
