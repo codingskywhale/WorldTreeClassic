@@ -37,7 +37,7 @@ public class BubbleClickSkill : Skill
 
         while (elapsedTime < skillDuration)
         {
-            if (LifeManager.Instance.bubbleGenerator.nowBubbleList.Count > 0)
+            if (LifeManager.Instance.bubbleGenerator.GetNowBubbleList().Count > 0)
             {
                 ClickNextBubble();
             }
@@ -51,9 +51,9 @@ public class BubbleClickSkill : Skill
 
     private void ClickNextBubble()
     {
-        if (LifeManager.Instance.bubbleGenerator.nowBubbleList.Count > 0)
+        if (LifeManager.Instance.bubbleGenerator.GetNowBubbleList().Count > 0)
         {
-            HeartButton bubble = LifeManager.Instance.bubbleGenerator.nowBubbleList[0];
+            HeartButton bubble = LifeManager.Instance.bubbleGenerator.GetNowBubbleList()[0];
             if (bubble != null)
             {
                 bubble.TouchHeartBubble();

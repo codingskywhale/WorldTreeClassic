@@ -61,8 +61,8 @@ public class AnimalInfoWindow : MonoBehaviour
             {
                 if (animalDataSO.animalName == nowAnimaldataSO.animalName)
                 {
-                    DataManager.Instance.DestroyAnimal(animalDataSO, count);
                     LifeManager.Instance.bubbleGenerator.RemoveBubble(count);
+                    DataManager.Instance.DestroyAnimal(animalDataSO, count);
 
                     break;
                 }
@@ -71,9 +71,6 @@ public class AnimalInfoWindow : MonoBehaviour
             count = 0;
 
             DataManager.Instance.StoreAnimalCount(nowAnimaldataSO);
-
-            // animalIndex가 아니라 그냥 그 오브젝트 자체의 인덱스 값을 가져와야함.....
-            
 
             SetActiveStoreCountUI();
         }

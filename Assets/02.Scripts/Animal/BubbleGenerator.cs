@@ -5,7 +5,7 @@ using UnityEngine;
 public class BubbleGenerator : MonoBehaviour
 {
     public List<HeartButton> heartBubbleList = new List<HeartButton>();
-    public List<HeartButton> nowBubbleList = new List<HeartButton>();
+    private List<HeartButton> nowBubbleList = new List<HeartButton>();
     private readonly int maxHeartCount = 2;
     private int nowOnHeartIndex;
     public readonly float heartGenerateDelay = 2f;
@@ -18,6 +18,10 @@ public class BubbleGenerator : MonoBehaviour
         bubbleClickSkill = FindObjectOfType<BubbleClickSkill>();
     }
 
+    public List<HeartButton> GetNowBubbleList()
+    {
+        return nowBubbleList;
+    }
     public void InitialBubbleSet()
     {
         if (heartBubbleList.Count > 0)
@@ -59,7 +63,8 @@ public class BubbleGenerator : MonoBehaviour
         {
             randomIdx = 0;
             // 가장 첫번째에 띄워주기.
-            nowBubbleList.Add(heartBubbleList[0].GetComponent<HeartButton>());
+            if(nowBubbleList.Count == 0)
+                nowBubbleList.Add(heartBubbleList[0].GetComponent<HeartButton>());
         }
 
         // 하트 버블이 2개 이상이라면. 전체 중 랜덤 Idx를 뽑아야 한다.
@@ -79,13 +84,14 @@ public class BubbleGenerator : MonoBehaviour
         }
 
         // 리스트에 없다?
+
         heartBubbleList[randomIdx].SetBubbleOn();
     }
 
     // nowBubbleList에서 해당 인덱스의 데이터를 제거. (터치한 경우 nowBubbleList에서 제거 시켜주는 기능)
     public void RemoveIdxFromNowBubbleList(int idx)
     {
-        nowBubbleList.Remove(heartBubbleList[idx].GetComponent<HeartButton>());
+       nowBubbleList.Remove(heartBubbleList[idx].GetComponent<HeartButton>());
 
         GenerateNewHeart();
     }
@@ -98,9 +104,17 @@ public class BubbleGenerator : MonoBehaviour
         if (nowBubbleList.Contains(heartBubble.GetComponent<HeartButton>()))
         {
             nowBubbleList.Remove(heartBubble.GetComponent<HeartButton>());
+
             GenerateNewHeart();
         }
         heartBubbleList.Remove(heartBubble);
         buttonIdx--;
+
+        // 앞의 인덱스가 삭제되었을 때 해당 버튼의 인덱스도 당겨져야 함.
+        foreach(HeartButton heartButton in heartBubbleList)
+        {
+            if(heartButton.heartIdx > idx)
+                heartButton.heartIdx--;
+        }
     }
 }
