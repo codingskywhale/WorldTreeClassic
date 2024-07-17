@@ -29,6 +29,7 @@ public class GameManager : MonoBehaviour
     private void Start()
     {
         saveDataManager.LoadGameData(resourceManager);
+        LifeManager.Instance.bubbleGenerator.InitialBubbleSet();
         saveDataManager.animalDataList = animalDataList;
         CalculateOfflineProgress();
         uiUpdater.UpdateAllUI();

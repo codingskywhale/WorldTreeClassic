@@ -10,7 +10,7 @@ public class DataManager : MonoBehaviour
     public AnimalSpawnData spawnData;
     public TouchData touchData;
     public Bag bag;
-    public List<AnimalDataSO> animalDataList;
+    public List<AnimalDataSO> animalDataList = new List<AnimalDataSO>();
 
     private void Awake()
     {

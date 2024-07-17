@@ -17,6 +17,18 @@ public class BubbleGenerator : MonoBehaviour
     {
         bubbleClickSkill = FindObjectOfType<BubbleClickSkill>();
     }
+
+    public void InitialBubbleSet()
+    {
+        if (heartBubbleList.Count > 0)
+        {
+            for (int i = 0; i < heartBubbleList.Count; i++)
+            {
+                GenerateNewHeart();
+            }
+        }
+    }
+
     public void AddAnimalHeartBubbleList(HeartButton bubble)
     {
         heartBubbleList.Add(bubble);

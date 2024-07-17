@@ -37,6 +37,7 @@ public class SaveDataManager
             {
                 animalStates.Add(new AnimalDataSave.AnimalState
                 {
+                    dataSO = animalData,
                     uniqueID = uniqueID.uniqueID,
                     animalIndex = animalData.animalIndex,
                     posX = animal.transform.position.x,
@@ -66,20 +67,6 @@ public class SaveDataManager
             animalTypeCountSerialized.Add(serializedCount);
         }
 
-        // 활성화된 허트버블 인덱스 저장
-        var activeHeartBubbles = new List<int>();
-        if (LifeManager.Instance?.bubbleGenerator?.nowBubbleList != null)
-        {
-            foreach (var heartBubble in LifeManager.Instance.bubbleGenerator.nowBubbleList)
-            {
-                activeHeartBubbles.Add(heartBubble.heartIdx);
-            }
-        }
-        else
-        {
-            Debug.LogError("LifeManager.Instance.bubbleGenerator.nowBubbleList is null");
-        }
-
         // 딕셔너리 변환
         var serializableDict = new SerializableDictionary<string, SerializableDictionary<EachCountType, int>>();
         foreach (var kvp in DataManager.Instance.animalGenerateData.allTypeCountDic)
@@ -91,6 +78,8 @@ public class SaveDataManager
             }
             serializableDict[kvp.Key] = innerDict;
         }
+
+
 
         // 게임 데이터 생성 및 저장
         GameData gameData = new GameData
@@ -117,8 +106,8 @@ public class SaveDataManager
             },
             lastSaveTime = DateTime.UtcNow.ToString("o"),
             lifeGenerationRatePerSecond = resourceManager.GetTotalLifeGenerationPerSecond().ToString(),
-            activeHeartBubbles = activeHeartBubbles,
-            allTypeCountDic = serializableDict // 직렬화된 딕셔너리 저장
+            allTypeCountDic = serializableDict, // 직렬화된 딕셔너리 저장
+            createObjectButtonUnlockCount = UIManager.Instance.createObjectButtonUnlockCount
         };
         Debug.Log("Saving JSON: " + JsonUtility.ToJson(gameData, true)); // 저장되는 JSON 출력
         SaveSystem.Save(gameData);
@@ -131,6 +120,8 @@ public class SaveDataManager
         if (gameData == null)
         {
             InitializeDefaultGameData(resourceManager);
+            UIManager.Instance.createObjectButtonUnlockCount = 1;
+            UIManager.Instance.UpdateButtonUI();
             return;
         }
 
@@ -147,33 +138,6 @@ public class SaveDataManager
             DataManager.Instance.animalGenerateData.nowAnimalCount = gameData.animalData.nowAnimalCount;
             DataManager.Instance.animalGenerateData.maxAnimalCount = gameData.animalData.maxAnimalCount;
 
-            // 동물 상태 로드
-            Debug.Log($"Loading {gameData.animalData.animalStates.Count} animal states");
-            foreach (var animalState in gameData.animalData.animalStates)
-            {
-                GameObject animalObject = InstantiateAnimal(animalState.animalIndex);
-                if (animalObject != null)
-                {
-                    UniqueID uniqueID = animalObject.AddComponent<UniqueID>();
-                    uniqueID.uniqueID = animalState.uniqueID; // 고유 ID 설정
-                    animalObject.transform.position = new UnityEngine.Vector3(animalState.posX, animalState.posY, animalState.posZ);
-                    Debug.Log($"Animal instantiated at position {animalObject.transform.position}");
-
-                    // 스폰 트랜스폼 설정
-                    animalObject.transform.SetParent(DataManager.Instance.spawnData.spawnTr);
-
-                    // 하트 버블 추가
-                    var heartButton = animalObject.GetComponent<HeartButton>();
-                    if (heartButton != null)
-                    {
-                        LifeManager.Instance.bubbleGenerator.AddAnimalHeartBubbleList(heartButton);
-                    }
-                }
-                else
-                {
-                    Debug.LogError($"Failed to instantiate animal with index {animalState.animalIndex}");
-                }
-            }
 
             // 직렬화된 딕셔너리 로드
             var deserializedDict = new Dictionary<string, Dictionary<EachCountType, int>>();
@@ -188,10 +152,39 @@ public class SaveDataManager
             }
             DataManager.Instance.animalGenerateData.allTypeCountDic = deserializedDict;
 
+            // 동물 상태 로드
+            Debug.Log($"Loading {gameData.animalData.animalStates.Count} animal states");
+            foreach (var animalState in gameData.animalData.animalStates)
+            {
+                GameObject animalObject = InstantiateAnimal(animalState.animalIndex);
+                DataManager.Instance.spawnData.animalDataSOList.Add(animalState.dataSO);
+                if (animalObject != null)
+                {
+                    UniqueID uniqueID = animalObject.AddComponent<UniqueID>();
+                    uniqueID.uniqueID = animalState.uniqueID; // 고유 ID 설정
+                    animalObject.transform.position = new UnityEngine.Vector3(animalState.posX, animalState.posY, animalState.posZ);
+                    Debug.Log($"Animal instantiated at position {animalObject.transform.position}");
+
+                    // 스폰 트랜스폼 설정
+                    animalObject.transform.SetParent(DataManager.Instance.spawnData.spawnTr);
+
+                    // 하트 버블 추가
+                    var heartButton = animalObject.GetComponent<Animal>().heart;
+                    if (heartButton != null)
+                    {
+                        LifeManager.Instance.bubbleGenerator.AddAnimalHeartBubbleList(heartButton);
+                    }
+                }
+                else
+                {
+                    Debug.LogError($"Failed to instantiate animal with index {animalState.animalIndex}");
+                }
+            }
+
             // 가방 슬롯 업데이트
             foreach (var kvp in deserializedDict)
             {
-                var animalDataSO = DataManager.Instance.animalDataList.Find(data => data.animalName == kvp.Key);
+                var animalDataSO = animalDataList.Find(data => data.animalName == kvp.Key);
                 if (animalDataSO != null)
                 {
                     var animalSlot = Array.Find(DataManager.Instance.bag.slots, slot => slot.slotAnimalDataSO == animalDataSO);
@@ -228,18 +221,10 @@ public class SaveDataManager
             root.UpdateUI();
         }
 
-        // 활성화된 허트버블 인덱스 로드
-        LifeManager.Instance.bubbleGenerator.nowBubbleList.Clear();
-        foreach (var heartIdx in gameData.activeHeartBubbles)
-        {
-            var heartButton = LifeManager.Instance.bubbleGenerator.heartBubbleList.Find(h => h.heartIdx == heartIdx);
-            if (heartButton != null)
-            {
-                LifeManager.Instance.bubbleGenerator.nowBubbleList.Add(heartButton);
-                heartButton.SetBubbleOn();
-            }
-        }
+        UIManager.Instance.createObjectButtonUnlockCount = gameData.createObjectButtonUnlockCount > 0 ? gameData.createObjectButtonUnlockCount : 1;
+        UIManager.Instance.UpdateButtonUI();
     }
+
 
     private void InitializeRoots(ResourceManager resourceManager, List<RootData> rootDataList)
     {
@@ -312,6 +297,7 @@ public class SaveDataManager
         {
             Debug.Log($"Animal prefab found for index: {animalIndex}");
             GameObject animalObject = GameObject.Instantiate(animalData.animalPrefab, DataManager.Instance.spawnData.spawnTr); // 부모 설정 추가
+            DataManager.Instance.spawnData.animalObjectList.Add(animalObject);
             if (animalObject != null)
             {
                 animalObject.name = animalData.animalPrefab.name; // 프리팹 이름으로 설정
