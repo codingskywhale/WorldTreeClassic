@@ -15,10 +15,10 @@ public class Bag_AnimalSlot : MonoBehaviour
     private void Awake()
     {
         animalIcon.sprite = slotAnimalDataSO.animalIcon;
-        animalIcon.color = Color.black;
+        //animalIcon.color = Color.black;
 
         explainText.text = string.Empty;
-    }
+    }        
 
     public void SetSlotData()
     {

@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Numerics;
 using UnityEngine;
 
-public class GameDataManager
+public class SaveDataManager
 {
-    public List<AnimalDataSO> animalDataList; 
+    public List<AnimalDataSO> animalDataList;
 
     public void SaveGameData(ResourceManager resourceManager)
     {
@@ -26,24 +26,62 @@ public class GameDataManager
 
         // 동물 상태 저장
         List<AnimalDataSave.AnimalState> animalStates = new List<AnimalDataSave.AnimalState>();
-        foreach (var animal in GameObject.FindObjectsOfType<GameObject>())
+        GameObject[] animalObjects = GameObject.FindGameObjectsWithTag("Animal");
+        Debug.Log($"Found {animalObjects.Length} animals with 'Animal' tag");
+
+        foreach (var animal in animalObjects)
         {
-            if (animal.CompareTag("Animal"))
+            AnimalDataSO animalData = FindAnimalDataByGameObject(animal);
+            UniqueID uniqueID = animal.GetComponent<UniqueID>();
+            if (animalData != null && uniqueID != null)
             {
-                AnimalDataSO animalData = FindAnimalDataByGameObject(animal);
-                if (animalData != null)
+                animalStates.Add(new AnimalDataSave.AnimalState
                 {
-                    animalStates.Add(new AnimalDataSave.AnimalState
-                    {
-                        animalIndex = animalData.animalIndex,
-                        posX = animal.transform.position.x,
-                        posY = animal.transform.position.y,
-                        posZ = animal.transform.position.z
-                    });
-                }
+                    dataSO = animalData,
+                    uniqueID = uniqueID.uniqueID,
+                    animalIndex = animalData.animalIndex,
+                    posX = animal.transform.position.x,
+                    posY = animal.transform.position.y,
+                    posZ = animal.transform.position.z
+                });
+                Debug.Log($"Animal state saved: {animalData.animalName}, Index: {animalData.animalIndex}, Position: ({animal.transform.position.x}, {animal.transform.position.y}, {animal.transform.position.z})");
+            }
+            else
+            {
+                Debug.LogError($"Animal data not found or UniqueID component missing for game object: {animal.name}");
             }
         }
 
+        // animalTypeCount 직렬화
+        var animalTypeCountSerialized = new List<AnimalDataSave.SerializedAnimalTypeCount>();
+        foreach (var kvp in DataManager.Instance.animalGenerateData.allTypeCountDic)
+        {
+            var counts = kvp.Value;
+            var serializedCount = new AnimalDataSave.SerializedAnimalTypeCount
+            {
+                AnimalName = kvp.Key,
+                Total = counts[EachCountType.Total],
+                Active = counts[EachCountType.Active],
+                Stored = counts[EachCountType.Stored]
+            };
+            animalTypeCountSerialized.Add(serializedCount);
+        }
+
+        // 딕셔너리 변환
+        var serializableDict = new SerializableDictionary<string, SerializableDictionary<EachCountType, int>>();
+        foreach (var kvp in DataManager.Instance.animalGenerateData.allTypeCountDic)
+        {
+            var innerDict = new SerializableDictionary<EachCountType, int>();
+            foreach (var innerKvp in kvp.Value)
+            {
+                innerDict[innerKvp.Key] = innerKvp.Value;
+            }
+            serializableDict[kvp.Key] = innerDict;
+        }
+
+
+
+        // 게임 데이터 생성 및 저장
         GameData gameData = new GameData
         {
             lifeAmount = LifeManager.Instance.lifeAmount.ToString(),
@@ -58,7 +96,7 @@ public class GameDataManager
                 nowAnimalCount = DataManager.Instance.animalGenerateData.nowAnimalCount,
                 maxAnimalCount = DataManager.Instance.animalGenerateData.maxAnimalCount,
                 animalStates = animalStates,
-                animalTypeCount = DataManager.Instance.animalGenerateData.allTypeCountDic
+                animalTypeCountSerialized = animalTypeCountSerialized // 직렬화된 데이터를 저장
             },
             touchData = new TouchDataSave
             {
@@ -67,8 +105,11 @@ public class GameDataManager
                 upgradeLifeCost = DataManager.Instance.touchData.upgradeLifeCost.ToString()
             },
             lastSaveTime = DateTime.UtcNow.ToString("o"),
-            lifeGenerationRatePerSecond = resourceManager.GetTotalLifeGenerationPerSecond().ToString() // 초당 생명력 생성률 저장
+            lifeGenerationRatePerSecond = resourceManager.GetTotalLifeGenerationPerSecond().ToString(),
+            allTypeCountDic = serializableDict, // 직렬화된 딕셔너리 저장
+            createObjectButtonUnlockCount = UIManager.Instance.createObjectButtonUnlockCount
         };
+        Debug.Log("Saving JSON: " + JsonUtility.ToJson(gameData, true)); // 저장되는 JSON 출력
         SaveSystem.Save(gameData);
     }
 
@@ -79,6 +120,8 @@ public class GameDataManager
         if (gameData == null)
         {
             InitializeDefaultGameData(resourceManager);
+            UIManager.Instance.createObjectButtonUnlockCount = 1;
+            UIManager.Instance.UpdateButtonUI();
             return;
         }
 
@@ -95,16 +138,66 @@ public class GameDataManager
             DataManager.Instance.animalGenerateData.nowAnimalCount = gameData.animalData.nowAnimalCount;
             DataManager.Instance.animalGenerateData.maxAnimalCount = gameData.animalData.maxAnimalCount;
 
+
+            // 직렬화된 딕셔너리 로드
+            var deserializedDict = new Dictionary<string, Dictionary<EachCountType, int>>();
+            foreach (var kvp in gameData.allTypeCountDic)
+            {
+                var innerDict = new Dictionary<EachCountType, int>();
+                foreach (var innerKvp in kvp.Value)
+                {
+                    innerDict[innerKvp.Key] = innerKvp.Value;
+                }
+                deserializedDict[kvp.Key] = innerDict;
+            }
+            DataManager.Instance.animalGenerateData.allTypeCountDic = deserializedDict;
+
             // 동물 상태 로드
+            Debug.Log($"Loading {gameData.animalData.animalStates.Count} animal states");
             foreach (var animalState in gameData.animalData.animalStates)
             {
                 GameObject animalObject = InstantiateAnimal(animalState.animalIndex);
+                DataManager.Instance.spawnData.animalDataSOList.Add(animalState.dataSO);
                 if (animalObject != null)
                 {
+                    UniqueID uniqueID = animalObject.AddComponent<UniqueID>();
+                    uniqueID.uniqueID = animalState.uniqueID; // 고유 ID 설정
                     animalObject.transform.position = new UnityEngine.Vector3(animalState.posX, animalState.posY, animalState.posZ);
+                    Debug.Log($"Animal instantiated at position {animalObject.transform.position}");
+
+                    // 스폰 트랜스폼 설정
+                    animalObject.transform.SetParent(DataManager.Instance.spawnData.spawnTr);
+
+                    // 하트 버블 추가
+                    var heartButton = animalObject.GetComponent<Animal>().heart;
+                    if (heartButton != null)
+                    {
+                        LifeManager.Instance.bubbleGenerator.AddAnimalHeartBubbleList(heartButton);
+                    }
+                }
+                else
+                {
+                    Debug.LogError($"Failed to instantiate animal with index {animalState.animalIndex}");
                 }
             }
-            DataManager.Instance.animalGenerateData.allTypeCountDic = gameData.animalData.animalTypeCount;
+
+            // 가방 슬롯 업데이트
+            foreach (var kvp in deserializedDict)
+            {
+                var animalDataSO = animalDataList.Find(data => data.animalName == kvp.Key);
+                if (animalDataSO != null)
+                {
+                    var animalSlot = Array.Find(DataManager.Instance.bag.slots, slot => slot.slotAnimalDataSO == animalDataSO);
+                    if (animalSlot != null)
+                    {
+                        animalSlot.isUnlocked = kvp.Value[EachCountType.Active] > 0 || kvp.Value[EachCountType.Stored] > 0;
+                        if (animalSlot.isUnlocked)
+                        {
+                            animalSlot.SetSlotData();
+                        }
+                    }
+                }
+            }
         }
 
         if (gameData.touchData != null)
@@ -127,7 +220,11 @@ public class GameDataManager
         {
             root.UpdateUI();
         }
+
+        UIManager.Instance.createObjectButtonUnlockCount = gameData.createObjectButtonUnlockCount > 0 ? gameData.createObjectButtonUnlockCount : 1;
+        UIManager.Instance.UpdateButtonUI();
     }
+
 
     private void InitializeRoots(ResourceManager resourceManager, List<RootData> rootDataList)
     {
@@ -199,7 +296,18 @@ public class GameDataManager
         if (animalData != null)
         {
             Debug.Log($"Animal prefab found for index: {animalIndex}");
-            return GameObject.Instantiate(animalData.animalPrefab);
+            GameObject animalObject = GameObject.Instantiate(animalData.animalPrefab, DataManager.Instance.spawnData.spawnTr); // 부모 설정 추가
+            DataManager.Instance.spawnData.animalObjectList.Add(animalObject);
+            if (animalObject != null)
+            {
+                animalObject.name = animalData.animalPrefab.name; // 프리팹 이름으로 설정
+                Debug.Log($"Animal instantiated successfully at index: {animalIndex}");
+            }
+            else
+            {
+                Debug.LogError($"Failed to instantiate animal at index: {animalIndex}");
+            }
+            return animalObject;
         }
         Debug.LogError($"Animal prefab not found for index: {animalIndex}");
         return null;
@@ -207,18 +315,33 @@ public class GameDataManager
 
     private AnimalDataSO GetAnimalDataByIndex(int index)
     {
-        return animalDataList.Find(data => data.animalIndex == index);
+        Debug.Log($"GetAnimalDataByIndex - Start for index: {index}");
+        AnimalDataSO animalData = animalDataList.Find(data => data.animalIndex == index);
+        if (animalData == null)
+        {
+            Debug.LogError($"GetAnimalDataByIndex - No animal data found for index: {index}");
+        }
+        else
+        {
+            Debug.Log($"GetAnimalDataByIndex - Animal data found for index: {index}");
+        }
+        return animalData;
     }
 
     private AnimalDataSO FindAnimalDataByGameObject(GameObject animal)
     {
+        string animalNameWithoutClone = animal.name.Replace("(Clone)", "").Trim();
+        Debug.Log($"Searching AnimalDataSO for game object name: {animalNameWithoutClone}");
         foreach (var data in animalDataList)
         {
-            if (animal.name.Contains(data.animalPrefab.name))
+            Debug.Log($"Comparing with AnimalDataSO name: {data.animalPrefab.name}");
+            if (animalNameWithoutClone.Equals(data.animalPrefab.name, StringComparison.OrdinalIgnoreCase))
             {
+                Debug.Log($"Found matching AnimalDataSO: {data.animalPrefab.name} for game object name: {animalNameWithoutClone}");
                 return data;
             }
         }
+        Debug.LogError($"AnimalDataSO not found for game object name: {animalNameWithoutClone}");
         return null;
     }
 }

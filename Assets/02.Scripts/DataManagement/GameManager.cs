@@ -10,14 +10,15 @@ public class GameManager : MonoBehaviour
     public List<AnimalDataSO> animalDataList;
     public TouchInput touchInput;
 
-    private GameDataManager gameDataManager;
+    private SaveDataManager saveDataManager;
     private UIUpdater uiUpdater;
     private OfflineProgressCalculator offlineProgressCalculator;
     private OfflineRewardManager offlineRewardManager;
 
     private void Awake()
     {
-        gameDataManager = new GameDataManager();
+        saveDataManager = new SaveDataManager();
+        saveDataManager.animalDataList = animalDataList;
         uiUpdater = new UIUpdater(resourceManager, upgradeButtons);
         offlineProgressCalculator = new OfflineProgressCalculator();
         offlineRewardManager = new OfflineRewardManager(resourceManager, offlineProgressCalculator);
@@ -27,8 +28,9 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
-        gameDataManager.LoadGameData(resourceManager);
-        gameDataManager.animalDataList = animalDataList;
+        saveDataManager.LoadGameData(resourceManager);
+        LifeManager.Instance.bubbleGenerator.InitialBubbleSet();
+        saveDataManager.animalDataList = animalDataList;
         CalculateOfflineProgress();
         uiUpdater.UpdateAllUI();
         Debug.Log($"초기 생명력: {LifeManager.Instance.lifeAmount}");          
@@ -60,7 +62,6 @@ public class GameManager : MonoBehaviour
 
     private void OnApplicationQuit()
     {
-        gameDataManager.SaveGameData(resourceManager);
+        saveDataManager.SaveGameData(resourceManager);
     }
 }
-

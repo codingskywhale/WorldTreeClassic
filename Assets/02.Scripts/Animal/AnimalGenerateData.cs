@@ -62,14 +62,18 @@ public class AnimalGenerateData
 
     public void AddAnimalToDictionary(string name, bool canActive)
     {
+        if (allTypeCountDic == null)
+        {
+            allTypeCountDic = new Dictionary<string, Dictionary<EachCountType, int>>();
+        }
+
         // Dic에 이미 있는 데이터일 경우
-        // Dictionary<string, Dictionary<EachCountType, int>>
         if (allTypeCountDic.ContainsKey(name))
         {
             allTypeCountDic[name][EachCountType.Total]++;
 
             // 활동 중 혹은 보관중 체크
-            if(canActive)
+            if (canActive)
                 allTypeCountDic[name][EachCountType.Active]++;
             else
                 allTypeCountDic[name][EachCountType.Stored]++;
