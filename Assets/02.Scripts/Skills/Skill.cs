@@ -142,11 +142,11 @@ public abstract class Skill : MonoBehaviour
     {
         if (level >= 1 && level <= 10)
         {
-            return level * 10;
+            return unlockCost + (level * 10); ;
         }
         else if (level >= 11 && level <= 21)
         {
-            return (level - 10) * 100;
+            return unlockCost + (level - 10) * 100;
         }
         else
         {
