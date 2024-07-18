@@ -14,17 +14,20 @@ public class Bag_AnimalSlot : MonoBehaviour
 
     private void Awake()
     {
-        animalIcon.sprite = slotAnimalDataSO.animalIcon;
-        //animalIcon.color = Color.black;
+        if (!isUnlocked)
+        {
+            animalIcon.sprite = slotAnimalDataSO.animalIcon;
+            animalIcon.color = Color.black;
 
-        explainText.text = string.Empty;
+            explainText.text = string.Empty;
+        }
     }        
 
     public void SetSlotData()
     {
         animalIcon.color = Color.white;
 
-        explainText.text = slotAnimalDataSO.animalName;
+        explainText.text = $"{DataManager.Instance.animalGenerateData.nowAnimalCount} / {DataManager.Instance.animalGenerateData.maxAnimalCount}";
     }
 
     public void ClickAnimalIcon()

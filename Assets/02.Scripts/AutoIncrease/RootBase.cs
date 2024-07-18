@@ -44,7 +44,7 @@ public class RootBase : MonoBehaviour, IRoot
         OnGenerationRateChanged?.Invoke(); // 초기화 시 이벤트 트리거
         UpdateUI();
         cameraTransition = FindObjectOfType<CameraTransition>(); // CameraTransition 컴포넌트 참조 초기화
-        upgradeLifeCost = initialUpgradeCost; // 초기 레벨업 비용 설정
+        //upgradeLifeCost = initialUpgradeCost; // 초기 레벨업 비용 설정
         currentMultiplier = 1;
     }
 
@@ -79,11 +79,11 @@ public class RootBase : MonoBehaviour, IRoot
     {
         if (rootLevel == 0)
         {
-            return initialUpgradeCost;
+            return unlockCost;
         }
         else
         {
-            return initialUpgradeCost * BigInteger.Pow(120, rootLevel) / BigInteger.Pow(100, rootLevel); // 1.2^rootLevel
+            return unlockCost * BigInteger.Pow(120, rootLevel) / BigInteger.Pow(100, rootLevel); // 1.2^rootLevel
         }
     }
 
@@ -147,25 +147,20 @@ public class RootBase : MonoBehaviour, IRoot
 
     public void Unlock()
     {
-        if (LifeManager.Instance.HasSufficientWater(unlockCost))
-        {
-            LifeManager.Instance.DecreaseWater(unlockCost);
-            isUnlocked = true;
-            rootLevel = 1; // 잠금 해제 시 레벨 1로 설정
-            OnGenerationRateChanged?.Invoke(); // 잠금 해제 시 이벤트 트리거
-            UpdateUI();
-            CreateAndZoomObject(); // 오브젝트 생성 및 줌 효과 시작
-        }
-        else
-        {
-            Debug.Log("물이 부족하여 해금할 수 없습니다.");
-        }
+        isUnlocked = true;
+        rootLevel = 1; // 잠금 해제 시 레벨 1로 설정
+        upgradeLifeCost = CalculateUpgradeCost(); // 업그레이드 비용 업데이트
+        OnGenerationRateChanged?.Invoke(); // 잠금 해제 시 이벤트 트리거
+        UpdateUI();
+        CreateAndZoomObject(); // 오브젝트 생성 및 줌 효과 시작
+        Debug.Log("Unlocked successfully.");
     }
 
     private void CheckUnlockCondition()
     {
-        // 버튼 활성화 처리를 위해 조건 확인 로직을 유지
-        if (!isUnlocked && DataManager.Instance.touchData != null && DataManager.Instance.touchData.touchIncreaseLevel >= unlockThreshold)
+        // 잠금 해제 조건 확인 로직
+        if (!isUnlocked && DataManager.Instance.touchData != null
+            && DataManager.Instance.touchData.touchIncreaseLevel >= unlockThreshold)
         {
             UpdateUI();
         }

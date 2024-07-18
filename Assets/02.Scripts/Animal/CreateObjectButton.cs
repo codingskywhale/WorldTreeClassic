@@ -22,6 +22,8 @@ public class CreateObjectButton : MonoBehaviour
     private string conditionX = "(X) ";
     private string conditionV = "(V) ";
 
+    public bool conditionCleared = false;
+
     private void Awake()
     {
         InitailizeSet();
@@ -32,8 +34,14 @@ public class CreateObjectButton : MonoBehaviour
         nameText.text = animalData.animalName;
         conditionText.text = conditionX + animalData.animalUnlockConditions[0];
         // 일단 첫 번째 버튼은 해금된 상태여야 함.
-        CheckConditionCleared(0);
-        SetButtonLock();
+        if (!conditionCleared) SetButtonLock();
+
+        else
+        {
+            for(int i = 0; i< UIManager.Instance.createObjectButtonUnlockCount; i++)
+                CheckConditionCleared(i);
+        }
+    
         UIManager.Instance.UpdateButtonUI();
     }
 

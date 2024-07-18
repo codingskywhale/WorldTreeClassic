@@ -12,7 +12,6 @@ GameObject:
   - component: {fileID: 6152538799074584581}
   - component: {fileID: 7016397208776181772}
   - component: {fileID: 335796131865696861}
-  - component: {fileID: 2272810531494771511}
   m_Layer: 5
   m_Name: Button (7)
   m_TagString: Untagged
@@ -36,10 +35,10 @@ RectTransform:
   - {fileID: 4317462077474508363}
   m_Father: {fileID: 1044281755608989316}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: -100, y: -190}
-  m_SizeDelta: {x: 180, y: 180}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!222 &6152538799074584581
 CanvasRenderer:
@@ -123,7 +122,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 2272810531494771511}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: Bag_AnimalSlot, Assembly-CSharp
         m_MethodName: ClickAnimalIcon
         m_Mode: 1
@@ -135,22 +134,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
---- !u!114 &2272810531494771511
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 368406717309863918}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ded275846d124ab44849ff1b8ae47b4f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  slotAnimalDataSO: {fileID: 11400000, guid: e392f383c42242544a1c9109c5fda00f, type: 2}
-  animalIcon: {fileID: 3115182591697284597}
-  explainText: {fileID: 2384081029980643677}
-  isUnlocked: 0
 --- !u!1 &478529932445960767
 GameObject:
   m_ObjectHideFlags: 0
@@ -575,7 +558,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Button
+  m_text: "\uBB3C\uACE0\uAE30"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 5e83b443025082a41adb5c0e9869d0b5, type: 2}
   m_sharedMaterial: {fileID: -4230123428673298972, guid: 5e83b443025082a41adb5c0e9869d0b5, type: 2}
@@ -656,7 +639,6 @@ GameObject:
   - component: {fileID: 1199870918499001514}
   - component: {fileID: 4030891358760749056}
   - component: {fileID: 3008865136052195904}
-  - component: {fileID: 8711029620621638685}
   m_Layer: 5
   m_Name: Button (8)
   m_TagString: Untagged
@@ -680,10 +662,10 @@ RectTransform:
   - {fileID: 6367928771251747152}
   m_Father: {fileID: 1044281755608989316}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 90, y: -190}
-  m_SizeDelta: {x: 180, y: 180}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!222 &1199870918499001514
 CanvasRenderer:
@@ -767,7 +749,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 8711029620621638685}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: Bag_AnimalSlot, Assembly-CSharp
         m_MethodName: ClickAnimalIcon
         m_Mode: 1
@@ -779,22 +761,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
---- !u!114 &8711029620621638685
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2506633559810138537}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ded275846d124ab44849ff1b8ae47b4f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  slotAnimalDataSO: {fileID: 11400000, guid: 88f1bf1e724255742aa9c2959472959a, type: 2}
-  animalIcon: {fileID: 1136618704711910817}
-  explainText: {fileID: 4870305596065029767}
-  isUnlocked: 0
 --- !u!1 &2521834590772843214
 GameObject:
   m_ObjectHideFlags: 0
@@ -805,7 +771,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1044281755608989316}
   - component: {fileID: 612587895682445838}
-  - component: {fileID: 8475431506124329637}
   m_Layer: 5
   m_Name: Grid LayOut
   m_TagString: Untagged
@@ -865,28 +830,6 @@ MonoBehaviour:
   m_Spacing: {x: 10, y: 10}
   m_Constraint: 1
   m_ConstraintCount: 3
---- !u!114 &8475431506124329637
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2521834590772843214}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 52ad1df39533b244cbe8d725c621de8a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  slots:
-  - {fileID: 5600156984325069955}
-  - {fileID: 7648042416113491547}
-  - {fileID: 1858965866418519402}
-  - {fileID: 8781037614987733067}
-  - {fileID: 3752737518687819464}
-  - {fileID: 1529383694211874986}
-  - {fileID: 2272810531494771511}
-  - {fileID: 8711029620621638685}
-  - {fileID: 8210987693392419996}
 --- !u!1 &2532784332968241992
 GameObject:
   m_ObjectHideFlags: 0
@@ -1033,7 +976,6 @@ GameObject:
   - component: {fileID: 2560538746420216011}
   - component: {fileID: 8912775925725867163}
   - component: {fileID: 7099339574113986873}
-  - component: {fileID: 8210987693392419996}
   m_Layer: 5
   m_Name: Button (9)
   m_TagString: Untagged
@@ -1057,10 +999,10 @@ RectTransform:
   - {fileID: 4121388609301135877}
   m_Father: {fileID: 1044281755608989316}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 280, y: -190}
-  m_SizeDelta: {x: 180, y: 180}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!222 &2560538746420216011
 CanvasRenderer:
@@ -1144,7 +1086,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 8210987693392419996}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: Bag_AnimalSlot, Assembly-CSharp
         m_MethodName: ClickAnimalIcon
         m_Mode: 1
@@ -1156,22 +1098,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
---- !u!114 &8210987693392419996
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2729172290429846923}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ded275846d124ab44849ff1b8ae47b4f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  slotAnimalDataSO: {fileID: 11400000, guid: 53687f997b677e54d88689da51f1ff0d, type: 2}
-  animalIcon: {fileID: 7407608966616041389}
-  explainText: {fileID: 5003356794578196960}
-  isUnlocked: 0
 --- !u!1 &2760767857435777858
 GameObject:
   m_ObjectHideFlags: 0
@@ -1259,7 +1185,6 @@ GameObject:
   - component: {fileID: 7036606745446312109}
   - component: {fileID: 6515215964486106857}
   - component: {fileID: 6322852412640650782}
-  - component: {fileID: 8781037614987733067}
   m_Layer: 5
   m_Name: Button (4)
   m_TagString: Untagged
@@ -1283,10 +1208,10 @@ RectTransform:
   - {fileID: 1468924052798897566}
   m_Father: {fileID: 1044281755608989316}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: -100, y: 0}
-  m_SizeDelta: {x: 180, y: 180}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!222 &7036606745446312109
 CanvasRenderer:
@@ -1370,7 +1295,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 8781037614987733067}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: Bag_AnimalSlot, Assembly-CSharp
         m_MethodName: ClickAnimalIcon
         m_Mode: 1
@@ -1382,22 +1307,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
---- !u!114 &8781037614987733067
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3052553299352279525}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ded275846d124ab44849ff1b8ae47b4f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  slotAnimalDataSO: {fileID: 11400000, guid: 83070f56aae5b3c49af0696ec2c090f5, type: 2}
-  animalIcon: {fileID: 1943288511707159127}
-  explainText: {fileID: 2068902522190850222}
-  isUnlocked: 0
 --- !u!1 &3499014465975093152
 GameObject:
   m_ObjectHideFlags: 0
@@ -1544,7 +1453,6 @@ GameObject:
   - component: {fileID: 3268280118826018055}
   - component: {fileID: 7285773987815531194}
   - component: {fileID: 7976220333272308334}
-  - component: {fileID: 1858965866418519402}
   m_Layer: 5
   m_Name: Button (3)
   m_TagString: Untagged
@@ -1568,10 +1476,10 @@ RectTransform:
   - {fileID: 5647074374683258743}
   m_Father: {fileID: 1044281755608989316}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 280, y: 190}
-  m_SizeDelta: {x: 180, y: 180}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!222 &3268280118826018055
 CanvasRenderer:
@@ -1655,7 +1563,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1858965866418519402}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: Bag_AnimalSlot, Assembly-CSharp
         m_MethodName: ClickAnimalIcon
         m_Mode: 1
@@ -1667,22 +1575,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
---- !u!114 &1858965866418519402
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3762936553787625591}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ded275846d124ab44849ff1b8ae47b4f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  slotAnimalDataSO: {fileID: 11400000, guid: fe5714a4e8607f640a477dd2e38f0e99, type: 2}
-  animalIcon: {fileID: 4546475776724917346}
-  explainText: {fileID: 4658331642488760780}
-  isUnlocked: 0
 --- !u!1 &4189439916825961386
 GameObject:
   m_ObjectHideFlags: 0
@@ -2087,7 +1979,6 @@ GameObject:
   - component: {fileID: 8807682346787442590}
   - component: {fileID: 8294537422032186346}
   - component: {fileID: 7751450110478917213}
-  - component: {fileID: 7648042416113491547}
   m_Layer: 5
   m_Name: Button (2)
   m_TagString: Untagged
@@ -2111,10 +2002,10 @@ RectTransform:
   - {fileID: 4555667234502569981}
   m_Father: {fileID: 1044281755608989316}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 90, y: 190}
-  m_SizeDelta: {x: 180, y: 180}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!222 &8807682346787442590
 CanvasRenderer:
@@ -2198,7 +2089,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 7648042416113491547}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: Bag_AnimalSlot, Assembly-CSharp
         m_MethodName: ClickAnimalIcon
         m_Mode: 1
@@ -2210,22 +2101,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
---- !u!114 &7648042416113491547
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5786296648618589441}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ded275846d124ab44849ff1b8ae47b4f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  slotAnimalDataSO: {fileID: 11400000, guid: 2c92774703157354bb990bf61f0e2331, type: 2}
-  animalIcon: {fileID: 8472849657216828439}
-  explainText: {fileID: 5522412388279961146}
-  isUnlocked: 0
 --- !u!1 &5871768984499625589
 GameObject:
   m_ObjectHideFlags: 0
@@ -2506,7 +2381,6 @@ GameObject:
   - component: {fileID: 952177212719460501}
   - component: {fileID: 7295276670298517863}
   - component: {fileID: 8996510302399305890}
-  - component: {fileID: 5600156984325069955}
   m_Layer: 5
   m_Name: Button (1)
   m_TagString: Untagged
@@ -2530,10 +2404,10 @@ RectTransform:
   - {fileID: 403599646246240981}
   m_Father: {fileID: 1044281755608989316}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: -190, y: 190}
-  m_SizeDelta: {x: 180, y: 180}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 1}
 --- !u!222 &952177212719460501
 CanvasRenderer:
@@ -2617,7 +2491,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 5600156984325069955}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: Bag_AnimalSlot, Assembly-CSharp
         m_MethodName: ClickAnimalIcon
         m_Mode: 1
@@ -2629,22 +2503,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
---- !u!114 &5600156984325069955
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6516790061322291210}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ded275846d124ab44849ff1b8ae47b4f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  slotAnimalDataSO: {fileID: 11400000, guid: b8d3b3358fc9c9348bd6300236914032, type: 2}
-  animalIcon: {fileID: 8840928702480847353}
-  explainText: {fileID: 1625502066788172696}
-  isUnlocked: 0
 --- !u!1 &6908684944077453993
 GameObject:
   m_ObjectHideFlags: 0
@@ -2663,7 +2521,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &5877608361485391765
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2671,7 +2529,7 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6908684944077453993}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -2968,7 +2826,6 @@ GameObject:
   - component: {fileID: 4463444394246931869}
   - component: {fileID: 3085149661507759524}
   - component: {fileID: 4785080574552375379}
-  - component: {fileID: 3752737518687819464}
   m_Layer: 5
   m_Name: Button (5)
   m_TagString: Untagged
@@ -2992,10 +2849,10 @@ RectTransform:
   - {fileID: 7339638802019180681}
   m_Father: {fileID: 1044281755608989316}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 90, y: 0}
-  m_SizeDelta: {x: 180, y: 180}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!222 &4463444394246931869
 CanvasRenderer:
@@ -3079,7 +2936,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 3752737518687819464}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: Bag_AnimalSlot, Assembly-CSharp
         m_MethodName: ClickAnimalIcon
         m_Mode: 1
@@ -3091,22 +2948,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
---- !u!114 &3752737518687819464
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7811979698830785752}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ded275846d124ab44849ff1b8ae47b4f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  slotAnimalDataSO: {fileID: 11400000, guid: 8415b503013473f4fb6ddbb2227d6659, type: 2}
-  animalIcon: {fileID: 5410763642491983774}
-  explainText: {fileID: 5194999312899887288}
-  isUnlocked: 0
 --- !u!1 &7873627534336289340
 GameObject:
   m_ObjectHideFlags: 0
@@ -3403,7 +3244,6 @@ GameObject:
   - component: {fileID: 8634968428971020002}
   - component: {fileID: 7705097027526673588}
   - component: {fileID: 1025644046737665576}
-  - component: {fileID: 1529383694211874986}
   m_Layer: 5
   m_Name: Button (6)
   m_TagString: Untagged
@@ -3427,10 +3267,10 @@ RectTransform:
   - {fileID: 5938989104211035821}
   m_Father: {fileID: 1044281755608989316}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 280, y: 0}
-  m_SizeDelta: {x: 180, y: 180}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!222 &8634968428971020002
 CanvasRenderer:
@@ -3514,7 +3354,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1529383694211874986}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: Bag_AnimalSlot, Assembly-CSharp
         m_MethodName: ClickAnimalIcon
         m_Mode: 1
@@ -3526,22 +3366,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
---- !u!114 &1529383694211874986
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8447163799757684825}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ded275846d124ab44849ff1b8ae47b4f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  slotAnimalDataSO: {fileID: 11400000, guid: f978169c3de2b72498b00e062fe9f2ef, type: 2}
-  animalIcon: {fileID: 6702550569711703128}
-  explainText: {fileID: 3886236201515311598}
-  isUnlocked: 0
 --- !u!1 &8465468717508128853
 GameObject:
   m_ObjectHideFlags: 0
