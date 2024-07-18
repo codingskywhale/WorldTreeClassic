@@ -94,6 +94,11 @@ public class RootBase : MonoBehaviour, IRoot
     {
         if (!isUnlocked) return; // 잠금 해제된 경우에만 업그레이드 가능
         rootLevel++;
+        // 레벨이 1이라면 CreateAndZoomObject 메서드 호출
+        if (rootLevel == 1)
+        {
+            CreateAndZoomObject();
+        }
         if (rootLevel % 25 == 0)
         {
             baseLifeGeneration *= 2; // 25레벨마다 기본 생명력 생성량 두 배 증가
@@ -202,7 +207,6 @@ public class RootBase : MonoBehaviour, IRoot
         upgradeLifeCost = CalculateUpgradeCost(); // 업그레이드 비용 업데이트
         OnGenerationRateChanged?.Invoke(); // 잠금 해제 시 이벤트 트리거
         UpdateUI();
-        CreateAndZoomObject(); // 오브젝트 생성 및 줌 효과 시작
         Debug.Log("Unlocked successfully.");
     }
 
@@ -240,12 +244,24 @@ public class RootBase : MonoBehaviour, IRoot
     {
         if (objectPrefab != null)
         {
-            UnityEngine.Vector3 spawnPosition = new UnityEngine.Vector3(0, 0, 9); // 기본 좌표 설정
-            GameObject newObject = Instantiate(objectPrefab, spawnPosition, UnityEngine.Quaternion.identity);
-            Debug.Log("Object created at position: " + spawnPosition);
-            if (cameraTransition != null)
+            float radius = 1.5f; // 원하는 원의 반지름
+            int numberOfObjects = 8; // 생성할 오브젝트 수
+            UnityEngine.Vector3 centerPosition = new UnityEngine.Vector3(0, 0, 10); // 중심 좌표
+
+            for (int i = 0; i < numberOfObjects; i++)
             {
-                // StartCoroutine(cameraTransition.ZoomCamera(newObject.transform)); // 줌 효과 시작
+                float angle = i * Mathf.PI * 2 / numberOfObjects;
+                float x = Mathf.Cos(angle) * radius;
+                float z = Mathf.Sin(angle) * radius;
+                UnityEngine.Vector3 spawnPosition = centerPosition + new UnityEngine.Vector3(x, 0, z);
+
+                GameObject newObject = Instantiate(objectPrefab, spawnPosition, UnityEngine.Quaternion.identity);
+                Debug.Log("Object created at position: " + spawnPosition);
+
+                if (cameraTransition != null)
+                {
+                    // StartCoroutine(cameraTransition.ZoomCamera(newObject.transform)); // 줌 효과 시작
+                }
             }
         }
         else

@@ -12,6 +12,10 @@ public class WorldTree : MonoBehaviour
 
     private GameObject currentTreeInstance; // 현재 인스턴스화된 트리 프리팹
 
+    private void Start()
+    {
+        UpdateTreeMeshes(0);
+    }
     public void UpdateTreeMeshes(int currentLevel)
     {
         int currentIndex = (currentLevel / 5) % treePrefabs.Length;
