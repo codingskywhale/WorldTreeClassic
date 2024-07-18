@@ -8,6 +8,8 @@ public class GameManager : MonoBehaviour
     public ResourceManager resourceManager;
     public List<UpgradeButton> upgradeButtons;
     public List<AnimalDataSO> animalDataList;
+    public List<SkillCoolDownReduction> skillCoolDownReductions; 
+    public List<Skill> skills; 
     public TouchInput touchInput;
     public OfflineRewardUIManager offlineRewardUIManager; // 오프라인 보상 UI 매니저
 
@@ -21,8 +23,9 @@ public class GameManager : MonoBehaviour
     private void Awake()
     {
         saveDataManager = new SaveDataManager();
-        saveDataManager.animalDataList = animalDataList;
+        saveDataManager.animalDataList = animalDataList;        
         uiUpdater = new UIUpdater(resourceManager, upgradeButtons);
+        uiUpdater.SetSkills(skills);
         offlineProgressCalculator = new OfflineProgressCalculator();
         // OfflineRewardSkill 인스턴스 생성 및 초기화
         offlineRewardSkill = FindObjectOfType<OfflineRewardSkill>();
@@ -36,7 +39,7 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
-        saveDataManager.LoadGameData(resourceManager);
+        saveDataManager.LoadGameData(resourceManager, skills);
         LifeManager.Instance.bubbleGenerator.InitialBubbleSet();
         saveDataManager.animalDataList = animalDataList;
         CalculateOfflineProgress();
@@ -66,6 +69,6 @@ public class GameManager : MonoBehaviour
     }
     private void OnApplicationQuit()
     {
-        saveDataManager.SaveGameData(resourceManager);
+        saveDataManager.SaveGameData(resourceManager, skills);
     }
 }

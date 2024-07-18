@@ -5,9 +5,9 @@ using UnityEngine;
 
 public class SaveDataManager
 {
-    public List<AnimalDataSO> animalDataList;
+    public List<AnimalDataSO> animalDataList;    
 
-    public void SaveGameData(ResourceManager resourceManager)
+    public void SaveGameData(ResourceManager resourceManager, List<Skill> skillList)
     {
         List<RootBase> roots = resourceManager.roots;
 
@@ -79,7 +79,19 @@ public class SaveDataManager
             serializableDict[kvp.Key] = innerDict;
         }
 
+        List<SkillDataSave> skillDataList = new List<SkillDataSave>();
 
+        foreach (var skill in skillList)
+        {
+            SkillDataSave data = new SkillDataSave
+            {
+                skillName = skill.gameObject.name,
+                currentLevel = skill.currentLevel,
+                unlockCost = skill.unlockCost.ToString(),
+                cooldownRemaining = skill.cooldownRemaining 
+            };
+            skillDataList.Add(data);
+        }
 
         // 게임 데이터 생성 및 저장
         GameData gameData = new GameData
@@ -107,13 +119,14 @@ public class SaveDataManager
             lastSaveTime = DateTime.UtcNow.ToString("o"),
             lifeGenerationRatePerSecond = resourceManager.GetTotalLifeGenerationPerSecond().ToString(),
             allTypeCountDic = serializableDict, // 직렬화된 딕셔너리 저장
-            createObjectButtonUnlockCount = UIManager.Instance.createObjectButtonUnlockCount
+            createObjectButtonUnlockCount = UIManager.Instance.createObjectButtonUnlockCount,
+            skillDataList = skillDataList
         };
         Debug.Log("Saving JSON: " + JsonUtility.ToJson(gameData, true)); // 저장되는 JSON 출력
         SaveSystem.Save(gameData);
     }
 
-    public void LoadGameData(ResourceManager resourceManager)
+    public void LoadGameData(ResourceManager resourceManager, List<Skill> skillList)
     {
         GameData gameData = SaveSystem.Load();
 
@@ -219,6 +232,23 @@ public class SaveDataManager
         foreach (var root in roots)
         {
             root.UpdateUI();
+        }
+
+        if (gameData.skillDataList != null)
+        {
+            foreach (var skillData in gameData.skillDataList)
+            {
+                foreach (var skill in skillList)
+                {
+                    if (skill.gameObject.name == skillData.skillName)
+                    {
+                        skill.currentLevel = skillData.currentLevel;
+                        skill.unlockCost = string.IsNullOrEmpty(skillData.unlockCost) ? BigInteger.Zero : BigInteger.Parse(skillData.unlockCost);
+                        skill.cooldownRemaining = skillData.cooldownRemaining; // 쿨다운 남은 시간 불러오기
+                        skill.UpdateUI();
+                    }
+                }
+            }
         }
 
         UIManager.Instance.createObjectButtonUnlockCount = gameData.createObjectButtonUnlockCount > 0 ? gameData.createObjectButtonUnlockCount : 1;

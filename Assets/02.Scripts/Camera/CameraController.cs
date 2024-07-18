@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
+using TMPro;
 using static UnityEngine.GraphicsBuffer;
 
 public class CameraController : MonoBehaviour
@@ -10,9 +11,12 @@ public class CameraController : MonoBehaviour
     public Transform target; // 나무의 Transform을 에디터에서 할당
     public Button toggleButton;
     public float rotationSpeed = 10f; // 회전 속도
+    public GameObject messagePrefab; // 메시지를 표시할 프리팹
+    public Transform messageParent; // 메시지를 표시할 부모 객체
 
     private CameraTransition cameraTransition;
     private CameraTargetHandler cameraTargetHandler;
+    private GameObject currentMessage;
 
     public bool isFreeCamera = false;
     private bool isDragging = false;
@@ -144,6 +148,7 @@ public class CameraController : MonoBehaviour
             cameraTargetHandler.SetTarget(target);
             cameraTargetHandler.isObjectTarget = false;
             StartCoroutine(cameraTransition.ZoomCamera(cameraTransition.initialPosition, cameraTransition.finalRotation));
+            ShowMessage("카메라가 나무에 고정됩니다.");
         }
         else
         {
@@ -151,6 +156,7 @@ public class CameraController : MonoBehaviour
             cameraTargetHandler.SetTarget(target);
             cameraTargetHandler.isObjectTarget = false;
             StartCoroutine(cameraTransition.ZoomCamera(cameraTransition.zoomInPosition, cameraTransition.zoomInRotation));
+            ShowMessage("카메라 자유 조작이 활성화됩니다.");
         }
 
         // 모드 전환
@@ -167,4 +173,43 @@ public class CameraController : MonoBehaviour
         yield return new WaitForSeconds(delay);
         toggleButton.interactable = true;
     }
+
+    private void ShowMessage(string message)
+    {
+        // 기존 메시지가 있다면 제거
+        if (currentMessage != null)
+        {
+            Destroy(currentMessage);
+        }
+
+        // 메시지 생성
+        currentMessage = Instantiate(messagePrefab, messageParent);
+        currentMessage.GetComponent<TMP_Text>().text = message;
+
+        // 메시지 애니메이션 시작
+        StartCoroutine(FadeAndMoveMessage(currentMessage));
+    }
+
+    private IEnumerator FadeAndMoveMessage(GameObject message)
+    {
+        TMP_Text messageText = message.GetComponent<TMP_Text>();
+        Color originalColor = messageText.color;
+        Vector3 originalPosition = message.transform.position;
+
+        float duration = 2.5f;
+        float elapsed = 0.0f;
+
+        while (elapsed < duration)
+        {
+            elapsed += Time.deltaTime;
+            float alpha = Mathf.Lerp(1.0f, 0.0f, elapsed / duration);
+            messageText.color = new Color(originalColor.r, originalColor.g, originalColor.b, alpha);
+            message.transform.position = originalPosition + new Vector3(0, elapsed * 10, 0); // 조금씩 위로 이동
+
+            yield return null;
+        }
+
+        Destroy(message);
+    }
+
 }
