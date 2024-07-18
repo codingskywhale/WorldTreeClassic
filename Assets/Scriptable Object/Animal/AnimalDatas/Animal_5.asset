@@ -14,7 +14,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   animalIndex: 5
   animalIcon: {fileID: 10901, guid: 0000000000000000f000000000000000, type: 0}
-  animalName: "\uB3D9\uBB3C5"
+  animalName: "\uC18C"
   animalUnlockConditions:
   - "\uC774\uC804 \uBC84\uD2BC \uD574\uAE08\uD558\uAE30"
-  animalPrefab: {fileID: 6040825781364759821, guid: ce47e0f882d9fdd43bf5e3f50103fe3c, type: 3}
+  animalPrefab: {fileID: 7604589965335949422, guid: 479efb3793efa4043be91317c6baf638, type: 3}
+  storyText: "\uC6B0\uC9C1\uD558\uAC8C \uC77C\uC744 \uD558\uB294 \uC18C. \uD3C9\uC0DD
+    \uAC08\uC544\uC628 \uBC2D\uC758 \uB113\uC774\uB9CC \uD574\uB3C4 \uD55C\uBC18\uB3C4\uB97C
+    \uB36E\uACE0\uB3C4 \uB0A8\uB294\uB2E4\uACE0 \uD55C\uB2E4. \uB178\uD6C4\uB97C
+    \uD3B8\uC548\uD788 \uBCF4\uB0B4\uAE30 \uC704\uD574 \uC694\uC591\uC5D0 \uC88B\uB2E4\uB294
+    \uC138\uACC4\uC218\uC5D0 \uCC3E\uC544\uC654\uB2E4."
