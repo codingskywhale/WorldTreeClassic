@@ -1,0 +1,125 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &4835326874610079803
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3875751832686876997}
+  - component: {fileID: 5733770185951797523}
+  - component: {fileID: 839973117703150552}
+  - component: {fileID: 8777639166994513665}
+  - component: {fileID: 5285335455270045311}
+  m_Layer: 0
+  m_Name: UITestObject
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!4 &3875751832686876997
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4835326874610079803}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &5733770185951797523
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4835326874610079803}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8784ea0f207b71d418432134a51e5299, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mainUI: {fileID: 0}
+  mainUI2: {fileID: 0}
+  idleUIContainer: {fileID: 0}
+  gameTitleText: {fileID: 0}
+  songTitleText: {fileID: 0}
+  timeText: {fileID: 0}
+  dateText: {fileID: 0}
+  idleTime: 10
+  scrollSpeed: 0.5
+  uiOpenCloseManager: {fileID: 8777639166994513665}
+--- !u!114 &839973117703150552
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4835326874610079803}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: feb5aec4c2136e240811ba14c08aafee, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bagCanvas: {fileID: 0}
+  bagPopup: {fileID: 0}
+--- !u!114 &8777639166994513665
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4835326874610079803}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f10588e5ba78be8479bdf670c4510308, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bottomUIPanel1: {fileID: 0}
+  bottomUIPanel2: {fileID: 0}
+  bottomUIPanel3: {fileID: 0}
+  otherButtons:
+  - {fileID: 0}
+  closeButton: {fileID: 0}
+  openButton: {fileID: 0}
+  animationDuration: 0.5
+  mainCamera: {fileID: 0}
+  cameraMoveAmount: 1.5
+--- !u!114 &5285335455270045311
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4835326874610079803}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ddfddb3a73118fb40851613e08aa9875, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  musicPanel: {fileID: 0}
+  openMusicButton: {fileID: 0}
+  closeMusicButton: {fileID: 0}
+  songTitleText: {fileID: 0}
+  artistNameText: {fileID: 0}
+  descriptionText: {fileID: 0}
+  songImage: {fileID: 0}
+  songButtons:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  scrollRect: {fileID: 0}
+  rotationSpeed: 10
+  deactivationButton: {fileID: 0}
+  uiOpenCloseManager: {fileID: 8777639166994513665}
