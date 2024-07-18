@@ -2,6 +2,7 @@ using System.Collections;
 using System.Numerics;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public interface IRoot
 {
@@ -22,6 +23,8 @@ public class RootBase : MonoBehaviour, IRoot
     public TextMeshProUGUI rootLevelText;
     public TextMeshProUGUI generationRateText; // 생산률을 나타내는 텍스트 추가
     public TextMeshProUGUI rootUpgradeCostText;
+    public Image lockImage; // 해금 이미지
+    public TextMeshProUGUI lockText; // 해금 텍스트
     public bool isUnlocked = false; // 잠금 상태를 나타내는 변수 추가
 
     private float timer;
@@ -104,7 +107,7 @@ public class RootBase : MonoBehaviour, IRoot
     {
         UpdateRootLevelUI(rootLevel, upgradeLifeCost);
         UpdateGenerationRateUI(GetTotalLifeGeneration()); // 생산률 업데이트 추가
-        //Debug.Log($"UI Updated for root: {this.name}, Level: {rootLevel}, Upgrade Cost: {upgradeLifeCost}, Generation Rate: {GetTotalLifeGeneration()}");
+        UpdateUnlockUI(); // 잠금 해제 UI 업데이트 추가
     }
 
     public virtual void ApplyIncreaseRate(BigInteger rate)
@@ -124,15 +127,62 @@ public class RootBase : MonoBehaviour, IRoot
 
         if (rootUpgradeCostText != null)
         {
-            rootUpgradeCostText.text = isUnlocked ? $"강화 비용: {BigIntegerUtils.FormatBigInteger(upgradeCost)} 물" : $"해금 비용: {BigIntegerUtils.FormatBigInteger(unlockCost)} 물 (레벨: {unlockThreshold} 필요)";
+            rootUpgradeCostText.text = //isUnlocked ?
+                                       $"강화 비용: {BigIntegerUtils.FormatBigInteger(upgradeCost)} 물"; //: $"해금 비용: {BigIntegerUtils.FormatBigInteger(unlockCost)} 물 (레벨: {unlockThreshold} 필요)";
+
         }
+
+        
     }
 
     public virtual void UpdateGenerationRateUI(BigInteger generationRate)
     {
         if (generationRateText != null)
         {
-            generationRateText.text = isUnlocked ? $"생산률: {BigIntegerUtils.FormatBigInteger(generationRate)} 물/초" : $"잠금 해제 조건: 세계수 레벨 {unlockThreshold}\n식물 해금 시 배치 가능 동물 수 + 5";
+
+            generationRateText.text = $"생산률: {BigIntegerUtils.FormatBigInteger(generationRate)} 물/초";
+
+            if (isUnlocked && rootLevel == 0)
+            {
+                // 1레벨일 때의 생산률 계산
+                BigInteger levelOneGenerationRate = baseLifeGeneration * BigInteger.Pow(103, 0) / BigInteger.Pow(100, 0); // 1.03^0 / 1.00^0
+                generationRateText.text = $"생산률: {BigIntegerUtils.FormatBigInteger(generationRate)} 물/초 \n1레벨 업그레이드시 자동생산: {BigIntegerUtils.FormatBigInteger(levelOneGenerationRate)} 물/초";
+            }
+            if (!isUnlocked && rootLevel == 0)
+            {
+                // 1레벨일 때의 생산률 계산
+                BigInteger levelOneGenerationRate = baseLifeGeneration * BigInteger.Pow(103, 0) / BigInteger.Pow(100, 0); // 1.03^0 / 1.00^0
+                generationRateText.text = $"생산률: {BigIntegerUtils.FormatBigInteger(generationRate)} 물/초 \n1레벨 업그레이드시 자동생산: {BigIntegerUtils.FormatBigInteger(levelOneGenerationRate)} 물/초";
+            }
+        }
+    }
+    
+
+    public virtual void UpdateUnlockUI()
+    {
+        if (!isUnlocked)
+        {
+            if (lockText != null)
+            {
+                lockText.text = $"잠금 해제 조건: 세계수 레벨 {unlockThreshold}\n식물 해금 시 배치 가능 동물 수 + 5";
+            }
+
+            if (lockImage != null)
+            {
+                lockImage.gameObject.SetActive(true);
+            }
+        }
+        else
+        {
+            if (lockText != null)
+            {
+                lockText.gameObject.SetActive(false);
+            }
+
+            if (lockImage != null)
+            {
+                lockImage.gameObject.SetActive(false);
+            }
         }
     }
 
@@ -148,7 +198,7 @@ public class RootBase : MonoBehaviour, IRoot
     public void Unlock()
     {
         isUnlocked = true;
-        rootLevel = 1; // 잠금 해제 시 레벨 1로 설정
+        //rootLevel = 1; // 잠금 해제 시 레벨 1로 설정
         upgradeLifeCost = CalculateUpgradeCost(); // 업그레이드 비용 업데이트
         OnGenerationRateChanged?.Invoke(); // 잠금 해제 시 이벤트 트리거
         UpdateUI();
@@ -162,7 +212,7 @@ public class RootBase : MonoBehaviour, IRoot
         if (!isUnlocked && DataManager.Instance.touchData != null
             && DataManager.Instance.touchData.touchIncreaseLevel >= unlockThreshold)
         {
-            UpdateUI();
+            Unlock(); // 잠금 해제 조건 만족 시 Unlock 호출
         }
     }
 
