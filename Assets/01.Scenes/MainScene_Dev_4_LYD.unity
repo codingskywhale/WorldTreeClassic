@@ -3733,7 +3733,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\uC218\uC815 \uC911"
+  m_text: "\uAC1C\uBC1C \uC911.."
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 5e83b443025082a41adb5c0e9869d0b5, type: 2}
   m_sharedMaterial: {fileID: -4230123428673298972, guid: 5e83b443025082a41adb5c0e9869d0b5, type: 2}
@@ -12616,11 +12616,11 @@ PrefabInstance:
       objectReference: {fileID: 21300000, guid: 8be8f9fd3917db740bc921e0dee67c5e, type: 3}
     - target: {fileID: 2068902522190850222, guid: 2c216aceeeea4cb4994f9766e4513c6a, type: 3}
       propertyPath: m_text
-      value: "\uC218\uC815 \uC911"
+      value: "\uAC1C\uBC1C \uC911.."
       objectReference: {fileID: 0}
     - target: {fileID: 2384081029980643677, guid: 2c216aceeeea4cb4994f9766e4513c6a, type: 3}
       propertyPath: m_text
-      value: "\uC218\uC815 \uC911"
+      value: "\uAC1C\uBC1C \uC911.."
       objectReference: {fileID: 0}
     - target: {fileID: 2521834590772843214, guid: 2c216aceeeea4cb4994f9766e4513c6a, type: 3}
       propertyPath: m_IsActive
@@ -12648,7 +12648,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3886236201515311598, guid: 2c216aceeeea4cb4994f9766e4513c6a, type: 3}
       propertyPath: m_text
-      value: "\uC218\uC815 \uC911"
+      value: "\uAC1C\uBC1C \uC911.."
       objectReference: {fileID: 0}
     - target: {fileID: 4194524789130440440, guid: 2c216aceeeea4cb4994f9766e4513c6a, type: 3}
       propertyPath: m_AnchorMax.y
@@ -12680,19 +12680,19 @@ PrefabInstance:
       objectReference: {fileID: 21300000, guid: 8be8f9fd3917db740bc921e0dee67c5e, type: 3}
     - target: {fileID: 4658331642488760780, guid: 2c216aceeeea4cb4994f9766e4513c6a, type: 3}
       propertyPath: m_text
-      value: "\uC218\uC815 \uC911"
+      value: "\uAC1C\uBC1C \uC911.."
       objectReference: {fileID: 0}
     - target: {fileID: 4870305596065029767, guid: 2c216aceeeea4cb4994f9766e4513c6a, type: 3}
       propertyPath: m_text
-      value: "\uC218\uC815 \uC911"
+      value: "\uAC1C\uBC1C \uC911.."
       objectReference: {fileID: 0}
     - target: {fileID: 5003356794578196960, guid: 2c216aceeeea4cb4994f9766e4513c6a, type: 3}
       propertyPath: m_text
-      value: "\uC218\uC815 \uC911"
+      value: "\uAC1C\uBC1C \uC911.."
       objectReference: {fileID: 0}
     - target: {fileID: 5194999312899887288, guid: 2c216aceeeea4cb4994f9766e4513c6a, type: 3}
       propertyPath: m_text
-      value: "\uC218\uC815 \uC911"
+      value: "\uAC1C\uBC1C \uC911.."
       objectReference: {fileID: 0}
     - target: {fileID: 5410763642491983774, guid: 2c216aceeeea4cb4994f9766e4513c6a, type: 3}
       propertyPath: m_Sprite
@@ -12700,7 +12700,7 @@ PrefabInstance:
       objectReference: {fileID: 21300000, guid: 8be8f9fd3917db740bc921e0dee67c5e, type: 3}
     - target: {fileID: 5522412388279961146, guid: 2c216aceeeea4cb4994f9766e4513c6a, type: 3}
       propertyPath: m_text
-      value: "\uC218\uC815 \uC911"
+      value: "\uAC1C\uBC1C \uC911.."
       objectReference: {fileID: 0}
     - target: {fileID: 5877608361485391765, guid: 2c216aceeeea4cb4994f9766e4513c6a, type: 3}
       propertyPath: m_Pivot.x
@@ -13173,7 +13173,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\uC218\uC815 \uC911"
+  m_text: "\uAC1C\uBC1C \uC911.."
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 5e83b443025082a41adb5c0e9869d0b5, type: 2}
   m_sharedMaterial: {fileID: -4230123428673298972, guid: 5e83b443025082a41adb5c0e9869d0b5, type: 2}
