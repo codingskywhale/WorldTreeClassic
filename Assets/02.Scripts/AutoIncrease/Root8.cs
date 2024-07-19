@@ -5,7 +5,7 @@ public class Root8 : RootBase
 {
     protected override void Start()
     {
-        unlockThreshold = 50;
+        unlockThreshold = 80;
         baseLifeGeneration = BigInteger.Parse("113426500000000000");
         unlockCost = BigInteger.Parse("6112794518097722000000000000000000");
         base.Start();
