@@ -206,6 +206,7 @@ public class RootBase : MonoBehaviour, IRoot
         //rootLevel = 1; // 잠금 해제 시 레벨 1로 설정
         upgradeLifeCost = CalculateUpgradeCost(); // 업그레이드 비용 업데이트
         OnGenerationRateChanged?.Invoke(); // 잠금 해제 시 이벤트 트리거
+        DataManager.Instance.animalGenerateData.AddMaxAnimalCount();
         UpdateUI();
         Debug.Log("Unlocked successfully.");
     }
@@ -245,7 +246,7 @@ public class RootBase : MonoBehaviour, IRoot
         if (objectPrefab != null)
         {
             float radius = 1.5f; // 원하는 원의 반지름
-            int numberOfObjects = 8; // 생성할 오브젝트 수
+            int numberOfObjects = 20; // 생성할 오브젝트 수
             UnityEngine.Vector3 centerPosition = new UnityEngine.Vector3(0, 0, 10); // 중심 좌표
 
             for (int i = 0; i < numberOfObjects; i++)

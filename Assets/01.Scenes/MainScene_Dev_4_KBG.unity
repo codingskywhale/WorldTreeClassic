@@ -3758,7 +3758,7 @@ MonoBehaviour:
   lockText: {fileID: 223683321}
   isUnlocked: 0
   unlockThreshold: 5
-  objectPrefab: {fileID: 5301309050596588315, guid: 0c1e836fa0b4c10459101789f6b7dd03, type: 3}
+  objectPrefab: {fileID: 1343015748577472, guid: 6c699673feab636478f4ceef0f7481fa, type: 3}
 --- !u!4 &131668843
 Transform:
   m_ObjectHideFlags: 0
@@ -31818,7 +31818,7 @@ MonoBehaviour:
   lockText: {fileID: 1033640163}
   isUnlocked: 0
   unlockThreshold: 5
-  objectPrefab: {fileID: 5472168320066651640, guid: 6654cdf7bd247904e963dbd6b45ae307, type: 3}
+  objectPrefab: {fileID: 1871208469632612, guid: 36dd6e38fcde3e94ebd8fd83bc089f4a, type: 3}
 --- !u!4 &1925851965
 Transform:
   m_ObjectHideFlags: 0

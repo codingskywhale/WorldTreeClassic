@@ -23,7 +23,7 @@ public static class SaveSystem
             Debug.Log("Loaded JSON: " + json);  // 디버깅을 위해 JSON 문자열 출력
             return CustomJsonUtility.FromJson<GameData>(json);
         }
-        return new GameData(); // 새로운 데이터를 리턴
+        return null; // 새로운 데이터를 리턴
     }
 
     public static void DeleteSave()

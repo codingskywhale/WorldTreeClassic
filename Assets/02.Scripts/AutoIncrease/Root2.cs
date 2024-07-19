@@ -20,11 +20,7 @@ public class Root2 : RootBase
         BigInteger generatedLife = GetTotalLifeGeneration();
         InvokeLifeGenerated(generatedLife);
     }
-    //public override void UpdateRootLevelUI(int rootLevel, BigInteger upgradeCost)
-    //{
-    //    rootUpgradeCostText.text = isUnlocked ? $"강화 비용: {BigIntegerUtils.FormatBigInteger(upgradeCost)} 물" :
-    //        $"해금 비용: {BigIntegerUtils.FormatBigInteger(unlockCost)} 물 (레벨: {unlockThreshold} 필요)";
-    //}
+
     public override void UpdateUI()
     {
         base.UpdateUI();
@@ -39,12 +35,24 @@ public class Root2 : RootBase
     {
         if (objectPrefab != null)
         {
-            UnityEngine.Vector3 spawnPosition = new UnityEngine.Vector3(2, 0, 9); // 새로운 좌표로 설정
-            GameObject newObject = Instantiate(objectPrefab, spawnPosition, UnityEngine.Quaternion.identity);
-            Debug.Log("Root2 object created at position: " + spawnPosition);
-            if (cameraTransition != null)
+            float radius = 2.0f; // 원하는 원의 반지름
+            int numberOfObjects = 20; // 생성할 오브젝트 수
+            UnityEngine.Vector3 centerPosition = new UnityEngine.Vector3(0, 0, 10); // 중심 좌표
+
+            for (int i = 0; i < numberOfObjects; i++)
             {
-                //StartCoroutine(cameraTransition.ZoomCamera(newObject.transform)); // 줌 효과 시작
+                float angle = i * Mathf.PI * 2 / numberOfObjects;
+                float x = Mathf.Cos(angle) * radius;
+                float z = Mathf.Sin(angle) * radius;
+                UnityEngine.Vector3 spawnPosition = centerPosition + new UnityEngine.Vector3(x, 0, z);
+
+                GameObject newObject = Instantiate(objectPrefab, spawnPosition, UnityEngine.Quaternion.identity);
+                Debug.Log("Object created at position: " + spawnPosition);
+
+                if (cameraTransition != null)
+                {
+                    // StartCoroutine(cameraTransition.ZoomCamera(newObject.transform)); // 줌 효과 시작
+                }
             }
         }
         else
@@ -52,4 +60,19 @@ public class Root2 : RootBase
             Debug.Log("Object prefab is not assigned.");
         }
     }
+    //if (objectPrefab != null)
+    //{
+    //    UnityEngine.Vector3 spawnPosition = new UnityEngine.Vector3(2, 0, 9); // 새로운 좌표로 설정
+    //    GameObject newObject = Instantiate(objectPrefab, spawnPosition, UnityEngine.Quaternion.identity);
+    //    Debug.Log("Root2 object created at position: " + spawnPosition);
+    //    if (cameraTransition != null)
+    //    {
+    //        //StartCoroutine(cameraTransition.ZoomCamera(newObject.transform)); // 줌 효과 시작
+    //    }
+    //}
+    //else
+    //{
+    //    Debug.Log("Object prefab is not assigned.");
+    //}
 }
+

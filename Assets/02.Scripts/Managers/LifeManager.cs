@@ -6,7 +6,7 @@ public class LifeManager : MonoBehaviour
 {
     public static LifeManager Instance { get; private set; } // 싱글톤 인스턴스
 
-    public BigInteger lifeAmount;
+    public BigInteger lifeAmount = new BigInteger(5000);
     public int currentLevel = 1;
     public int lifePerLevel = 10;
     public RootBase RootData;
@@ -15,6 +15,17 @@ public class LifeManager : MonoBehaviour
     public delegate void WaterChanged(BigInteger newAmount);
     public event WaterChanged OnWaterChanged;
 
+    private void Start()
+    {
+        Debug.Log("LifeManager 초기값: " + lifeAmount);
+
+        // SaveDataManager의 LoadGameData 호출
+        SaveDataManager saveDataManager = new SaveDataManager();
+        ResourceManager resourceManager = FindObjectOfType<ResourceManager>();
+        saveDataManager.LoadGameData(resourceManager);
+
+        Debug.Log("LifeManager 로드 후 값: " + lifeAmount);
+    }
     private void Awake()
     {
         // 싱글톤 인스턴스 설정
