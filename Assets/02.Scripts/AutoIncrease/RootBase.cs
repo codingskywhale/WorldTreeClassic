@@ -2,6 +2,7 @@ using System.Collections;
 using System.Numerics;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public interface IRoot
 {
@@ -22,6 +23,8 @@ public class RootBase : MonoBehaviour, IRoot
     public TextMeshProUGUI rootLevelText;
     public TextMeshProUGUI generationRateText; // 생산률을 나타내는 텍스트 추가
     public TextMeshProUGUI rootUpgradeCostText;
+    public Image lockImage; // 해금 이미지
+    public TextMeshProUGUI lockText; // 해금 텍스트
     public bool isUnlocked = false; // 잠금 상태를 나타내는 변수 추가
 
     private float timer;
@@ -91,6 +94,11 @@ public class RootBase : MonoBehaviour, IRoot
     {
         if (!isUnlocked) return; // 잠금 해제된 경우에만 업그레이드 가능
         rootLevel++;
+        // 레벨이 1이라면 CreateAndZoomObject 메서드 호출
+        if (rootLevel == 1)
+        {
+            CreateAndZoomObject();
+        }
         if (rootLevel % 25 == 0)
         {
             baseLifeGeneration *= 2; // 25레벨마다 기본 생명력 생성량 두 배 증가
@@ -104,7 +112,7 @@ public class RootBase : MonoBehaviour, IRoot
     {
         UpdateRootLevelUI(rootLevel, upgradeLifeCost);
         UpdateGenerationRateUI(GetTotalLifeGeneration()); // 생산률 업데이트 추가
-        //Debug.Log($"UI Updated for root: {this.name}, Level: {rootLevel}, Upgrade Cost: {upgradeLifeCost}, Generation Rate: {GetTotalLifeGeneration()}");
+        UpdateUnlockUI(); // 잠금 해제 UI 업데이트 추가
     }
 
     public virtual void ApplyIncreaseRate(BigInteger rate)
@@ -124,15 +132,62 @@ public class RootBase : MonoBehaviour, IRoot
 
         if (rootUpgradeCostText != null)
         {
-            rootUpgradeCostText.text = isUnlocked ? $"강화 비용: {BigIntegerUtils.FormatBigInteger(upgradeCost)} 물" : $"해금 비용: {BigIntegerUtils.FormatBigInteger(unlockCost)} 물 (레벨: {unlockThreshold} 필요)";
+            rootUpgradeCostText.text = //isUnlocked ?
+                                       $"강화 비용: {BigIntegerUtils.FormatBigInteger(upgradeCost)} 물"; //: $"해금 비용: {BigIntegerUtils.FormatBigInteger(unlockCost)} 물 (레벨: {unlockThreshold} 필요)";
+
         }
+
+        
     }
 
     public virtual void UpdateGenerationRateUI(BigInteger generationRate)
     {
         if (generationRateText != null)
         {
-            generationRateText.text = isUnlocked ? $"생산률: {BigIntegerUtils.FormatBigInteger(generationRate)} 물/초" : $"잠금 해제 조건: 세계수 레벨 {unlockThreshold}\n식물 해금 시 배치 가능 동물 수 + 5";
+
+            generationRateText.text = $"생산률: {BigIntegerUtils.FormatBigInteger(generationRate)} 물/초";
+
+            if (isUnlocked && rootLevel == 0)
+            {
+                // 1레벨일 때의 생산률 계산
+                BigInteger levelOneGenerationRate = baseLifeGeneration * BigInteger.Pow(103, 0) / BigInteger.Pow(100, 0); // 1.03^0 / 1.00^0
+                generationRateText.text = $"생산률: {BigIntegerUtils.FormatBigInteger(generationRate)} 물/초 \n1레벨 업그레이드시 자동생산: {BigIntegerUtils.FormatBigInteger(levelOneGenerationRate)} 물/초";
+            }
+            if (!isUnlocked && rootLevel == 0)
+            {
+                // 1레벨일 때의 생산률 계산
+                BigInteger levelOneGenerationRate = baseLifeGeneration * BigInteger.Pow(103, 0) / BigInteger.Pow(100, 0); // 1.03^0 / 1.00^0
+                generationRateText.text = $"생산률: {BigIntegerUtils.FormatBigInteger(generationRate)} 물/초 \n1레벨 업그레이드시 자동생산: {BigIntegerUtils.FormatBigInteger(levelOneGenerationRate)} 물/초";
+            }
+        }
+    }
+    
+
+    public virtual void UpdateUnlockUI()
+    {
+        if (!isUnlocked)
+        {
+            if (lockText != null)
+            {
+                lockText.text = $"잠금 해제 조건: 세계수 레벨 {unlockThreshold}\n식물 해금 시 배치 가능 동물 수 + 5";
+            }
+
+            if (lockImage != null)
+            {
+                lockImage.gameObject.SetActive(true);
+            }
+        }
+        else
+        {
+            if (lockText != null)
+            {
+                lockText.gameObject.SetActive(false);
+            }
+
+            if (lockImage != null)
+            {
+                lockImage.gameObject.SetActive(false);
+            }
         }
     }
 
@@ -148,11 +203,10 @@ public class RootBase : MonoBehaviour, IRoot
     public void Unlock()
     {
         isUnlocked = true;
-        rootLevel = 1; // 잠금 해제 시 레벨 1로 설정
+        //rootLevel = 1; // 잠금 해제 시 레벨 1로 설정
         upgradeLifeCost = CalculateUpgradeCost(); // 업그레이드 비용 업데이트
         OnGenerationRateChanged?.Invoke(); // 잠금 해제 시 이벤트 트리거
         UpdateUI();
-        CreateAndZoomObject(); // 오브젝트 생성 및 줌 효과 시작
         Debug.Log("Unlocked successfully.");
     }
 
@@ -162,7 +216,7 @@ public class RootBase : MonoBehaviour, IRoot
         if (!isUnlocked && DataManager.Instance.touchData != null
             && DataManager.Instance.touchData.touchIncreaseLevel >= unlockThreshold)
         {
-            UpdateUI();
+            Unlock(); // 잠금 해제 조건 만족 시 Unlock 호출
         }
     }
 
@@ -190,12 +244,24 @@ public class RootBase : MonoBehaviour, IRoot
     {
         if (objectPrefab != null)
         {
-            UnityEngine.Vector3 spawnPosition = new UnityEngine.Vector3(0, 0, 9); // 기본 좌표 설정
-            GameObject newObject = Instantiate(objectPrefab, spawnPosition, UnityEngine.Quaternion.identity);
-            Debug.Log("Object created at position: " + spawnPosition);
-            if (cameraTransition != null)
+            float radius = 1.5f; // 원하는 원의 반지름
+            int numberOfObjects = 8; // 생성할 오브젝트 수
+            UnityEngine.Vector3 centerPosition = new UnityEngine.Vector3(0, 0, 10); // 중심 좌표
+
+            for (int i = 0; i < numberOfObjects; i++)
             {
-                // StartCoroutine(cameraTransition.ZoomCamera(newObject.transform)); // 줌 효과 시작
+                float angle = i * Mathf.PI * 2 / numberOfObjects;
+                float x = Mathf.Cos(angle) * radius;
+                float z = Mathf.Sin(angle) * radius;
+                UnityEngine.Vector3 spawnPosition = centerPosition + new UnityEngine.Vector3(x, 0, z);
+
+                GameObject newObject = Instantiate(objectPrefab, spawnPosition, UnityEngine.Quaternion.identity);
+                Debug.Log("Object created at position: " + spawnPosition);
+
+                if (cameraTransition != null)
+                {
+                    // StartCoroutine(cameraTransition.ZoomCamera(newObject.transform)); // 줌 효과 시작
+                }
             }
         }
         else
