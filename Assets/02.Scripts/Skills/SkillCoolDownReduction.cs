@@ -15,7 +15,7 @@ public class SkillCoolDownReduction : MonoBehaviour
     public TextMeshProUGUI currentLevelText; // 현재 스킬 레벨 텍스트
     public TextMeshProUGUI skillInfoText; // 현재 스킬 설명 텍스트
     public Button upgradeButton; // 해금/업그레이드 버튼
-
+    public GameObject unlockObject; // 해금시 생기는 오브젝트
     private void Start()
     {
         // 초기 UI 설정
@@ -47,6 +47,7 @@ public class SkillCoolDownReduction : MonoBehaviour
         {
             DiamondManager.Instance.DecreaseDiamond(unlockCost);
             currentLevel = 1;
+            ActiveObject();
             ApplyCooldownReduction();
             UpdateUpgradeCostUI();
             UpdateUI();
@@ -81,6 +82,10 @@ public class SkillCoolDownReduction : MonoBehaviour
         }
     }
 
+    private void ActiveObject()
+    {
+        unlockObject.SetActive(true);
+    }
     private void ApplyCooldownReduction()
     {
         Skill[] allSkills = FindObjectsOfType<Skill>();

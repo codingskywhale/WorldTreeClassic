@@ -3758,7 +3758,9 @@ MonoBehaviour:
   lockText: {fileID: 223683321}
   isUnlocked: 0
   unlockThreshold: 5
-  objectPrefab: {fileID: 2087719541}
+  plantObjects:
+  - {fileID: 2087719541}
+  - {fileID: 1996747634}
 --- !u!4 &131668843
 Transform:
   m_ObjectHideFlags: 0
@@ -3941,7 +3943,7 @@ MonoBehaviour:
   lockText: {fileID: 1323370059}
   isUnlocked: 0
   unlockThreshold: 5
-  objectPrefab: {fileID: 1139572726157748, guid: 3c98bb4bee2f2ba4b92a2fbca7b8831f, type: 3}
+  plantObjects: []
 --- !u!4 &145072086
 Transform:
   m_ObjectHideFlags: 0
@@ -4140,7 +4142,7 @@ MonoBehaviour:
   lockText: {fileID: 0}
   isUnlocked: 0
   unlockThreshold: 10
-  objectPrefab: {fileID: 0}
+  plantObjects: []
 --- !u!4 &153027943
 Transform:
   m_ObjectHideFlags: 0
@@ -8474,7 +8476,7 @@ MonoBehaviour:
   lockText: {fileID: 403743730}
   isUnlocked: 0
   unlockThreshold: 5
-  objectPrefab: {fileID: 4788970640975895863, guid: ad39d0db841115b43b78eaf7f446015a, type: 3}
+  plantObjects: []
 --- !u!4 &468112743
 Transform:
   m_ObjectHideFlags: 0
@@ -15319,7 +15321,7 @@ MonoBehaviour:
   lockText: {fileID: 1116881957}
   isUnlocked: 0
   unlockThreshold: 5
-  objectPrefab: {fileID: 1139572726157748, guid: 3c98bb4bee2f2ba4b92a2fbca7b8831f, type: 3}
+  plantObjects: []
 --- !u!4 &866107452
 Transform:
   m_ObjectHideFlags: 0
@@ -17932,7 +17934,7 @@ MonoBehaviour:
   lockText: {fileID: 26035368}
   isUnlocked: 0
   unlockThreshold: 5
-  objectPrefab: {fileID: 0}
+  plantObjects: []
 --- !u!1 &993243311
 GameObject:
   m_ObjectHideFlags: 0
@@ -19365,7 +19367,7 @@ MonoBehaviour:
   lockText: {fileID: 1912814641}
   isUnlocked: 0
   unlockThreshold: 5
-  objectPrefab: {fileID: 8786307500450749642, guid: 392ee36e7aefeec42aa914c0102a04c8, type: 3}
+  plantObjects: []
 --- !u!4 &1058648820
 Transform:
   m_ObjectHideFlags: 0
@@ -26075,7 +26077,7 @@ MonoBehaviour:
   lockText: {fileID: 1112945588}
   isUnlocked: 0
   unlockThreshold: 5
-  objectPrefab: {fileID: 1139572726157748, guid: 3c98bb4bee2f2ba4b92a2fbca7b8831f, type: 3}
+  plantObjects: []
 --- !u!4 &1474580549
 Transform:
   m_ObjectHideFlags: 0
@@ -26129,7 +26131,7 @@ MonoBehaviour:
   lockText: {fileID: 314175474}
   isUnlocked: 0
   unlockThreshold: 5
-  objectPrefab: {fileID: 1139572726157748, guid: 3c98bb4bee2f2ba4b92a2fbca7b8831f, type: 3}
+  plantObjects: []
 --- !u!4 &1486323989
 Transform:
   m_ObjectHideFlags: 0
@@ -27041,6 +27043,68 @@ CanvasRenderer:
 GameObject:
   m_CorrespondingSourceObject: {fileID: 5378002285174680460, guid: 2c216aceeeea4cb4994f9766e4513c6a, type: 3}
   m_PrefabInstance: {fileID: 769555868}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1001 &1543796919
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 1615153081}
+    m_Modifications:
+    - target: {fileID: 1226896354247008, guid: f1ac1674b1044b940a5e6f1e32750350, type: 3}
+      propertyPath: m_Name
+      value: Lemon Tree 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 4280707092021346, guid: f1ac1674b1044b940a5e6f1e32750350, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4280707092021346, guid: f1ac1674b1044b940a5e6f1e32750350, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4280707092021346, guid: f1ac1674b1044b940a5e6f1e32750350, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4280707092021346, guid: f1ac1674b1044b940a5e6f1e32750350, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4280707092021346, guid: f1ac1674b1044b940a5e6f1e32750350, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4280707092021346, guid: f1ac1674b1044b940a5e6f1e32750350, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4280707092021346, guid: f1ac1674b1044b940a5e6f1e32750350, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4280707092021346, guid: f1ac1674b1044b940a5e6f1e32750350, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4280707092021346, guid: f1ac1674b1044b940a5e6f1e32750350, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4280707092021346, guid: f1ac1674b1044b940a5e6f1e32750350, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: f1ac1674b1044b940a5e6f1e32750350, type: 3}
+--- !u!4 &1543796920 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 4280707092021346, guid: f1ac1674b1044b940a5e6f1e32750350, type: 3}
+  m_PrefabInstance: {fileID: 1543796919}
   m_PrefabAsset: {fileID: 0}
 --- !u!114 &1547222005 stripped
 MonoBehaviour:
@@ -28013,6 +28077,38 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1603668950}
   m_CullTransparentMesh: 1
+--- !u!1 &1615153080
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1615153081}
+  m_Layer: 0
+  m_Name: GameObject
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!4 &1615153081
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1615153080}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 5}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 1543796920}
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1626605272
 GameObject:
   m_ObjectHideFlags: 0
@@ -28204,6 +28300,7 @@ MonoBehaviour:
   currentLevelText: {fileID: 1928736669}
   skillInfoText: {fileID: 1369397780}
   upgradeButton: {fileID: 1401388687}
+  unlockObject: {fileID: 1615153080}
 --- !u!4 &1652345461
 Transform:
   m_ObjectHideFlags: 0
@@ -32189,7 +32286,7 @@ MonoBehaviour:
   lockText: {fileID: 1033640163}
   isUnlocked: 0
   unlockThreshold: 5
-  objectPrefab: {fileID: 1871208469632612, guid: 36dd6e38fcde3e94ebd8fd83bc089f4a, type: 3}
+  plantObjects: []
 --- !u!4 &1925851965
 Transform:
   m_ObjectHideFlags: 0
@@ -34552,7 +34649,7 @@ MonoBehaviour:
   lockText: {fileID: 679089875}
   isUnlocked: 0
   unlockThreshold: 5
-  objectPrefab: {fileID: 1139572726157748, guid: 3c98bb4bee2f2ba4b92a2fbca7b8831f, type: 3}
+  plantObjects: []
 --- !u!4 &2089163037
 Transform:
   m_ObjectHideFlags: 0
@@ -42981,3 +43078,4 @@ SceneRoots:
   - {fileID: 2029848324}
   - {fileID: 2087719542}
   - {fileID: 1996747635}
+  - {fileID: 1615153081}
