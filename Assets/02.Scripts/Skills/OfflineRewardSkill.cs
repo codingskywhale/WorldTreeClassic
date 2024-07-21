@@ -11,7 +11,7 @@ public class OfflineRewardSkill : MonoBehaviour
     public TextMeshProUGUI skillInfoText; // 현재 스킬 설명 텍스트
     public BigInteger unlockCost = 200; // 해금 비용
     public Button upgradeButton; // 해금/업그레이드 버튼
-
+    public GameObject unlockObject; // 해금시 활성화 오브젝트
     private void Start()
     {
         UpdateUI(); // 초기 UI 설정
@@ -36,6 +36,7 @@ public class OfflineRewardSkill : MonoBehaviour
         {
             DiamondManager.Instance.DecreaseDiamond(unlockCost);
             currentLevel = 1;
+            ActiveObject();
             UpdateUpgradeCostUI(); // 업그레이드 비용 UI 업데이트
             UpdateUI(); // UI 업데이트
             CheckUnlockStatus(); // 해금 후 상태 확인 및 UI 업데이트
@@ -46,6 +47,10 @@ public class OfflineRewardSkill : MonoBehaviour
         }
     }
 
+    private void ActiveObject()
+    {
+        unlockObject.SetActive(true);
+    }
     private void UpgradeSkill()
     {
         if (currentLevel >= 10)
