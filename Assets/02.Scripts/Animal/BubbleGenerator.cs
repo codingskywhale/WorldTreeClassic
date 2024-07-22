@@ -71,7 +71,7 @@ public class BubbleGenerator : MonoBehaviour
         else
         {
             // 현재 nowBubble이 2개라면 뽑을 필요가 없다. (이론상 나오면 안되는 경우긴함.)
-            if (nowBubbleList.Count == 2) return;
+            if (nowBubbleList.Count == maxHeartCount) return;
 
             randomIdx = Random.Range(0, heartBubbleList.Count);
             // 현재 버블이 켜져 있는 오브젝트를 제외하기 위해.

@@ -137,9 +137,10 @@ GameObject:
   - component: {fileID: 114905693314452548}
   - component: {fileID: 195879434793580014}
   - component: {fileID: -7965075480880812702}
+  - component: {fileID: -2611152852181720479}
   m_Layer: 0
   m_Name: 9_Wolf_Grey
-  m_TagString: Untagged
+  m_TagString: Animal
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -351,7 +352,7 @@ MonoBehaviour:
   - stateName: Running
     animationBool: isRunning
     maxStateTime: 10
-    moveSpeed: 8
+    moveSpeed: 5
     turnSpeed: 200
   attackingStates:
   - stateName: Attacking
@@ -361,9 +362,7 @@ MonoBehaviour:
     animationBool: isDead
   species: Wolf
   stats: {fileID: 11400000, guid: eb63abc8ed4638546b1db42f35c9b0b3, type: 2}
-  wanderZone: 20
-  awareness: 15
-  scent: 30
+  wanderZone: 8
   constainedToWanderZone: 0
   nonAgressiveTowards: []
   matchSurfaceRotation: 1
@@ -420,7 +419,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 68ce9d49a47199348b78f7d518bc6ecc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  heart: {fileID: 0}
+  heart: {fileID: 4799197646626151588}
+--- !u!114 &-2611152852181720479
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1555847620765010}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 86ed368a899d8614894a78cc74df1559, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  uniqueID: 
 --- !u!1 &132445533187324529
 GameObject:
   m_ObjectHideFlags: 0
@@ -2205,7 +2217,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: -7965075480880812702}
         m_TargetAssemblyTypeName: Animal, Assembly-CSharp
         m_MethodName: HeartTouch
         m_Mode: 1
@@ -2269,7 +2281,7 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8688820976477108244}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 12}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:

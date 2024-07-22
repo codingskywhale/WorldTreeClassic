@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
@@ -133,8 +133,6 @@ namespace Polyperfect.Common
                 GUILayout.EndHorizontal();
 
                 EditorGUILayout.PropertyField(wanderSize);
-                EditorGUILayout.PropertyField(awareness);
-                EditorGUILayout.PropertyField(scent);
 
                 EditorGUILayout.PropertyField(constainedToWanderZone);
                 EditorGUILayout.PropertyField(nonAgressiveTowards, true);

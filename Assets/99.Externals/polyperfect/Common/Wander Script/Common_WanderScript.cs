@@ -21,7 +21,7 @@ namespace Polyperfect.Common
 
         [SerializeField] public IdleState[] idleStates;
         [SerializeField] private MovementState[] movementStates;
-        [SerializeField] private AIState[] attackingStates;
+        [SerializeField] private AIState[] attackingStates; 
         [SerializeField] private AIState[] deathStates;
 
         [SerializeField] public string species = "NA";
@@ -48,19 +48,8 @@ namespace Polyperfect.Common
         private int dominance = 1;
         private int originalDominance = 0;
 
-        [SerializeField, Tooltip("How far this animal can sense a predator.")]
-        private float awareness = 30f;
-
-        [SerializeField, Tooltip("How far this animal can sense it's prey.")]
-        private float scent = 30f;
-
-        private float originalScent = 0f;
-
         // [SerializeField, Tooltip("How many seconds this animal can run for before it gets tired.")]
         private float stamina = 10f;
-
-        // [SerializeField, Tooltip("Stealthy animals can't be detected by other animals.")]
-        private bool stealthy = false;
 
         [SerializeField, Tooltip("If true, this animal will never leave it's zone, even if it's chasing or running away from another animal.")]
         private bool constainedToWanderZone = false;
@@ -90,8 +79,6 @@ namespace Polyperfect.Common
         private bool showGizmos = false;
 
         [SerializeField] private bool drawWanderRange = true;
-        [SerializeField] private bool drawScentRange = true;
-        [SerializeField] private bool drawAwarenessRange = true;
 
         public UnityEngine.Events.UnityEvent deathEvent;
         public UnityEngine.Events.UnityEvent attackingEvent;
@@ -119,8 +106,6 @@ namespace Polyperfect.Common
             Idle,
             Wander,
         }
-
-        float attackTimer = 0;
         float MinimumStaminaForAggression
         {
             get { return stats.stamina * .9f; }
@@ -132,11 +117,7 @@ namespace Polyperfect.Common
         }
 
         public WanderState CurrentState;
-        Common_WanderScript primaryPrey;
-        Common_WanderScript primaryPursuer;
-        Common_WanderScript attackTarget;
         float moveSpeed = 0f;
-        float attackReach =2f;
         bool forceUpdate = false;
         float idleStateDuration;
         Vector3 startPosition;
@@ -158,27 +139,6 @@ namespace Polyperfect.Common
 
                 Vector3 IconWander = new Vector3(transform.position.x, transform.position.y + wanderZone, transform.position.z);
                 Gizmos.DrawIcon(IconWander, "ico-wander", true);
-            }
-
-            if (drawAwarenessRange)
-            {
-                //Draw circle radius for Awarness.
-                Gizmos.color = awarnessColor;
-                Gizmos.DrawWireSphere(transform.position, awareness);
-
-
-                Vector3 IconAwareness = new Vector3(transform.position.x, transform.position.y + awareness, transform.position.z);
-                Gizmos.DrawIcon(IconAwareness, "ico-awareness", true);
-            }
-
-            if (drawScentRange)
-            {
-                //Draw circle radius for Scent.
-                Gizmos.color = scentColor;
-                Gizmos.DrawWireSphere(transform.position, scent);
-
-                Vector3 IconScent = new Vector3(transform.position.x, transform.position.y + scent, transform.position.z);
-                Gizmos.DrawIcon(IconScent, "ico-scent", true);
             }
 
             if (!Application.isPlaying)
@@ -362,10 +322,6 @@ namespace Polyperfect.Common
             dominance = originalDominance;
 
             stamina = stats.stamina;
-            stealthy = stats.stealthy;
-
-            originalScent = scent;
-            scent = originalScent;
 
             if (navMeshAgent)
             {
@@ -408,7 +364,7 @@ namespace Polyperfect.Common
 
         private void Start()
         {
-            startPosition = transform.position;
+            startPosition = new Vector3(0, 0, 10);
 
             StartCoroutine(RandomStartingDelay());
         }
@@ -422,7 +378,6 @@ namespace Polyperfect.Common
                 return;
             if (forceUpdate)
             {
-                UpdateAI();
                 forceUpdate = false;
             }
 
@@ -439,7 +394,6 @@ namespace Polyperfect.Common
                     if (displacementFromTarget.magnitude < contingencyDistance)
                     {
                         SetState(WanderState.Idle);
-                        UpdateAI();
                     }
 
                     break;
@@ -448,7 +402,6 @@ namespace Polyperfect.Common
                     if (Time.time>=idleUpdateTime)
                     {
                         SetState(WanderState.Wander);
-                        UpdateAI();
                     }
                     break;
             }
@@ -469,26 +422,6 @@ namespace Polyperfect.Common
         {
             transform.rotation = Quaternion.LookRotation(Vector3.ProjectOnPlane(Vector3.RotateTowards(transform.forward,
                 facePosition, turnSpeed * Time.deltaTime*Mathf.Deg2Rad, 0f), Vector3.up), Vector3.up);
-        }
-
-        void UpdateAI()
-        {
-            var position = transform.position;
-            primaryPursuer = null;
-            if (awareness > 0)
-            {
-                var closestDistance = awareness;
-                if (allAnimals.Count > 0)
-                {
-                    foreach (var chaser in allAnimals)
-                    {
-                        var distance = Vector3.Distance(position, chaser.transform.position);
-                        
-                        closestDistance = distance;
-                        primaryPursuer = chaser;
-                    }
-                }
-            }
         }
 
         bool IsValidLocation(Vector3 targetPosition)
@@ -553,27 +486,6 @@ namespace Polyperfect.Common
             enabled = false;
         }
 
-        void HandleBeginAttack()
-        {
-            var attackState = Random.Range(0, attackingStates.Length);
-            turnSpeed = 120f;
-            ClearAnimatorBools();
-            TrySetBool(attackingStates[attackState].animationBool,true);
-            attackingEvent.Invoke();
-        }
-
-        void HandleBeginEvade()
-        {
-            SetMoveFast();
-            movementEvent.Invoke();
-        }
-
-        void HandleBeginChase()
-        {
-            SetMoveFast();
-            movementEvent.Invoke();
-        }
-
         void SetMoveFast()
         {
             MovementState moveState = null;
@@ -634,7 +546,6 @@ namespace Polyperfect.Common
         }
         void HandleBeginWander()
         {
-            primaryPrey = null;
             var rand = Random.insideUnitSphere * wanderZone;
             var targetPos = startPosition + rand;
             ValidatePosition(ref targetPos);
@@ -671,7 +582,6 @@ namespace Polyperfect.Common
         {
             while (true)
             {
-                UpdateAI();
                 yield return new WaitForSeconds(delay);
             }
             // ReSharper disable once IteratorNeverReturns

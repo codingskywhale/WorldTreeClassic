@@ -16,9 +16,10 @@ GameObject:
   - component: {fileID: 195392007921826444}
   - component: {fileID: 114210507595430992}
   - component: {fileID: -217182703854139850}
+  - component: {fileID: 657061234024889735}
   m_Layer: 0
   m_Name: 2_Cat_Orange
-  m_TagString: Untagged
+  m_TagString: Animal
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -32,7 +33,7 @@ Transform:
   m_GameObject: {fileID: 1904107386653458}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 5, y: 0, z: 50}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -246,12 +247,12 @@ MonoBehaviour:
   - stateName: Walking
     animationBool: isWalking
     maxStateTime: 20
-    moveSpeed: 2
+    moveSpeed: 1
     turnSpeed: 120
   - stateName: Running
     animationBool: isRunning
     maxStateTime: 5
-    moveSpeed: 10
+    moveSpeed: 4
     turnSpeed: 200
   attackingStates:
   - stateName: Attack
@@ -261,9 +262,7 @@ MonoBehaviour:
     animationBool: isDead
   species: Cat
   stats: {fileID: 11400000, guid: dbe9e93337452e549825f00a2450fc95, type: 2}
-  wanderZone: 5
-  awareness: 30
-  scent: 30
+  wanderZone: 8
   constainedToWanderZone: 0
   nonAgressiveTowards: []
   matchSurfaceRotation: 0
@@ -299,6 +298,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   heart: {fileID: 1846152594359276983}
+--- !u!114 &657061234024889735
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1904107386653458}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 86ed368a899d8614894a78cc74df1559, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  uniqueID: 
 --- !u!1 &2067293984731789625
 GameObject:
   m_ObjectHideFlags: 0
@@ -326,7 +338,7 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2067293984731789625}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -38}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -336,8 +348,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: -5, y: 1.5}
-  m_SizeDelta: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 0, y: 0.5}
+  m_SizeDelta: {x: 0.3, y: 0.3}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!223 &6937785562779528886
 Canvas:
@@ -523,7 +535,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: -217182703854139850}
         m_TargetAssemblyTypeName: Animal, Assembly-CSharp
         m_MethodName: HeartTouch
         m_Mode: 1
