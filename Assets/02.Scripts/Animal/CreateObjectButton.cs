@@ -30,7 +30,6 @@ public class CreateObjectButton : MonoBehaviour
     }
     private void InitailizeSet()
     {
-        characterIcon.sprite = animalData.animalIcon;
         nameText.text = animalData.animalName;
         conditionText.text = conditionX + animalData.animalUnlockConditions[0];
         // 일단 첫 번째 버튼은 해금된 상태여야 함.

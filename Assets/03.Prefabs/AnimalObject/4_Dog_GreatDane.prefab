@@ -367,9 +367,10 @@ GameObject:
   - component: {fileID: 195483596070128140}
   - component: {fileID: 114925849592729484}
   - component: {fileID: 8808230658182936462}
+  - component: {fileID: 2723269697640789843}
   m_Layer: 0
   m_Name: 4_Dog_GreatDane
-  m_TagString: Untagged
+  m_TagString: Animal
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -432,13 +433,13 @@ CharacterController:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Height: 2
+  m_Height: 1
   m_Radius: 0.5
   m_SlopeLimit: 45
   m_StepOffset: 0.3
   m_SkinWidth: 0.08
   m_MinMoveDistance: 0.001
-  m_Center: {x: 0, y: 1.1, z: 0}
+  m_Center: {x: 0, y: 0.5, z: 0}
 --- !u!195 &195483596070128140
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -499,11 +500,9 @@ MonoBehaviour:
   deathStates:
   - stateName: Sit
     animationBool: isSitting
-  species: Chihuahua
+  species: GreatDane
   stats: {fileID: 11400000, guid: 9f3f059a29809ff43bb6115c7349536d, type: 2}
-  wanderZone: 16.71
-  awareness: 30
-  scent: 30
+  wanderZone: 8
   constainedToWanderZone: 0
   nonAgressiveTowards: []
   matchSurfaceRotation: 0
@@ -539,6 +538,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   heart: {fileID: 8123422579361929618}
+--- !u!114 &2723269697640789843
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1149234200949348}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 86ed368a899d8614894a78cc74df1559, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  uniqueID: 
 --- !u!1 &1149297703058442
 GameObject:
   m_ObjectHideFlags: 0
@@ -2302,7 +2314,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 8808230658182936462}
         m_TargetAssemblyTypeName: Animal, Assembly-CSharp
         m_MethodName: HeartTouch
         m_Mode: 1
@@ -2338,7 +2350,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 452bbe8a6ecf677489cf23159647ea23, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  heartIdx: 0
+  heartIdx: 4
 --- !u!1 &7406649524788727434
 GameObject:
   m_ObjectHideFlags: 0
@@ -2366,7 +2378,7 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7406649524788727434}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 12}
+  m_LocalPosition: {x: 0, y: 0, z: 0.2}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -2376,8 +2388,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 1.5}
-  m_SizeDelta: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 0, y: 1.2}
+  m_SizeDelta: {x: 0.5, y: 0.5}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!223 &4870196559442055761
 Canvas:

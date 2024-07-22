@@ -71,7 +71,6 @@ public class UIUpdater
 
             if (animalData != null) 
             {
-                button.characterIcon.sprite = animalData.animalIcon; // 버튼의 아이콘을 동물 아이콘으로 설정
                 button.nameText.text = animalData.animalName; // 버튼의 이름을 동물 이름으로 설정
 
                 // 해금 상태에 따라 설명 텍스트 업데이트

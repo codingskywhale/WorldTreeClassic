@@ -27,7 +27,7 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1871173067659304980}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 12}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -37,8 +37,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 1.5}
-  m_SizeDelta: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 0, y: 2}
+  m_SizeDelta: {x: 0.5, y: 0.5}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!223 &3199493205718612806
 Canvas:
@@ -151,9 +151,10 @@ GameObject:
   - component: {fileID: 2704793380095254441}
   - component: {fileID: 85464971403526565}
   - component: {fileID: 9203416441574157972}
+  - component: {fileID: -96983278315882781}
   m_Layer: 0
   m_Name: 6_Cow_Brown
-  m_TagString: Untagged
+  m_TagString: Animal
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -215,8 +216,8 @@ CharacterController:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Height: 2
-  m_Radius: 0.5
+  m_Height: 1.5
+  m_Radius: 0.8
   m_SlopeLimit: 45
   m_StepOffset: 0.3
   m_SkinWidth: 0.08
@@ -364,7 +365,7 @@ MonoBehaviour:
   - stateName: Running
     animationBool: isRunning
     maxStateTime: 10
-    moveSpeed: 5
+    moveSpeed: 2
     turnSpeed: 200
   attackingStates:
   - stateName: Attack
@@ -374,9 +375,7 @@ MonoBehaviour:
     animationBool: isDead
   species: Cow
   stats: {fileID: 11400000, guid: 8251212eb0e447040bbaad411c2209a4, type: 2}
-  wanderZone: 10
-  awareness: 15
-  scent: 30
+  wanderZone: 8
   constainedToWanderZone: 0
   nonAgressiveTowards: []
   matchSurfaceRotation: 0
@@ -433,7 +432,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 68ce9d49a47199348b78f7d518bc6ecc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  heart: {fileID: 0}
+  heart: {fileID: 1438616374633803563}
+--- !u!114 &-96983278315882781
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7604589965335949422}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 86ed368a899d8614894a78cc74df1559, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  uniqueID: 
 --- !u!1 &8959083530102452962
 GameObject:
   m_ObjectHideFlags: 0
@@ -555,7 +567,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 9203416441574157972}
         m_TargetAssemblyTypeName: Animal, Assembly-CSharp
         m_MethodName: HeartTouch
         m_Mode: 1

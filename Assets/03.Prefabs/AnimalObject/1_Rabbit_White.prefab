@@ -334,9 +334,10 @@ GameObject:
   - component: {fileID: 114971814617894522}
   - component: {fileID: 195360568403518646}
   - component: {fileID: 3222667427072893663}
+  - component: {fileID: 390323831838926178}
   m_Layer: 0
   m_Name: 1_Rabbit_White
-  m_TagString: Untagged
+  m_TagString: Animal
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -432,7 +433,7 @@ MonoBehaviour:
   - stateName: Run
     animationBool: isRunning
     maxStateTime: 5
-    moveSpeed: 6
+    moveSpeed: 3
     turnSpeed: 200
   attackingStates: []
   deathStates:
@@ -442,9 +443,7 @@ MonoBehaviour:
     animationBool: isDead_1
   species: Rabbit
   stats: {fileID: 11400000, guid: 7c5c1c5c9a5e94647b0e5e541b0b1e6b, type: 2}
-  wanderZone: 5
-  awareness: 15
-  scent: 0
+  wanderZone: 8
   constainedToWanderZone: 0
   nonAgressiveTowards: []
   matchSurfaceRotation: 1
@@ -502,6 +501,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   heart: {fileID: 3755200369401547881}
+--- !u!114 &390323831838926178
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1262440479064932}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 86ed368a899d8614894a78cc74df1559, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  uniqueID: 
 --- !u!1 &1275589145405808
 GameObject:
   m_ObjectHideFlags: 0
@@ -2099,7 +2111,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &2954248756015017787
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2432,18 +2444,6 @@ PrefabInstance:
     - target: {fileID: 1498813618654573010, guid: 1c59e72c6f108874798ed6b04102d524, type: 3}
       propertyPath: m_Name
       value: CostText
-      objectReference: {fileID: 0}
-    - target: {fileID: 1498813618654573010, guid: 1c59e72c6f108874798ed6b04102d524, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6648842111549161072, guid: 1c59e72c6f108874798ed6b04102d524, type: 3}
-      propertyPath: m_fontSize
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 6648842111549161072, guid: 1c59e72c6f108874798ed6b04102d524, type: 3}
-      propertyPath: m_fontSizeBase
-      value: 3
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

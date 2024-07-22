@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using UnityEditor;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,13 +16,8 @@ namespace Polyperfect.Common
         static string pathFolder = "";
         bool toggleName = true;
         bool toggleDominance = true;
-        bool toggleAgression = true;
-        bool toggleAttackSpeed = true;
-        bool togglePower = true;
         bool toggleStamina = true;
-        bool toggleStealthy = true;
         bool toggleToughness = true;
-        bool toggleTeritorial = true;
 
 
         GUIStyle folderStyle = new GUIStyle();
@@ -229,17 +224,7 @@ namespace Polyperfect.Common
                 }
 
                 Stats.dominance = int.Parse(GUILayout.TextField(Stats.dominance.ToString(), GUILayout.Width(position.width / 9)));
-                Stats.agression = Mathf.Clamp(float.Parse(GUILayout.TextField(Stats.agression.ToString(), GUILayout.Width(position.width / 9))), 0, 99);
-                Stats.attackSpeed = float.Parse(GUILayout.TextField(Stats.attackSpeed.ToString(), GUILayout.Width(position.width / 9)));
-                Stats.power = float.Parse(GUILayout.TextField(Stats.power.ToString(), GUILayout.Width(position.width / 9)));
-                Stats.stamina = float.Parse(GUILayout.TextField(Stats.stamina.ToString(), GUILayout.Width(position.width / 9)));
-                Stats.stealthy = GUILayout.Toggle(Stats.stealthy, Stats.stealthy.ToString(), GUILayout.Width(position.width / 9));
-                Stats.toughness = float.Parse(GUILayout.TextField(Stats.toughness.ToString(), GUILayout.Width(position.width / 9)));
-                Stats.territorial = GUILayout.Toggle(Stats.territorial, Stats.territorial.ToString(), toggleField, GUILayout.Width(position.width / 9));
                 GUILayout.EndHorizontal();
-
-
-
             }
         }
 
@@ -279,50 +264,13 @@ namespace Polyperfect.Common
 
                 case 2:
 
-                    if (toggleAgression)
-                    {
-                        stats = (stats.OrderBy(p => p.agression).Reverse()).ToList();
-                        toggleAgression = !toggleAgression;
-                    }
-
-                    else
-                    {
-                        stats = stats.OrderBy(p => p.agression).ToList();
-                        toggleAgression = !toggleAgression;
-                    }
-
                     break;
 
                 case 3:
 
-                    if (toggleAttackSpeed)
-                    {
-                        stats = (stats.OrderBy(p => p.attackSpeed).Reverse()).ToList();
-                        toggleAttackSpeed = !toggleAttackSpeed;
-                    }
-
-                    else
-                    {
-                        stats = stats.OrderBy(p => p.attackSpeed).ToList();
-                        toggleAttackSpeed = !toggleAttackSpeed;
-                    }
-
                     break;
 
                 case 4:
-
-                    if (togglePower)
-                    {
-                        stats = (stats.OrderBy(p => p.power).Reverse()).ToList();
-                        togglePower = !togglePower;
-                    }
-
-                    else
-                    {
-                        stats = stats.OrderBy(p => p.power).ToList();
-                        togglePower = !togglePower;
-                    }
-
                     break;
 
                 case 5:
@@ -342,19 +290,6 @@ namespace Polyperfect.Common
                     break;
 
                 case 6:
-
-                    if (toggleStealthy)
-                    {
-                        stats = (stats.OrderBy(p => p.stealthy).Reverse()).ToList();
-                        toggleStealthy = !toggleStealthy;
-                    }
-
-                    else
-                    {
-                        stats = stats.OrderBy(p => p.stealthy).ToList();
-                        toggleStealthy = !toggleStealthy;
-                    }
-
                     break;
 
                 case 7:
@@ -374,18 +309,6 @@ namespace Polyperfect.Common
                     break;
 
                 case 8:
-
-                    if (toggleTeritorial)
-                    {
-                        stats = (stats.OrderBy(p => p.territorial).Reverse()).ToList();
-                        toggleTeritorial = !toggleTeritorial;
-                    }
-
-                    else
-                    {
-                        stats = stats.OrderBy(p => p.territorial).ToList();
-                        toggleTeritorial = !toggleTeritorial;
-                    }
 
                     break;
             }

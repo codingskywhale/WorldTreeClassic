@@ -206,6 +206,7 @@ public class RootBase : MonoBehaviour, IRoot
         //rootLevel = 1; // 잠금 해제 시 레벨 1로 설정
         upgradeLifeCost = CalculateUpgradeCost(); // 업그레이드 비용 업데이트
         OnGenerationRateChanged?.Invoke(); // 잠금 해제 시 이벤트 트리거
+        DataManager.Instance.animalGenerateData.AddMaxAnimalCount();
         UpdateUI();
         Debug.Log("Unlocked successfully.");
     }
