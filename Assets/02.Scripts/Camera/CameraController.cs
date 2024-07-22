@@ -35,6 +35,8 @@ public class CameraController : MonoBehaviour
 
         // 애니메이션 시작
         StartCoroutine(cameraTransition.OpeningCamera());
+
+        messageParent.gameObject.SetActive(false);
     }
 
     private void Update()
@@ -185,6 +187,8 @@ public class CameraController : MonoBehaviour
             Destroy(currentMessage);
         }
 
+        messageParent.gameObject.SetActive(true);
+
         // 메시지 생성
         currentMessage = Instantiate(messagePrefab, messageParent);
         currentMessage.GetComponent<TMP_Text>().text = message;
@@ -213,6 +217,7 @@ public class CameraController : MonoBehaviour
         }
 
         Destroy(message);
+        messageParent.gameObject.SetActive(false);
     }
 
 }
