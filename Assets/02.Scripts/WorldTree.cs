@@ -11,6 +11,11 @@ public class WorldTree : MonoBehaviour
     public GameObject[] treePrefabs; // 3D 모델 배열
 
     private GameObject currentTreeInstance; // 현재 인스턴스화된 트리 프리팹
+    public Camera mainCamera;
+
+    public float initialFOV = 60f; // 초기 FOV 값
+    public float FOVIncrement = 2f; // 나무의 외형이 바뀔 때마다 증가할 FOV 값
+    public float maxFOV = 120f; // 최대 FOV 값    
 
     private void Start()
     {
@@ -32,6 +37,20 @@ public class WorldTree : MonoBehaviour
             currentTreeInstance = Instantiate(treePrefabs[currentIndex], outsideTreeObject.transform.position, Quaternion.identity);
             currentTreeInstance.transform.SetParent(outsideTreeObject.transform);
             currentTreeInstance.name = treePrefabs[currentIndex].name; // 이름 설정
+        }
+
+        if (currentLevel % 5 == 0 && currentLevel != 0)
+        {
+            IncrementCameraFOV();
+        }
+    }
+
+    private void IncrementCameraFOV()
+    {
+        if (mainCamera != null)
+        {
+            float newFOV = mainCamera.fieldOfView + FOVIncrement;
+            mainCamera.fieldOfView = Mathf.Min(newFOV, maxFOV); // 최대 FOV를 넘지 않도록 제한
         }
     }
 }
