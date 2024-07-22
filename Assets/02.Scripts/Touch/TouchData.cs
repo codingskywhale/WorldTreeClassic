@@ -8,8 +8,8 @@ using UnityEngine;
 public class TouchData : MonoBehaviour
 {
     public int touchIncreaseLevel = 1;
-    public BigInteger touchIncreaseAmount = 10;
-    public BigInteger upgradeLifeCost = 20;
+    public BigInteger touchIncreaseAmount = 50;
+    public BigInteger upgradeLifeCost = 1000;
     public BigInteger lifeGenerationPerLevel = 10; // 일정 증가량
 
     public TextMeshProUGUI touchLevelText;
@@ -25,9 +25,10 @@ public class TouchData : MonoBehaviour
         }
         else
         {
-            touchIncreaseAmount += lifeGenerationPerLevel; // 일정하게 증가
+            touchIncreaseAmount = touchIncreaseAmount * 104 / 100; // n레벨 터치 생명력 생산량 공식 적용
         }
-        upgradeLifeCost += 20; // 업그레이드 비용 증가
+        // 업그레이드 비용 공식 적용
+        upgradeLifeCost = upgradeLifeCost * 120 / 100; // n레벨 업그레이드 비용 공식 적용
         UpdateUI();
         UIManager.Instance.tree.UpdateTreeMeshes(touchIncreaseLevel); // 나무 모습 업데이트
     }

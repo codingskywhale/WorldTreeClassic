@@ -137,6 +137,8 @@ public class SaveDataManager
             UIManager.Instance.createObjectButtonUnlockCount = 1;
             UIManager.Instance.UpdateButtonUI();
             LifeManager.Instance.lifeAmount = new BigInteger(500000000000000000);
+            UIManager.Instance.touchData.upgradeLifeCost = new BigInteger(1000);
+            UIManager.Instance.touchData.touchIncreaseAmount = new BigInteger(50);
             return;
         }                
 
