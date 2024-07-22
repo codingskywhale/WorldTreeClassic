@@ -28,7 +28,10 @@ public class CameraController : MonoBehaviour
 
         // 초기 위치와 회전 설정
         Camera.main.transform.position = cameraTransition.initialPosition;
-        Camera.main.transform.rotation = cameraTransition.initialRotation;
+        cameraTransition.initialRotation = Quaternion.Euler(-100, -116, 0);
+        cameraTransition.finalRotation = Quaternion.Euler(30, -116, 0);
+        cameraTransition.zoomInRotation = Quaternion.Euler(25, -116, 0);        
+        Camera.main.transform.rotation = cameraTransition.initialRotation;       
 
         // 애니메이션 시작
         StartCoroutine(cameraTransition.OpeningCamera());
