@@ -15,17 +15,7 @@ public class LifeManager : MonoBehaviour
     public delegate void WaterChanged(BigInteger newAmount);
     public event WaterChanged OnWaterChanged;
 
-    private void Start()
-    {
-        Debug.Log("LifeManager 초기값: " + lifeAmount);
 
-        // SaveDataManager의 LoadGameData 호출
-        SaveDataManager saveDataManager = new SaveDataManager();
-        ResourceManager resourceManager = FindObjectOfType<ResourceManager>();
-        saveDataManager.LoadGameData(resourceManager);
-
-        Debug.Log("LifeManager 로드 후 값: " + lifeAmount);
-    }
     private void Awake()
     {
         // 싱글톤 인스턴스 설정
@@ -41,7 +31,17 @@ public class LifeManager : MonoBehaviour
 
         bubbleGenerator = GetComponent<BubbleGenerator>();
     }
+    private void Start()
+    {
+        Debug.Log("LifeManager 초기값: " + lifeAmount);
 
+        // SaveDataManager의 LoadGameData 호출
+        SaveDataManager saveDataManager = new SaveDataManager();
+        ResourceManager resourceManager = FindObjectOfType<ResourceManager>();
+        //saveDataManager.LoadGameData(skill);
+
+        Debug.Log("LifeManager 로드 후 값: " + lifeAmount);
+    }
     public void IncreaseWater(BigInteger amount)
     {
         lifeAmount += amount;

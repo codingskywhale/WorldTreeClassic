@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.33512115, g: 0.679411, b: 0.98869795, a: 1}
+  m_IndirectSpecularColor: {r: 0.3326186, g: 0.6750198, b: 0.98597234, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -3538,9 +3538,11 @@ MonoBehaviour:
   rootLevelText: {fileID: 1863914463}
   generationRateText: {fileID: 13296687}
   rootUpgradeCostText: {fileID: 1447391205}
+  lockImage: {fileID: 0}
+  lockText: {fileID: 0}
   isUnlocked: 0
   unlockThreshold: 5
-  objectPrefab: {fileID: 1139572726157748, guid: 3c98bb4bee2f2ba4b92a2fbca7b8831f, type: 3}
+  plantObjects: []
 --- !u!4 &131668843
 Transform:
   m_ObjectHideFlags: 0
@@ -3657,6 +3659,7 @@ MonoBehaviour:
   - {fileID: 564631443}
   - {fileID: 1780361236808267187}
   currentActiveObject: {fileID: 1079943225}
+  tabButtons: []
 --- !u!4 &137116702
 Transform:
   m_ObjectHideFlags: 0
@@ -3719,9 +3722,11 @@ MonoBehaviour:
   rootLevelText: {fileID: 488309716}
   generationRateText: {fileID: 958188133}
   rootUpgradeCostText: {fileID: 1594379434}
+  lockImage: {fileID: 0}
+  lockText: {fileID: 0}
   isUnlocked: 0
   unlockThreshold: 5
-  objectPrefab: {fileID: 1139572726157748, guid: 3c98bb4bee2f2ba4b92a2fbca7b8831f, type: 3}
+  plantObjects: []
 --- !u!4 &145072086
 Transform:
   m_ObjectHideFlags: 0
@@ -3916,9 +3921,11 @@ MonoBehaviour:
   rootLevelText: {fileID: 0}
   generationRateText: {fileID: 0}
   rootUpgradeCostText: {fileID: 0}
+  lockImage: {fileID: 0}
+  lockText: {fileID: 0}
   isUnlocked: 0
   unlockThreshold: 10
-  objectPrefab: {fileID: 0}
+  plantObjects: []
 --- !u!4 &153027943
 Transform:
   m_ObjectHideFlags: 0
@@ -4534,6 +4541,7 @@ MonoBehaviour:
   currentLevelText: {fileID: 1832202786}
   skillInfoText: {fileID: 1919679624}
   upgradeButton: {fileID: 71070987}
+  unlockObject: {fileID: 0}
 --- !u!1 &237684747
 GameObject:
   m_ObjectHideFlags: 0
@@ -7567,9 +7575,11 @@ MonoBehaviour:
   rootLevelText: {fileID: 1211825842}
   generationRateText: {fileID: 78938534}
   rootUpgradeCostText: {fileID: 562969235}
+  lockImage: {fileID: 0}
+  lockText: {fileID: 0}
   isUnlocked: 0
   unlockThreshold: 5
-  objectPrefab: {fileID: 1139572726157748, guid: 3c98bb4bee2f2ba4b92a2fbca7b8831f, type: 3}
+  plantObjects: []
 --- !u!4 &468112743
 Transform:
   m_ObjectHideFlags: 0
@@ -8317,6 +8327,7 @@ MonoBehaviour:
   idleTime: 10
   scrollSpeed: 0.5
   uiOpenCloseManager: {fileID: 494238007}
+  NoneIdleuiPanels: []
 --- !u!114 &494238010
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11326,6 +11337,7 @@ MonoBehaviour:
   cooldownImage: {fileID: 673845767}
   skillButton: {fileID: 691690551}
   upgradeButton: {fileID: 1308554116}
+  cooldownRemaining: 0
   currentLevel: 0
   upgradeCostText: {fileID: 1027674066}
   currentLevelText: {fileID: 977944162}
@@ -12034,14 +12046,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3872491dffc90d84faeba612b01f5488, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  outsideTreeMeshFilter: {fileID: 701093652}
+  outsideTreeObject: {fileID: 701093650}
   upgradeRequirementText: {fileID: 0}
   groundMeshFilter: {fileID: 701093652}
-  treeMeshes:
-  - {fileID: 4300002, guid: 98b0ccf8b6592394f847463b75d797f7, type: 3}
-  - {fileID: 4300004, guid: 98b0ccf8b6592394f847463b75d797f7, type: 3}
-  - {fileID: 4300006, guid: 98b0ccf8b6592394f847463b75d797f7, type: 3}
-  - {fileID: 4300000, guid: 98b0ccf8b6592394f847463b75d797f7, type: 3}
+  treePrefabs:
+  - {fileID: 701093650}
 --- !u!33 &701093652
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -14214,9 +14223,11 @@ MonoBehaviour:
   rootLevelText: {fileID: 966637972}
   generationRateText: {fileID: 2018015115}
   rootUpgradeCostText: {fileID: 596384272}
+  lockImage: {fileID: 0}
+  lockText: {fileID: 0}
   isUnlocked: 0
   unlockThreshold: 5
-  objectPrefab: {fileID: 1139572726157748, guid: 3c98bb4bee2f2ba4b92a2fbca7b8831f, type: 3}
+  plantObjects: []
 --- !u!4 &866107452
 Transform:
   m_ObjectHideFlags: 0
@@ -16759,9 +16770,11 @@ MonoBehaviour:
   rootLevelText: {fileID: 488309716}
   generationRateText: {fileID: 1100550479}
   rootUpgradeCostText: {fileID: 513035660}
+  lockImage: {fileID: 0}
+  lockText: {fileID: 0}
   isUnlocked: 0
   unlockThreshold: 5
-  objectPrefab: {fileID: 701093650}
+  plantObjects: []
 --- !u!1 &993243311
 GameObject:
   m_ObjectHideFlags: 0
@@ -17587,6 +17600,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: e392f383c42242544a1c9109c5fda00f, type: 2}
   - {fileID: 11400000, guid: 88f1bf1e724255742aa9c2959472959a, type: 2}
   - {fileID: 11400000, guid: 53687f997b677e54d88689da51f1ff0d, type: 2}
+  skillCoolDownReductions: []
+  skills: []
   touchInput: {fileID: 0}
   offlineRewardUIManager: {fileID: 494238011}
 --- !u!114 &1028150610
@@ -17922,9 +17937,11 @@ MonoBehaviour:
   rootLevelText: {fileID: 2036162024}
   generationRateText: {fileID: 1661802142}
   rootUpgradeCostText: {fileID: 193992294}
+  lockImage: {fileID: 0}
+  lockText: {fileID: 0}
   isUnlocked: 0
   unlockThreshold: 5
-  objectPrefab: {fileID: 1139572726157748, guid: 3c98bb4bee2f2ba4b92a2fbca7b8831f, type: 3}
+  plantObjects: []
 --- !u!4 &1058648820
 Transform:
   m_ObjectHideFlags: 0
@@ -22086,6 +22103,7 @@ MonoBehaviour:
   cooldownImage: {fileID: 1167087303}
   skillButton: {fileID: 1037225546}
   upgradeButton: {fileID: 873526765}
+  cooldownRemaining: 0
   currentLevel: 0
   upgradeCostText: {fileID: 559274339}
   currentLevelText: {fileID: 412957881}
@@ -24322,9 +24340,11 @@ MonoBehaviour:
   rootLevelText: {fileID: 1143373019}
   generationRateText: {fileID: 993243313}
   rootUpgradeCostText: {fileID: 2115733076}
+  lockImage: {fileID: 0}
+  lockText: {fileID: 0}
   isUnlocked: 0
   unlockThreshold: 5
-  objectPrefab: {fileID: 1139572726157748, guid: 3c98bb4bee2f2ba4b92a2fbca7b8831f, type: 3}
+  plantObjects: []
 --- !u!4 &1474580549
 Transform:
   m_ObjectHideFlags: 0
@@ -24374,9 +24394,11 @@ MonoBehaviour:
   rootLevelText: {fileID: 622135871}
   generationRateText: {fileID: 549389115}
   rootUpgradeCostText: {fileID: 2051418161}
+  lockImage: {fileID: 0}
+  lockText: {fileID: 0}
   isUnlocked: 0
   unlockThreshold: 5
-  objectPrefab: {fileID: 1139572726157748, guid: 3c98bb4bee2f2ba4b92a2fbca7b8831f, type: 3}
+  plantObjects: []
 --- !u!4 &1486323989
 Transform:
   m_ObjectHideFlags: 0
@@ -25486,6 +25508,7 @@ MonoBehaviour:
   cooldownImage: {fileID: 1907958379}
   skillButton: {fileID: 920151271}
   upgradeButton: {fileID: 1759607508}
+  cooldownRemaining: 0
   currentLevel: 0
   upgradeCostText: {fileID: 1245519964}
   currentLevelText: {fileID: 94250424}
@@ -26555,6 +26578,7 @@ MonoBehaviour:
   currentLevelText: {fileID: 1928736669}
   skillInfoText: {fileID: 1369397780}
   upgradeButton: {fileID: 1401388687}
+  unlockObject: {fileID: 0}
 --- !u!4 &1652345461
 Transform:
   m_ObjectHideFlags: 0
@@ -30747,9 +30771,11 @@ MonoBehaviour:
   rootLevelText: {fileID: 426361142}
   generationRateText: {fileID: 69703261}
   rootUpgradeCostText: {fileID: 489307881}
+  lockImage: {fileID: 0}
+  lockText: {fileID: 0}
   isUnlocked: 0
   unlockThreshold: 5
-  objectPrefab: {fileID: 1139572726157748, guid: 3c98bb4bee2f2ba4b92a2fbca7b8831f, type: 3}
+  plantObjects: []
 --- !u!4 &1925851965
 Transform:
   m_ObjectHideFlags: 0
@@ -31086,6 +31112,8 @@ MonoBehaviour:
   target: {fileID: 701093655}
   toggleButton: {fileID: 3638540319130917262}
   rotationSpeed: 300
+  messagePrefab: {fileID: 0}
+  messageParent: {fileID: 0}
   isFreeCamera: 0
 --- !u!114 &1932504321
 MonoBehaviour:
@@ -31786,6 +31814,7 @@ MonoBehaviour:
   currentLevelText: {fileID: 1001946538}
   skillInfoText: {fileID: 1440457550}
   upgradeButton: {fileID: 1879165990}
+  unlockObject: {fileID: 0}
 --- !u!1 &1992437183
 GameObject:
   m_ObjectHideFlags: 0
@@ -33108,9 +33137,11 @@ MonoBehaviour:
   rootLevelText: {fileID: 1992437185}
   generationRateText: {fileID: 921566821}
   rootUpgradeCostText: {fileID: 498801415}
+  lockImage: {fileID: 0}
+  lockText: {fileID: 0}
   isUnlocked: 0
   unlockThreshold: 5
-  objectPrefab: {fileID: 1139572726157748, guid: 3c98bb4bee2f2ba4b92a2fbca7b8831f, type: 3}
+  plantObjects: []
 --- !u!4 &2089163037
 Transform:
   m_ObjectHideFlags: 0

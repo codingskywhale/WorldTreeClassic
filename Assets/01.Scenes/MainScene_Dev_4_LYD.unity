@@ -2970,7 +2970,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &90634207
 Transform:
   m_ObjectHideFlags: 0
@@ -3310,7 +3310,7 @@ MonoBehaviour:
   lockText: {fileID: 0}
   isUnlocked: 0
   unlockThreshold: 5
-  objectPrefab: {fileID: 1139572726157748, guid: 3c98bb4bee2f2ba4b92a2fbca7b8831f, type: 3}
+  plantObjects: []
 --- !u!4 &131668843
 Transform:
   m_ObjectHideFlags: 0
@@ -3499,7 +3499,7 @@ MonoBehaviour:
   lockText: {fileID: 0}
   isUnlocked: 0
   unlockThreshold: 5
-  objectPrefab: {fileID: 1139572726157748, guid: 3c98bb4bee2f2ba4b92a2fbca7b8831f, type: 3}
+  plantObjects: []
 --- !u!4 &145072086
 Transform:
   m_ObjectHideFlags: 0
@@ -3698,7 +3698,7 @@ MonoBehaviour:
   lockText: {fileID: 0}
   isUnlocked: 0
   unlockThreshold: 10
-  objectPrefab: {fileID: 0}
+  plantObjects: []
 --- !u!4 &153027943
 Transform:
   m_ObjectHideFlags: 0
@@ -4314,6 +4314,7 @@ MonoBehaviour:
   currentLevelText: {fileID: 1832202786}
   skillInfoText: {fileID: 1919679624}
   upgradeButton: {fileID: 71070987}
+  unlockObject: {fileID: 0}
 --- !u!1 &237684747
 GameObject:
   m_ObjectHideFlags: 0
@@ -7164,7 +7165,7 @@ MonoBehaviour:
   lockText: {fileID: 0}
   isUnlocked: 0
   unlockThreshold: 5
-  objectPrefab: {fileID: 1139572726157748, guid: 3c98bb4bee2f2ba4b92a2fbca7b8831f, type: 3}
+  plantObjects: []
 --- !u!4 &468112743
 Transform:
   m_ObjectHideFlags: 0
@@ -11520,10 +11521,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3872491dffc90d84faeba612b01f5488, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  outsideTreeObject: {fileID: 0}
+  outsideTreeObject: {fileID: 701093650}
   upgradeRequirementText: {fileID: 0}
   groundMeshFilter: {fileID: 701093652}
-  treePrefabs: []
+  treePrefabs:
+  - {fileID: 701093650}
 --- !u!33 &701093652
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -14172,7 +14174,7 @@ MonoBehaviour:
   lockText: {fileID: 0}
   isUnlocked: 0
   unlockThreshold: 5
-  objectPrefab: {fileID: 1139572726157748, guid: 3c98bb4bee2f2ba4b92a2fbca7b8831f, type: 3}
+  plantObjects: []
 --- !u!4 &866107452
 Transform:
   m_ObjectHideFlags: 0
@@ -16785,7 +16787,7 @@ MonoBehaviour:
   lockText: {fileID: 0}
   isUnlocked: 0
   unlockThreshold: 5
-  objectPrefab: {fileID: 701093650}
+  plantObjects: []
 --- !u!1 &993243311
 GameObject:
   m_ObjectHideFlags: 0
@@ -17957,7 +17959,7 @@ MonoBehaviour:
   lockText: {fileID: 0}
   isUnlocked: 0
   unlockThreshold: 5
-  objectPrefab: {fileID: 1139572726157748, guid: 3c98bb4bee2f2ba4b92a2fbca7b8831f, type: 3}
+  plantObjects: []
 --- !u!4 &1058648820
 Transform:
   m_ObjectHideFlags: 0
@@ -24044,7 +24046,7 @@ MonoBehaviour:
   lockText: {fileID: 0}
   isUnlocked: 0
   unlockThreshold: 5
-  objectPrefab: {fileID: 1139572726157748, guid: 3c98bb4bee2f2ba4b92a2fbca7b8831f, type: 3}
+  plantObjects: []
 --- !u!4 &1474580549
 Transform:
   m_ObjectHideFlags: 0
@@ -24098,7 +24100,7 @@ MonoBehaviour:
   lockText: {fileID: 0}
   isUnlocked: 0
   unlockThreshold: 5
-  objectPrefab: {fileID: 1139572726157748, guid: 3c98bb4bee2f2ba4b92a2fbca7b8831f, type: 3}
+  plantObjects: []
 --- !u!4 &1486323989
 Transform:
   m_ObjectHideFlags: 0
@@ -26093,6 +26095,7 @@ MonoBehaviour:
   currentLevelText: {fileID: 1928736669}
   skillInfoText: {fileID: 1369397780}
   upgradeButton: {fileID: 1401388687}
+  unlockObject: {fileID: 0}
 --- !u!4 &1652345461
 Transform:
   m_ObjectHideFlags: 0
@@ -29936,7 +29939,7 @@ MonoBehaviour:
   lockText: {fileID: 0}
   isUnlocked: 0
   unlockThreshold: 5
-  objectPrefab: {fileID: 1139572726157748, guid: 3c98bb4bee2f2ba4b92a2fbca7b8831f, type: 3}
+  plantObjects: []
 --- !u!4 &1925851965
 Transform:
   m_ObjectHideFlags: 0
@@ -30974,6 +30977,7 @@ MonoBehaviour:
   currentLevelText: {fileID: 1001946538}
   skillInfoText: {fileID: 1440457550}
   upgradeButton: {fileID: 1879165990}
+  unlockObject: {fileID: 0}
 --- !u!1 &1992437183
 GameObject:
   m_ObjectHideFlags: 0
@@ -32178,7 +32182,7 @@ MonoBehaviour:
   lockText: {fileID: 0}
   isUnlocked: 0
   unlockThreshold: 5
-  objectPrefab: {fileID: 1139572726157748, guid: 3c98bb4bee2f2ba4b92a2fbca7b8831f, type: 3}
+  plantObjects: []
 --- !u!4 &2089163037
 Transform:
   m_ObjectHideFlags: 0
