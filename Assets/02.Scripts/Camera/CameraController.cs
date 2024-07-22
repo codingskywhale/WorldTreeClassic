@@ -203,7 +203,7 @@ public class CameraController : MonoBehaviour
         Color originalColor = messageText.color;
         Vector3 originalPosition = message.transform.position;
 
-        float duration = 2.5f;
+        float duration = 2f;
         float elapsed = 0.0f;
 
         while (elapsed < duration)
