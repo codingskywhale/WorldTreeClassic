@@ -6,11 +6,17 @@ public class UIUpdater
 {
     private ResourceManager resourceManager;
     private List<UpgradeButton> upgradeButtons;
+    private List<Skill> skills;
 
     public UIUpdater(ResourceManager resourceManager, List<UpgradeButton> upgradeButtons)
     {
         this.resourceManager = resourceManager;
         this.upgradeButtons = upgradeButtons;
+    }
+
+    public void SetSkills(List<Skill> skills)
+    {
+        this.skills = skills;
     }
 
     public void UpdateAllUI()
@@ -57,6 +63,7 @@ public class UIUpdater
         }
 
         UpdateAnimalButtons();
+        UpdateSkillUI();
     }
 
     private void UpdateAnimalButtons()
@@ -88,6 +95,17 @@ public class UIUpdater
 
                 // 아이콘 클릭 가능 여부 업데이트
                 button.characterIconButton.interactable = conditionCleared;
+            }
+        }
+    }
+
+    private void UpdateSkillUI()
+    {
+        if (skills != null)
+        {
+            foreach (var skill in skills)
+            {
+                skill.UpdateUI(); // 각 스킬의 UI 업데이트
             }
         }
     }

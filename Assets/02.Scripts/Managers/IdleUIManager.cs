@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using System;
+using UnityEngine.UIElements;
 
 public class IdleUIManager : MonoBehaviour
 {
@@ -20,6 +21,10 @@ public class IdleUIManager : MonoBehaviour
     private bool isIdle;
     private string currentSongTitle;
     public UIOpenCloseManager uiOpenCloseManager;
+
+    // 모든 UI 패널을 리스트로 관리
+    public List<GameObject> NoneIdleuiPanels;
+
 
     private void Start()
     {
@@ -41,7 +46,8 @@ public class IdleUIManager : MonoBehaviour
         {
             timer -= Time.deltaTime;
 
-            if (timer <= 0 && !uiOpenCloseManager.IsPanelOpen)
+            // 추가: 모든 UI 패널이 닫혀 있는지 확인
+            if (timer <= 0 && !uiOpenCloseManager.IsPanelOpen && AllUIPanelsClosed())
             {
                 EnterIdleMode();
             }
@@ -118,5 +124,17 @@ public class IdleUIManager : MonoBehaviour
                 yield return new WaitForSeconds(scrollSpeed);
             }
         }
+    }
+
+    private bool AllUIPanelsClosed()
+    {
+        foreach (var panel in NoneIdleuiPanels)
+        {
+            if (panel.activeSelf)
+            {
+                return false;
+            }
+        }
+        return true;
     }
 }

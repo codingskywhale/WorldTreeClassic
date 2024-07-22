@@ -65,7 +65,7 @@ public class UIOpenCloseManager : MonoBehaviour
         Vector2 targetPosition1 = panelOriginalPosition1 - new Vector2(0, bottomUIPanel1.rect.height);
         Vector2 targetPosition2 = panelOriginalPosition2 - new Vector2(0, bottomUIPanel2.rect.height);
         Vector2 targetPosition3 = panelOriginalPosition3 - new Vector2(0, bottomUIPanel3.rect.height);
-        Vector3 cameraTargetPosition = cameraOriginalPosition + new Vector3(0, cameraMoveAmount, 0); // 카메라를 위로 이동
+        Vector3 cameraTargetPosition = new Vector3(cameraOriginalPosition.x, cameraOriginalPosition.y + cameraMoveAmount, cameraOriginalPosition.z); // 카메라를 위로 이동
 
         if (instant)
         {
@@ -98,7 +98,7 @@ public class UIOpenCloseManager : MonoBehaviour
         Vector2 targetPosition1 = panelOriginalPosition1;
         Vector2 targetPosition2 = panelOriginalPosition2;
         Vector2 targetPosition3 = panelOriginalPosition3;
-        Vector3 cameraTargetPosition = cameraOriginalPosition - new Vector3(0, cameraMoveAmount, 0); // 카메라를 아래로 이동
+        Vector3 cameraTargetPosition = new Vector3(cameraOriginalPosition.x, cameraOriginalPosition.y - cameraMoveAmount, cameraOriginalPosition.z); // 카메라를 아래로 이동
 
         yield return StartCoroutine(MoveUIPanelsAndButtons(targetPosition1, targetPosition2, targetPosition3, cameraTargetPosition, false));
 
@@ -127,7 +127,10 @@ public class UIOpenCloseManager : MonoBehaviour
             bottomUIPanel1.anchoredPosition = Vector2.Lerp(startingPosition1, targetPosition1, elapsedTime / animationDuration);
             bottomUIPanel2.anchoredPosition = Vector2.Lerp(startingPosition2, targetPosition2, elapsedTime / animationDuration);
             bottomUIPanel3.anchoredPosition = Vector2.Lerp(startingPosition3, targetPosition3, elapsedTime / animationDuration);
-            mainCamera.transform.position = Vector3.Lerp(cameraStartingPosition, cameraTargetPosition, elapsedTime / animationDuration);
+            mainCamera.transform.position = new Vector3(
+                cameraStartingPosition.x,
+                Mathf.Lerp(cameraStartingPosition.y, cameraTargetPosition.y, elapsedTime / animationDuration),
+                cameraOriginalPosition.z); // Z 값을 원래 값으로 고정
 
             for (int i = 0; i < otherButtons.Length; i++)
             {
@@ -141,7 +144,7 @@ public class UIOpenCloseManager : MonoBehaviour
         bottomUIPanel1.anchoredPosition = targetPosition1;
         bottomUIPanel2.anchoredPosition = targetPosition2;
         bottomUIPanel3.anchoredPosition = targetPosition3;
-        mainCamera.transform.position = cameraTargetPosition;
+        mainCamera.transform.position = new Vector3(cameraTargetPosition.x, cameraTargetPosition.y, cameraOriginalPosition.z); // Z 값을 원래 값으로 고정
 
         for (int i = 0; i < otherButtons.Length; i++)
         {

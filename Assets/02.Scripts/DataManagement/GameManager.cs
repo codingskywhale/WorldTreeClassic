@@ -8,6 +8,8 @@ public class GameManager : MonoBehaviour
     public ResourceManager resourceManager;
     public List<UpgradeButton> upgradeButtons;
     public List<AnimalDataSO> animalDataList;
+    public List<SkillCoolDownReduction> skillCoolDownReductions; 
+    public List<Skill> skills; 
     public TouchInput touchInput;
     public OfflineRewardUIManager offlineRewardUIManager; // 오프라인 보상 UI 매니저
 
@@ -18,11 +20,15 @@ public class GameManager : MonoBehaviour
     private OfflineRewardSkill offlineRewardSkill;
     private OfflineRewardAmountSkill offlineRewardAmountSkill;
     private int maxOfflineDurationMinutes = 120; // 최대 오프라인 기간 설정 (기본값 120분)
+    private int saveBufferCounter = 0; // 저장 버퍼 카운터
+    private const int SaveBufferThreshold = 10; // 생명력 업그레이드 저장 버퍼 임계값
+
     private void Awake()
     {
         saveDataManager = new SaveDataManager();
-        saveDataManager.animalDataList = animalDataList;
+        saveDataManager.animalDataList = animalDataList;        
         uiUpdater = new UIUpdater(resourceManager, upgradeButtons);
+        uiUpdater.SetSkills(skills);
         offlineProgressCalculator = new OfflineProgressCalculator();
         // OfflineRewardSkill 인스턴스 생성 및 초기화
         offlineRewardSkill = FindObjectOfType<OfflineRewardSkill>();
@@ -36,12 +42,20 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
-        saveDataManager.LoadGameData(resourceManager);
+        saveDataManager.LoadGameData(resourceManager, skills);
         LifeManager.Instance.bubbleGenerator.InitialBubbleSet();
         saveDataManager.animalDataList = animalDataList;
         CalculateOfflineProgress();
         uiUpdater.UpdateAllUI();
-        Debug.Log($"초기 생명력: {LifeManager.Instance.lifeAmount}");          
+        Debug.Log($"초기 생명력: {LifeManager.Instance.lifeAmount}");
+
+        InvokeRepeating(nameof(AutoSaveGame), 180f, 180f);
+    }
+
+    private void AutoSaveGame()
+    {
+        saveDataManager.SaveGameData(resourceManager, skills);
+        Debug.Log("Game data saved automatically.");
     }
 
     private void CalculateOfflineProgress()
@@ -66,6 +80,6 @@ public class GameManager : MonoBehaviour
     }
     private void OnApplicationQuit()
     {
-        saveDataManager.SaveGameData(resourceManager);
+        saveDataManager.SaveGameData(resourceManager, skills);
     }
 }

@@ -8116,6 +8116,9 @@ MonoBehaviour:
   idleTime: 10
   scrollSpeed: 0.5
   uiOpenCloseManager: {fileID: 494238007}
+  NoneIdleuiPanels:
+  - {fileID: 1177561300}
+  - {fileID: 896870574}
 --- !u!114 &494238010
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11105,6 +11108,7 @@ MonoBehaviour:
   cooldownImage: {fileID: 673845767}
   skillButton: {fileID: 691690551}
   upgradeButton: {fileID: 1308554116}
+  cooldownRemaining: 0
   currentLevel: 0
   upgradeCostText: {fileID: 1027674066}
   currentLevelText: {fileID: 977944162}
@@ -21562,6 +21566,7 @@ MonoBehaviour:
   cooldownImage: {fileID: 1167087303}
   skillButton: {fileID: 1037225546}
   upgradeButton: {fileID: 873526765}
+  cooldownRemaining: 0
   currentLevel: 0
   upgradeCostText: {fileID: 559274339}
   currentLevelText: {fileID: 412957881}
@@ -24777,6 +24782,7 @@ MonoBehaviour:
   cooldownImage: {fileID: 1907958379}
   skillButton: {fileID: 920151271}
   upgradeButton: {fileID: 1759607508}
+  cooldownRemaining: 0
   currentLevel: 0
   upgradeCostText: {fileID: 1245519964}
   currentLevelText: {fileID: 94250424}

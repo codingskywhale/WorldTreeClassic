@@ -16,4 +16,5 @@ public class GameData
     public List<int> activeHeartBubbles = new List<int>(); // 활성화된 허트버블 인덱스 추가
     public SerializableDictionary<string, SerializableDictionary<EachCountType, int>> allTypeCountDic = new SerializableDictionary<string, SerializableDictionary<EachCountType, int>>();
     public int createObjectButtonUnlockCount = 1;
+    public List<SkillDataSave> skillDataList = new List<SkillDataSave>();
 }
