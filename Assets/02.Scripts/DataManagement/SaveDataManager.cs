@@ -83,11 +83,12 @@ public class SaveDataManager
 
         foreach (var skill in skillList)
         {
+            BigInteger upgradeCost = skill.currentLevel > 0 ? skill.CalculateUpgradeCost(skill.currentLevel) : skill.unlockCost;
             SkillDataSave data = new SkillDataSave
             {
                 skillName = skill.gameObject.name,
                 currentLevel = skill.currentLevel,
-                unlockCost = skill.unlockCost.ToString(),
+                upgradeCost = upgradeCost.ToString(),
                 cooldownRemaining = skill.cooldownRemaining 
             };
             skillDataList.Add(data);
@@ -136,7 +137,7 @@ public class SaveDataManager
             UIManager.Instance.createObjectButtonUnlockCount = 1;
             UIManager.Instance.UpdateButtonUI();
             return;
-        }
+        }                
 
         List<RootBase> roots = resourceManager.roots;
 
@@ -243,7 +244,6 @@ public class SaveDataManager
                     if (skill.gameObject.name == skillData.skillName)
                     {
                         skill.currentLevel = skillData.currentLevel;
-                        skill.unlockCost = string.IsNullOrEmpty(skillData.unlockCost) ? BigInteger.Zero : BigInteger.Parse(skillData.unlockCost);
                         skill.cooldownRemaining = skillData.cooldownRemaining; // 쿨다운 남은 시간 불러오기
                         skill.UpdateUI();
                     }

@@ -12,7 +12,7 @@ public class CameraTargetHandler : MonoBehaviour
     public float minVerticalAngle = 0f; // 최소 각도 제한
     public float maxVerticalAngle = 30f; // 최대 각도 제한
     public float minHeight = 1f; // 카메라의 최소 높이 제한
-    public float maxHeight = 10f; // 카메라의 최대 높이 제한
+    public float maxHeight = 15f; // 카메라의 최대 높이 제한
 
     private bool isFreeCamera = false; // 자유시점 모드 여부
 

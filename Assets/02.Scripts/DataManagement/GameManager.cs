@@ -20,6 +20,9 @@ public class GameManager : MonoBehaviour
     private OfflineRewardSkill offlineRewardSkill;
     private OfflineRewardAmountSkill offlineRewardAmountSkill;
     private int maxOfflineDurationMinutes = 120; // 최대 오프라인 기간 설정 (기본값 120분)
+    private int saveBufferCounter = 0; // 저장 버퍼 카운터
+    private const int SaveBufferThreshold = 10; // 생명력 업그레이드 저장 버퍼 임계값
+
     private void Awake()
     {
         saveDataManager = new SaveDataManager();
@@ -44,7 +47,15 @@ public class GameManager : MonoBehaviour
         saveDataManager.animalDataList = animalDataList;
         CalculateOfflineProgress();
         uiUpdater.UpdateAllUI();
-        Debug.Log($"초기 생명력: {LifeManager.Instance.lifeAmount}");          
+        Debug.Log($"초기 생명력: {LifeManager.Instance.lifeAmount}");
+
+        InvokeRepeating(nameof(AutoSaveGame), 180f, 180f);
+    }
+
+    private void AutoSaveGame()
+    {
+        saveDataManager.SaveGameData(resourceManager, skills);
+        Debug.Log("Game data saved automatically.");
     }
 
     private void CalculateOfflineProgress()

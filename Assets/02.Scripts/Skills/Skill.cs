@@ -226,5 +226,5 @@ public abstract class Skill : MonoBehaviour
     public void ReduceCooldown(float reductionPercentage)
     {
         cooldownTime = cooldownTime * (1 - (reductionPercentage / 100));
-    }
+    }       
 }
