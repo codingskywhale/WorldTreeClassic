@@ -14,7 +14,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   animalIndex: 6
   animalIcon: {fileID: 10901, guid: 0000000000000000f000000000000000, type: 0}
-  animalName: "\uB3D9\uBB3C6"
+  animalName: "\uB9D0"
   animalUnlockConditions:
   - "\uC774\uC804 \uBC84\uD2BC \uD574\uAE08\uD558\uAE30"
-  animalPrefab: {fileID: 6040825781364759821, guid: ce47e0f882d9fdd43bf5e3f50103fe3c, type: 3}
+  animalPrefab: {fileID: 6481239469565288174, guid: ea1de200ad74a4cf1b54c8d73aafeab1, type: 3}
+  storyText: "\uD3C9\uC6D0\uC744 \uC9C8\uC8FC\uD558\uB294 \uB9D0. \uACBD\uC8FC\uB9C8\uB85C
+    \uD0A4\uC6CC\uC84C\uC73C\uB098, \uC6B4\uB3D9\uC744 \uC2EB\uC5B4\uD574\uC11C \uAC00\uCD9C\uD588\uB2E4.
+    \uC138\uACC4\uC218 \uC778\uADFC\uC758 \uB4DC\uB113\uC740 \uCD08\uC6D0\uC744 \uBCF4\uACE0
+    \uC810\uCC28 \uC9C8\uC8FC\uBCF8\uB2A5\uC774 \uAE68\uC5B4\uB098\uACE0 \uC788\uB2E4."

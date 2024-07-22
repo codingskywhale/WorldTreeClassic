@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
@@ -33,11 +33,6 @@ namespace Polyperfect.Common
             Manager.PeaceTime = EditorGUILayout.Toggle("Peace Time", Manager.PeaceTime);
 
             GUILayout.Space(5);
-
-			if (GUILayout.Button("Kill 'Em All"))
-            {
-                Manager.Nuke();
-            }
         }
     }
 }
