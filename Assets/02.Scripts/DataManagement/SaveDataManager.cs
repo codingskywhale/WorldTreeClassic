@@ -136,8 +136,11 @@ public class SaveDataManager
             InitializeDefaultGameData(resourceManager);
             UIManager.Instance.createObjectButtonUnlockCount = 1;
             UIManager.Instance.UpdateButtonUI();
+            LifeManager.Instance.lifeAmount = new BigInteger(500000000000000000);
             return;
         }                
+
+        //gameData = new GameData();
 
         List<RootBase> roots = resourceManager.roots;
 

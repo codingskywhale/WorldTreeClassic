@@ -9,23 +9,27 @@ public class Bag_AnimalSlot : MonoBehaviour
 
     public Image animalIcon;
     public TextMeshProUGUI explainText;
+    public Button slotButton;
 
     public bool isUnlocked = false;
 
     private void Awake()
     {
+        slotButton = GetComponent<Button>();
         if (!isUnlocked)
         {
             animalIcon.sprite = slotAnimalDataSO.animalIcon;
             animalIcon.color = Color.black;
 
+            slotButton.interactable = false;
             explainText.text = string.Empty;
         }
     }        
 
     public void SetSlotData()
     {
-        animalIcon.color = Color.white;
+        animalIcon.color = Color.white; 
+        slotButton.interactable = true;
 
         explainText.text = $"{DataManager.Instance.animalGenerateData.nowAnimalCount} / {DataManager.Instance.animalGenerateData.maxAnimalCount}";
     }

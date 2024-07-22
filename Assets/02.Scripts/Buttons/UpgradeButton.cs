@@ -84,38 +84,38 @@ public class UpgradeButton : MonoBehaviour
     {
         if (root == null) return;
 
-        if (!root.isUnlocked)
-        {
-            HandleRootUnlock();
-        }
-        else
-        {
+        //if (!root.isUnlocked)
+        //{
+        //    //HandleRootUnlock();
+        //}
+        //else
+        //{
             HandleRootUpgrade();
-        }
+        //}
     }
 
-    private void HandleRootUnlock()
-    {
-        if (root == null || root.isUnlocked) return;
+    //private void HandleRootUnlock()
+    //{
+    //    if (root == null || root.isUnlocked) return;
 
-        BigInteger unlockCost = root.unlockCost; // CalculateUpgradeCost가 아닌 unlockCost 사용
-        Debug.Log($"HandleRootUnlock - Unlock Cost: {unlockCost}, Current Water: {LifeManager.Instance.lifeAmount}");
-        if (LifeManager.Instance.HasSufficientWater(unlockCost))
-        {
-            LifeManager.Instance.DecreaseWater(unlockCost);
-            root.Unlock();
-            resourceManager.UpdateLifeGenerationRatePerSecond();  // 초당 생명력 생성률 업데이트
-            root.UpdateUI();
-            resourceManager.UpdateUI();
-            resourceManager.GetTotalLifeGenerationPerSecond();
-            DataManager.Instance.animalGenerateData.maxAnimalCount += 5;
-            UIManager.Instance.SetAnimalCountStatus();
-        }
-        else
-        {
-            Debug.Log("물이 부족하여 해금할 수 없습니다.");
-        }
-    }
+    //    BigInteger unlockCost = root.unlockCost; // CalculateUpgradeCost가 아닌 unlockCost 사용
+    //    Debug.Log($"HandleRootUnlock - Unlock Cost: {unlockCost}, Current Water: {LifeManager.Instance.lifeAmount}");
+    //    if (LifeManager.Instance.HasSufficientWater(unlockCost))
+    //    {
+    //        LifeManager.Instance.DecreaseWater(unlockCost);
+    //        root.Unlock();
+    //        resourceManager.UpdateLifeGenerationRatePerSecond();  // 초당 생명력 생성률 업데이트
+    //        root.UpdateUI();
+    //        resourceManager.UpdateUI();
+    //        resourceManager.GetTotalLifeGenerationPerSecond();
+    //        DataManager.Instance.animalGenerateData.maxAnimalCount += 5;
+    //        UIManager.Instance.SetAnimalCountStatus();
+    //    }
+    //    else
+    //    {
+    //        Debug.Log("물이 부족하여 해금할 수 없습니다.");
+    //    }
+    //}
 
     private void HandleRootUpgrade()
     {

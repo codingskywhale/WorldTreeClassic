@@ -1,11 +1,13 @@
 fileFormatVersion: 2
-<<<<<<<< HEAD:Assets/99.Externals/Buttons/Scenes/SampleScene.unity.meta
-guid: 2cda990e2423bbf4892e6590ba056729
+<<<<<<<< HEAD:Assets/New Terrain.asset.meta
+guid: 2332fbb36aba3ef4ba7fb5c3f4527938
+NativeFormatImporter:
 ========
-guid: 45ef6f1ab7920704fa0c4db058f5675d
->>>>>>>> origin/jeong:Assets/01.Scenes/MapScene.unity.meta
+guid: 2cda990e2423bbf4892e6590ba056729
 DefaultImporter:
+>>>>>>>> origin/Dev_3_LYD:Assets/99.Externals/Buttons/Scenes/SampleScene.unity.meta
   externalObjects: {}
+  mainObjectFileID: 15600000
   userData: 
   assetBundleName: 
   assetBundleVariant: 

@@ -8,4 +8,5 @@ public class AnimalDataSO : ScriptableObject
     public string animalName;
     public string[] animalUnlockConditions;
     public GameObject animalPrefab;
+    public string storyText;
 }

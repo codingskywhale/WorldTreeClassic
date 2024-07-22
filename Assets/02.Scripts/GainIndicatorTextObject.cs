@@ -8,18 +8,36 @@ public class GainIndicatorTextObject : MonoBehaviour
     private readonly float visibleTime = 0.75f;
     public Transform originTr;
     TextMeshPro rewardText;
+    Camera cam;
 
+    private void Awake()
+    {
+        cam = Camera.main;
+    }
+
+    private void Update()
+    {
+        LookCamera();
+    }
     private void OnEnable()
     {
         rewardText = GetComponent<TextMeshPro>();
         rewardText.color = new Color (0,0,0,255);
-        this.transform.position = originTr.position;
         StartCoroutine(gainEffect());
+    }
+
+    private void LookCamera()
+    {
+        transform.LookAt(cam.transform);
+        transform.rotation = Quaternion.Euler(-transform.rotation.eulerAngles.x,
+                                              transform.rotation.eulerAngles.y + 180, transform.rotation.eulerAngles.z);
     }
 
     // 1초 정도 보임.
     IEnumerator gainEffect()
     {
+        // y값의 이동이 없는 오리지널 포지션
+        Vector3 originPos = transform.position;
         Color32 origin = rewardText.color;
         Color32 c = new Color32(0, 0, 0, 255 / 75);
         float elapsedTime = 0f;
@@ -40,5 +58,8 @@ public class GainIndicatorTextObject : MonoBehaviour
                 break;
             }
         }
+        // 최종 x,y,z 가 변경된 상태이지만 y값의 변화만 초기화 시켜주면 되는 부분이다.
+        Vector3 movedVector = new Vector3(transform.position.x, originPos.y, transform.position.z);
+        transform.position = movedVector;
     }
 }

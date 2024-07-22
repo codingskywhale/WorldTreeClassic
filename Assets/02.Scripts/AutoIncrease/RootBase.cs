@@ -29,8 +29,9 @@ public class RootBase : MonoBehaviour, IRoot
 
     private float timer;
     public int unlockThreshold = 5; // 잠금 해제에 필요한 터치 레벨
-    public GameObject objectPrefab;
+    //public GameObject objectPrefab;
 
+    public GameObject[] plantObjects; // 미리 배치된 식물 오브젝트 배열 추가
     public delegate void LifeGenerated(BigInteger amount);
     protected event LifeGenerated OnLifeGenerated;
     public event System.Action OnGenerationRateChanged;
@@ -94,18 +95,39 @@ public class RootBase : MonoBehaviour, IRoot
     {
         if (!isUnlocked) return; // 잠금 해제된 경우에만 업그레이드 가능
         rootLevel++;
-        // 레벨이 1이라면 CreateAndZoomObject 메서드 호출
+        //레벨이 1이라면 CreateAndZoomObject 메서드 호출
         if (rootLevel == 1)
         {
-            CreateAndZoomObject();
+            //CreateAndZoomObject();
+            ActivateNextPlantObject();
         }
         if (rootLevel % 25 == 0)
         {
+            //CreateAndZoomObject();
+            ActivateNextPlantObject();
             baseLifeGeneration *= 2; // 25레벨마다 기본 생명력 생성량 두 배 증가
         }
         upgradeLifeCost = CalculateUpgradeCost();
         OnGenerationRateChanged?.Invoke();
         UpdateUI();
+    }
+    private void ActivateNextPlantObject()
+    {
+        if (plantObjects == null || plantObjects.Length == 0) return;
+
+        // 첫 번째 레벨일 때 첫 번째 오브젝트 활성화
+        if (rootLevel == 1)
+        {
+            plantObjects[0].SetActive(true);
+        }
+        else if (rootLevel > 1 && rootLevel % 25 == 0)
+        {
+            int plantIndex = rootLevel / 25; // 현재 레벨에 해당하는 인덱스 계산
+            if (plantIndex >= 0 && plantIndex < plantObjects.Length)
+            {
+                plantObjects[plantIndex].SetActive(true); // 해당 인덱스의 식물 오브젝트 활성화
+            }
+        }
     }
 
     public virtual void UpdateUI()
@@ -206,6 +228,7 @@ public class RootBase : MonoBehaviour, IRoot
         //rootLevel = 1; // 잠금 해제 시 레벨 1로 설정
         upgradeLifeCost = CalculateUpgradeCost(); // 업그레이드 비용 업데이트
         OnGenerationRateChanged?.Invoke(); // 잠금 해제 시 이벤트 트리거
+        DataManager.Instance.animalGenerateData.AddMaxAnimalCount();
         UpdateUI();
         Debug.Log("Unlocked successfully.");
     }
@@ -240,33 +263,33 @@ public class RootBase : MonoBehaviour, IRoot
         UpdateUI(); // 부스트가 끝난 후 UI 업데이트
     }
 
-    protected virtual void CreateAndZoomObject()
-    {
-        if (objectPrefab != null)
-        {
-            float radius = 1.5f; // 원하는 원의 반지름
-            int numberOfObjects = 8; // 생성할 오브젝트 수
-            UnityEngine.Vector3 centerPosition = new UnityEngine.Vector3(0, 0, 10); // 중심 좌표
+    //protected virtual void CreateAndZoomObject()
+    //{
+    //    if (objectPrefab != null)
+    //    {
+    //        float radius = 1.5f; // 원하는 원의 반지름
+    //        int numberOfObjects = 20; // 생성할 오브젝트 수
+    //        UnityEngine.Vector3 centerPosition = new UnityEngine.Vector3(0, 0, 10); // 중심 좌표
 
-            for (int i = 0; i < numberOfObjects; i++)
-            {
-                float angle = i * Mathf.PI * 2 / numberOfObjects;
-                float x = Mathf.Cos(angle) * radius;
-                float z = Mathf.Sin(angle) * radius;
-                UnityEngine.Vector3 spawnPosition = centerPosition + new UnityEngine.Vector3(x, 0, z);
+    //        for (int i = 0; i < numberOfObjects; i++)
+    //        {
+    //            float angle = i * Mathf.PI * 2 / numberOfObjects;
+    //            float x = Mathf.Cos(angle) * radius;
+    //            float z = Mathf.Sin(angle) * radius;
+    //            UnityEngine.Vector3 spawnPosition = centerPosition + new UnityEngine.Vector3(x, 0, z);
 
-                GameObject newObject = Instantiate(objectPrefab, spawnPosition, UnityEngine.Quaternion.identity);
-                Debug.Log("Object created at position: " + spawnPosition);
+    //            GameObject newObject = Instantiate(objectPrefab, spawnPosition, UnityEngine.Quaternion.identity);
+    //            Debug.Log("Object created at position: " + spawnPosition);
 
-                if (cameraTransition != null)
-                {
-                    // StartCoroutine(cameraTransition.ZoomCamera(newObject.transform)); // 줌 효과 시작
-                }
-            }
-        }
-        else
-        {
-            Debug.Log("Object prefab is not assigned.");
-        }
-    }
+    //            if (cameraTransition != null)
+    //            {
+    //                // StartCoroutine(cameraTransition.ZoomCamera(newObject.transform)); // 줌 효과 시작
+    //            }
+    //        }
+    //    }
+    //    else
+    //    {
+    //        Debug.Log("Object prefab is not assigned.");
+    //    }
+    //}
 }

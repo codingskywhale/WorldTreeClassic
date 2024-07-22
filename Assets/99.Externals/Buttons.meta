@@ -1,13 +1,14 @@
 fileFormatVersion: 2
-<<<<<<<< HEAD:Assets/99.Externals/Buttons.meta
+<<<<<<<< HEAD:Assets/TerrainData_d54b818a-cf4a-45d3-b643-3bfe5a6dbe5d.asset.meta
+guid: 43f60029d4d43f34cba484f8edfb6166
+NativeFormatImporter:
+========
 guid: a6bd2d7fcbd556347b84cca2f2f08760
 folderAsset: yes
 DefaultImporter:
-========
-guid: dcc1a1eafe379e5479f66f880ddbeae7
-PrefabImporter:
->>>>>>>> origin/jeong:Assets/Ground.prefab.meta
+>>>>>>>> origin/Dev_3_LYD:Assets/99.Externals/Buttons.meta
   externalObjects: {}
+  mainObjectFileID: 15600000
   userData: 
   assetBundleName: 
   assetBundleVariant: 
