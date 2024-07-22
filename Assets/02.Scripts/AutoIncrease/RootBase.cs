@@ -115,10 +115,18 @@ public class RootBase : MonoBehaviour, IRoot
     {
         if (plantObjects == null || plantObjects.Length == 0) return;
 
-        int plantIndex = rootLevel == 1 ? 0 : (rootLevel - 1) / 25; // 현재 레벨에 해당하는 인덱스 계산
-        if (plantIndex >= 0 && plantIndex < plantObjects.Length)
+        // 첫 번째 레벨일 때 첫 번째 오브젝트 활성화
+        if (rootLevel == 1)
         {
-            plantObjects[plantIndex].SetActive(true); // 해당 인덱스의 식물 오브젝트 활성화
+            plantObjects[0].SetActive(true);
+        }
+        else if (rootLevel > 1 && rootLevel % 25 == 0)
+        {
+            int plantIndex = rootLevel / 25; // 현재 레벨에 해당하는 인덱스 계산
+            if (plantIndex >= 0 && plantIndex < plantObjects.Length)
+            {
+                plantObjects[plantIndex].SetActive(true); // 해당 인덱스의 식물 오브젝트 활성화
+            }
         }
     }
 
