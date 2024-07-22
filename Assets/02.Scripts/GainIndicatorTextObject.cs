@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class GainIndicatorTextObject : MonoBehaviour
@@ -13,17 +14,18 @@ public class GainIndicatorTextObject : MonoBehaviour
     private void Awake()
     {
         cam = Camera.main;
+        rewardText = GetComponent<TextMeshPro>();
+    }
+    private void OnEnable()
+    {
+        rewardText.text = BigIntegerUtils.FormatBigInteger(DataManager.Instance.touchData.touchIncreaseAmount);
+        rewardText.color = new Color (0,0,0,255);
+        StartCoroutine(gainEffect());
     }
 
     private void Update()
     {
         LookCamera();
-    }
-    private void OnEnable()
-    {
-        rewardText = GetComponent<TextMeshPro>();
-        rewardText.color = new Color (0,0,0,255);
-        StartCoroutine(gainEffect());
     }
 
     private void LookCamera()

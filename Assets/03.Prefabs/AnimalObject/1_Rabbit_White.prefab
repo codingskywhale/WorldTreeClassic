@@ -451,8 +451,6 @@ MonoBehaviour:
   logChanges: 0
   showGizmos: 1
   drawWanderRange: 1
-  drawScentRange: 1
-  drawAwarenessRange: 1
   deathEvent:
     m_PersistentCalls:
       m_Calls: []
@@ -2250,6 +2248,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   heartIdx: 0
+  gainText: {fileID: 2524876033674328131}
 --- !u!1 &4260145397075631407
 GameObject:
   m_ObjectHideFlags: 0
@@ -2450,6 +2449,17 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1c59e72c6f108874798ed6b04102d524, type: 3}
+--- !u!114 &2524876033674328131 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 542147451877466246, guid: 1c59e72c6f108874798ed6b04102d524, type: 3}
+  m_PrefabInstance: {fileID: 2633534154318551237}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3477036574672709911}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2e8d4b44ca6eb3c42b065b253b217317, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &3477036574672709911 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1498813618654573010, guid: 1c59e72c6f108874798ed6b04102d524, type: 3}

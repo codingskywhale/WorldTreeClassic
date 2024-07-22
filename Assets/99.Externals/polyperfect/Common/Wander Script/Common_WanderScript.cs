@@ -364,7 +364,7 @@ namespace Polyperfect.Common
 
         private void Start()
         {
-            startPosition = new Vector3(0, 0, 10);
+            startPosition = new Vector3(-7.3f, -0.66f, -5f);
 
             StartCoroutine(RandomStartingDelay());
         }

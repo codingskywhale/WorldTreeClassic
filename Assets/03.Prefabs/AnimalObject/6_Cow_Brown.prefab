@@ -383,8 +383,6 @@ MonoBehaviour:
   logChanges: 0
   showGizmos: 0
   drawWanderRange: 1
-  drawScentRange: 1
-  drawAwarenessRange: 1
   deathEvent:
     m_PersistentCalls:
       m_Calls: []
@@ -407,7 +405,7 @@ NavMeshAgent:
   m_GameObject: {fileID: 7604589965335949422}
   m_Enabled: 1
   m_AgentTypeID: 0
-  m_Radius: 1.5
+  m_Radius: 1
   m_Speed: 3.5
   m_Acceleration: 8
   avoidancePriority: 50
