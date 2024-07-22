@@ -3,10 +3,10 @@ using UnityEngine;
 
 public class CameraTransition : MonoBehaviour
 {
-    public Vector3 initialPosition = new Vector3(23f, 6f, 7f); // 카메라의 초기 위치
+    public Vector3 initialPosition = new Vector3(4.7f, 6f, 0.8f); // 카메라의 초기 위치
     public Quaternion initialRotation = Quaternion.Euler(-100, -116, 0); // 카메라의 초기 회전
     public Quaternion finalRotation = Quaternion.Euler(30, -116, 0); // 오프닝 애니메이션 후 카메라의 회전
-    public Vector3 zoomInPosition = new Vector3(24f, 7f, 8f); // 줌인 위치 (UI 창이 열릴 때)
+    public Vector3 zoomInPosition = new Vector3(4.7f, 6f, 0.8f); // 줌인 위치 (UI 창이 열릴 때)
     public Quaternion zoomInRotation = Quaternion.Euler(30, -116, 0); // 줌인 상태에서의 회전
     public float duration = 2.5f; // 애니메이션 시간
     public float zoomDuration = 1.0f; // 줌 애니메이션 시간

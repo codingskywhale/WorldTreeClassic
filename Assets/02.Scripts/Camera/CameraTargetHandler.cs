@@ -6,7 +6,7 @@ public class CameraTargetHandler : MonoBehaviour
     public static CameraTargetHandler Instance { get; private set; }
     public Transform currentTarget; // 현재 타겟
     public bool isObjectTarget = false;
-    private Vector3 offset = new Vector3(23f, 6f, 7f); // 타겟에 대한 카메라 오프셋
+    private Vector3 offset = new Vector3(4.7f, 6f, 0.8f); // 타겟에 대한 카메라 오프셋
     private CameraTransition cameraTransition;
 
     public float minVerticalAngle = 0f; // 최소 각도 제한
