@@ -1,4 +1,3 @@
-using System.Collections;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -23,12 +22,27 @@ public abstract class Skill : MonoBehaviour
     public TextMeshProUGUI skillInfoText; // 현재 스킬 설명 텍스트
     public BigInteger unlockCost = 200; // 해금 비용
 
+    // 팝업 관련 변수
+    public GameObject skillPopup; // 팝업 오브젝트
+    public TextMeshProUGUI skillPopupInfoText; // 팝업에 표시될 텍스트
+
     protected virtual void Start()
     {
         // 각 스킬의 지속시간과 쿨타임은 서브 클래스에서 설정됩니다.
         UpdateUpgradeCostUI(); // 초기 업그레이드 비용 UI 설정
         UpdateUI(); // 스킬 설명과 레벨 UI 업데이트
         CheckUnlockStatus(); // 해금 상태 확인 및 UI 업데이트
+
+        // 팝업 초기 상태 비활성화
+        if (skillPopup != null)
+        {
+            skillPopup.SetActive(false);
+        }
+
+        if (upgradeButton != null)
+        {
+            upgradeButton.onClick.AddListener(OnUpgradeButtonClicked);
+        }
     }
 
     private void Update()
@@ -52,7 +66,7 @@ public abstract class Skill : MonoBehaviour
         }
         else
         {
-            UpgradeSkill();
+            ShowSkillInfoPopup();
         }
     }
 
@@ -70,6 +84,7 @@ public abstract class Skill : MonoBehaviour
         else
         {
             Debug.Log("Not enough diamonds to unlock.");
+            ShowPopup("Not enough diamonds to unlock.");
         }
     }
 
@@ -121,6 +136,7 @@ public abstract class Skill : MonoBehaviour
         if (currentLevel >= 21)
         {
             Debug.Log("Maximum level reached.");
+            ShowPopup("Maximum level reached.");
             return;
         }
         BigInteger upgradeCost = CalculateUpgradeCost(currentLevel);
@@ -135,6 +151,7 @@ public abstract class Skill : MonoBehaviour
         else
         {
             Debug.Log("Not enough diamonds to upgrade.");
+            ShowPopup("Not enough diamonds to upgrade.");
         }
     }
 
@@ -226,5 +243,49 @@ public abstract class Skill : MonoBehaviour
     public void ReduceCooldown(float reductionPercentage)
     {
         cooldownTime = cooldownTime * (1 - (reductionPercentage / 100));
-    }       
+    }
+
+    // 팝업을 띄우는 함수
+    public void ShowPopup(string message)
+    {
+        if (skillPopup != null && skillPopupInfoText != null)
+        {
+            skillPopupInfoText.text = message;
+            skillPopup.SetActive(true);
+        }
+    }
+
+    public void ShowSkillInfoPopup()
+    {
+        if (skillPopup != null && skillPopupInfoText != null)
+        {
+            string skillName = this.GetType().Name;
+            string currentAbility = GetCurrentAbilityDescription();
+            string nextAbility = GetNextAbilityDescription();
+
+            skillPopupInfoText.text = $"스킬 이름: {skillName}\n\n현재 능력: {currentAbility}\n\n레벨업 시 능력: {nextAbility}";
+            skillPopup.SetActive(true);
+        }
+    }
+
+    // 현재 능력 설명을 반환하는 함수 (각 스킬에서 오버라이드 필요)
+    protected abstract string GetCurrentAbilityDescription();
+
+    // 레벨업 시 능력 설명을 반환하는 함수 (각 스킬에서 오버라이드 필요)
+    protected abstract string GetNextAbilityDescription();
+
+    // 팝업을 닫는 함수
+    public void ClosePopup()
+    {
+        if (skillPopup != null)
+        {
+            skillPopup.SetActive(false);
+        }
+    }
+
+    private void OnUpgradeButtonClicked()
+    {
+        UpgradeSkill();
+        ClosePopup();
+    }
 }

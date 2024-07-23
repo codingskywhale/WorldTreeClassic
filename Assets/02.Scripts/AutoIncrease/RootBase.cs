@@ -139,7 +139,6 @@ public class RootBase : MonoBehaviour, IRoot
 
     public virtual void ApplyIncreaseRate(BigInteger rate)
     {
-        if (!isUnlocked) return; // 잠금 해제된 경우에만 적용 가능
         baseLifeGeneration = baseLifeGeneration * (1 + rate);
         OnGenerationRateChanged?.Invoke();
         UpdateUI();
