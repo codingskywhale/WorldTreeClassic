@@ -16,6 +16,10 @@ public class TouchData : MonoBehaviour
     public TextMeshProUGUI touchIncreaseText; // 추가된 텍스트 UI 요소
     public TextMeshProUGUI upgradelifeCostText;
 
+    private void Start()
+    {
+        UpdateUI();
+    }
     public void UpgradeTouchGeneration()
     {
         touchIncreaseLevel++;
