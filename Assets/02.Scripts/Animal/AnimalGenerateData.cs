@@ -40,9 +40,9 @@ public class AnimalGenerateData
         UIManager.Instance.status.UpdateAnimalCountText(nowAnimalCount, maxAnimalCount);
     }
     // 동물이 추가될 때 데이터에 반영
-    public bool AddAnimal()
+    public bool AddAnimal(bool isNew = false)
     {
-        nowCreateCost = (BigInteger)((float)nowCreateCost * createCostMultiple);
+        if(isNew) nowCreateCost = (BigInteger)((float)nowCreateCost * createCostMultiple);
 
         // 카운트 늘리지 않기.
         if (nowAnimalCount >= maxAnimalCount) return false;
@@ -99,5 +99,10 @@ public class AnimalGenerateData
     public void UpdateUIText()
     {
         UIManager.Instance.status.UpdateAnimalCountText(nowAnimalCount, maxAnimalCount);
+    }
+
+    public bool CanAnimalReplace()
+    {
+        return nowAnimalCount < maxAnimalCount;
     }
 }

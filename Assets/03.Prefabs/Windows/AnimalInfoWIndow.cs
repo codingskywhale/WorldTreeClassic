@@ -1,4 +1,4 @@
-using System;
+using System.Numerics;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -13,14 +13,41 @@ public class AnimalInfoWindow : MonoBehaviour
     public int totalArrangedCount;
     public int totalStoredCount;
 
+    public int animalGenerateCount = 1;
+
     private AnimalDataSO nowAnimaldataSO;
     public Image animalImage;
+
+    [Header("Bag UI")]
     public TextMeshProUGUI nameText;
     public TextMeshProUGUI conditionTexts;
     public TextMeshProUGUI totalGeneratedCountText;
     public TextMeshProUGUI totalActiveCountText;
     public TextMeshProUGUI totalStoredCountText;
+    public Button storyButton;
 
+    [Header("Create Animal UI")]
+    public TextMeshProUGUI animalGenerateCountText;
+    public TextMeshProUGUI createCostText;
+
+    [Header("UI GameObject")]
+    public GameObject BagBottomUI;
+    public GameObject CreateAnimalBottomUI;
+
+    public CreateObjectButton createObjectButton;
+
+    private BigInteger totalGenerateValue;
+
+    private void OnEnable()
+    {
+        animalGenerateCount = 1;
+        animalGenerateCountText.text = animalGenerateCount.ToString();
+        createCostText.text = BigIntegerUtils.FormatBigInteger(DataManager.Instance.animalGenerateData.nowCreateCost);
+    }
+    private void Start()
+    {
+        UpdateCreateCost();
+    }
     // 이미지를 눌렀을 때 SetAnimalInfoWindowData 를 해주면 된다.
     public void SetAnimalInfoWindowData(AnimalDataSO dataSO)
     {
@@ -34,6 +61,12 @@ public class AnimalInfoWindow : MonoBehaviour
         // 총 생산 데이터는 SO에 담지 말자.
         // 해당 동물을 식별할 수 있는 데이터를 AnimalDataSO에 넣고 
         // 이를 바탕으로 판단해서 해당 오브젝트 내의 값에 접근하자 (생성 수, 보관 수, 활동중 수 등)
+    }
+
+    public void SetBasicData(string name)
+    {
+        nameText.text = name;
+        storyButton.gameObject.SetActive(false);
     }
 
     public void CheckPointerClick(BaseEventData eventData)
@@ -57,7 +90,7 @@ public class AnimalInfoWindow : MonoBehaviour
         // 해당하는 동물을 찾아야 한다.
         if (DataManager.Instance.animalGenerateData.allTypeCountDic[nowAnimaldataSO.animalName][EachCountType.Active] > 0)
         {
-            foreach(var animalDataSO in DataManager.Instance.spawnData.animalDataSOList)
+            foreach (var animalDataSO in DataManager.Instance.spawnData.animalDataSOList)
             {
                 if (animalDataSO.animalName == nowAnimaldataSO.animalName)
                 {
@@ -84,7 +117,8 @@ public class AnimalInfoWindow : MonoBehaviour
     {
         // 보관 중인 동물이 있을 경우
         // 해당 동물을 찾아야 한다.
-        if (DataManager.Instance.animalGenerateData.allTypeCountDic[nowAnimaldataSO.animalName][EachCountType.Stored] > 0)
+        if (DataManager.Instance.animalGenerateData.allTypeCountDic[nowAnimaldataSO.animalName][EachCountType.Stored] > 0
+            && DataManager.Instance.animalGenerateData.CanAnimalReplace())
         {
             DataManager.Instance.animalGenerateData.allTypeCountDic[nowAnimaldataSO.animalName][EachCountType.Stored]--;
             DataManager.Instance.animalGenerateData.allTypeCountDic[nowAnimaldataSO.animalName][EachCountType.Active]++;
@@ -111,5 +145,83 @@ public class AnimalInfoWindow : MonoBehaviour
     {
         totalActiveCountText.text = DataManager.Instance.animalGenerateData.allTypeCountDic[nowAnimaldataSO.animalName][EachCountType.Active].ToString();
         totalStoredCountText.text = DataManager.Instance.animalGenerateData.allTypeCountDic[nowAnimaldataSO.animalName][EachCountType.Stored].ToString();
+    }
+
+    public void ChangeBottomUI(bool isBag)
+    {
+        BagBottomUI.SetActive(isBag);
+        CreateAnimalBottomUI.SetActive(!isBag);
+    }
+
+    public void SetAnimalGenerateCountText(int count = 1)
+    {
+        // 선택된 동물을 몇 마리 생성할 건지 설정해야 함. - 기본 값 1로 설정.
+        animalGenerateCountText.text = count.ToString();
+    }
+
+    public void AnimalCountPlus()
+    {
+        if (LifeManager.Instance.lifeAmount > totalGenerateValue * 4)
+        {
+            animalGenerateCount++;
+            SetAnimalGenerateCountText(animalGenerateCount);
+            UpdateCreateCost();
+        }
+    }
+
+    public void AnimalCountMinus()
+    {
+        if (animalGenerateCount > 1)
+        {
+            animalGenerateCount--;
+            SetAnimalGenerateCountText(animalGenerateCount);
+            UpdateCreateCost();
+        }
+    }
+
+    public void UpdateCreateCost()
+    {
+        BigInteger previousCost = DataManager.Instance.animalGenerateData.nowCreateCost;
+        totalGenerateValue = previousCost;
+        for (int i = 1; i < animalGenerateCount; i++)
+        {
+            previousCost *= 4;
+            totalGenerateValue += previousCost;
+        }
+        createCostText.text = BigIntegerUtils.FormatBigInteger(totalGenerateValue);
+    }
+
+    public void CreateAnimal()
+    {
+        WindowsManager.Instance.createAnimalWindow.previousCost = DataManager.Instance.animalGenerateData.nowCreateCost;
+
+        for(int i = 0; i < animalGenerateCount; i++) createObjectButton.CreateAnimalToScene();
+
+        WindowsManager.Instance.createAnimalWindow.SetData(createObjectButton.animalData.animalName, animalGenerateCount);
+    }
+
+    public void TouchMinButton()
+    {
+        animalGenerateCount = 1;
+        SetAnimalGenerateCountText(animalGenerateCount);
+        UpdateCreateCost();
+    }
+
+    public void TouchMaxButton()
+    {
+        BigInteger previousCost = DataManager.Instance.animalGenerateData.nowCreateCost;
+        BigInteger totalCost = previousCost;
+        animalGenerateCount = 1;
+
+        // 총 비용이 소지 생명보다 적을 때만
+        while (totalCost + previousCost < LifeManager.Instance.lifeAmount)
+        {
+            previousCost = previousCost * 4;
+            totalCost += previousCost;
+            animalGenerateCount++;
+        }
+
+        animalGenerateCountText.text = animalGenerateCount.ToString();
+        createCostText.text = BigIntegerUtils.FormatBigInteger(totalCost);
     }
 }

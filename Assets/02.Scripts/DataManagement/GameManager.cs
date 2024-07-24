@@ -5,6 +5,8 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
+    public static GameManager Instance { get; private set; }
+
     public ResourceManager resourceManager;
     public List<UpgradeButton> upgradeButtons;
     public List<AnimalDataSO> animalDataList;
@@ -25,6 +27,17 @@ public class GameManager : MonoBehaviour
 
     private void Awake()
     {
+        // 싱글톤 인스턴스 설정
+        if (Instance == null)
+        {
+            Instance = this;
+            DontDestroyOnLoad(gameObject); // 인스턴스가 파괴되지 않도록 설정
+        }
+        else
+        {
+            Destroy(gameObject); // 이미 인스턴스가 존재하면 중복 생성된 객체 파괴
+        }
+
         saveDataManager = new SaveDataManager();
         saveDataManager.animalDataList = animalDataList;        
         uiUpdater = new UIUpdater(resourceManager, upgradeButtons);

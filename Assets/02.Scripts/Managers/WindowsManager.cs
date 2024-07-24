@@ -6,6 +6,7 @@ public class WindowsManager : MonoBehaviour
 {
     public static WindowsManager Instance { get; private set; } // 싱글톤 인스턴스
     public AnimalInfoWindow animalInfoWnd;
+    public CreateAnimalWindow createAnimalWindow;
 
     private void Awake()
     {
