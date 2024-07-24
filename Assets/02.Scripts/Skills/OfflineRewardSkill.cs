@@ -25,13 +25,13 @@ public class OfflineRewardSkill : Artifact
         // 오프라인 보상 시간을 업데이트
     }
 
-    public override string GetCurrentAbilityDescription()
-    {
-        return $"보상 시간 증가: {rewardIncreasePerLevel * currentLevel}분";
-    }
+    //public override string GetCurrentAbilityDescription()
+    //{
+    //    return $"보상 시간 증가: {rewardIncreasePerLevel * currentLevel}분";
+    //}
 
     public override string GetNextAbilityDescription()
     {
-        return $"보상 시간 증가: {rewardIncreasePerLevel * (currentLevel + 1)}분";
+        return $"{rewardIncreasePerLevel * currentLevel}->{rewardIncreasePerLevel * (currentLevel + 1)}분";
     }
 }

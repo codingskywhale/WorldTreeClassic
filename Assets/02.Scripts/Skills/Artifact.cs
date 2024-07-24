@@ -169,16 +169,16 @@ public abstract class Artifact : MonoBehaviour
     {
         if (skillPopup != null && skillPopupInfoText != null)
         {
-            string currentAbility = GetCurrentAbilityDescription();
+           //string currentAbility = GetCurrentAbilityDescription();
             string nextAbility = GetNextAbilityDescription();
 
-            skillPopupInfoText.text = $"아티팩트 이름: {artifactName}\n\n현재 능력: {currentAbility}\n\n레벨업 시 능력: {nextAbility}";
+            skillPopupInfoText.text = $"아티팩트 이름: {artifactName}\n레벨업 시 능력: {nextAbility}";
             skillPopup.SetActive(true);
         }
     }
 
     // 현재 능력 설명을 반환하는 함수 (각 스킬에서 오버라이드 필요)
-    public abstract string GetCurrentAbilityDescription();
+    //public abstract string GetCurrentAbilityDescription();
 
     // 레벨업 시 능력 설명을 반환하는 함수 (각 스킬에서 오버라이드 필요)
     public abstract string GetNextAbilityDescription();
