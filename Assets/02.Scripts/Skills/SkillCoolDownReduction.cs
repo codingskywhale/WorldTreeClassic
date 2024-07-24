@@ -1,8 +1,15 @@
-using System.Linq;
+using UnityEngine;
 
 public class SkillCoolDownReduction : Artifact
 {
     public float baseCooldownReduction = 2f; // 레벨당 쿨타임 감소 비율
+
+    protected override void Start()
+    {
+        artifactName = "스킬 쿨다운";
+        base.Start();
+        ApplyCooldownReduction();
+    }
 
     protected override void UpdateSkillInfoUI()
     {
@@ -14,12 +21,6 @@ public class SkillCoolDownReduction : Artifact
         }
     }
 
-    protected override void Start()
-    {
-        base.Start();
-        ApplyCooldownReduction();
-    }
-
     private void ApplyCooldownReduction()
     {
         Skill[] allSkills = FindObjectsOfType<Skill>();
@@ -27,5 +28,21 @@ public class SkillCoolDownReduction : Artifact
         {
             skill.ReduceCooldown(baseCooldownReduction * currentLevel);
         }
+    }
+
+    protected override void UpdateClickValues()
+    {
+        // 쿨타임 감소 값을 업데이트
+        ApplyCooldownReduction();
+    }
+
+    protected override string GetCurrentAbilityDescription()
+    {
+        return $"쿨타임 감소: {baseCooldownReduction * currentLevel}%";
+    }
+
+    protected override string GetNextAbilityDescription()
+    {
+        return $"쿨타임 감소: {baseCooldownReduction * (currentLevel + 1)}%";
     }
 }
