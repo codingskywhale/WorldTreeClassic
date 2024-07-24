@@ -112,7 +112,6 @@ public abstract class Artifact : MonoBehaviour
             if (currentLevel >= 10)
             {
                 upgradeCostText.text = "최대 레벨";
-                skillPopupCostText.text = "최대 레벨";
             }
             else
             {
@@ -120,10 +119,6 @@ public abstract class Artifact : MonoBehaviour
                 upgradeCostText.text = currentLevel > 0
                     ? $"업그레이드 비용: {BigIntegerUtils.FormatBigInteger(nextCost)} 다이아"
                     : $"해금 비용: {BigIntegerUtils.FormatBigInteger(nextCost)} 다이아";
-                skillPopupCostText.text = currentLevel > 0
-                    ? $"업그레이드 비용: {BigIntegerUtils.FormatBigInteger(nextCost)} 다이아"
-                    : $"해금 비용: {BigIntegerUtils.FormatBigInteger(nextCost)} 다이아";
-
             }
         }
     }
@@ -183,10 +178,10 @@ public abstract class Artifact : MonoBehaviour
     }
 
     // 현재 능력 설명을 반환하는 함수 (각 스킬에서 오버라이드 필요)
-    protected abstract string GetCurrentAbilityDescription();
+    public abstract string GetCurrentAbilityDescription();
 
     // 레벨업 시 능력 설명을 반환하는 함수 (각 스킬에서 오버라이드 필요)
-    protected abstract string GetNextAbilityDescription();
+    public abstract string GetNextAbilityDescription();
 
     // 팝업을 닫는 함수
     public void ClosePopup()

@@ -29,14 +29,14 @@ public class BubbleClickSkill : Skill
         }
     }
 
-    protected override string GetCurrentAbilityDescription()
+    public override string GetCurrentAbilityDescription()
     {
         return currentLevel > 0
             ? $"현재 클릭 시간: {clickInterval:F1}초, 클릭 횟수: {baseClickRateIncrease}/초"
             : "스킬이 해금되지 않았습니다";
     }
 
-    protected override string GetNextAbilityDescription()
+    public override string GetNextAbilityDescription()
     {
         float nextClickInterval;
         int nextClickRateIncrease;

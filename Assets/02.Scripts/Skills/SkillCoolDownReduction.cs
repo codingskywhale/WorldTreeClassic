@@ -36,12 +36,12 @@ public class SkillCoolDownReduction : Artifact
         ApplyCooldownReduction();
     }
 
-    protected override string GetCurrentAbilityDescription()
+    public override string GetCurrentAbilityDescription()
     {
         return $"쿨타임 감소: {baseCooldownReduction * currentLevel}%";
     }
 
-    protected override string GetNextAbilityDescription()
+    public override string GetNextAbilityDescription()
     {
         return $"쿨타임 감소: {baseCooldownReduction * (currentLevel + 1)}%";
     }

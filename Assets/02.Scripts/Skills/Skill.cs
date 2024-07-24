@@ -6,6 +6,7 @@ using System.Collections;
 
 public abstract class Skill : MonoBehaviour
 {
+    [Header("Skill Info")]
     public string skillName; // 스킬 이름
     public float skillDuration; // 스킬 지속시간
     public float cooldownTime = 15.0f; // 기본 쿨타임
@@ -19,12 +20,15 @@ public abstract class Skill : MonoBehaviour
     public float cooldownRemaining;
 
     public int currentLevel = 0; // 현재 스킬 레벨 (0 = 잠금 상태)
-    public TextMeshProUGUI upgradeCostText; // 업그레이드 비용을 표시할 텍스트
-    public TextMeshProUGUI upgradeCostText2; // 업그레이드 비용을 표시할 텍스트
     public TextMeshProUGUI currentLevelText; // 현재 스킬 레벨 텍스트
     public TextMeshProUGUI skillInfoText; // 현재 스킬 설명 텍스트
+
+    [Header("Upgrade")]
+    public TextMeshProUGUI upgradeCostText; // 업그레이드 비용을 표시할 텍스트
+    public TextMeshProUGUI upgradeCostText2; // 업그레이드 비용을 표시할 텍스트
     public BigInteger unlockCost = 200; // 해금 비용
 
+    [Header("PopUp Info")]
     // 팝업 관련 변수
     public GameObject skillPopup; // 팝업 오브젝트
     public TextMeshProUGUI skillPopupInfoText; // 팝업에 표시될 텍스트
@@ -193,15 +197,11 @@ public abstract class Skill : MonoBehaviour
             if (currentLevel >= 21)
             {
                 upgradeCostText.text = "최대 레벨";
-                upgradeCostText2.text = "최대 레벨";
             }
             else
             {
                 BigInteger nextCost = currentLevel > 0 ? CalculateUpgradeCost(currentLevel) : unlockCost;
                 upgradeCostText.text = currentLevel > 0
-                    ? $"업그레이드 비용: {BigIntegerUtils.FormatBigInteger(nextCost)} 다이아"
-                    : $"해금 비용: {BigIntegerUtils.FormatBigInteger(nextCost)} 다이아";
-                upgradeCostText2.text = currentLevel > 0
                     ? $"업그레이드 비용: {BigIntegerUtils.FormatBigInteger(nextCost)} 다이아"
                     : $"해금 비용: {BigIntegerUtils.FormatBigInteger(nextCost)} 다이아";
             }
@@ -280,10 +280,10 @@ public abstract class Skill : MonoBehaviour
     }
 
     // 현재 능력 설명을 반환하는 함수 (각 스킬에서 오버라이드 필요)
-    protected abstract string GetCurrentAbilityDescription();
+    public abstract string GetCurrentAbilityDescription();
 
     // 레벨업 시 능력 설명을 반환하는 함수 (각 스킬에서 오버라이드 필요)
-    protected abstract string GetNextAbilityDescription();
+    public abstract string GetNextAbilityDescription();
 
     // 팝업을 닫는 함수
     public void ClosePopup()

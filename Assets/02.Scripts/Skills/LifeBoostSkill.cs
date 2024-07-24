@@ -22,14 +22,14 @@ public class LifeBoostSkill : Skill
         UpdateUI();
     }
 
-    protected override string GetCurrentAbilityDescription()
+    public override string GetCurrentAbilityDescription()
     {
         return currentLevel > 0
             ? $"현재 즉시 획득 생명력: {skillMultiplier} 배"
             : "스킬이 해금되지 않았습니다";
     }
 
-    protected override string GetNextAbilityDescription()
+    public override string GetNextAbilityDescription()
     {
         BigInteger nextSkillMultiplier = currentLevel == 0 ? 5000 : 5000 + currentLevel * 1000;
         return $"다음 레벨 즉시 획득 생명력: {nextSkillMultiplier} 배";

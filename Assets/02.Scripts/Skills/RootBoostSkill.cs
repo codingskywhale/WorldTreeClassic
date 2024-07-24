@@ -27,14 +27,14 @@ public class RootBoostSkill : Skill
         UpdateUI();
     }
 
-    protected override string GetCurrentAbilityDescription()
+    public override string GetCurrentAbilityDescription()
     {
         return currentLevel > 0
             ? $"현재 부스트 배수: {boostMultiplier}, 부스트 지속 시간: {boostDuration / 60}분"
             : "스킬이 해금되지 않았습니다";
     }
 
-    protected override string GetNextAbilityDescription()
+    public override string GetNextAbilityDescription()
     {
         BigInteger nextBoostMultiplier = currentLevel == 0
             ? baseBoostMultiplier

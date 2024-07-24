@@ -24,12 +24,12 @@ public class OfflineRewardAmountSkill : Artifact
         // 오프라인 보상 양을 업데이트
     }
 
-    protected override string GetCurrentAbilityDescription()
+    public override string GetCurrentAbilityDescription()
     {
         return $"보상량 증가: {rewardIncreasePerLevel * currentLevel}%";
     }
 
-    protected override string GetNextAbilityDescription()
+    public override string GetNextAbilityDescription()
     {
         return $"보상량 증가: {rewardIncreasePerLevel * (currentLevel + 1)}%";
     }
