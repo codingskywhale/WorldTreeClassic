@@ -10,7 +10,7 @@ public class LifeBoostSkill : Skill
 
     protected override void Start()
     {
-        unlockThreshold = 1;
+        unlockThreshold = 300;
         skillName = "즉시 획득";
         cooldownTime = 3600f; // 스킬 쿨타임 30분
         currentLevel = 0; // 초기 레벨

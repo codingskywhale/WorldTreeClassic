@@ -11,7 +11,7 @@ public class RootBoostSkill : Skill
 
     protected override void Start()
     {
-        unlockThreshold = 1;
+        unlockThreshold = 600;
         skillName = "획득량 증가";
         cooldownTime = 7200f; // 스킬 쿨타임 120분 (2시간)
         currentLevel = 0;
