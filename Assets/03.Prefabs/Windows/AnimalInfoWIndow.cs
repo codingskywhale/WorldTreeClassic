@@ -37,6 +37,7 @@ public class AnimalInfoWindow : MonoBehaviour
     public CreateObjectButton createObjectButton;
 
     private BigInteger totalGenerateValue;
+    private BigInteger preCost;
 
     private void OnEnable()
     {
@@ -161,7 +162,7 @@ public class AnimalInfoWindow : MonoBehaviour
 
     public void AnimalCountPlus()
     {
-        if (LifeManager.Instance.lifeAmount > totalGenerateValue * 4)
+        if (LifeManager.Instance.lifeAmount > totalGenerateValue + preCost * 4)
         {
             animalGenerateCount++;
             SetAnimalGenerateCountText(animalGenerateCount);
@@ -188,6 +189,7 @@ public class AnimalInfoWindow : MonoBehaviour
             previousCost *= 4;
             totalGenerateValue += previousCost;
         }
+        preCost = previousCost;
         createCostText.text = BigIntegerUtils.FormatBigInteger(totalGenerateValue);
     }
 
@@ -220,6 +222,9 @@ public class AnimalInfoWindow : MonoBehaviour
             totalCost += previousCost;
             animalGenerateCount++;
         }
+
+        totalGenerateValue = totalCost;
+        preCost = previousCost;
 
         animalGenerateCountText.text = animalGenerateCount.ToString();
         createCostText.text = BigIntegerUtils.FormatBigInteger(totalCost);
