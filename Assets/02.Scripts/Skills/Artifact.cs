@@ -200,6 +200,7 @@ public abstract class Artifact : MonoBehaviour
     public void OnUpgradeButtonClicked()
     {
         UpgradeArtifact();
+        ActiveObject();
         ClosePopup();
     }
 }
