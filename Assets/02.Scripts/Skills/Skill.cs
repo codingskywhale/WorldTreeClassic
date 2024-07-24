@@ -27,7 +27,11 @@ public abstract class Skill : MonoBehaviour
     public TextMeshProUGUI upgradeCostText; // 업그레이드 비용을 표시할 텍스트
     public TextMeshProUGUI upgradeCostText2; // 업그레이드 비용을 표시할 텍스트
     public BigInteger unlockCost = 200; // 해금 비용
-
+    [Header("UnlockInfo")]
+    public Image lockImage; // 해금 이미지
+    public TextMeshProUGUI lockText; // 해금 텍스트
+    private bool isUnlocked = false; // 해금 상태를 나타내는 변수 추가
+    public int unlockThreshold; // 해금에 필요한 세계수 레벨
     [Header("PopUp Info")]
     // 팝업 관련 변수
     public GameObject skillPopup; // 팝업 오브젝트
@@ -67,7 +71,7 @@ public abstract class Skill : MonoBehaviour
             UpdateCooldownUI(cooldownRemaining);
         }
 
-        CheckUnlockStatus();
+        CheckUnlockCondition();
     }
 
     public void UnlockOrUpgradeSkill()
@@ -84,9 +88,9 @@ public abstract class Skill : MonoBehaviour
 
     private void UnlockSkill()
     {
-        if (DiamondManager.Instance.HasSufficientDiamond(unlockCost))
+        if (DataManager.Instance.touchData != null && DataManager.Instance.touchData.touchIncreaseLevel >= unlockThreshold)
         {
-            DiamondManager.Instance.DecreaseDiamond(unlockCost);
+            isUnlocked = true;
             currentLevel = 1;
             UpdateClickValues();
             UpdateUpgradeCostUI(); // 업그레이드 비용 UI 업데이트
@@ -95,8 +99,8 @@ public abstract class Skill : MonoBehaviour
         }
         else
         {
-            Debug.Log("Not enough diamonds to unlock.");
-            ShowPopup("Not enough diamonds to unlock.");
+            Debug.Log("Unlock condition not met.");
+            ShowPopup("Unlock condition not met.");
         }
     }
 
@@ -169,18 +173,7 @@ public abstract class Skill : MonoBehaviour
 
     public BigInteger CalculateUpgradeCost(int level)
     {
-        if (level >= 1 && level <= 10)
-        {
-            return unlockCost + (level * 10); ;
-        }
-        else if (level >= 11 && level <= 21)
-        {
-            return unlockCost + (level - 10) * 100;
-        }
-        else
-        {
-            return BigInteger.Zero; // 임의로 추가한 범위 외의 레벨은 업그레이드 불가
-        }
+        return level * 30; // 업그레이드 비용 (레벨) x 30
     }
 
     public virtual void UpdateUI()
@@ -188,6 +181,7 @@ public abstract class Skill : MonoBehaviour
         UpdateUpgradeCostUI();
         NowskillInfoUI();
         LevelUI();
+        UpdateUnlockUI(); // 해금 상태 UI 업데이트
     }
 
     protected void UpdateUpgradeCostUI()
@@ -229,8 +223,44 @@ public abstract class Skill : MonoBehaviour
     }
 
     protected virtual void UpdateClickValues() { }
+    private void CheckUnlockCondition()
+    {
+        // 잠금 해제 조건 확인 로직
+        if (!isUnlocked && DataManager.Instance.touchData != null
+            && DataManager.Instance.touchData.touchIncreaseLevel >= unlockThreshold)
+        {
+            UnlockSkill(); // 잠금 해제 조건 만족 시 Unlock 호출
+        }
+    }
+    private void UpdateUnlockUI()
+    {
+        if (!isUnlocked)
+        {
+            if (lockText != null)
+            {
+                lockText.text = $"잠금 해제 조건: 세계수 레벨 {unlockThreshold}";
+            }
 
-    private void CheckUnlockStatus()
+            if (lockImage != null)
+            {
+                lockImage.gameObject.SetActive(true);
+            }
+        }
+        else
+        {
+            if (lockText != null)
+            {
+                lockText.gameObject.SetActive(false);
+            }
+
+            if (lockImage != null)
+            {
+                lockImage.gameObject.SetActive(false);
+            }
+        }
+    }
+
+    public void CheckUnlockStatus()
     {
         if (upgradeButton != null)
         {

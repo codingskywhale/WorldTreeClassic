@@ -4,17 +4,17 @@ using System.Numerics;
 
 public class RootBoostSkill : Skill
 {
-    public BigInteger baseBoostMultiplier = 500; // 초기 부스트 배수
+    public BigInteger baseBoostMultiplier = 100; // 초기 부스트 배수
     public BigInteger boostMultiplier; // 현재 부스트 배수
     public float boostDuration = 300f; // 부스트 지속 시간 (5분)
     private IRoot[] roots;
 
     protected override void Start()
     {
+        unlockThreshold = 1;
         skillName = "획득량 증가";
-        cooldownTime = 1800f; // 스킬 쿨타임 30분
+        cooldownTime = 7200f; // 스킬 쿨타임 120분 (2시간)
         currentLevel = 0;
-        unlockCost = 500; // 해금 비용
 
         // IRoot 컴포넌트를 찾아서 참조합니다.
         roots = FindObjectsOfType<RootBase>();
@@ -25,6 +25,7 @@ public class RootBoostSkill : Skill
         // 초기 UI 설정
         UpdateCooldownUI(0);
         UpdateUI();
+        CheckUnlockStatus(); // 해금 상태를 초기화
     }
 
     public override string GetCurrentAbilityDescription()
@@ -39,7 +40,9 @@ public class RootBoostSkill : Skill
         BigInteger nextBoostMultiplier = currentLevel == 0
             ? baseBoostMultiplier
             : baseBoostMultiplier + currentLevel * 100;
-        return $"다음 레벨 부스트 배수: {nextBoostMultiplier}, 부스트 지속 시간: {boostDuration / 60}분";
+        return currentLevel > 0
+            ? $"부스트 배수: {boostMultiplier} -> {nextBoostMultiplier}, 부스트 지속 시간: {boostDuration / 60}분"
+            : $"부스트 배수: {nextBoostMultiplier}, 부스트 지속 시간: {boostDuration / 60}분";
     }
 
     public override void ActivateSkill()

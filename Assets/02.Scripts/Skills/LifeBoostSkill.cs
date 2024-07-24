@@ -4,16 +4,16 @@ using System.Numerics;
 
 public class LifeBoostSkill : Skill
 {
-    public BigInteger skillMultiplier = 5000; // 스킬 배수
+    public BigInteger skillMultiplier = 60; // 스킬 배수
 
     private TouchData touchData;
 
     protected override void Start()
     {
+        unlockThreshold = 1;
         skillName = "즉시 획득";
-        cooldownTime = 1800f; // 스킬 쿨타임 30분
+        cooldownTime = 3600f; // 스킬 쿨타임 30분
         currentLevel = 0; // 초기 레벨
-        unlockCost = 300; // 해금 비용
 
         // TouchData 컴포넌트를 찾아서 참조합니다.
         touchData = FindObjectOfType<TouchData>();
@@ -31,8 +31,10 @@ public class LifeBoostSkill : Skill
 
     public override string GetNextAbilityDescription()
     {
-        BigInteger nextSkillMultiplier = currentLevel == 0 ? 5000 : 5000 + currentLevel * 1000;
-        return $"다음 레벨 즉시 획득 생명력: {nextSkillMultiplier} 배";
+        BigInteger nextSkillMultiplier = currentLevel == 0 ? 60 : 60 + currentLevel * 60;
+        return currentLevel > 0
+            ? $"즉시 획득 생명력: {skillMultiplier} 배 -> {nextSkillMultiplier} 배"
+            : $"즉시 획득 생명력: {nextSkillMultiplier} 배";
     }
 
     public override void ActivateSkill()
@@ -45,7 +47,7 @@ public class LifeBoostSkill : Skill
 
     protected override IEnumerator ApplySkillEffect()
     {
-        // 터치 증가량의 5000배에 해당하는 생명력을 추가로 획득합니다.
+        // 터치 증가량의 60배에 해당하는 생명력을 추가로 획득합니다.
         if (touchData != null)
         {
             BigInteger bonusLife = touchData.touchIncreaseAmount * skillMultiplier;
@@ -57,7 +59,7 @@ public class LifeBoostSkill : Skill
 
     protected override void UpdateClickValues()
     {
-        skillMultiplier = 5000 + (currentLevel - 1) * 1000; // 레벨당 증가 배수 계산
+        skillMultiplier = 60 + (currentLevel - 1) * 60; // 레벨당 증가 배수 계산
     }
 
     protected override void LevelUI()
