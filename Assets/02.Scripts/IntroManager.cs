@@ -51,6 +51,9 @@ public class IntroManager : MonoBehaviour
         // 인트로 애니메이션 완료 후 배경 패널과 텍스트 비활성화
         introText.gameObject.SetActive(false);
         backgroundPanel.gameObject.SetActive(false);
+        GameManager.Instance.cameraTransition.StartCoroutine(GameManager.Instance.cameraTransition.OpeningCamera());
+
         introCanvas.SetActive(false);
+
     }
 }

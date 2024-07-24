@@ -36,7 +36,7 @@ public class CameraController : MonoBehaviour
         Camera.main.transform.rotation = cameraTransition.initialRotation;       
 
         // 애니메이션 시작
-        StartCoroutine(cameraTransition.OpeningCamera());
+        //StartCoroutine(cameraTransition.OpeningCamera());
 
         messageParent.gameObject.SetActive(false);
     }

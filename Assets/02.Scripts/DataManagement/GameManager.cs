@@ -67,7 +67,7 @@ public class GameManager : MonoBehaviour
         yield return StartCoroutine(introManager.PlayIntro());
 
         // 오프닝 애니메이션 실행
-        yield return StartCoroutine(cameraTransition.OpeningCamera());
+        //yield return StartCoroutine(cameraTransition.OpeningCamera());
 
         // 오프닝 애니메이션이 완료된 후 게임 로직 실행
         OnIntroAndOpeningCompleted();
