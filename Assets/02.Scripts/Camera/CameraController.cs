@@ -17,6 +17,7 @@ public class CameraController : MonoBehaviour
     private CameraTransition cameraTransition;
     private CameraTargetHandler cameraTargetHandler;
     private GameObject currentMessage;
+    private WorldTree worldTree;
 
     public bool isFreeCamera = false;
     private bool isDragging = false;
@@ -25,16 +26,17 @@ public class CameraController : MonoBehaviour
     {
         cameraTransition = GetComponent<CameraTransition>();
         cameraTargetHandler = GetComponent<CameraTargetHandler>();
+        worldTree = FindObjectOfType<WorldTree>();
 
         // 초기 위치와 회전 설정
         Camera.main.transform.position = cameraTransition.initialPosition;
-        cameraTransition.initialRotation = Quaternion.Euler(-100, -116, 0);
-        cameraTransition.finalRotation = Quaternion.Euler(30, -116, 0);
+        cameraTransition.initialRotation = Quaternion.Euler(-90, -116, 0);
+        cameraTransition.finalRotation = Quaternion.Euler(20, -116, 0);
         cameraTransition.zoomInRotation = Quaternion.Euler(25, -116, 0);        
         Camera.main.transform.rotation = cameraTransition.initialRotation;       
 
         // 애니메이션 시작
-        StartCoroutine(cameraTransition.OpeningCamera());
+        //StartCoroutine(cameraTransition.OpeningCamera());
 
         messageParent.gameObject.SetActive(false);
     }
@@ -152,7 +154,11 @@ public class CameraController : MonoBehaviour
             // 자유 시점 모드에서 고정 시점 모드로 전환
             cameraTargetHandler.SetTarget(target);
             cameraTargetHandler.isObjectTarget = false;
-            StartCoroutine(cameraTransition.ZoomCamera(cameraTransition.initialPosition, cameraTransition.finalRotation));
+
+            // WorldTree의 위치 오프셋을 적용하여 새로운 위치 계산
+            Vector3 newPosition = cameraTransition.initialPosition + worldTree.GetPositionOffset();
+            
+            StartCoroutine(cameraTransition.ZoomCamera(newPosition, cameraTransition.finalRotation));
             ShowMessage("카메라가 나무에 고정됩니다.");
         }
         else
@@ -160,7 +166,12 @@ public class CameraController : MonoBehaviour
             // 고정 시점 모드에서 자유 시점 모드로 전환
             cameraTargetHandler.SetTarget(target);
             cameraTargetHandler.isObjectTarget = false;
-            StartCoroutine(cameraTransition.ZoomCamera(cameraTransition.zoomInPosition, cameraTransition.zoomInRotation));
+
+            // WorldTree의 위치 오프셋을 적용하여 새로운 위치 계산
+            Vector3 newPosition = cameraTransition.zoomInPosition + worldTree.GetPositionOffset();
+            
+
+            StartCoroutine(cameraTransition.ZoomCamera(newPosition, cameraTransition.zoomInRotation));
             ShowMessage("카메라 자유 조작이 활성화됩니다.");
         }
 

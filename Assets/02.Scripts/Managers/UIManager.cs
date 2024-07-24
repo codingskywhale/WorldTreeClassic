@@ -44,7 +44,8 @@ public class UIManager : MonoBehaviour
     {
         for (int i = 0; i < createObjectButtonUnlockCount; i++)
         {
-            createAnimalButtons[i].SetCostText();
+            if (i < createAnimalButtons.Length)
+                createAnimalButtons[i].SetCostText();
         }
     }
 
@@ -55,7 +56,8 @@ public class UIManager : MonoBehaviour
         {
             for(int i = 0; i < createObjectButtonUnlockCount; i++)
             {
-                createAnimalButtons[i].createButton.interactable = true;
+                if(i < createAnimalButtons.Length)
+                    createAnimalButtons[i].createButton.interactable = true;
             }
         }
         else

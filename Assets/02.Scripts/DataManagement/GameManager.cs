@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Numerics;
 using UnityEngine;
@@ -14,6 +15,8 @@ public class GameManager : MonoBehaviour
     public List<Skill> skills; 
     public TouchInput touchInput;
     public OfflineRewardUIManager offlineRewardUIManager; // 오프라인 보상 UI 매니저
+    public IntroManager introManager; // 인트로 매니저
+    public CameraTransition cameraTransition; // 카메라 트랜지션
 
     private SaveDataManager saveDataManager;
     private UIUpdater uiUpdater;
@@ -54,6 +57,23 @@ public class GameManager : MonoBehaviour
     }
 
     private void Start()
+    {
+        StartCoroutine(PlayIntroAndOpening());        
+    }
+
+    private IEnumerator PlayIntroAndOpening()
+    {
+        // 인트로 애니메이션 실행
+        yield return StartCoroutine(introManager.PlayIntro());
+
+        // 오프닝 애니메이션 실행
+        //yield return StartCoroutine(cameraTransition.OpeningCamera());
+
+        // 오프닝 애니메이션이 완료된 후 게임 로직 실행
+        OnIntroAndOpeningCompleted();
+    }
+
+    private void OnIntroAndOpeningCompleted()
     {
         saveDataManager.LoadGameData(resourceManager, skills);
         LifeManager.Instance.bubbleGenerator.InitialBubbleSet();
