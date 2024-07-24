@@ -13,43 +13,89 @@ public class CameraTransition : MonoBehaviour
 
     public bool animationCompleted = false;
     public bool isZooming = false;
-        
+
+    private Camera mainCamera;
+
+    private Vector3 currentCameraPosition;
+    private Quaternion currentCameraRotation;
+    public float currentCameraFOV;
+
+    private void Awake()
+    {
+        mainCamera = Camera.main;
+
+        currentCameraPosition = mainCamera.transform.position;
+        currentCameraRotation = mainCamera.transform.rotation;
+        currentCameraFOV = mainCamera.fieldOfView;
+    }
+
     public IEnumerator OpeningCamera()
     {
-        float elapsedTime = 0;
+        float elapsedTime = 0f;
 
+        // 카메라 초기 위치와 회전 설정
+        mainCamera.transform.position = currentCameraPosition;
+        mainCamera.transform.rotation = currentCameraRotation;
+        mainCamera.fieldOfView = currentCameraFOV;
+
+        // 카메라 회전 애니메이션
         while (elapsedTime < duration)
         {
             elapsedTime += Time.deltaTime;
             float t = elapsedTime / duration;
 
-            // 카메라 회전 Lerp
-            Camera.main.transform.rotation = Quaternion.Slerp(initialRotation, finalRotation, t);
+            mainCamera.transform.rotation = Quaternion.Slerp(initialRotation, finalRotation, t);
 
             yield return null;
         }
 
         // 애니메이션 완료
-        animationCompleted = true;       
+        animationCompleted = true;
     }
 
     public IEnumerator ZoomCamera(Vector3 targetPosition, Quaternion targetRotation)
     {
         isZooming = true; // 줌 애니메이션 시작
         float startTime = Time.time;
-        Vector3 startPosition = Camera.main.transform.position;
-        Quaternion startRotation = Camera.main.transform.rotation;
+        Vector3 startPosition = mainCamera.transform.position;
+        Quaternion startRotation = mainCamera.transform.rotation;
 
         while (Time.time < startTime + zoomDuration)
         {
             float t = (Time.time - startTime) / zoomDuration;
-            Camera.main.transform.position = Vector3.Lerp(startPosition, targetPosition, t);
-            Camera.main.transform.rotation = Quaternion.Slerp(startRotation, targetRotation, t);
+            mainCamera.transform.position = Vector3.Lerp(startPosition, targetPosition, t);
+            mainCamera.transform.rotation = Quaternion.Slerp(startRotation, targetRotation, t);
             yield return null;
         }
 
-        Camera.main.transform.position = targetPosition;
-        Camera.main.transform.rotation = targetRotation;
+        mainCamera.transform.position = targetPosition;
+        mainCamera.transform.rotation = targetRotation;
         isZooming = false; // 줌 애니메이션 종료
+    }
+
+    public void UpdateCameraState(float newFOV, Vector3 newPosition)
+    {
+        mainCamera.fieldOfView = newFOV;
+        mainCamera.transform.position = newPosition;
+    }
+
+    public void ApplyCameraState()
+    {
+        mainCamera.fieldOfView = currentCameraFOV;
+        mainCamera.transform.position = currentCameraPosition;
+    }
+
+    public void SetCameraState(Vector3 position, Quaternion rotation, float FOV)
+    {
+        currentCameraPosition = position;
+        currentCameraRotation = rotation;
+        currentCameraFOV = FOV;
+        ApplyCameraState();
+    }
+
+    public void SetInitialCameraState(Vector3 position, float FOV)
+    {
+        initialPosition = position;
+        currentCameraFOV = FOV;
     }
 }
