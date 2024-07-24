@@ -14,7 +14,7 @@ public class UIOpenCloseManager : MonoBehaviour
     public float animationDuration = 0.5f; // 애니메이션 시간
 
     public Camera mainCamera; // 메인 카메라
-    public float cameraMoveAmount = 1.5f; // 카메라 이동 거리
+    public float cameraMoveAmount = 0.6f; // 카메라 이동 거리
 
     private Vector2 panelOriginalPosition1;
     private Vector2 panelOriginalPosition2;
