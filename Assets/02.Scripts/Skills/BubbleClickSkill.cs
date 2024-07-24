@@ -1,18 +1,18 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class BubbleClickSkill : Skill
 {
     public float clickInterval = 0.5f; // 자동 클릭 간격
-    public float baseClickIntervalIncrease = 1; // 클릭 시간 증가량
+    public float baseClickIntervalIncrease = 1.0f; // 클릭 시간 증가량
     public int baseClickRateIncrease = 1; // 클릭 횟수 증가량
 
     public bool isUseSkill = false;
 
     protected override void Start()
     {
-        skillDuration = 300f; // 스킬 지속 시간
+        skillName = "자동 클릭";
+        skillDuration = 300f; // 스킬 지속 시간 5분
         cooldownTime = 1800f; // 스킬 쿨타임 30분
         currentLevel = 0;
 
@@ -29,6 +29,31 @@ public class BubbleClickSkill : Skill
         }
     }
 
+    protected override string GetCurrentAbilityDescription()
+    {
+        return currentLevel > 0
+            ? $"현재 클릭 시간: {clickInterval:F1}초, 클릭 횟수: {baseClickRateIncrease}/초"
+            : "스킬이 해금되지 않았습니다";
+    }
+
+    protected override string GetNextAbilityDescription()
+    {
+        float nextClickInterval;
+        int nextClickRateIncrease;
+
+        if (currentLevel == 0)
+        {
+            nextClickInterval = clickInterval + baseClickIntervalIncrease;
+            nextClickRateIncrease = baseClickRateIncrease + 1;
+        }
+        else
+        {
+            nextClickInterval = clickInterval + baseClickIntervalIncrease;
+            nextClickRateIncrease = baseClickRateIncrease + 1;
+        }
+
+        return $"다음 레벨 클릭 시간: {nextClickInterval:F1}초, 클릭 횟수: {nextClickRateIncrease}/초";
+    }
 
     protected override IEnumerator ApplySkillEffect()
     {
@@ -63,8 +88,8 @@ public class BubbleClickSkill : Skill
 
     protected override void UpdateClickValues()
     {
-        clickInterval = Mathf.Max(0.1f, clickInterval - baseClickIntervalIncrease * currentLevel);
-        baseClickRateIncrease = 1 + currentLevel; // 클릭 횟수 증가량은 레벨에 비례하여 증가
+        clickInterval += baseClickIntervalIncrease;
+        baseClickRateIncrease += 1;
     }
 
     protected override void LevelUI()
@@ -77,7 +102,7 @@ public class BubbleClickSkill : Skill
     protected override void NowskillInfoUI()
     {
         skillInfoText.text = currentLevel > 0
-            ? $"현재 클릭 간격: {clickInterval}초 \n 클릭 횟수: {baseClickRateIncrease}"
+            ? $"현재 클릭 간격: {clickInterval:F1}초 \n 클릭 횟수: {baseClickRateIncrease}/초"
             : "스킬이 해금되지 않았습니다";
     }
 }

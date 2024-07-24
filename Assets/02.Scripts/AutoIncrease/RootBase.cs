@@ -148,7 +148,7 @@ public class RootBase : MonoBehaviour, IRoot
     {
         if (rootLevelText != null)
         {
-            rootLevelText.text = isUnlocked ? $"뿌리 레벨: {rootLevel}" : $"뿌리 레벨: 0";
+            rootLevelText.text = isUnlocked ? $"꽃 레벨: {rootLevel}" : $"꽃 레벨: 0";
         }
 
         if (rootUpgradeCostText != null)
@@ -190,7 +190,7 @@ public class RootBase : MonoBehaviour, IRoot
         {
             if (lockText != null)
             {
-                lockText.text = $"잠금 해제 조건: 세계수 레벨 {unlockThreshold}\n식물 해금 시 배치 가능 동물 수 + 5";
+                lockText.text = $"잠금 해제 조건: 세계수 레벨 {unlockThreshold}\n꽃 해금 시 배치 가능 동물 수 + 5";
             }
 
             if (lockImage != null)
