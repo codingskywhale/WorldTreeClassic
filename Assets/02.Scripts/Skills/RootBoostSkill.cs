@@ -11,7 +11,7 @@ public class RootBoostSkill : Skill
 
     protected override void Start()
     {
-        unlockThreshold = 600;
+        unlockThreshold = 1;
         skillName = "획득량 증가";
         cooldownTime = 7200f; // 스킬 쿨타임 120분 (2시간)
         currentLevel = 0;
@@ -28,12 +28,12 @@ public class RootBoostSkill : Skill
         CheckUnlockStatus(); // 해금 상태를 초기화
     }
 
-    public override string GetCurrentAbilityDescription()
-    {
-        return currentLevel > 0
-            ? $"현재 부스트 배수: {boostMultiplier}, 부스트 지속 시간: {boostDuration / 60}분"
-            : "스킬이 해금되지 않았습니다";
-    }
+    //public override string GetCurrentAbilityDescription()
+    //{
+    //    return currentLevel > 0
+    //        ? $"현재 부스트 배수: {boostMultiplier}, 부스트 지속 시간: {boostDuration / 60}분"
+    //        : "스킬이 해금되지 않았습니다";
+    //}
 
     public override string GetNextAbilityDescription()
     {
@@ -41,7 +41,7 @@ public class RootBoostSkill : Skill
             ? baseBoostMultiplier
             : baseBoostMultiplier + currentLevel * 100;
         return currentLevel > 0
-            ? $"부스트 배수: {boostMultiplier} -> {nextBoostMultiplier}, 부스트 지속 시간: {boostDuration / 60}분"
+            ? $"{boostMultiplier} -> {nextBoostMultiplier}"
             : $"부스트 배수: {nextBoostMultiplier}, 부스트 지속 시간: {boostDuration / 60}분";
     }
 

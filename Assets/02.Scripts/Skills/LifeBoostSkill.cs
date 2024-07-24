@@ -10,7 +10,7 @@ public class LifeBoostSkill : Skill
 
     protected override void Start()
     {
-        unlockThreshold = 300;
+        unlockThreshold = 1;
         skillName = "즉시 획득";
         cooldownTime = 3600f; // 스킬 쿨타임 30분
         currentLevel = 0; // 초기 레벨
@@ -22,18 +22,18 @@ public class LifeBoostSkill : Skill
         UpdateUI();
     }
 
-    public override string GetCurrentAbilityDescription()
-    {
-        return currentLevel > 0
-            ? $"현재 즉시 획득 생명력: {skillMultiplier} 배"
-            : "스킬이 해금되지 않았습니다";
-    }
+    //public override string GetCurrentAbilityDescription()
+    //{
+    //    return currentLevel > 0
+    //        ? $"현재 즉시 획득 생명력: {skillMultiplier} 배"
+    //        : "스킬이 해금되지 않았습니다";
+    //}
 
     public override string GetNextAbilityDescription()
     {
         BigInteger nextSkillMultiplier = currentLevel == 0 ? 60 : 60 + currentLevel * 60;
         return currentLevel > 0
-            ? $"즉시 획득 생명력: {skillMultiplier} 배 -> {nextSkillMultiplier} 배"
+            ? $"{skillMultiplier} -> {nextSkillMultiplier}"
             : $"즉시 획득 생명력: {nextSkillMultiplier} 배";
     }
 
