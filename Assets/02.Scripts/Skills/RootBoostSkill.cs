@@ -11,7 +11,6 @@ public class RootBoostSkill : Skill
 
     protected override void Start()
     {
-        unlockThreshold = 1;
         skillName = "획득량 증가";
         cooldownTime = 7200f; // 스킬 쿨타임 120분 (2시간)
         currentLevel = 0;
@@ -41,7 +40,7 @@ public class RootBoostSkill : Skill
             ? baseBoostMultiplier
             : baseBoostMultiplier + currentLevel * 100;
         return currentLevel > 0
-            ? $"{boostMultiplier} -> {nextBoostMultiplier}"
+            ? $"{boostMultiplier} → {nextBoostMultiplier}"
             : $"부스트 배수: {nextBoostMultiplier}, 부스트 지속 시간: {boostDuration / 60}분";
     }
 

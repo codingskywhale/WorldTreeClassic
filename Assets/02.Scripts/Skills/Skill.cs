@@ -35,7 +35,6 @@ public abstract class Skill : MonoBehaviour
     [Header("PopUp Info")]
     // 팝업 관련 변수
     public GameObject skillPopup; // 팝업 오브젝트
-    public TextMeshProUGUI skillPopupInfoText; // 팝업에 표시될 텍스트
 
     protected virtual void Start()
     {
@@ -55,10 +54,10 @@ public abstract class Skill : MonoBehaviour
             upgradeButton.onClick.AddListener(OnUpgradeButtonClicked);
         }
 
-        if (skillButton != null)
-        {
-            skillButton.onClick.AddListener(ShowSkillInfoPopup);
-        }
+        //if (skillButton != null)
+        //{
+        //    skillButton.onClick.AddListener(ShowSkillInfoPopup);
+        //}
     }
 
     private void Update()
@@ -290,21 +289,19 @@ public abstract class Skill : MonoBehaviour
     // 팝업을 띄우는 함수
     public void ShowPopup(string message)
     {
-        if (skillPopup != null && skillPopupInfoText != null)
+        if (skillPopup != null)
         {
-            skillPopupInfoText.text = message;
             skillPopup.SetActive(true);
         }
     }
 
     public void ShowSkillInfoPopup()
     {
-        if (skillPopup != null && skillPopupInfoText != null)
+        if (skillPopup != null)
         {
             //string currentAbility = GetCurrentAbilityDescription();
             string nextAbility = GetNextAbilityDescription();
 
-            skillPopupInfoText.text = $"스킬 이름: {skillName}\n\n레벨업 시 능력: {nextAbility}";
             skillPopup.SetActive(true);
         }
     }

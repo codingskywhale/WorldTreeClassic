@@ -10,7 +10,6 @@ public class LifeBoostSkill : Skill
 
     protected override void Start()
     {
-        unlockThreshold = 1;
         skillName = "즉시 획득";
         cooldownTime = 3600f; // 스킬 쿨타임 30분
         currentLevel = 0; // 초기 레벨
@@ -33,7 +32,7 @@ public class LifeBoostSkill : Skill
     {
         BigInteger nextSkillMultiplier = currentLevel == 0 ? 60 : 60 + currentLevel * 60;
         return currentLevel > 0
-            ? $"{skillMultiplier} -> {nextSkillMultiplier}"
+            ? $"{skillMultiplier} → {nextSkillMultiplier}"
             : $"즉시 획득 생명력: {nextSkillMultiplier} 배";
     }
 

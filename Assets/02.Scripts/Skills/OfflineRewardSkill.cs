@@ -32,6 +32,6 @@ public class OfflineRewardSkill : Artifact
 
     public override string GetNextAbilityDescription()
     {
-        return $"{rewardIncreasePerLevel * currentLevel}->{rewardIncreasePerLevel * (currentLevel + 1)}분";
+        return $"{rewardIncreasePerLevel * currentLevel}분 → {rewardIncreasePerLevel * (currentLevel + 1)}분";
     }
 }

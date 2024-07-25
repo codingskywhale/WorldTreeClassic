@@ -43,6 +43,6 @@ public class SkillCoolDownReduction : Artifact
 
     public override string GetNextAbilityDescription()
     {
-        return $"{baseCooldownReduction * currentLevel}->{baseCooldownReduction * (currentLevel + 1)}%";
+        return $"{baseCooldownReduction * currentLevel}% → {baseCooldownReduction * (currentLevel + 1)}%";
     }
 }

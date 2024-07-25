@@ -11,7 +11,6 @@ public class BubbleClickSkill : Skill
 
     protected override void Start()
     {
-        unlockThreshold = 1;
         skillName = "자동 클릭";
         skillDuration = 60f; // 스킬 지속 시간 1분
         cooldownTime = 1800f; // 스킬 쿨타임 30분
@@ -42,7 +41,7 @@ public class BubbleClickSkill : Skill
         float nextSkillDuration = skillDuration + skillDurationIncrease;
 
         return currentLevel > 0
-            ? $"{skillDuration / 60:F0} -> {nextSkillDuration / 60:F0}"
+            ? $"{skillDuration / 60:F0} → {nextSkillDuration / 60:F0}"
             : $"지속 시간: {nextSkillDuration / 60:F0}분";
     }
 
