@@ -51,7 +51,7 @@ public class GameManager : MonoBehaviour
         offlineRewardAmountSkill = FindObjectOfType<OfflineRewardAmountSkill>();
         offlineRewardManager = new OfflineRewardManager(resourceManager, offlineProgressCalculator, 
                                                         offlineRewardSkill, offlineRewardAmountSkill);
-        //SaveSystem.DeleteSave();  // 개발 중에만 사용
+        SaveSystem.DeleteSave();  // 개발 중에만 사용
         touchInput = GetComponent<TouchInput>();
         offlineRewardUIManager.Initialize(offlineRewardManager); // UI 매니저 초기화
     }

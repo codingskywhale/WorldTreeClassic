@@ -3,17 +3,17 @@ using UnityEngine;
 
 public class Root2 : RootBase
 {
-    protected override void Start()
-    {
-        unlockThreshold = 10;
-        baseLifeGeneration = 500;
-        unlockCost = BigInteger.Parse("78400");
-        base.Start();
-        LifeManager.Instance.RegisterRoot(this);
-        // 업그레이드 비용을 다시 계산하여 UI 업데이트
-        upgradeLifeCost = CalculateUpgradeCost();
-        UpdateUI();
-    }
+    //protected override void Start()
+    //{
+    //    unlockThreshold = 10;
+    //    baseLifeGeneration = 500;
+    //    unlockCost = BigInteger.Parse("78400");
+    //    base.Start();
+    //    LifeManager.Instance.RegisterRoot(this);
+    //    // 업그레이드 비용을 다시 계산하여 UI 업데이트
+    //    upgradeLifeCost = CalculateUpgradeCost();
+    //    UpdateUI();
+    //}
 
     protected override void GenerateLife()
     {
@@ -21,10 +21,10 @@ public class Root2 : RootBase
         InvokeLifeGenerated(generatedLife);
     }
 
-    public override void UpdateUI()
-    {
-        base.UpdateUI();
-    }
+    //public override void UpdateUI()
+    //{
+    //    base.UpdateUI();
+    //}
 
     public override BigInteger GetTotalLifeGeneration()
     {

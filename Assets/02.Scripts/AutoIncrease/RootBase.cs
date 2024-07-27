@@ -19,7 +19,6 @@ public class RootBase : MonoBehaviour, IRoot
     public BigInteger initialUpgradeCost = 20; // 초기 레벨업 비용
     public BigInteger unlockCost = 0; // 해금 비용
     public BigInteger upgradeLifeCost;
-    public float generationInterval = 1f;
     public TextMeshProUGUI rootLevelText;
     public TextMeshProUGUI generationRateText; // 생산률을 나타내는 텍스트 추가
     public TextMeshProUGUI rootUpgradeCostText;
@@ -27,44 +26,35 @@ public class RootBase : MonoBehaviour, IRoot
     public TextMeshProUGUI lockText; // 해금 텍스트
     public bool isUnlocked = false; // 잠금 상태를 나타내는 변수 추가
 
-    private float timer;
     public int unlockThreshold = 5; // 잠금 해제에 필요한 터치 레벨
-    //public GameObject objectPrefab;
+                                    //public GameObject objectPrefab;
 
     public GameObject[] plantObjects; // 미리 배치된 식물 오브젝트 배열 추가
-    public delegate void LifeGenerated(BigInteger amount);
-    protected event LifeGenerated OnLifeGenerated;
+
     public event System.Action OnGenerationRateChanged;
 
     protected CameraTransition cameraTransition; // CameraTransition 참조 추가
     private BigInteger currentMultiplier; // 현재 적용 중인 배수
     private Coroutine boostCoroutine; // 부스트 코루틴 참조 변수
 
+    public RootDataSO rootDataSO;
+
     protected virtual void Start()
     {
-        OnLifeGenerated -= LifeManager.Instance.IncreaseWater;
-        OnLifeGenerated += LifeManager.Instance.IncreaseWater;
-        OnGenerationRateChanged += UpdateUI; // 이벤트 핸들러 추가
-        OnGenerationRateChanged?.Invoke(); // 초기화 시 이벤트 트리거
-        UpdateUI();
-        cameraTransition = FindObjectOfType<CameraTransition>(); // CameraTransition 컴포넌트 참조 초기화
-        //upgradeLifeCost = initialUpgradeCost; // 초기 레벨업 비용 설정
-        currentMultiplier = 1;
-    }
-
-
-    protected virtual void Update()
-    {
-        CheckUnlockCondition(); // 업데이트 시 잠금 해제 조건 확인
-        if (isUnlocked && rootLevel > 0)
+        if (rootDataSO != null)
         {
-            timer += Time.deltaTime;
-            if (timer >= generationInterval)
-            {
-                GenerateLife();
-                timer = 0f;
-            }
+            unlockThreshold = rootDataSO.unlockThreshold;
+            baseLifeGeneration = BigInteger.Parse(rootDataSO.baseLifeGenerationString);
+            unlockCost = BigInteger.Parse(rootDataSO.unlockCostString);
         }
+
+        OnGenerationRateChanged += UpdateUI; // 이벤트 핸들러 추가
+                                             //OnGenerationRateChanged?.Invoke(); // 초기화 시 이벤트 트리거
+        cameraTransition = FindObjectOfType<CameraTransition>(); // CameraTransition 컴포넌트 참조 초기화
+                                                                 //upgradeLifeCost = initialUpgradeCost; // 초기 레벨업 비용 설정
+        currentMultiplier = 1;
+        LifeManager.Instance.RegisterRoot(this);
+        UpdateUI();
     }
 
     protected virtual void GenerateLife()
@@ -76,7 +66,7 @@ public class RootBase : MonoBehaviour, IRoot
 
     protected void InvokeLifeGenerated(BigInteger amount)
     {
-        OnLifeGenerated?.Invoke(amount);
+        //OnLifeGenerated?.Invoke(amount);
     }
 
     public BigInteger CalculateUpgradeCost()
@@ -109,6 +99,8 @@ public class RootBase : MonoBehaviour, IRoot
         }
         upgradeLifeCost = CalculateUpgradeCost();
         OnGenerationRateChanged?.Invoke();
+
+        AutoObjectManager.Instance.CalculateTotalAutoGeneration();
         UpdateUI();
     }
     private void ActivateNextPlantObject()
@@ -158,7 +150,7 @@ public class RootBase : MonoBehaviour, IRoot
 
         }
 
-        
+
     }
 
     public virtual void UpdateGenerationRateUI(BigInteger generationRate)
@@ -182,7 +174,7 @@ public class RootBase : MonoBehaviour, IRoot
             }
         }
     }
-    
+
 
     public virtual void UpdateUnlockUI()
     {
@@ -190,12 +182,14 @@ public class RootBase : MonoBehaviour, IRoot
         {
             if (lockText != null)
             {
+                lockText.gameObject.SetActive(true);
                 lockText.text = $"잠금 해제 조건: 세계수 레벨 {unlockThreshold}\n꽃 해금 시 배치 가능 동물 수 + 5";
             }
 
             if (lockImage != null)
             {
                 lockImage.gameObject.SetActive(true);
+                
             }
         }
         else
@@ -217,7 +211,7 @@ public class RootBase : MonoBehaviour, IRoot
         if (!isUnlocked || rootLevel == 0) return 0; // 잠금 해제 전이나 레벨이 0일 때는 0
         BigInteger baseGeneration = baseLifeGeneration * BigInteger.Pow(103, rootLevel - 1) / BigInteger.Pow(100, rootLevel - 1); // 1.03^rootLevel-1
         BigInteger totalGeneration = baseGeneration * currentMultiplier; // currentMultiplier를 곱하여 반환
-        //Debug.Log($"Total Generation ({this.name}): " + totalGeneration);
+                                                                         //Debug.Log($"Total Generation ({this.name}): " + totalGeneration);
         return totalGeneration;
     }
 

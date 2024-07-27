@@ -10,7 +10,6 @@ public class Root1 : RootBase
         base.Start();
         LifeManager.Instance.RegisterRoot(this);
         UpdateUI();
-
     }
 
 
