@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Numerics;
 using TMPro;
 using UnityEngine;
@@ -42,10 +43,9 @@ public class UIManager : MonoBehaviour
 
     public void UpdateButtonUI()
     {
-        for (int i = 0; i < createObjectButtonUnlockCount; i++)
+        for (int i = 0; i < createAnimalButtons.Length; i++)
         {
-            if (i < createAnimalButtons.Length)
-                createAnimalButtons[i].SetCostText();
+            createAnimalButtons[i].SetCostText();
         }
     }
 
@@ -65,6 +65,61 @@ public class UIManager : MonoBehaviour
             for (int i = 0; i < createObjectButtonUnlockCount; i++)
             {
                 createAnimalButtons[i].createButton.interactable = false;
+            }
+        }
+    }
+
+    public void CheckConditionCleared()
+    {
+        int clearCount = 0;
+        for (int i = 3; i < createAnimalButtons.Length; i++)
+        {
+            if (!createAnimalButtons[i].conditionCleared)
+            {
+                foreach (var condition in createAnimalButtons[i].animalData.animalUnlockConditions)
+                {
+                    switch (condition.conditionType)
+                    {                      
+                        case UnlockConditionType.AnimalCount:
+
+                            Dictionary<string, Dictionary<EachCountType, int>> dic = DataManager.Instance.animalGenerateData.allTypeCountDic;
+                            string name = GameManager.Instance.animalDataList[condition.requiredAnimalIndex].animalName;
+                            if (dic.ContainsKey(name) && dic[name][EachCountType.Total] >= condition.requiredAnimalCount)
+                            {
+                                clearCount++;
+                                Debug.Log($"{createAnimalButtons[i].animalData.animalName} 버튼 동물 조건 충족 완료 ");
+                            }
+
+                            break;
+                        case UnlockConditionType.PlantCount:
+
+                            if (AutoObjectManager.Instance.roots[condition.requiredPlantIndex].isUnlocked)
+                            {
+                                clearCount++;
+                                Debug.Log($"{createAnimalButtons[i].animalData.animalName} 버튼 식물 조건 충족 완료 ");
+                            }
+
+                            break;
+                        case UnlockConditionType.LevelReached:
+
+                            if (DataManager.Instance.touchData.touchIncreaseLevel > condition.requiredWorldTreeLevel)
+                            {
+                                clearCount++;
+                                Debug.Log($"{createAnimalButtons[i].animalData.animalName} 버튼 레벨 조건 충족 완료 ");
+                            }
+
+                            break;
+                    }
+                }
+
+                if (clearCount == createAnimalButtons[i].animalData.animalUnlockConditions.Length)
+                {
+                    createAnimalButtons[i].conditionCleared = true;
+                    createAnimalButtons[i].SetLockImageOff();
+                    Debug.Log($"{createAnimalButtons[i].animalData.animalName} 락 해제 완료 {createAnimalButtons[i].animalData.animalUnlockConditions.Length}, {clearCount} 개의 조건을 수행함");
+                }
+                
+                clearCount = 0;
             }
         }
     }

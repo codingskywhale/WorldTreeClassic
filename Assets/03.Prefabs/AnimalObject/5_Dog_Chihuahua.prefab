@@ -1246,6 +1246,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   heart: {fileID: 218669654821373548}
+  animalDataSO: {fileID: 11400000, guid: 8415b503013473f4fb6ddbb2227d6659, type: 2}
 --- !u!114 &-872449927598425851
 MonoBehaviour:
   m_ObjectHideFlags: 0

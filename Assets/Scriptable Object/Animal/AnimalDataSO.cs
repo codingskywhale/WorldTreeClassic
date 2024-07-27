@@ -6,7 +6,7 @@ public class AnimalDataSO : ScriptableObject
     public int animalIndex;
     public Sprite animalIcon;
     public string animalName;
-    public string[] animalUnlockConditions;
+    public UnlockCondition[] animalUnlockConditions;
     public GameObject animalPrefab;
     public string storyText;
 }

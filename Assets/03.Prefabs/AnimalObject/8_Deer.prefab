@@ -247,8 +247,6 @@ MonoBehaviour:
   logChanges: 0
   showGizmos: 0
   drawWanderRange: 1
-  drawScentRange: 1
-  drawAwarenessRange: 1
   deathEvent:
     m_PersistentCalls:
       m_Calls: []
@@ -297,6 +295,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   heart: {fileID: 6750238200947379256}
+  animalDataSO: {fileID: 11400000, guid: e392f383c42242544a1c9109c5fda00f, type: 2}
 --- !u!114 &-6067473938447156737
 MonoBehaviour:
   m_ObjectHideFlags: 0

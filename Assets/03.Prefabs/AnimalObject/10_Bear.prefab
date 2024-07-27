@@ -811,6 +811,8 @@ GameObject:
   - component: {fileID: 114596199732060686}
   - component: {fileID: 114730609460955830}
   - component: {fileID: 195644442718834230}
+  - component: {fileID: 7645976498556735352}
+  - component: {fileID: -4240490790341809631}
   m_Layer: 0
   m_Name: 10_Bear
   m_TagString: Untagged
@@ -1034,8 +1036,6 @@ MonoBehaviour:
   species: Bear
   stats: {fileID: 11400000, guid: 7c0caf258cdab7a4fa8d1b3f9a9a5510, type: 2}
   wanderZone: 25
-  awareness: 30
-  scent: 30
   constainedToWanderZone: 0
   nonAgressiveTowards: []
   matchSurfaceRotation: 0
@@ -1043,8 +1043,6 @@ MonoBehaviour:
   logChanges: 0
   showGizmos: 0
   drawWanderRange: 1
-  drawScentRange: 1
-  drawAwarenessRange: 1
   deathEvent:
     m_PersistentCalls:
       m_Calls: []
@@ -1080,6 +1078,33 @@ NavMeshAgent:
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
+--- !u!114 &7645976498556735352
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1514481875857408}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 68ce9d49a47199348b78f7d518bc6ecc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  heart: {fileID: 0}
+  animalDataSO: {fileID: 0}
+--- !u!114 &-4240490790341809631
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1514481875857408}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 86ed368a899d8614894a78cc74df1559, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  uniqueID: 
 --- !u!1 &1529970377729522
 GameObject:
   m_ObjectHideFlags: 0

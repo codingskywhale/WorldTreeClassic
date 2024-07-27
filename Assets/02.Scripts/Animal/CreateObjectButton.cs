@@ -5,15 +5,23 @@ using UnityEngine.UI;
 
 public class CreateObjectButton : MonoBehaviour
 {
+    [Header("Animal Basic Datas")]
     public AnimalDataSO animalData;
     public Image characterIcon;
     public Button characterIconButton;
+
+    [Header("UIs")]
     public TextMeshProUGUI nameText;
     public TextMeshProUGUI conditionText;
     // 생명 창조 ~~ cost
     public TextMeshProUGUI inButtonCostText;
     public Button createButton;
+
     public Transform animalSpawnTr;
+
+    [Header("Unlock Image")]
+    public GameObject lockImage;
+    public TextMeshProUGUI lockConditionText;
 
     private int buttonIndex;
 
@@ -30,15 +38,13 @@ public class CreateObjectButton : MonoBehaviour
     private void InitailizeSet()
     {
         nameText.text = animalData.animalName;
-        conditionText.text = conditionX + animalData.animalUnlockConditions[0];
-        // 일단 첫 번째 버튼은 해금된 상태여야 함.
-        if (!conditionCleared) SetButtonLock();
-
-        else
+        if (lockImage != null)
         {
-            for (int i = 0; i < UIManager.Instance.createObjectButtonUnlockCount; i++)
-                CheckConditionCleared(i);
+            lockConditionText.text = GetConditions();
         }
+
+        for (int i = 0; i < UIManager.Instance.createObjectButtonUnlockCount; i++)
+            UIManager.Instance.CheckConditionCleared();
 
         UIManager.Instance.UpdateButtonUI();
     }
@@ -73,12 +79,12 @@ public class CreateObjectButton : MonoBehaviour
             UIManager.Instance.createObjectButtonUnlockCount++;
             characterIconButton.interactable = true;
 
-            if(UIManager.Instance.createAnimalButtons.Length > buttonIdx + 1)
-                CheckConditionCleared(buttonIdx + 1);
+            if (UIManager.Instance.createAnimalButtons.Length > buttonIdx + 1)
+                UIManager.Instance.CheckConditionCleared();
 
-            //해당 버튼에 대응되는 동물을 해금시켜준다.
-            UIManager.Instance.bag.UnlockSlot(buttonIdx);
         }
+        //해당 버튼에 대응되는 동물을 해금시켜준다.
+        UIManager.Instance.bag.UnlockSlot(buttonIdx);
     }
 
     public void AddAnimal()
@@ -113,6 +119,8 @@ public class CreateObjectButton : MonoBehaviour
 
         UIManager.Instance.CheckEnoughCost(0);
         UIManager.Instance.UpdateButtonUI();
+
+        UIManager.Instance.CheckConditionCleared();
     }
     // 모든 버튼에 적용 시켜야함
     public void SetCostText()
@@ -128,15 +136,39 @@ public class CreateObjectButton : MonoBehaviour
         inButtonCostText.text = "잠김";
     }
 
-    // 뭔가 버튼을 누르는 이벤트가 일어났을 때?
-    // 어떠한 조건이 일어났을 때 확인
-    public void CheckConditionCleared(int buttonIdx)
+    public string GetConditions()
     {
-        UIManager.Instance.createAnimalButtons[buttonIdx].conditionText.text = conditionV + animalData.animalUnlockConditions[0];
+        string conditions = "";
+        foreach (var condition in animalData.animalUnlockConditions)
+        {
+            conditions += condition.ShowCondition();
+        }
+        if (conditions.Length == 0) conditions = "조건 없음";
+
+        return conditions;
     }
 
     public void ClickAnimalIcon()
     {
         WindowsManager.Instance.animalInfoWnd.SetAnimalInfoWindowData(animalData);
+    }
+
+    public void SetLockImageText()
+    {
+
+    }
+
+    public void SetLockImageOff()
+    {
+        lockImage.SetActive(false);
+    }
+
+    public CreateObjectButton GetNextButton()
+    {
+        if (buttonIndex <= UIManager.Instance.createAnimalButtons.Length)
+            return UIManager.Instance.createAnimalButtons[buttonIndex + 1];
+
+        else
+            return null;
     }
 }

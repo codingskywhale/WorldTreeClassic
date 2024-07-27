@@ -10,13 +10,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 800bd3ef680550d49883bb83d8765e37, type: 3}
-  m_Name: Animal_6
+  m_Name: Animal_Horse
   m_EditorClassIdentifier: 
   animalIndex: 6
   animalIcon: {fileID: 10901, guid: 0000000000000000f000000000000000, type: 0}
   animalName: "\uB9D0"
   animalUnlockConditions:
-  - "\uC774\uC804 \uBC84\uD2BC \uD574\uAE08\uD558\uAE30"
+  - conditionType: 1
+    targetName: 
+    requiredAnimalCount: 0
+    requiredPlantIndex: 3
+    requiredWorldTreeLevel: 0
   animalPrefab: {fileID: 6481239469565288174, guid: ea1de200ad74a4cf1b54c8d73aafeab1, type: 3}
   storyText: "\uD3C9\uC6D0\uC744 \uC9C8\uC8FC\uD558\uB294 \uB9D0. \uACBD\uC8FC\uB9C8\uB85C
     \uD0A4\uC6CC\uC84C\uC73C\uB098, \uC6B4\uB3D9\uC744 \uC2EB\uC5B4\uD574\uC11C \uAC00\uCD9C\uD588\uB2E4.

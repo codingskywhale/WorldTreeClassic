@@ -18,7 +18,6 @@ public class Bag_AnimalSlot : MonoBehaviour
         slotButton = GetComponent<Button>();
         if (!isUnlocked)
         {
-            animalIcon.sprite = slotAnimalDataSO.animalIcon;
             animalIcon.color = Color.black;
 
             slotButton.interactable = false;

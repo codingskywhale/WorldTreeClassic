@@ -10,13 +10,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 800bd3ef680550d49883bb83d8765e37, type: 3}
-  m_Name: Animal_3
+  m_Name: Animal_Dog_GreatDane
   m_EditorClassIdentifier: 
   animalIndex: 3
   animalIcon: {fileID: 10901, guid: 0000000000000000f000000000000000, type: 0}
   animalName: "\uAC1C : \uADF8\uB808\uC774\uD2B8 \uB370\uC778"
   animalUnlockConditions:
-  - "\uC774\uC804 \uBC84\uD2BC \uD574\uAE08\uD558\uAE30"
+  - conditionType: 0
+    targetName: "\uB9AC\uD2B8\uB9AC\uBC84"
+    requiredAnimalIndex: 3
+    requiredAnimalCount: 3
+    requiredPlantIndex: 0
+    requiredWorldTreeLevel: 0
   animalPrefab: {fileID: 1149234200949348, guid: 3530aa07ed1fa41bd899b6d9780d97ad, type: 3}
   storyText: "\uC5BC\uB8E9\uBB34\uB2AC\uAC00 \uB3CB\uBCF4\uC774\uB294 \uADF8\uB808\uC774\uD2B8\uB370\uC778.
     \uC138\uACC4\uC5D0\uC11C \uAC00\uC7A5 \uD070 \uAC1C\uB77C\uACE0 \uD55C\uB2E4.

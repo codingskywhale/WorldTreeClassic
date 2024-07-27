@@ -10,13 +10,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 800bd3ef680550d49883bb83d8765e37, type: 3}
-  m_Name: Animal_7
+  m_Name: Animal_Deer
   m_EditorClassIdentifier: 
   animalIndex: 7
   animalIcon: {fileID: 10901, guid: 0000000000000000f000000000000000, type: 0}
   animalName: "\uC0AC\uC2B4"
   animalUnlockConditions:
-  - "\uC774\uC804 \uBC84\uD2BC \uD574\uAE08\uD558\uAE30"
+  - conditionType: 0
+    targetName: "\uC18C"
+    requiredAnimalCount: 2
+    requiredPlantIndex: 0
+    requiredWorldTreeLevel: 0
   animalPrefab: {fileID: 1567582185033856, guid: 3a9b422ae305e3b49aadf8ece0bfa915, type: 3}
   storyText: "\uD06C\uACE0 \uC544\uB984\uB2E4\uC6B4 \uBFD4\uC744 \uAC00\uC9C4 \uC0AC\uC2B4.
     \uC232 \uC18D\uC5D0\uC11C \uC0B4\uB358 \uC0AC\uC2B4\uC740 \uB291\uB300\uC640

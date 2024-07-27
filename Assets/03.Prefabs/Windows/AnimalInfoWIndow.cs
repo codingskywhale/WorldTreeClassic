@@ -20,7 +20,6 @@ public class AnimalInfoWindow : MonoBehaviour
 
     [Header("Bag UI")]
     public TextMeshProUGUI nameText;
-    public TextMeshProUGUI conditionTexts;
     public TextMeshProUGUI totalGeneratedCountText;
     public TextMeshProUGUI totalActiveCountText;
     public TextMeshProUGUI totalStoredCountText;
@@ -55,7 +54,6 @@ public class AnimalInfoWindow : MonoBehaviour
         nowAnimaldataSO = dataSO;
         animalImage.sprite = dataSO.animalIcon;
         nameText.text = dataSO.animalName;
-        conditionTexts.text = dataSO.animalUnlockConditions[0];
         totalGeneratedCountText.text = DataManager.Instance.animalGenerateData.allTypeCountDic[dataSO.animalName][EachCountType.Total].ToString();
         totalActiveCountText.text = DataManager.Instance.animalGenerateData.allTypeCountDic[dataSO.animalName][EachCountType.Active].ToString();
         totalStoredCountText.text = DataManager.Instance.animalGenerateData.allTypeCountDic[dataSO.animalName][EachCountType.Stored].ToString();

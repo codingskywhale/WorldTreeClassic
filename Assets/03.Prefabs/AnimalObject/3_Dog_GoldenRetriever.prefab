@@ -512,7 +512,7 @@ MonoBehaviour:
     animationBool: isSitting
   species: GoldenRetriever
   stats: {fileID: 11400000, guid: 91ff9525a96dadf46b6ed6d11b429824, type: 2}
-  wanderZone: 8
+  wanderZone: 3
   constainedToWanderZone: 0
   nonAgressiveTowards: []
   matchSurfaceRotation: 0
@@ -520,8 +520,6 @@ MonoBehaviour:
   logChanges: 0
   showGizmos: 0
   drawWanderRange: 1
-  drawScentRange: 1
-  drawAwarenessRange: 1
   deathEvent:
     m_PersistentCalls:
       m_Calls: []
@@ -553,7 +551,7 @@ NavMeshAgent:
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 1
   m_AutoRepath: 1
-  m_Height: 2
+  m_Height: 1
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
@@ -570,6 +568,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   heart: {fileID: 1077966415532071609}
+  animalDataSO: {fileID: 11400000, guid: fe5714a4e8607f640a477dd2e38f0e99, type: 2}
 --- !u!114 &-1725987432389278554
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -368,6 +368,7 @@ GameObject:
   - component: {fileID: 114925849592729484}
   - component: {fileID: 8808230658182936462}
   - component: {fileID: 2723269697640789843}
+  - component: {fileID: 7228424111545332635}
   m_Layer: 0
   m_Name: 4_Dog_GreatDane
   m_TagString: Animal
@@ -458,7 +459,7 @@ NavMeshAgent:
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 1
   m_AutoRepath: 1
-  m_Height: 2
+  m_Height: 1
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
@@ -510,8 +511,6 @@ MonoBehaviour:
   logChanges: 0
   showGizmos: 0
   drawWanderRange: 1
-  drawScentRange: 1
-  drawAwarenessRange: 1
   deathEvent:
     m_PersistentCalls:
       m_Calls: []
@@ -538,6 +537,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   heart: {fileID: 8123422579361929618}
+  animalDataSO: {fileID: 11400000, guid: 83070f56aae5b3c49af0696ec2c090f5, type: 2}
 --- !u!114 &2723269697640789843
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -551,6 +551,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   uniqueID: 
+--- !u!114 &7228424111545332635
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1149234200949348}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9ff6502c9bfc60740b9b7808681f4b68, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  heart: {fileID: 8123422579361929618}
+  animalDataSO: {fileID: 11400000, guid: 83070f56aae5b3c49af0696ec2c090f5, type: 2}
+  <needAnimalSO>k__BackingField:
+  - {fileID: 11400000, guid: fe5714a4e8607f640a477dd2e38f0e99, type: 2}
 --- !u!1 &1149297703058442
 GameObject:
   m_ObjectHideFlags: 0

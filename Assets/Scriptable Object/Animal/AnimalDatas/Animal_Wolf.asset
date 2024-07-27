@@ -10,13 +10,22 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 800bd3ef680550d49883bb83d8765e37, type: 3}
-  m_Name: Animal_8
+  m_Name: Animal_Wolf
   m_EditorClassIdentifier: 
   animalIndex: 8
   animalIcon: {fileID: 10901, guid: 0000000000000000f000000000000000, type: 0}
   animalName: "\uB291\uB300"
   animalUnlockConditions:
-  - "\uC774\uC804 \uBC84\uD2BC \uD574\uAE08\uD558\uAE30"
+  - conditionType: 0
+    targetName: "\uADF8\uB808\uC774\uD2B8 \uB370\uC778"
+    requiredAnimalCount: 1
+    requiredPlantIndex: 0
+    requiredWorldTreeLevel: 0
+  - conditionType: 0
+    targetName: "\uCE58\uC640\uC640"
+    requiredAnimalCount: 1
+    requiredPlantIndex: 0
+    requiredWorldTreeLevel: 0
   animalPrefab: {fileID: 1555847620765010, guid: 1159fbfcf2d66ee4b896abb3e41d47c4, type: 3}
   storyText: "\uD06C\uACE0 \uBB34\uC11C\uC6B4 \uB291\uB300. \uC0AC\uB098\uC6B4 \uC678\uBAA8\uC640
     \uB2EC\uB9AC \uC218\uB2E4\uB97C \uC88B\uC544\uD558\uB294 \uC218\uB2E4\uC7C1\uC774\uC774\uB2E4.

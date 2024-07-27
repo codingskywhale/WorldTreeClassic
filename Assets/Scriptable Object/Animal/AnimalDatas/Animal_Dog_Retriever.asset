@@ -10,13 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 800bd3ef680550d49883bb83d8765e37, type: 3}
-  m_Name: Animal_2
+  m_Name: Animal_Dog_Retriever
   m_EditorClassIdentifier: 
   animalIndex: 2
   animalIcon: {fileID: 10901, guid: 0000000000000000f000000000000000, type: 0}
   animalName: "\uAC1C : \uACE8\uB4E0 \uB9AC\uD2B8\uB9AC\uBC84"
-  animalUnlockConditions:
-  - "\uC870\uAC74 \uC5C6\uC74C"
+  animalUnlockConditions: []
   animalPrefab: {fileID: 1206288095452438, guid: 16e5f48d612f744039dbecb3e834b94f, type: 3}
   storyText: "\uD65C\uAE30 \uB118\uCE58\uB294 \uACE8\uB4E0 \uB9AC\uD2B8\uB9AC\uBC84.
     \uCD1D\uBA85\uD55C \uB9AC\uD2B8\uB9AC\uBC84\uB294 \uB9CE\uC740 \uC8FC\uC778\uC744
