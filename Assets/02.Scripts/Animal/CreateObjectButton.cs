@@ -38,6 +38,7 @@ public class CreateObjectButton : MonoBehaviour
     private void InitailizeSet()
     {
         nameText.text = animalData.animalName;
+        characterIcon.sprite = animalData.animalIcon;
         if (lockImage != null)
         {
             lockConditionText.text = GetConditions();
@@ -65,9 +66,9 @@ public class CreateObjectButton : MonoBehaviour
     {
         LifeManager.Instance.DecreaseWater(DataManager.Instance.animalGenerateData.nowCreateCost);
 
-        UnlockButton(buttonIndex);
-
         AddAnimal();
+
+        UnlockButton(buttonIndex);
     }
 
     public void UnlockButton(int buttonIdx)
@@ -112,6 +113,8 @@ public class CreateObjectButton : MonoBehaviour
             // 가방으로 이동하도록 해야함
             DataManager.Instance.animalGenerateData.AddAnimalToDictionary(animalData.animalName, false);
         }
+
+        DataManager.Instance.bag.UpdateSlotDataUI(buttonIndex);
         // 생산량 2배 증가.
         DataManager.Instance.touchData.ApplyIncreaseRate(1);
         LifeManager.Instance.ApplyIncreaseRateToAllRoots(1);

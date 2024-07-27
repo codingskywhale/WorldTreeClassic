@@ -13,12 +13,12 @@ MonoBehaviour:
   m_Name: Animal_Dog_Chihwawa
   m_EditorClassIdentifier: 
   animalIndex: 4
-  animalIcon: {fileID: 10901, guid: 0000000000000000f000000000000000, type: 0}
+  animalIcon: {fileID: 21300000, guid: 5a4dfffbf85206c46b38c1f67b4161d9, type: 3}
   animalName: "\uAC1C : \uCE58\uC640\uC640"
   animalUnlockConditions:
   - conditionType: 0
     targetName: "\uB9AC\uD2B8\uB9AC\uBC84"
-    requiredAnimalIndex: 3
+    requiredAnimalIndex: 2
     requiredAnimalCount: 3
     requiredPlantIndex: 0
     requiredWorldTreeLevel: 0

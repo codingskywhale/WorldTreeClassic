@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Animal_Dog_Retriever
   m_EditorClassIdentifier: 
   animalIndex: 2
-  animalIcon: {fileID: 10901, guid: 0000000000000000f000000000000000, type: 0}
+  animalIcon: {fileID: 21300000, guid: 5e2764654b22fee4f9ebdd6b1adb0101, type: 3}
   animalName: "\uAC1C : \uACE8\uB4E0 \uB9AC\uD2B8\uB9AC\uBC84"
   animalUnlockConditions: []
   animalPrefab: {fileID: 1206288095452438, guid: 16e5f48d612f744039dbecb3e834b94f, type: 3}

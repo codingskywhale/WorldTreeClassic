@@ -18,11 +18,13 @@ MonoBehaviour:
   animalUnlockConditions:
   - conditionType: 0
     targetName: "\uADF8\uB808\uC774\uD2B8 \uB370\uC778"
+    requiredAnimalIndex: 3
     requiredAnimalCount: 1
     requiredPlantIndex: 0
     requiredWorldTreeLevel: 0
   - conditionType: 0
     targetName: "\uCE58\uC640\uC640"
+    requiredAnimalIndex: 4
     requiredAnimalCount: 1
     requiredPlantIndex: 0
     requiredWorldTreeLevel: 0

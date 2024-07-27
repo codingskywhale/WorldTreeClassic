@@ -24,13 +24,14 @@ public class Bag_AnimalSlot : MonoBehaviour
             explainText.text = string.Empty;
         }
     }        
-
+     
     public void SetSlotData()
     {
         animalIcon.color = Color.white; 
         slotButton.interactable = true;
 
-        explainText.text = $"{DataManager.Instance.animalGenerateData.nowAnimalCount} / {DataManager.Instance.animalGenerateData.maxAnimalCount}";
+        explainText.text = $"{DataManager.Instance.animalGenerateData.allTypeCountDic[slotAnimalDataSO.animalName][EachCountType.Active]} " +
+                            $"/ {DataManager.Instance.animalGenerateData.allTypeCountDic[slotAnimalDataSO.animalName][EachCountType.Total]}";
     }
 
     public void ClickAnimalIcon()
@@ -40,5 +41,11 @@ public class Bag_AnimalSlot : MonoBehaviour
             WindowsManager.Instance.animalInfoWnd.gameObject.SetActive(true);
             WindowsManager.Instance.animalInfoWnd.SetAnimalInfoWindowData(slotAnimalDataSO);
         }
+    }
+
+    public void UpdateUI()
+    {
+        explainText.text = $"{DataManager.Instance.animalGenerateData.allTypeCountDic[slotAnimalDataSO.animalName][EachCountType.Active]} " +
+                            $"/ {DataManager.Instance.animalGenerateData.allTypeCountDic[slotAnimalDataSO.animalName][EachCountType.Total]}";
     }
 }

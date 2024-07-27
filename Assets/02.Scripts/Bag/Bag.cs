@@ -15,4 +15,9 @@ public class Bag : MonoBehaviour
         slots[slotIdx].isUnlocked = true;
         slots[slotIdx].SetSlotData();
     }
+
+    public void UpdateSlotDataUI(int slotIdx)
+    {
+        slots[slotIdx].UpdateUI();
+    }
 }

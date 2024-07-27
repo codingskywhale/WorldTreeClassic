@@ -13,13 +13,14 @@ MonoBehaviour:
   m_Name: Animal_Horse
   m_EditorClassIdentifier: 
   animalIndex: 6
-  animalIcon: {fileID: 10901, guid: 0000000000000000f000000000000000, type: 0}
+  animalIcon: {fileID: 21300000, guid: fb04b2d69cea7444ab01b62a7305ab51, type: 3}
   animalName: "\uB9D0"
   animalUnlockConditions:
   - conditionType: 1
     targetName: 
+    requiredAnimalIndex: 0
     requiredAnimalCount: 0
-    requiredPlantIndex: 3
+    requiredPlantIndex: 2
     requiredWorldTreeLevel: 0
   animalPrefab: {fileID: 6481239469565288174, guid: ea1de200ad74a4cf1b54c8d73aafeab1, type: 3}
   storyText: "\uD3C9\uC6D0\uC744 \uC9C8\uC8FC\uD558\uB294 \uB9D0. \uACBD\uC8FC\uB9C8\uB85C

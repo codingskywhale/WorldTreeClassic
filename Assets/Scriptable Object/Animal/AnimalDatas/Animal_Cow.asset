@@ -13,13 +13,14 @@ MonoBehaviour:
   m_Name: Animal_Cow
   m_EditorClassIdentifier: 
   animalIndex: 5
-  animalIcon: {fileID: 10901, guid: 0000000000000000f000000000000000, type: 0}
+  animalIcon: {fileID: 21300000, guid: d89184c3df5fa424ea4cf7bc140d186e, type: 3}
   animalName: "\uC18C"
   animalUnlockConditions:
   - conditionType: 1
     targetName: 
+    requiredAnimalIndex: 0
     requiredAnimalCount: 0
-    requiredPlantIndex: 3
+    requiredPlantIndex: 2
     requiredWorldTreeLevel: 0
   animalPrefab: {fileID: 7604589965335949422, guid: 479efb3793efa4043be91317c6baf638, type: 3}
   storyText: "\uC6B0\uC9C1\uD558\uAC8C \uC77C\uC744 \uD558\uB294 \uC18C. \uD3C9\uC0DD

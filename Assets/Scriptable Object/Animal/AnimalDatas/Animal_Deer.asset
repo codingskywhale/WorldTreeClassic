@@ -13,11 +13,12 @@ MonoBehaviour:
   m_Name: Animal_Deer
   m_EditorClassIdentifier: 
   animalIndex: 7
-  animalIcon: {fileID: 10901, guid: 0000000000000000f000000000000000, type: 0}
+  animalIcon: {fileID: 21300000, guid: 770cab90374662a4283396e283586f11, type: 3}
   animalName: "\uC0AC\uC2B4"
   animalUnlockConditions:
   - conditionType: 0
     targetName: "\uC18C"
+    requiredAnimalIndex: 5
     requiredAnimalCount: 2
     requiredPlantIndex: 0
     requiredWorldTreeLevel: 0

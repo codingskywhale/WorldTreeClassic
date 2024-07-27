@@ -13,12 +13,12 @@ MonoBehaviour:
   m_Name: Animal_Dog_GreatDane
   m_EditorClassIdentifier: 
   animalIndex: 3
-  animalIcon: {fileID: 10901, guid: 0000000000000000f000000000000000, type: 0}
+  animalIcon: {fileID: 21300000, guid: e8d4d70e36d992c4690188f9840c8e30, type: 3}
   animalName: "\uAC1C : \uADF8\uB808\uC774\uD2B8 \uB370\uC778"
   animalUnlockConditions:
   - conditionType: 0
     targetName: "\uB9AC\uD2B8\uB9AC\uBC84"
-    requiredAnimalIndex: 3
+    requiredAnimalIndex: 2
     requiredAnimalCount: 3
     requiredPlantIndex: 0
     requiredWorldTreeLevel: 0
