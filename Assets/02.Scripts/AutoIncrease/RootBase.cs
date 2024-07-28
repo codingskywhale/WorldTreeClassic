@@ -1,8 +1,11 @@
 using System.Collections;
+using System.Collections.Generic;
 using System.Numerics;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using Quaternion = UnityEngine.Quaternion;
+using Vector3 = UnityEngine.Vector3;
 
 public interface IRoot
 {
@@ -14,6 +17,14 @@ public interface IRoot
 
 public class RootBase : MonoBehaviour, IRoot
 {
+    public Terrain terrain;  // Terrain 오브젝트
+    public GameObject flowerPrefab;  // 꽃 프리팹
+    public float brushSize = 100f;  // 브러시 크기
+    public int flowersPerPosition = 10;  // 각 위치당 심을 꽃의 개수
+
+    private List<Vector3> flowerPositions;  // 꽃 위치 리스트
+    private int currentFlowerIndex = 0;  // 꽃 인덱스
+
     public int rootLevel = 0; // 초기 레벨을 0으로 설정
     public BigInteger baseLifeGeneration = 1; // 기본 생명력 생성량
     public BigInteger initialUpgradeCost = 20; // 초기 레벨업 비용
@@ -27,9 +38,6 @@ public class RootBase : MonoBehaviour, IRoot
     public bool isUnlocked = false; // 잠금 상태를 나타내는 변수 추가
 
     public int unlockThreshold = 5; // 잠금 해제에 필요한 터치 레벨
-                                    //public GameObject objectPrefab;
-
-    public GameObject[] plantObjects; // 미리 배치된 식물 오브젝트 배열 추가
 
     public event System.Action OnGenerationRateChanged;
 
@@ -41,6 +49,10 @@ public class RootBase : MonoBehaviour, IRoot
 
     protected virtual void Start()
     {
+        flowerPositions = new List<Vector3>();
+
+        CalculateFlowerPositions();
+
         if (rootDataSO != null)
         {
             unlockThreshold = rootDataSO.unlockThreshold;
@@ -49,9 +61,7 @@ public class RootBase : MonoBehaviour, IRoot
         }
 
         OnGenerationRateChanged += UpdateUI; // 이벤트 핸들러 추가
-                                             //OnGenerationRateChanged?.Invoke(); // 초기화 시 이벤트 트리거
         cameraTransition = FindObjectOfType<CameraTransition>(); // CameraTransition 컴포넌트 참조 초기화
-                                                                 //upgradeLifeCost = initialUpgradeCost; // 초기 레벨업 비용 설정
         currentMultiplier = 1;
         LifeManager.Instance.RegisterRoot(this);
         UpdateUI();
@@ -85,17 +95,13 @@ public class RootBase : MonoBehaviour, IRoot
     {
         if (!isUnlocked) return; // 잠금 해제된 경우에만 업그레이드 가능
         rootLevel++;
-        //레벨이 1이라면 CreateAndZoomObject 메서드 호출
-        if (rootLevel == 1)
+        if (rootLevel == 1 || rootLevel % 25 == 0)
         {
-            //CreateAndZoomObject();
             ActivateNextPlantObject();
-        }
-        if (rootLevel % 25 == 0)
-        {
-            //CreateAndZoomObject();
-            ActivateNextPlantObject();
-            baseLifeGeneration *= 2; // 25레벨마다 기본 생명력 생성량 두 배 증가
+            if (rootLevel % 25 == 0)
+            {
+                baseLifeGeneration *= 2; // 25레벨마다 기본 생명력 생성량 두 배 증가
+            }
         }
         upgradeLifeCost = CalculateUpgradeCost();
         OnGenerationRateChanged?.Invoke();
@@ -103,23 +109,80 @@ public class RootBase : MonoBehaviour, IRoot
         AutoObjectManager.Instance.CalculateTotalAutoGeneration();
         UpdateUI();
     }
+
     private void ActivateNextPlantObject()
     {
-        if (plantObjects == null || plantObjects.Length == 0) return;
+        PlaceFlowers(flowerPositions, flowerPrefab, ref currentFlowerIndex);
+    }
 
-        // 첫 번째 레벨일 때 첫 번째 오브젝트 활성화
-        if (rootLevel == 1)
+    void CalculateFlowerPositions()
+    {
+        Vector3 objectCenter = transform.position;  // 오브젝트의 위치를 중앙값으로 설정
+        float innerRadius = 1f;  // innerRadius 값을 줄임
+        float outerRadius = 2f;  // outerRadius 값을 줄임
+
+        int numPositions = 12;  // 12개의 위치를 원형으로 배치
+
+        // 꽃 위치 (내부 및 바깥쪽 원형 배치)
+        for (int i = 0; i < numPositions; i++)
         {
-            plantObjects[0].SetActive(true);
+            float angle = Mathf.Deg2Rad * (360f / numPositions * i);  // 각도 계산
+            float x = innerRadius * Mathf.Cos(angle);
+            float z = innerRadius * Mathf.Sin(angle);
+
+            // y 좌표를 오브젝트의 y 좌표로 설정
+            float y = objectCenter.y;
+            flowerPositions.Add(new Vector3(x, y, z));
+
+            x = outerRadius * Mathf.Cos(angle);
+            z = outerRadius * Mathf.Sin(angle);
+
+            // y 좌표를 오브젝트의 y 좌표로 설정
+            y = objectCenter.y;
+            flowerPositions.Add(new Vector3(x, y, z));
         }
-        else if (rootLevel > 1 && rootLevel % 25 == 0)
+    }
+
+
+    void PlaceFlowers(List<Vector3> flowerPositions, GameObject flowerPrefab, ref int currentFlowerIndex)
+    {
+        if (currentFlowerIndex >= flowerPositions.Count)
         {
-            int plantIndex = rootLevel / 25; // 현재 레벨에 해당하는 인덱스 계산
-            if (plantIndex >= 0 && plantIndex < plantObjects.Length)
+            currentFlowerIndex = 0;  // 인덱스 초기화
+        }
+
+        Vector3 flowerPosition = flowerPositions[currentFlowerIndex];
+
+        for (int i = 0; i < flowersPerPosition; i++)
+        {
+            // 원형 오프셋 생성
+            float angle = Random.Range(0f, 2f * Mathf.PI);
+            float radius = Random.Range(0f, brushSize / 6);
+            Vector3 randomOffset = new Vector3(radius * Mathf.Cos(angle), 0, radius * Mathf.Sin(angle));
+            Vector3 finalPosition = transform.position + flowerPosition + randomOffset;  // 오브젝트의 위치를 기준으로 위치 설정
+
+            GameObject newFlower = Instantiate(flowerPrefab, finalPosition, Quaternion.identity);
+            newFlower.transform.parent = terrain.transform;  // Terrain 오브젝트의 자식으로 설정
+
+            // 경사면에 맞게 회전
+            Vector3 terrainNormal = terrain.terrainData.GetInterpolatedNormal(finalPosition.x / terrain.terrainData.size.x, finalPosition.z / terrain.terrainData.size.z);
+            newFlower.transform.up = terrainNormal;
+
+            newFlower.isStatic = true;  // Static Batching 적용
+
+            // Material에 GPU Instancing 활성화
+            foreach (var renderer in newFlower.GetComponentsInChildren<Renderer>())
             {
-                plantObjects[plantIndex].SetActive(true); // 해당 인덱스의 식물 오브젝트 활성화
+                if (renderer.sharedMaterial != null)
+                {
+                    renderer.sharedMaterial.enableInstancing = true;
+                }
             }
+
+            Debug.Log($"Placed {flowerPrefab.name} at position: {finalPosition} with normal: {terrainNormal}");
         }
+
+        currentFlowerIndex++;
     }
 
     public virtual void UpdateUI()
@@ -145,36 +208,28 @@ public class RootBase : MonoBehaviour, IRoot
 
         if (rootUpgradeCostText != null)
         {
-            rootUpgradeCostText.text = //isUnlocked ?
-                                       $"강화 비용: {BigIntegerUtils.FormatBigInteger(upgradeCost)} 물"; //: $"해금 비용: {BigIntegerUtils.FormatBigInteger(unlockCost)} 물 (레벨: {unlockThreshold} 필요)";
-
+            rootUpgradeCostText.text = $"강화 비용: {BigIntegerUtils.FormatBigInteger(upgradeCost)} 물";
         }
-
-
     }
 
     public virtual void UpdateGenerationRateUI(BigInteger generationRate)
     {
         if (generationRateText != null)
         {
-
             generationRateText.text = $"생산률: {BigIntegerUtils.FormatBigInteger(generationRate)} 물/초";
 
             if (isUnlocked && rootLevel == 0)
             {
-                // 1레벨일 때의 생산률 계산
-                BigInteger levelOneGenerationRate = baseLifeGeneration * BigInteger.Pow(103, 0) / BigInteger.Pow(100, 0); // 1.03^0 / 1.00^0
+                BigInteger levelOneGenerationRate = baseLifeGeneration * BigInteger.Pow(103, 0) / BigInteger.Pow(100, 0);
                 generationRateText.text = $"생산률: {BigIntegerUtils.FormatBigInteger(generationRate)} 물/초 \n1레벨 업그레이드시 자동생산: {BigIntegerUtils.FormatBigInteger(levelOneGenerationRate)} 물/초";
             }
             if (!isUnlocked && rootLevel == 0)
             {
-                // 1레벨일 때의 생산률 계산
-                BigInteger levelOneGenerationRate = baseLifeGeneration * BigInteger.Pow(103, 0) / BigInteger.Pow(100, 0); // 1.03^0 / 1.00^0
+                BigInteger levelOneGenerationRate = baseLifeGeneration * BigInteger.Pow(103, 0) / BigInteger.Pow(100, 0);
                 generationRateText.text = $"생산률: {BigIntegerUtils.FormatBigInteger(generationRate)} 물/초 \n1레벨 업그레이드시 자동생산: {BigIntegerUtils.FormatBigInteger(levelOneGenerationRate)} 물/초";
             }
         }
     }
-
 
     public virtual void UpdateUnlockUI()
     {
@@ -189,7 +244,6 @@ public class RootBase : MonoBehaviour, IRoot
             if (lockImage != null)
             {
                 lockImage.gameObject.SetActive(true);
-                
             }
         }
         else
@@ -211,14 +265,12 @@ public class RootBase : MonoBehaviour, IRoot
         if (!isUnlocked || rootLevel == 0) return 0; // 잠금 해제 전이나 레벨이 0일 때는 0
         BigInteger baseGeneration = baseLifeGeneration * BigInteger.Pow(103, rootLevel - 1) / BigInteger.Pow(100, rootLevel - 1); // 1.03^rootLevel-1
         BigInteger totalGeneration = baseGeneration * currentMultiplier; // currentMultiplier를 곱하여 반환
-                                                                         //Debug.Log($"Total Generation ({this.name}): " + totalGeneration);
         return totalGeneration;
     }
 
     public void Unlock()
     {
         isUnlocked = true;
-        //rootLevel = 1; // 잠금 해제 시 레벨 1로 설정
         upgradeLifeCost = CalculateUpgradeCost(); // 업그레이드 비용 업데이트
         OnGenerationRateChanged?.Invoke(); // 잠금 해제 시 이벤트 트리거
         DataManager.Instance.animalGenerateData.AddMaxAnimalCount();
@@ -228,7 +280,6 @@ public class RootBase : MonoBehaviour, IRoot
 
     private void CheckUnlockCondition()
     {
-        // 잠금 해제 조건 확인 로직
         if (!isUnlocked && DataManager.Instance.touchData != null
             && DataManager.Instance.touchData.touchIncreaseLevel >= unlockThreshold)
         {
@@ -255,34 +306,4 @@ public class RootBase : MonoBehaviour, IRoot
         OnGenerationRateChanged?.Invoke(); // 생산률 업데이트 이벤트 호출
         UpdateUI(); // 부스트가 끝난 후 UI 업데이트
     }
-
-    //protected virtual void CreateAndZoomObject()
-    //{
-    //    if (objectPrefab != null)
-    //    {
-    //        float radius = 1.5f; // 원하는 원의 반지름
-    //        int numberOfObjects = 20; // 생성할 오브젝트 수
-    //        UnityEngine.Vector3 centerPosition = new UnityEngine.Vector3(0, 0, 10); // 중심 좌표
-
-    //        for (int i = 0; i < numberOfObjects; i++)
-    //        {
-    //            float angle = i * Mathf.PI * 2 / numberOfObjects;
-    //            float x = Mathf.Cos(angle) * radius;
-    //            float z = Mathf.Sin(angle) * radius;
-    //            UnityEngine.Vector3 spawnPosition = centerPosition + new UnityEngine.Vector3(x, 0, z);
-
-    //            GameObject newObject = Instantiate(objectPrefab, spawnPosition, UnityEngine.Quaternion.identity);
-    //            Debug.Log("Object created at position: " + spawnPosition);
-
-    //            if (cameraTransition != null)
-    //            {
-    //                // StartCoroutine(cameraTransition.ZoomCamera(newObject.transform)); // 줌 효과 시작
-    //            }
-    //        }
-    //    }
-    //    else
-    //    {
-    //        Debug.Log("Object prefab is not assigned.");
-    //    }
-    //}
 }
