@@ -37,6 +37,17 @@ public class DataManager : MonoBehaviour
         spawnData.animalDataSOList.Remove(animalDataSO);
     }
 
+    public void DestroyAllAnimal()
+    {
+        for (int i = 0; i < spawnData.animalObjectList.Count; i++)
+        {
+            GameObject go = spawnData.animalObjectList[i];
+            Destroy(go);
+        }
+        spawnData.animalObjectList.Clear();
+        spawnData.animalDataSOList.Clear();
+    }
+
     // 가방에 보관하는 기능.
     public void StoreAnimalCount(AnimalDataSO animalDataSO)
     {

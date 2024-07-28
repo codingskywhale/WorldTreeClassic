@@ -17,7 +17,7 @@ MonoBehaviour:
   animalName: "\uAC70\uBBF8"
   animalUnlockConditions:
   - conditionType: 0
-    targetName: 
+    targetName: "\uBC40"
     requiredAnimalIndex: 14
     requiredAnimalCount: 2
     requiredPlantIndex: 0

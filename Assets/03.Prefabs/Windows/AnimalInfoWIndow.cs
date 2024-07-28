@@ -52,8 +52,8 @@ public class AnimalInfoWindow : MonoBehaviour
     public void SetAnimalInfoWindowData(AnimalDataSO dataSO)
     {
         nowAnimaldataSO = dataSO;
-        animalImage.sprite = dataSO.animalIcon;
-        nameText.text = dataSO.animalName;
+        animalImage.sprite = nowAnimaldataSO.animalIcon;
+        nameText.text = nowAnimaldataSO.animalName;
         totalGeneratedCountText.text = DataManager.Instance.animalGenerateData.allTypeCountDic[dataSO.animalName][EachCountType.Total].ToString();
         totalActiveCountText.text = DataManager.Instance.animalGenerateData.allTypeCountDic[dataSO.animalName][EachCountType.Active].ToString();
         totalStoredCountText.text = DataManager.Instance.animalGenerateData.allTypeCountDic[dataSO.animalName][EachCountType.Stored].ToString();

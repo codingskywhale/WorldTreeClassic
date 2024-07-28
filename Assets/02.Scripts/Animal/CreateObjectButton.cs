@@ -56,6 +56,7 @@ public class CreateObjectButton : MonoBehaviour
         if (LifeManager.Instance.lifeAmount >= (BigInteger)DataManager.Instance.animalGenerateData.nowCreateCost)
         {
             WindowsManager.Instance.animalInfoWnd.createObjectButton = this;
+            WindowsManager.Instance.animalInfoWnd.animalImage.sprite = animalData.animalIcon;
             buttonIndex = buttonIdx;
 
             WindowsManager.Instance.animalInfoWnd.SetBasicData(animalData.animalName);
