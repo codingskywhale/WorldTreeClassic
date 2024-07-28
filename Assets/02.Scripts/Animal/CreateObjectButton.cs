@@ -155,6 +155,7 @@ public class CreateObjectButton : MonoBehaviour
     public void ClickAnimalIcon()
     {
         WindowsManager.Instance.animalInfoWnd.SetAnimalInfoWindowData(animalData);
+        WindowsManager.Instance.animalInfoWnd.ChangeBottomUI(true);
     }
 
     public void SetLockImageText()
@@ -164,6 +165,7 @@ public class CreateObjectButton : MonoBehaviour
 
     public void SetLockImageOff()
     {
+        characterIconButton.interactable = true;
         lockImage.SetActive(false);
     }
 
