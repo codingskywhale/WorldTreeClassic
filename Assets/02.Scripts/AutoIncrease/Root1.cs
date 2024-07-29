@@ -1,4 +1,6 @@
 using System.Numerics;
+using UnityEngine;
+using Vector3 = UnityEngine.Vector3;
 
 public class Root1 : RootBase
 {
@@ -10,6 +12,7 @@ public class Root1 : RootBase
         base.Start();
         LifeManager.Instance.RegisterRoot(this);
         UpdateUI();
+        CalculateFlowerPositions();
     }
 
 
@@ -26,5 +29,12 @@ public class Root1 : RootBase
     public override BigInteger GetTotalLifeGeneration()
     {
         return base.GetTotalLifeGeneration(); // 기본 클래스의 동작을 유지
+    }
+
+    protected override Vector3 GetRootCenterPosition()
+    {
+        Vector3 centerPosition = new Vector3(-7.3f, -0.66f, -5); // Root1의 중심 위치
+        Debug.Log($"Root1 중심 위치: {centerPosition}"); // 중심 위치 로그 추가
+        return centerPosition;
     }
 }

@@ -19,11 +19,15 @@ public class RootBase : MonoBehaviour, IRoot
 {
     public Terrain terrain;  // Terrain 오브젝트
     public GameObject flowerPrefab;  // 꽃 프리팹
-    public float brushSize = 100f;  // 브러시 크기
+    public float brushSize = 1f;  // 브러시 크기
     public int flowersPerPosition = 10;  // 각 위치당 심을 꽃의 개수
+    public GameObject[] prePlacedFlowers; // 미리 배치된 꽃 배열
+    public OfflineRewardAmountSkill offlineRewardAmountSkill; // 오프라인 보상 스킬 참조
+    public SkillCoolDownReduction skillCoolDownReduction;
 
-    private List<Vector3> flowerPositions;  // 꽃 위치 리스트
+    protected List<Vector3> flowerPositions;  // 꽃 위치 리스트
     private int currentFlowerIndex = 0;  // 꽃 인덱스
+    private int currentPrePlacedFlowerIndex = 0; // 미리 배치된 꽃 인덱스
 
     public int rootLevel = 0; // 초기 레벨을 0으로 설정
     public BigInteger baseLifeGeneration = 1; // 기본 생명력 생성량
@@ -38,6 +42,8 @@ public class RootBase : MonoBehaviour, IRoot
     public bool isUnlocked = false; // 잠금 상태를 나타내는 변수 추가
 
     public int unlockThreshold = 5; // 잠금 해제에 필요한 터치 레벨
+    public int requiredOfflineRewardSkillLevel = 1; // 오프라인 보상 스킬 해금 조건 레벨
+    public int skillCoolDownReductionLevel = 1; // 스킬쿨다운 아티팩트 스킬 해금 조건 레벨
 
     public event System.Action OnGenerationRateChanged;
 
@@ -51,14 +57,15 @@ public class RootBase : MonoBehaviour, IRoot
     {
         flowerPositions = new List<Vector3>();
 
-        CalculateFlowerPositions();
-
         if (rootDataSO != null)
         {
             unlockThreshold = rootDataSO.unlockThreshold;
             baseLifeGeneration = BigInteger.Parse(rootDataSO.baseLifeGenerationString);
             unlockCost = BigInteger.Parse(rootDataSO.unlockCostString);
+            requiredOfflineRewardSkillLevel = rootDataSO.requiredOfflineRewardSkillLevel;
         }
+
+        CalculateFlowerPositions();
 
         OnGenerationRateChanged += UpdateUI; // 이벤트 핸들러 추가
         cameraTransition = FindObjectOfType<CameraTransition>(); // CameraTransition 컴포넌트 참조 초기화
@@ -112,37 +119,58 @@ public class RootBase : MonoBehaviour, IRoot
 
     private void ActivateNextPlantObject()
     {
-        PlaceFlowers(flowerPositions, flowerPrefab, ref currentFlowerIndex);
-    }
-
-    void CalculateFlowerPositions()
-    {
-        Vector3 objectCenter = transform.position;  // 오브젝트의 위치를 중앙값으로 설정
-        float innerRadius = 1f;  // innerRadius 값을 줄임
-        float outerRadius = 2f;  // outerRadius 값을 줄임
-
-        int numPositions = 12;  // 12개의 위치를 원형으로 배치
-
-        // 꽃 위치 (내부 및 바깥쪽 원형 배치)
-        for (int i = 0; i < numPositions; i++)
+        if (currentPrePlacedFlowerIndex < prePlacedFlowers.Length)
         {
-            float angle = Mathf.Deg2Rad * (360f / numPositions * i);  // 각도 계산
-            float x = innerRadius * Mathf.Cos(angle);
-            float z = innerRadius * Mathf.Sin(angle);
-
-            // y 좌표를 오브젝트의 y 좌표로 설정
-            float y = objectCenter.y;
-            flowerPositions.Add(new Vector3(x, y, z));
-
-            x = outerRadius * Mathf.Cos(angle);
-            z = outerRadius * Mathf.Sin(angle);
-
-            // y 좌표를 오브젝트의 y 좌표로 설정
-            y = objectCenter.y;
-            flowerPositions.Add(new Vector3(x, y, z));
+            prePlacedFlowers[currentPrePlacedFlowerIndex].SetActive(true);
+            currentPrePlacedFlowerIndex++;
+        }
+        else
+        {
+            PlaceFlowers(flowerPositions, flowerPrefab, ref currentFlowerIndex);
         }
     }
 
+    public virtual void CalculateFlowerPositions()
+    {
+        Vector3 terrainSize = terrain.terrainData.size;
+        Vector3 terrainPosition = terrain.transform.position;  // 터레인의 월드 위치
+        Vector3 terrainCenter = GetRootCenterPosition(); // Root마다 다른 중심 위치
+        Debug.Log($"{this.GetType().Name} 중심 위치: {terrainCenter}"); // 중심 위치 로그 추가
+        float innerRadius = brushSize / 4;  // 첫 번째 꽃의 위치를 위한 반경 (내부 원형 배치)
+        float outerRadius = brushSize / 2;  // 두 번째 꽃의 위치를 위한 반경 (외부 원형 배치)
+
+        int numPositions = 8;  // 8개의 위치를 원형으로 배치
+
+        // 첫 번째 꽃 위치 (내부 원형 배치)
+        for (int i = 0; i < numPositions; i++)
+        {
+            float angle = Mathf.Deg2Rad * (360f / numPositions * i);  // 각도 계산
+            float x = terrainCenter.x + innerRadius * Mathf.Cos(angle);
+            float z = terrainCenter.z + innerRadius * Mathf.Sin(angle);
+
+            flowerPositions.Add(new Vector3(x, terrainPosition.y, z));
+        }
+
+        // 두 번째 꽃 위치 (외부 원형 배치)
+        for (int i = 0; i < numPositions; i++)
+        {
+            float angle = Mathf.Deg2Rad * (360f / numPositions * i);  // 각도 계산
+            float x = terrainCenter.x + outerRadius * Mathf.Cos(angle);
+            float z = terrainCenter.z + outerRadius * Mathf.Sin(angle);
+
+            flowerPositions.Add(new Vector3(x, terrainPosition.y, z));
+        }
+    }
+
+    // Root 중심 위치를 반환하는 가상 메서드
+    protected virtual Vector3 GetRootCenterPosition()
+    {
+        if (rootDataSO != null)
+        {
+            return rootDataSO.centerPosition; // 스크립터블 오브젝트의 중심 위치 사용
+        }
+        return new Vector3(-7.3f, -0.66f, -5); // 기본 중심 위치
+    }
 
     void PlaceFlowers(List<Vector3> flowerPositions, GameObject flowerPrefab, ref int currentFlowerIndex)
     {
@@ -159,13 +187,20 @@ public class RootBase : MonoBehaviour, IRoot
             float angle = Random.Range(0f, 2f * Mathf.PI);
             float radius = Random.Range(0f, brushSize / 6);
             Vector3 randomOffset = new Vector3(radius * Mathf.Cos(angle), 0, radius * Mathf.Sin(angle));
-            Vector3 finalPosition = transform.position + flowerPosition + randomOffset;  // 오브젝트의 위치를 기준으로 위치 설정
+            Vector3 finalPosition = flowerPosition + randomOffset;
+
+            // Terrain 높이 샘플링 및 최종 위치 조정
+            float y = terrain.SampleHeight(finalPosition) + terrain.transform.position.y;
+            finalPosition.y = y;
 
             GameObject newFlower = Instantiate(flowerPrefab, finalPosition, Quaternion.identity);
             newFlower.transform.parent = terrain.transform;  // Terrain 오브젝트의 자식으로 설정
 
             // 경사면에 맞게 회전
-            Vector3 terrainNormal = terrain.terrainData.GetInterpolatedNormal(finalPosition.x / terrain.terrainData.size.x, finalPosition.z / terrain.terrainData.size.z);
+            Vector3 terrainNormal = terrain.terrainData.GetInterpolatedNormal(
+                (finalPosition.x - terrain.transform.position.x) / terrain.terrainData.size.x,
+                (finalPosition.z - terrain.transform.position.z) / terrain.terrainData.size.z
+            );
             newFlower.transform.up = terrainNormal;
 
             newFlower.isStatic = true;  // Static Batching 적용
@@ -178,8 +213,6 @@ public class RootBase : MonoBehaviour, IRoot
                     renderer.sharedMaterial.enableInstancing = true;
                 }
             }
-
-            Debug.Log($"Placed {flowerPrefab.name} at position: {finalPosition} with normal: {terrainNormal}");
         }
 
         currentFlowerIndex++;
@@ -238,9 +271,16 @@ public class RootBase : MonoBehaviour, IRoot
             if (lockText != null)
             {
                 lockText.gameObject.SetActive(true);
-                lockText.text = $"잠금 해제 조건: 세계수 레벨 {unlockThreshold}\n꽃 해금 시 배치 가능 동물 수 + 5";
+                if (rootDataSO != null)
+                {
+                    // 스크립터블 오브젝트의 텍스트 사용
+                    lockText.text = rootDataSO.unlockConditionText.Replace("\\n", "\n");
+                }
+                else
+                {
+                    lockText.text = $"잠금 해제 조건: 세계수 레벨 {unlockThreshold}\n꽃 해금 시 배치 가능 동물 수 + 5"; // 기본 텍스트
+                }
             }
-
             if (lockImage != null)
             {
                 lockImage.gameObject.SetActive(true);
@@ -285,6 +325,8 @@ public class RootBase : MonoBehaviour, IRoot
         {
             Unlock(); // 잠금 해제 조건 만족 시 Unlock 호출
         }
+
+        
     }
 
     public void ApplyTemporaryBoost(BigInteger multiplier, float duration)

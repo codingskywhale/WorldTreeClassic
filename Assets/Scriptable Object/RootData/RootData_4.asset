@@ -15,3 +15,5 @@ MonoBehaviour:
   unlockThreshold: 40
   baseLifeGenerationString: 320000
   unlockCostString: 64500000000
+  centerPosition: {x: 0, y: 0, z: 0}
+  unlockConditionText: 

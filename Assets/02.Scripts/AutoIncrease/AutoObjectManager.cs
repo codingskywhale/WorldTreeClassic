@@ -1,5 +1,3 @@
-
-
 using System;
 using System.Numerics;
 using UnityEngine;
@@ -55,6 +53,18 @@ public class AutoObjectManager : MonoBehaviour
                 && DataManager.Instance.touchData.touchIncreaseLevel >= root.unlockThreshold)
             {
                 root.Unlock(); // 잠금 해제 조건 만족 시 Unlock 호출
+            }
+            // 오프라인 보상 스킬 해금 조건 확인
+            if (!root.isUnlocked && root.offlineRewardAmountSkill != null
+                && root.offlineRewardAmountSkill.currentLevel >= root.requiredOfflineRewardSkillLevel)
+            {
+                root.Unlock(); // 오프라인 보상 스킬 레벨 조건 만족 시 Unlock 호출
+            }
+
+            if(!root.isUnlocked && root.skillCoolDownReduction != null
+                && root.skillCoolDownReduction.currentLevel >= root.skillCoolDownReductionLevel)
+            {
+                root.Unlock();
             }
         }
     }

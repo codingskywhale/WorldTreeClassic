@@ -15,3 +15,7 @@ MonoBehaviour:
   unlockThreshold: 10
   baseLifeGenerationString: 500
   unlockCostString: 78400
+  centerPosition: {x: -7.3, y: -0.66, z: -3}
+  unlockConditionText: 
+  requiredOfflineRewardSkillLevel: 0
+  skillCoolDownReductionLevel: 0
