@@ -33,11 +33,5 @@ public class Root2 : RootBase
         return base.GetTotalLifeGeneration(); // 기본 클래스의 동작을 유지
     }
 
-    protected override Vector3 GetRootCenterPosition()
-    {
-        Vector3 centerPosition = new Vector3(7.3f, -0.66f, -5); // Root2의 중심 위치
-        Debug.Log($"Root2 중심 위치: {centerPosition}"); // 중심 위치 로그 추가
-        return centerPosition;
-    }
 }
 

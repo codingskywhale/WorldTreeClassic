@@ -16,6 +16,8 @@ MonoBehaviour:
   baseLifeGenerationString: 110387500
   unlockCostString: 1086632462686570
   centerPosition: {x: 0, y: 0, z: 0}
-  unlockConditionText: 
+  unlockConditionText: "\"\uC7A0\uAE08 \uD574\uC81C \uC870\uAC74: \uC624\uD504\uB77C\uC778\uBCF4\uC0C1\uC99D\uAC00
+    \uB808\uBCA8 1 \\n\uAF43 \uD574\uAE08 \uC2DC \uBC30\uCE58 \uAC00\uB2A5 \uB3D9\uBB3C
+    \uC218 + 5\""
   requiredOfflineRewardSkillLevel: 1
   skillCoolDownReductionLevel: 0

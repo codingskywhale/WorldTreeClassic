@@ -1,7 +1,7 @@
 using System;
+using System.Collections.Generic;
 using System.Numerics;
 using UnityEngine;
-using static RootBase;
 
 public class AutoObjectManager : MonoBehaviour
 {
@@ -38,6 +38,7 @@ public class AutoObjectManager : MonoBehaviour
         timer += Time.deltaTime;
         if (timer >= generationInterval)
         {
+            CalculateTotalAutoGeneration(); // totalGeneration 값을 다시 계산
             InvokeLifeGeneration();
             timer = 0f;
         }
@@ -61,10 +62,11 @@ public class AutoObjectManager : MonoBehaviour
                 root.Unlock(); // 오프라인 보상 스킬 레벨 조건 만족 시 Unlock 호출
             }
 
-            if(!root.isUnlocked && root.skillCoolDownReduction != null
+            // 스킬 쿨다운 감소 해금 조건 확인
+            if (!root.isUnlocked && root.skillCoolDownReduction != null
                 && root.skillCoolDownReduction.currentLevel >= root.skillCoolDownReductionLevel)
             {
-                root.Unlock();
+                root.Unlock(); // 스킬 쿨다운 감소 스킬 레벨 조건 만족 시 Unlock 호출
             }
         }
     }
