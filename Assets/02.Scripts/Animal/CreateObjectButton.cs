@@ -31,11 +31,11 @@ public class CreateObjectButton : MonoBehaviour
     int count = 0;
     public bool conditionCleared = false;
 
-    private void Awake()
-    {
-        InitailizeSet();
-    }
-    private void InitailizeSet()
+    //private void Awake()
+    //{
+    //    InitailizeSet();
+    //}
+    public void InitailizeSet(AnimalDataSO animalDataSO = null)
     {
         nameText.text = animalData.animalName;
         characterIcon.sprite = animalData.animalIcon;

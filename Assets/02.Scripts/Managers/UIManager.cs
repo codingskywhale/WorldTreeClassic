@@ -8,11 +8,16 @@ public class UIManager : MonoBehaviour
 {
     public static UIManager Instance { get; private set; } // 싱글톤 인스턴스
 
+    [Header("Datas")]
     public Status status;
     public RootBase root;
     public TouchData touchData;
     public WorldTree tree;
     public Bag bag;
+
+    [Header("CreateObjectButton")]
+    public GameObject CreateObjectButton;
+    public Transform CreateObjectButtonTr;
     public CreateObjectButton[] createAnimalButtons;
     public int createObjectButtonUnlockCount = 1;
 
@@ -34,6 +39,15 @@ public class UIManager : MonoBehaviour
     {
         LifeManager.Instance.OnWaterChanged += CheckEnoughCost;
         SetAnimalCountStatus();
+    }
+
+    private void Update()
+    {
+        if (Input.GetKey(KeyCode.Q))
+        {
+
+            CreateAnimalButtons();
+        }
     }
 
     public void SetAnimalCountStatus()
@@ -121,6 +135,20 @@ public class UIManager : MonoBehaviour
                 
                 clearCount = 0;
             }
+        }
+    }
+
+    public void CreateAnimalButtons()
+    {
+        // 동물 데이터를 기반으로 동물 생성 버튼을 만들어준다. \
+        // 트랜스폼을 캔버스의 해당 위치로 설정하자.
+        GameObject go = Instantiate(CreateObjectButton, CreateObjectButtonTr);
+        CreateObjectButton button = go.AddComponent<CreateObjectButton>();
+
+        for (int i = 0; i < GameManager.Instance.animalDataList.Count; i++)
+        {
+            button.InitailizeSet(GameManager.Instance.animalDataList[i]);
+
         }
     }
 }

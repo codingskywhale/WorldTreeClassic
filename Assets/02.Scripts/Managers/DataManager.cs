@@ -11,6 +11,7 @@ public class DataManager : MonoBehaviour
     public TouchData touchData;
     public Bag bag;
     public List<AnimalDataSO> animalDataList = new List<AnimalDataSO>();
+    public List<AnimalData> animalDataList_New = new List<AnimalData>();
 
     private void Awake()
     {
