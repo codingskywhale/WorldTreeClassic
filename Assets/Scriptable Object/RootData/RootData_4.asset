@@ -15,7 +15,6 @@ MonoBehaviour:
   unlockThreshold: 100
   baseLifeGenerationString: 320000
   unlockCostString: 64500000000
-  centerPosition: {x: 0, y: 0, z: 0}
   unlockConditionText: "\"\uC7A0\uAE08 \uD574\uC81C \uC870\uAC74: \uC138\uACC4\uC218
     \uB808\uBCA8 100 \\n\uAF43 \uD574\uAE08 \uC2DC \uBC30\uCE58 \uAC00\uB2A5 \uB3D9\uBB3C
     \uC218 + 5\""

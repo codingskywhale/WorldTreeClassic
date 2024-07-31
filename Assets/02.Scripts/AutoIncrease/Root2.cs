@@ -4,18 +4,18 @@ using Vector3 = UnityEngine.Vector3;
 
 public class Root2 : RootBase
 {
-    protected override void Start()
-    {
-        //    unlockThreshold = 10;
-        //    baseLifeGeneration = 500;
-        //    unlockCost = BigInteger.Parse("78400");
-        //    base.Start();
-        //    LifeManager.Instance.RegisterRoot(this);
-        //    // 업그레이드 비용을 다시 계산하여 UI 업데이트
-        //    upgradeLifeCost = CalculateUpgradeCost();
-        //    UpdateUI();
-        CalculateFlowerPositions();
-    }
+    //protected override void Start()
+    //{
+    //    //    unlockThreshold = 10;
+    //    //    baseLifeGeneration = 500;
+    //    //    unlockCost = BigInteger.Parse("78400");
+    //    //    base.Start();
+    //    //    LifeManager.Instance.RegisterRoot(this);
+    //    //    // 업그레이드 비용을 다시 계산하여 UI 업데이트
+    //    //    upgradeLifeCost = CalculateUpgradeCost();
+    //    //    UpdateUI();
+    //    CalculateFlowerPositions();
+    //}
 
     protected override void GenerateLife()
     {

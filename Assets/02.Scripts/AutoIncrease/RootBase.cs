@@ -58,6 +58,7 @@ public class RootBase : MonoBehaviour, IRoot
     protected virtual void Start()
     {
         flowerPositions = new List<Vector3>();
+        CalculateFlowerPositions();
 
         if (rootDataSO != null)
         {
@@ -67,7 +68,7 @@ public class RootBase : MonoBehaviour, IRoot
             requiredOfflineRewardSkillLevel = rootDataSO.requiredOfflineRewardSkillLevel;
         }
 
-        CalculateFlowerPositions();
+        
 
         OnGenerationRateChanged += UpdateUI; // 이벤트 핸들러 추가
         cameraTransition = FindObjectOfType<CameraTransition>(); // CameraTransition 컴포넌트 참조 초기화
@@ -119,31 +120,35 @@ public class RootBase : MonoBehaviour, IRoot
         UpdateUI();
     }
 
-    private void ActivateNextPlantObject()
-    {
-        if (currentPrePlacedFlowerIndex < prePlacedFlowers.Length)
-        {
-            prePlacedFlowers[currentPrePlacedFlowerIndex].SetActive(true);
-            currentPrePlacedFlowerIndex++;
-        }
-        else
-        {
-            PlaceFlowers(flowerPositions, flowerPrefab, ref currentFlowerIndex);
-        }
-    }
-
     public virtual void CalculateFlowerPositions()
     {
         Vector3 terrainCenter = new Vector3(-7.3f, -0.66f, -5f); // 고정된 중심 위치
-        Debug.Log($"{this.GetType().Name} 중심 위치: {terrainCenter}"); // 중심 위치 로그 추가
 
-        float baseRadius = brushSize / 6;  // 첫 번째 꽃의 위치를 위한 기본 반경 (조금 더 가까운 거리)
-        float rootRadius = baseRadius * (Array.IndexOf(AutoObjectManager.Instance.roots, this) + 1); // 각 Root에 고유한 반경
+        float baseRadius = brushSize / 4;  // 첫 번째 꽃의 위치를 위한 기본 반경
+        float rootRadius = 0; // 각 Root에 고유한 반경
 
-        int numPositions = 8;  // 8개의 위치를 원형으로 배치
+        int rootIndex = Array.IndexOf(AutoObjectManager.Instance.roots, this);
+
+        if (rootIndex < 4)
+        {
+            rootRadius = baseRadius * (rootIndex + 1); // 초기 Root는 기본 반경 증가
+        }
+        else if (rootIndex >= 6)
+        {
+            rootRadius = baseRadius * 5 + (rootIndex - 6) * baseRadius; // Root7부터는 이전 Root의 반경을 기반으로 증가
+        }
+        else
+        {
+            // Root5와 Root6은 반경을 사용하지 않음
+            return;
+        }
+
+        // 반경에 따라 배치할 위치의 수를 동적으로 설정
+        int numPositions = Mathf.CeilToInt(rootRadius * 2);  // 반경에 비례하여 위치 수를 증가시킴
+
+        flowerPositions = new List<Vector3>(); // flowerPositions 리스트 초기화
         HashSet<Vector3> usedPositions = new HashSet<Vector3>(); // 사용된 위치를 저장하는 집합
 
-        // 꽃 위치 (원형 배치)
         for (int i = 0; i < numPositions; i++)
         {
             float angle = Mathf.Deg2Rad * (360f / numPositions * i);  // 각도 계산
@@ -167,6 +172,11 @@ public class RootBase : MonoBehaviour, IRoot
 
     void PlaceFlowers(List<Vector3> flowerPositions, GameObject flowerPrefab, ref int currentFlowerIndex)
     {
+        if (flowerPositions == null || flowerPositions.Count == 0)
+        {
+            return;
+        }
+
         if (currentFlowerIndex >= flowerPositions.Count)
         {
             currentFlowerIndex = 0;  // 인덱스 초기화
@@ -177,8 +187,8 @@ public class RootBase : MonoBehaviour, IRoot
         for (int i = 0; i < flowersPerPosition; i++)
         {
             // 원형 오프셋 생성
-            float angle = UnityEngine.Random.Range(0f, 2f * Mathf.PI);
-            float radius = UnityEngine.Random.Range(0f, brushSize / 6);
+            float angle = Random.Range(0f, 2f * Mathf.PI);
+            float radius = Random.Range(0f, brushSize / 6);
             Vector3 randomOffset = new Vector3(radius * Mathf.Cos(angle), 0, radius * Mathf.Sin(angle));
             Vector3 finalPosition = flowerPosition + randomOffset;
 
@@ -209,7 +219,26 @@ public class RootBase : MonoBehaviour, IRoot
         }
 
         currentFlowerIndex++;
+        if (currentFlowerIndex >= flowerPositions.Count)
+        {
+            currentFlowerIndex = 0;  // 인덱스 초기화
+        }
     }
+
+    private void ActivateNextPlantObject()
+    {
+        if (currentPrePlacedFlowerIndex < prePlacedFlowers.Length)
+        {
+            prePlacedFlowers[currentPrePlacedFlowerIndex].SetActive(true);
+            currentPrePlacedFlowerIndex++;
+        }
+        else
+        {
+            PlaceFlowers(flowerPositions, flowerPrefab, ref currentFlowerIndex);
+        }
+    }
+
+
 
     public virtual void UpdateUI()
     {
