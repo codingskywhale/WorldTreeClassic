@@ -6,7 +6,7 @@ public class LifeManager : MonoBehaviour
 {
     public static LifeManager Instance { get; private set; } // 싱글톤 인스턴스
 
-    public BigInteger lifeAmount = new BigInteger(5000);
+    public BigInteger lifeAmount;
     public int currentLevel = 1;
     public int lifePerLevel = 10;
     public RootBase RootData;

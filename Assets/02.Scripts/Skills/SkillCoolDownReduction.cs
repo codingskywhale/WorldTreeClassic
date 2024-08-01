@@ -6,6 +6,7 @@ public class SkillCoolDownReduction : Artifact
 
     protected override void Start()
     {
+        currentLevel = 0;
         artifactName = "스킬 쿨다운";
         base.Start();
         ApplyCooldownReduction();
