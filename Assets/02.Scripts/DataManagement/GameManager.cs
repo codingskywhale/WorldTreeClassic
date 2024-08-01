@@ -11,6 +11,7 @@ public class GameManager : MonoBehaviour
     public ResourceManager resourceManager;
     public List<UpgradeButton> upgradeButtons;
     public List<AnimalDataSO> animalDataList;
+    public List<AnimalDataSO> animalDataListTest;
     public List<SkillCoolDownReduction> skillCoolDownReductions; 
     public List<Skill> skills; 
     public TouchInput touchInput;
@@ -79,6 +80,8 @@ public class GameManager : MonoBehaviour
         LifeManager.Instance.bubbleGenerator.InitialBubbleSet();
         saveDataManager.animalDataList = animalDataList;
         CalculateOfflineProgress();
+        UIManager.Instance.CreateAnimalButtons();
+        UIManager.Instance.bag.CreateSlot();
         uiUpdater.UpdateAllUI();
         Debug.Log($"초기 생명력: {LifeManager.Instance.lifeAmount}");
 

@@ -24,7 +24,7 @@ public class UnlockCondition
             case UnlockConditionType.AnimalCount:
                 return $"{targetName} x {requiredAnimalCount}\n";
             case UnlockConditionType.PlantCount:
-                return $"식물 {requiredPlantIndex + 1}단계 해금\n";
+                return $"식물 {requiredPlantIndex}단계 해금\n";
             case UnlockConditionType.LevelReached:
                 return $"세계수 {requiredWorldTreeLevel}레벨\n";
             default:

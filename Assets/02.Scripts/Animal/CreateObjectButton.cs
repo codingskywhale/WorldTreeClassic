@@ -35,7 +35,8 @@ public class CreateObjectButton : MonoBehaviour
     //{
     //    InitailizeSet();
     //}
-    public void InitailizeSet(AnimalDataSO animalDataSO = null)
+
+    public void InitailizeSet()
     {
         nameText.text = animalData.animalName;
         characterIcon.sprite = animalData.animalIcon;
@@ -46,6 +47,22 @@ public class CreateObjectButton : MonoBehaviour
 
         for (int i = 0; i < UIManager.Instance.createObjectButtonUnlockCount; i++)
             UIManager.Instance.CheckConditionCleared();
+
+        UIManager.Instance.UpdateButtonUI();
+    }
+
+    public void InitailizeSetTest(AnimalDataSO animalDataSO)
+    {
+        animalData = animalDataSO;
+
+        nameText.text = animalData.animalNameKR;
+        characterIcon.sprite = animalData.animalIcon;
+        if (lockImage != null)
+        {
+            lockConditionText.text = GetConditions();
+        }
+
+        createButton.onClick.AddListener(OnCreateButtonClick);
 
         UIManager.Instance.UpdateButtonUI();
     }
@@ -67,7 +84,8 @@ public class CreateObjectButton : MonoBehaviour
     {
         LifeManager.Instance.DecreaseWater(DataManager.Instance.animalGenerateData.nowCreateCost);
 
-        AddAnimal();
+        //AddAnimal();
+        AddAnimalTest();
 
         UnlockButton(buttonIndex);
     }
@@ -81,12 +99,12 @@ public class CreateObjectButton : MonoBehaviour
             UIManager.Instance.createObjectButtonUnlockCount++;
             characterIconButton.interactable = true;
 
-            if (UIManager.Instance.createAnimalButtons.Length > buttonIdx + 1)
+            if (UIManager.Instance.createAnimalButtons.Count > buttonIdx + 1)
                 UIManager.Instance.CheckConditionCleared();
 
         }
         //해당 버튼에 대응되는 동물을 해금시켜준다.
-        UIManager.Instance.bag.UnlockSlot(buttonIdx);
+        UIManager.Instance.bag.UnlockSlot(buttonIdx - 1);
     }
 
     public void AddAnimal()
@@ -115,7 +133,7 @@ public class CreateObjectButton : MonoBehaviour
             DataManager.Instance.animalGenerateData.AddAnimalToDictionary(animalData.animalName, false);
         }
 
-        DataManager.Instance.bag.UpdateSlotDataUI(buttonIndex);
+        DataManager.Instance.bag.UpdateSlotDataUI(buttonIndex - 1);
         // 생산량 2배 증가.
         DataManager.Instance.touchData.ApplyIncreaseRate(1);
         LifeManager.Instance.ApplyIncreaseRateToAllRoots(1);
@@ -125,7 +143,45 @@ public class CreateObjectButton : MonoBehaviour
         UIManager.Instance.UpdateButtonUI();
 
         UIManager.Instance.CheckConditionCleared();
+        UIManager.Instance.CheckConditionClearedTest();
     }
+
+    public void AddAnimalTest()
+    {
+        // 동물을 추가할 여유 공간이 있을 때
+        if (DataManager.Instance.animalGenerateData.AddAnimal(true))
+        {
+            GameObject go = Instantiate(animalData.animalPrefab, animalSpawnTr);
+            DataManager.Instance.spawnData.AddAnimalSpawnData(go, animalData);
+
+            if (DataManager.Instance.animalGenerateData.nowAnimalCount == 1 || DataManager.Instance.animalGenerateData.nowAnimalCount == 2)
+            {
+                ResourceManager.Instance.bubbleGeneratorPool.GenerateNewHeart();
+            }
+
+            DataManager.Instance.animalGenerateData.AddAnimalToDictionary(animalData.animalNameEN, true);
+        }
+
+        // 여유 공간이 없을 때
+        else
+        {
+            // 가방으로 이동하도록 해야함
+            DataManager.Instance.animalGenerateData.AddAnimalToDictionary(animalData.animalNameEN, false);
+        }
+
+        DataManager.Instance.bag.UpdateSlotDataUI(buttonIndex - 1);
+        // 생산량 2배 증가.
+        DataManager.Instance.touchData.ApplyIncreaseRate(1);
+        LifeManager.Instance.ApplyIncreaseRateToAllRoots(1);
+        UIManager.Instance.status.UpdateLifeIncreaseUI(ResourceManager.Instance.GetTotalLifeGenerationPerSecond());
+
+        UIManager.Instance.CheckEnoughCost(0);
+        UIManager.Instance.UpdateButtonUI();
+
+        UIManager.Instance.CheckConditionCleared();
+        UIManager.Instance.CheckConditionClearedTest();
+    }
+
     // 모든 버튼에 적용 시켜야함
     public void SetCostText()
     {
@@ -171,10 +227,17 @@ public class CreateObjectButton : MonoBehaviour
 
     public CreateObjectButton GetNextButton()
     {
-        if (buttonIndex <= UIManager.Instance.createAnimalButtons.Length)
+        if (buttonIndex <= UIManager.Instance.createAnimalButtons.Count)
             return UIManager.Instance.createAnimalButtons[buttonIndex + 1];
 
         else
             return null;
+    }
+
+    public void OnCreateButtonClick()
+    {
+        WindowsManager.Instance.animalInfoWnd.gameObject.SetActive(true);
+        WindowsManager.Instance.animalInfoWnd.ChangeBottomUI(false);
+        WindowsManager.Instance.animalInfoWnd.SetAnimalInfoWindowData(animalData);
     }
 }

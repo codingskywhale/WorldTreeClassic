@@ -71,7 +71,7 @@ public class UIUpdater
         var createAnimalButtons = UIManager.Instance.createAnimalButtons; 
         var nowAnimalCount = UIManager.Instance.createObjectButtonUnlockCount; // 현재 생성된 동물
 
-        for (int i = 0; i < createAnimalButtons.Length; i++) 
+        for (int i = 0; i < createAnimalButtons.Count; i++) 
         {
             var button = createAnimalButtons[i]; 
             var animalData = button.animalData; 

@@ -8,6 +8,8 @@ public class ResourceManager : MonoBehaviour
     public static ResourceManager Instance { get; private set; }
 
     public List<RootBase> roots = new List<RootBase>();
+    public ObjectPool objectPool;
+    public BubbleGeneratorPool bubbleGeneratorPool;
     public BigInteger lifeGenerationRatePerSecond;
 
     private void Awake()
@@ -22,6 +24,9 @@ public class ResourceManager : MonoBehaviour
         {
             Destroy(gameObject); // 이미 인스턴스가 존재하면 중복 생성된 객체 파괴
         }
+
+        objectPool = GetComponent<ObjectPool>();
+        bubbleGeneratorPool = GetComponent<BubbleGeneratorPool>();
     }
     private void Start()
     {

@@ -1,8 +1,6 @@
 using System.Collections.Generic;
 using System.Numerics;
-using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class UIManager : MonoBehaviour
 {
@@ -18,7 +16,8 @@ public class UIManager : MonoBehaviour
     [Header("CreateObjectButton")]
     public GameObject CreateObjectButton;
     public Transform CreateObjectButtonTr;
-    public CreateObjectButton[] createAnimalButtons;
+    public List<CreateObjectButton> createAnimalButtons;
+    public List<CreateObjectButton> createAnimalButtonsTest;
     public int createObjectButtonUnlockCount = 1;
 
     private void Awake()
@@ -32,7 +31,7 @@ public class UIManager : MonoBehaviour
         else
         {
             Destroy(gameObject); // 이미 인스턴스가 존재하면 중복 생성된 객체 파괴
-        }    
+        }
     }
 
     private void Start()
@@ -57,9 +56,13 @@ public class UIManager : MonoBehaviour
 
     public void UpdateButtonUI()
     {
-        for (int i = 0; i < createAnimalButtons.Length; i++)
+        for (int i = 0; i < createAnimalButtons.Count; i++)
         {
             createAnimalButtons[i].SetCostText();
+        }
+        for (int i = 0; i < createAnimalButtonsTest.Count; i++)
+        {
+            createAnimalButtonsTest[i].SetCostText();   
         }
     }
 
@@ -68,10 +71,12 @@ public class UIManager : MonoBehaviour
         // createObjectButtonUnlockCount가 현재 버튼의 인덱스를 넘는지 확인.
         if (LifeManager.Instance.lifeAmount >= (BigInteger)DataManager.Instance.animalGenerateData.nowCreateCost)
         {
-            for(int i = 0; i < createObjectButtonUnlockCount; i++)
+            for (int i = 0; i < createObjectButtonUnlockCount; i++)
             {
-                if(i < createAnimalButtons.Length)
+                if (i < createAnimalButtons.Count)
                     createAnimalButtons[i].createButton.interactable = true;
+                if (i < createAnimalButtonsTest.Count)
+                    createAnimalButtonsTest[i].createButton.interactable = true;
             }
         }
         else
@@ -79,6 +84,8 @@ public class UIManager : MonoBehaviour
             for (int i = 0; i < createObjectButtonUnlockCount; i++)
             {
                 createAnimalButtons[i].createButton.interactable = false;
+                if (i < createAnimalButtonsTest.Count)
+                    createAnimalButtonsTest[i].createButton.interactable = false;
             }
         }
     }
@@ -86,14 +93,14 @@ public class UIManager : MonoBehaviour
     public void CheckConditionCleared()
     {
         int clearCount = 0;
-        for (int i = 3; i < createAnimalButtons.Length; i++)
+        for (int i = 3; i < createAnimalButtons.Count; i++)
         {
             if (!createAnimalButtons[i].conditionCleared)
             {
                 foreach (var condition in createAnimalButtons[i].animalData.animalUnlockConditions)
                 {
                     switch (condition.conditionType)
-                    {                      
+                    {
                         case UnlockConditionType.AnimalCount:
 
                             Dictionary<string, Dictionary<EachCountType, int>> dic = DataManager.Instance.animalGenerateData.allTypeCountDic;
@@ -132,8 +139,63 @@ public class UIManager : MonoBehaviour
                     createAnimalButtons[i].SetLockImageOff();
                     Debug.Log($"{createAnimalButtons[i].animalData.animalName} 락 해제 완료 {createAnimalButtons[i].animalData.animalUnlockConditions.Length}, {clearCount} 개의 조건을 수행함");
                 }
-                
+
                 clearCount = 0;
+            }
+        }
+    }
+
+    public void CheckConditionClearedTest()
+    {
+        int clearCount = 0;
+        for (int i = 0; i < createAnimalButtonsTest.Count; i++)
+        {
+            if (!createAnimalButtonsTest[i].conditionCleared)
+            {
+                foreach (var condition in createAnimalButtonsTest[i].animalData.animalUnlockConditions)
+                {
+                    switch (condition.conditionType)
+                    {
+                        case UnlockConditionType.AnimalCount:
+
+                            Dictionary<string, Dictionary<EachCountType, int>> dic = DataManager.Instance.animalGenerateData.allTypeCountDic;
+                            string name = GameManager.Instance.animalDataListTest[condition.requiredAnimalIndex - 1].animalNameEN;
+                            if (dic.ContainsKey(name) && dic[name][EachCountType.Total] >= condition.requiredAnimalCount)
+                            {
+                                clearCount++;
+                                Debug.Log($"{createAnimalButtonsTest[i].animalData.animalName} 버튼 동물 조건 충족 완료 ");
+                            }
+
+                            break;
+                        case UnlockConditionType.PlantCount:
+
+                            if (AutoObjectManager.Instance.roots[condition.requiredPlantIndex - 1].isUnlocked)
+                            {
+                                clearCount++;
+                                Debug.Log($"{createAnimalButtonsTest[i].animalData.animalName} 버튼 식물 조건 충족 완료 ");
+                            }
+
+                            break;
+                        case UnlockConditionType.LevelReached:
+
+                            if (DataManager.Instance.touchData.touchIncreaseLevel > condition.requiredWorldTreeLevel)
+                            {
+                                clearCount++;
+                                Debug.Log($"{createAnimalButtonsTest[i].animalData.animalName} 버튼 레벨 조건 충족 완료 ");
+                            }
+
+                            break;
+                    }
+                }
+
+                if (clearCount == createAnimalButtonsTest[i].animalData.animalUnlockConditions.Length)
+                {
+                    createAnimalButtonsTest[i].conditionCleared = true;
+                    createAnimalButtonsTest[i].SetLockImageOff();
+                    Debug.Log($"{createAnimalButtonsTest[i].animalData.animalName} 락 해제 완료 {createAnimalButtons[i].animalData.animalUnlockConditions.Length}, {clearCount} 개의 조건을 수행함");
+                }
+
+                clearCount = 0;            
             }
         }
     }
@@ -142,13 +204,15 @@ public class UIManager : MonoBehaviour
     {
         // 동물 데이터를 기반으로 동물 생성 버튼을 만들어준다. \
         // 트랜스폼을 캔버스의 해당 위치로 설정하자.
-        GameObject go = Instantiate(CreateObjectButton, CreateObjectButtonTr);
-        CreateObjectButton button = go.AddComponent<CreateObjectButton>();
+        GameObject go;
 
-        for (int i = 0; i < GameManager.Instance.animalDataList.Count; i++)
+        for (int i = 0; i < GameManager.Instance.animalDataListTest.Count; i++)
         {
-            button.InitailizeSet(GameManager.Instance.animalDataList[i]);
-
+            go = Instantiate(CreateObjectButton);
+            CreateObjectButton button; button = go.GetComponent<CreateObjectButton>();
+            button.InitailizeSetTest(GameManager.Instance.animalDataListTest[i]);
+            createAnimalButtonsTest.Add(button);
+            go.transform.SetParent(CreateObjectButtonTr);
         }
     }
 }

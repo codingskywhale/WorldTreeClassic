@@ -8,6 +8,7 @@ public class Bag_AnimalSlot : MonoBehaviour
     public AnimalDataSO slotAnimalDataSO;
 
     public Image animalIcon;
+    public Button animalIconButton;
     public TextMeshProUGUI explainText;
     public Button slotButton;
 
@@ -23,6 +24,7 @@ public class Bag_AnimalSlot : MonoBehaviour
             slotButton.interactable = false;
             explainText.text = string.Empty;
         }
+        animalIconButton.onClick.AddListener(ClickAnimalIcon);
     }        
      
     public void SetSlotData()
@@ -30,8 +32,8 @@ public class Bag_AnimalSlot : MonoBehaviour
         animalIcon.color = Color.white; 
         slotButton.interactable = true;
 
-        explainText.text = $"{DataManager.Instance.animalGenerateData.allTypeCountDic[slotAnimalDataSO.animalName][EachCountType.Active]} " +
-                            $"/ {DataManager.Instance.animalGenerateData.allTypeCountDic[slotAnimalDataSO.animalName][EachCountType.Total]}";
+        explainText.text = $"{DataManager.Instance.animalGenerateData.allTypeCountDic[slotAnimalDataSO.animalNameEN][EachCountType.Active]} " +
+                            $"/ {DataManager.Instance.animalGenerateData.allTypeCountDic[slotAnimalDataSO.animalNameEN][EachCountType.Total]}";
     }
 
     public void ClickAnimalIcon()
@@ -39,13 +41,14 @@ public class Bag_AnimalSlot : MonoBehaviour
         if (isUnlocked)
         {
             WindowsManager.Instance.animalInfoWnd.gameObject.SetActive(true);
+            WindowsManager.Instance.animalInfoWnd.ChangeBottomUI(true);
             WindowsManager.Instance.animalInfoWnd.SetAnimalInfoWindowData(slotAnimalDataSO);
         }
     }
 
     public void UpdateUI()
     {
-        explainText.text = $"{DataManager.Instance.animalGenerateData.allTypeCountDic[slotAnimalDataSO.animalName][EachCountType.Active]} " +
-                            $"/ {DataManager.Instance.animalGenerateData.allTypeCountDic[slotAnimalDataSO.animalName][EachCountType.Total]}";
+        explainText.text = $"{DataManager.Instance.animalGenerateData.allTypeCountDic[slotAnimalDataSO.animalNameEN][EachCountType.Active]} " +
+                            $"/ {DataManager.Instance.animalGenerateData.allTypeCountDic[slotAnimalDataSO.animalNameEN][EachCountType.Total]}";
     }
 }

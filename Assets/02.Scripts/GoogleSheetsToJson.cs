@@ -2,7 +2,6 @@ using Google.Apis.Auth.OAuth2;
 using Google.Apis.Services;
 using Google.Apis.Sheets.v4;
 using Google.Apis.Sheets.v4.Data;
-using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.IO;
 using System.Text.RegularExpressions;
@@ -88,17 +87,12 @@ public class GoogleSheetsToJson : MonoBehaviour
                     if (eachConditions[j].Contains("Animal"))
                     {
                         condition.conditionType = UnlockConditionType.AnimalCount;
-                        if (eachConditions[j].Contains("&"))
-                        {
 
-                        }
-                        else
-                        {
-                            // 마지막 문자를 가져오기
-                            lastUnderscoreIndex = eachConditions[j].ToString().LastIndexOf('_');
-                            condition.requiredAnimalIndex = int.Parse(GetDataBetweenFirstAndSecondUnderscore(eachConditions[j]));
-                            condition.requiredAnimalCount = int.Parse(eachConditions[j].ToString().Substring(lastUnderscoreIndex + 1));
-                        }
+                        // 마지막 문자를 가져오기
+                        lastUnderscoreIndex = eachConditions[j].ToString().LastIndexOf('_');
+                        condition.requiredAnimalIndex = int.Parse(GetDataBetweenFirstAndSecondUnderscore(eachConditions[j]));
+                        condition.targetName = GameManager.Instance.animalDataListTest[condition.requiredAnimalIndex - 1].animalNameKR;
+                        condition.requiredAnimalCount = int.Parse(eachConditions[j].ToString().Substring(lastUnderscoreIndex + 1));
                     }
 
                     else if (eachConditions[j].Contains("Plant"))
@@ -129,7 +123,7 @@ public class GoogleSheetsToJson : MonoBehaviour
             animalDataSO.animalIcon = Resources.Load<Sprite>($"Sprites/{animalNameEN}");
             animalDataSO.animalPrefab = Resources.Load<GameObject>($"Prefabs/Animal/{animalNameEN}");
 
-            GameManager.Instance.animalDataList.Add(animalDataSO);
+            GameManager.Instance.animalDataListTest.Add(animalDataSO);
         }
 
         return;

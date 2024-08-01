@@ -12,6 +12,7 @@ public class LifeManager : MonoBehaviour
     public RootBase RootData;
     public List<IRoot> rootData = new List<IRoot>();
     public BubbleGenerator bubbleGenerator;
+    public BubbleGeneratorPool bubbleGenratorPool;
     public delegate void WaterChanged(BigInteger newAmount);
     public event WaterChanged OnWaterChanged;
 

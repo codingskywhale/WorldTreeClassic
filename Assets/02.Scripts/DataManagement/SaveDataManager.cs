@@ -206,7 +206,7 @@ public class SaveDataManager
                 var animalDataSO = animalDataList.Find(data => data.animalName == kvp.Key);
                 if (animalDataSO != null)
                 {
-                    var animalSlot = Array.Find(DataManager.Instance.bag.slots, slot => slot.slotAnimalDataSO == animalDataSO);
+                    var animalSlot = DataManager.Instance.bag.slots.Find(slot => slot.slotAnimalDataSO == animalDataSO);
                     if (animalSlot != null)
                     {
                         animalSlot.isUnlocked = kvp.Value[EachCountType.Active] > 0 || kvp.Value[EachCountType.Stored] > 0;
