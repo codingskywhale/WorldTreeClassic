@@ -91,7 +91,7 @@ public class GoogleSheetsToJson : MonoBehaviour
                         // 마지막 문자를 가져오기
                         lastUnderscoreIndex = eachConditions[j].ToString().LastIndexOf('_');
                         condition.requiredAnimalIndex = int.Parse(GetDataBetweenFirstAndSecondUnderscore(eachConditions[j]));
-                        condition.targetName = GameManager.Instance.animalDataListTest[condition.requiredAnimalIndex - 1].animalNameKR;
+                        condition.targetName = GameManager.Instance.animalDataList[condition.requiredAnimalIndex - 1].animalNameKR;
                         condition.requiredAnimalCount = int.Parse(eachConditions[j].ToString().Substring(lastUnderscoreIndex + 1));
                     }
 
@@ -123,7 +123,7 @@ public class GoogleSheetsToJson : MonoBehaviour
             animalDataSO.animalIcon = Resources.Load<Sprite>($"Sprites/{animalNameEN}");
             animalDataSO.animalPrefab = Resources.Load<GameObject>($"Prefabs/Animal/{animalNameEN}");
 
-            GameManager.Instance.animalDataListTest.Add(animalDataSO);
+            GameManager.Instance.animalDataList.Add(animalDataSO);
         }
 
         return;

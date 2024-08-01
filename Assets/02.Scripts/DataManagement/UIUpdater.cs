@@ -62,7 +62,7 @@ public class UIUpdater
             }
         }
 
-        UpdateAnimalButtons();
+        //UpdateAnimalButtons();
         UpdateSkillUI();
     }
 

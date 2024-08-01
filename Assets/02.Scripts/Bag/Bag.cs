@@ -13,11 +13,11 @@ public class Bag : MonoBehaviour
 
     public void CreateSlot()
     {
-        for (int i = 0; i < GameManager.Instance.animalDataListTest.Count; i++)
+        for (int i = 0; i < GameManager.Instance.animalDataList.Count; i++)
         {
             GameObject go = Instantiate(slot);
             Bag_AnimalSlot nowSlot = go.GetComponent<Bag_AnimalSlot>();
-            nowSlot.slotAnimalDataSO = GameManager.Instance.animalDataListTest[i];
+            nowSlot.slotAnimalDataSO = GameManager.Instance.animalDataList[i];
             nowSlot.animalIcon.sprite = nowSlot.slotAnimalDataSO.animalIcon;
             go.transform.SetParent(this.transform);
             slots.Add(nowSlot);

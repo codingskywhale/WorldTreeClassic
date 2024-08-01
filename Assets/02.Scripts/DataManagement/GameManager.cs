@@ -11,7 +11,6 @@ public class GameManager : MonoBehaviour
     public ResourceManager resourceManager;
     public List<UpgradeButton> upgradeButtons;
     public List<AnimalDataSO> animalDataList;
-    public List<AnimalDataSO> animalDataListTest;
     public List<SkillCoolDownReduction> skillCoolDownReductions; 
     public List<Skill> skills; 
     public TouchInput touchInput;

@@ -51,7 +51,8 @@ public class BubbleGeneratorPool : MonoBehaviour
 
         //하트 버블을 랜덤한 동물에게 달아주는 작업.
         GameObject go = ResourceManager.Instance.objectPool.SpawnFromPool("Bubble");
-        go.GetComponentInChildren<HeartButton>().heartIdx = randomIdx;
+        go.GetComponentInChildren<HeartButton>(true).heartIdx = randomIdx;
+        go.GetComponentInChildren<HeartButton>(true).gameObject.SetActive(true);
         go.transform.SetParent(DataManager.Instance.spawnData.animalObjectList[randomIdx].transform.Find(bubbleTr).transform);
         go.GetComponent<RectTransform>().localPosition = Vector3.zero;
         nowHeartBubbleList.Add(go);
@@ -66,11 +67,18 @@ public class BubbleGeneratorPool : MonoBehaviour
             if(go.GetComponentInChildren<HeartButton>().heartIdx == idx)
             {
                 nowHeartBubbleList.Remove(go);
-                go.SetActive(false);
-                go.transform.SetParent(ResourceManager.Instance.transform);
+                StartCoroutine(WaitTimeForBubble(go));
             }
         }
         
         GenerateNewHeart();
+    }
+
+    IEnumerator WaitTimeForBubble(GameObject go)
+    {
+        yield return new WaitForSeconds(2f);
+        go.GetComponentInChildren<HeartButton>(true).gameObject.SetActive(true);
+        go.SetActive(false);
+        go.transform.SetParent(ResourceManager.Instance.transform);
     }
 }

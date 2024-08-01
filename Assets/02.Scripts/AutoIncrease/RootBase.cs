@@ -91,7 +91,6 @@ public class RootBase : MonoBehaviour, IRoot
         {
             //CreateAndZoomObject();
             UIManager.Instance.CheckConditionCleared();
-            UIManager.Instance.CheckConditionClearedTest();
             ActivateNextPlantObject();
         }
         if (rootLevel % 25 == 0)
