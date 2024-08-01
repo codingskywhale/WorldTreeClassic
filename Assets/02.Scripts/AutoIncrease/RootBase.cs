@@ -14,7 +14,7 @@ public interface IRoot
     void ApplyIncreaseRate(BigInteger rate);
     BigInteger GetTotalLifeGeneration();
     void Unlock();
-    void ApplyTemporaryBoost(BigInteger multiplier, float duration); // 임시 부스트 메서드 추가
+    void ApplyTemporaryBoost(BigInteger multiplier, float duration);
 }
 
 public class RootBase : MonoBehaviour, IRoot
@@ -55,11 +55,22 @@ public class RootBase : MonoBehaviour, IRoot
 
     public RootDataSO rootDataSO;
 
+    // 특정 영역들을 정의 (중심과 반경으로)
+    public List<Tuple<Vector3, float>> restrictedAreas;
+
     protected virtual void Start()
     {
+        // 특정 영역들을 초기화
+        restrictedAreas = new List<Tuple<Vector3, float>> {
+            new Tuple<Vector3, float>(new Vector3(-38.777f, -2.15f, -9.51f), CalculateRadius(new Vector3(-38.777f, -2.15f, -9.51f),
+                                                                                            new Vector3(-37.08f, -0.36f, 4.74f),
+                                                                                            new Vector3(-37.08f, -0.36f, -23.21f)))
+        };
+
         flowerPositions = new List<Vector3>();
         CalculateFlowerPositions();
 
+        // RootDataSO를 이용한 초기화
         if (rootDataSO != null)
         {
             unlockThreshold = rootDataSO.unlockThreshold;
@@ -67,8 +78,6 @@ public class RootBase : MonoBehaviour, IRoot
             unlockCost = BigInteger.Parse(rootDataSO.unlockCostString);
             requiredOfflineRewardSkillLevel = rootDataSO.requiredOfflineRewardSkillLevel;
         }
-
-        
 
         OnGenerationRateChanged += UpdateUI; // 이벤트 핸들러 추가
         cameraTransition = FindObjectOfType<CameraTransition>(); // CameraTransition 컴포넌트 참조 초기화
@@ -86,7 +95,7 @@ public class RootBase : MonoBehaviour, IRoot
 
     protected void InvokeLifeGenerated(BigInteger amount)
     {
-        //OnLifeGenerated?.Invoke(amount);
+        // 생명력 생성 이벤트 호출
     }
 
     public BigInteger CalculateUpgradeCost()
@@ -157,7 +166,7 @@ public class RootBase : MonoBehaviour, IRoot
             Vector3 newPosition = new Vector3(x, terrainCenter.y, z);
 
             // 위치가 이미 사용된 경우 반복
-            while (usedPositions.Contains(newPosition))
+            while (usedPositions.Contains(newPosition) || IsInRestrictedArea(newPosition))
             {
                 angle += Mathf.Deg2Rad * (360f / numPositions); // 각도를 변경하여 위치 재계산
                 x = terrainCenter.x + rootRadius * Mathf.Cos(angle);
@@ -166,7 +175,7 @@ public class RootBase : MonoBehaviour, IRoot
             }
 
             flowerPositions.Add(newPosition);
-            usedPositions.Add(newPosition); // 위치 저장
+            usedPositions.add(newPosition); // 위치 저장
         }
     }
 
@@ -191,6 +200,11 @@ public class RootBase : MonoBehaviour, IRoot
             float radius = Random.Range(0f, brushSize / 6);
             Vector3 randomOffset = new Vector3(radius * Mathf.Cos(angle), 0, radius * Mathf.Sin(angle));
             Vector3 finalPosition = flowerPosition + randomOffset;
+
+            if (IsInRestrictedArea(finalPosition)) // 제한된 영역을 확인
+            {
+                continue;
+            }
 
             // Terrain 높이 샘플링 및 최종 위치 조정
             float y = terrain.SampleHeight(finalPosition) + terrain.transform.position.y;
@@ -225,6 +239,27 @@ public class RootBase : MonoBehaviour, IRoot
         }
     }
 
+    // 특정 위치가 제한된 영역 내에 있는지 확인
+    private bool IsInRestrictedArea(Vector3 position)
+    {
+        foreach (var restrictedArea in restrictedAreas)
+        {
+            if (Vector3.Distance(position, restrictedArea.Item1) < restrictedArea.Item2)
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    // 두 좌표 사이의 최대 거리를 계산하여 반경을 구함
+    private float CalculateRadius(Vector3 center, Vector3 point1, Vector3 point2)
+    {
+        float distance1 = Vector3.Distance(center, point1);
+        float distance2 = Vector3.Distance(center, point2);
+        return Mathf.Max(distance1, distance2);
+    }
+
     private void ActivateNextPlantObject()
     {
         if (currentPrePlacedFlowerIndex < prePlacedFlowers.Length)
@@ -238,13 +273,11 @@ public class RootBase : MonoBehaviour, IRoot
         }
     }
 
-
-
     public virtual void UpdateUI()
     {
         UpdateRootLevelUI(rootLevel, upgradeLifeCost);
-        UpdateGenerationRateUI(GetTotalLifeGeneration()); // 생산률 업데이트 추가
-        UpdateUnlockUI(); // 잠금 해제 UI 업데이트 추가
+        UpdateGenerationRateUI(GetTotalLifeGeneration());
+        UpdateUnlockUI();
     }
 
     public virtual void ApplyIncreaseRate(BigInteger rate)
@@ -295,12 +328,11 @@ public class RootBase : MonoBehaviour, IRoot
                 lockText.gameObject.SetActive(true);
                 if (rootDataSO != null)
                 {
-                    // 스크립터블 오브젝트의 텍스트 사용
                     lockText.text = rootDataSO.unlockConditionText.Replace("\\n", "\n");
                 }
                 else
                 {
-                    lockText.text = $"잠금 해제 조건: 세계수 레벨 {unlockThreshold}\n꽃 해금 시 배치 가능 동물 수 + 5"; // 기본 텍스트
+                    lockText.text = $"잠금 해제 조건: 세계수 레벨 {unlockThreshold}\n꽃 해금 시 배치 가능 동물 수 + 5";
                 }
             }
             if (lockImage != null)
