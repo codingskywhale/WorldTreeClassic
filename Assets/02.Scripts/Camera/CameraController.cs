@@ -125,22 +125,14 @@ public class CameraController : MonoBehaviour
     }
 
     private void HandleClick()
-    {       
-        if (!isFreeCamera) // 자유시점 모드가 아닌 경우 클릭 이벤트 무시
-        {            
-            return;
-        }
+    {
+        if (!isFreeCamera) return;
 
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        RaycastHit hit;
-        if (Physics.Raycast(ray, out hit))
+        if (Physics.Raycast(ray, out RaycastHit hit))
         {
             var clickable = hit.transform.GetComponent<IClickableObject>();
-            if (clickable != null)
-            {
-                Debug.Log("HandleClick: Processing click on " + hit.transform.name);
-                clickable.OnPointerClick(new PointerEventData(EventSystem.current));
-            }
+            clickable?.OnPointerClick(new PointerEventData(EventSystem.current));
         }
     }
 

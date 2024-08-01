@@ -78,7 +78,7 @@ public class RootBase : MonoBehaviour, IRoot
     {
         OnLifeGenerated?.Invoke(amount);
     }
-
+    
     public BigInteger CalculateUpgradeCost()
     {
         if (rootLevel == 0)
@@ -111,7 +111,7 @@ public class RootBase : MonoBehaviour, IRoot
         OnGenerationRateChanged?.Invoke();
         UpdateUI();
     }
-    private void ActivateNextPlantObject()
+    public void ActivateNextPlantObject()
     {
         if (plantObjects == null || plantObjects.Length == 0) return;
 

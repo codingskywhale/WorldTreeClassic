@@ -89,8 +89,11 @@ public abstract class Skill : MonoBehaviour
     {
         if (DataManager.Instance.touchData != null && DataManager.Instance.touchData.touchIncreaseLevel >= unlockThreshold)
         {
-            isUnlocked = true;
-            currentLevel = 1;
+            isUnlocked = true;            
+            if (currentLevel == 0)
+            {
+                currentLevel = 1;
+            }
             UpdateClickValues();
             UpdateUpgradeCostUI(); // 업그레이드 비용 UI 업데이트
             UpdateUI(); // UI 업데이트
@@ -181,6 +184,7 @@ public abstract class Skill : MonoBehaviour
         NowskillInfoUI();
         LevelUI();
         UpdateUnlockUI(); // 해금 상태 UI 업데이트
+        Debug.Log($"Skill {skillName} UI updated: Level={currentLevel}, Cooldown={cooldownRemaining}");
     }
 
     protected void UpdateUpgradeCostUI()
@@ -208,6 +212,7 @@ public abstract class Skill : MonoBehaviour
             currentLevelText.text = currentLevel > 0
                 ? $"현재 스킬 레벨: {currentLevel}"
                 : "스킬이 해금되지 않았습니다";
+            Debug.Log($"Skill {skillName} level text updated: {currentLevelText.text}");
         }
     }
 

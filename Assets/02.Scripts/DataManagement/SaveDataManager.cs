@@ -1,20 +1,21 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Numerics;
 using UnityEngine;
 
 public class SaveDataManager
 {
-    public List<AnimalDataSO> animalDataList;    
+    public List<AnimalDataSO> animalDataList;
 
-    public void SaveGameData(ResourceManager resourceManager, List<Skill> skillList)
+    public void SaveGameData(ResourceManager resourceManager, List<Skill> skillList, List<Artifact> artifactList)
     {
         List<RootBase> roots = resourceManager.roots;
 
-        List<RootData> rootDataList = new List<RootData>();
+        List<RootDataSave> rootDataList = new List<RootDataSave>();
         foreach (var root in roots)
         {
-            rootDataList.Add(new RootData
+            rootDataList.Add(new RootDataSave
             {
                 rootLevel = root.rootLevel,
                 isUnlocked = root.isUnlocked,
@@ -27,7 +28,6 @@ public class SaveDataManager
         // 동물 상태 저장
         List<AnimalDataSave.AnimalState> animalStates = new List<AnimalDataSave.AnimalState>();
         GameObject[] animalObjects = GameObject.FindGameObjectsWithTag("Animal");
-        Debug.Log($"Found {animalObjects.Length} animals with 'Animal' tag");
 
         foreach (var animal in animalObjects)
         {
@@ -44,11 +44,6 @@ public class SaveDataManager
                     posY = animal.transform.position.y,
                     posZ = animal.transform.position.z
                 });
-                Debug.Log($"Animal state saved: {animalData.animalName}, Index: {animalData.animalIndex}, Position: ({animal.transform.position.x}, {animal.transform.position.y}, {animal.transform.position.z})");
-            }
-            else
-            {
-                Debug.LogError($"Animal data not found or UniqueID component missing for game object: {animal.name}");
             }
         }
 
@@ -79,6 +74,7 @@ public class SaveDataManager
             serializableDict[kvp.Key] = innerDict;
         }
 
+        // 스킬 저장
         List<SkillDataSave> skillDataList = new List<SkillDataSave>();
 
         foreach (var skill in skillList)
@@ -89,9 +85,25 @@ public class SaveDataManager
                 skillName = skill.gameObject.name,
                 currentLevel = skill.currentLevel,
                 upgradeCost = upgradeCost.ToString(),
-                cooldownRemaining = skill.cooldownRemaining 
+                cooldownRemaining = skill.cooldownRemaining
             };
             skillDataList.Add(data);
+        }
+
+        // 아티팩트 데이터 저장
+        List<ArtifactDataSave> artifactDataList = new List<ArtifactDataSave>();
+
+        foreach (var artifact in artifactList)
+        {
+            BigInteger upgradeCost = artifact.currentLevel > 0 ? artifact.CalculateUpgradeCost(artifact.currentLevel) : artifact.unlockCost;
+            ArtifactDataSave data = new ArtifactDataSave
+            {
+                artifactName = artifact.gameObject.name,
+                currentLevel = artifact.currentLevel,
+                upgradeCost = upgradeCost.ToString(),
+                isUnlocked = artifact.currentLevel > 0 // currentLevel이 0보다 크면 해금된 것으로 간주
+            };
+            artifactDataList.Add(data);
         }
 
         // 게임 데이터 생성 및 저장
@@ -121,29 +133,43 @@ public class SaveDataManager
             lifeGenerationRatePerSecond = resourceManager.GetTotalLifeGenerationPerSecond().ToString(),
             allTypeCountDic = serializableDict, // 직렬화된 딕셔너리 저장
             createObjectButtonUnlockCount = UIManager.Instance.createObjectButtonUnlockCount,
-            skillDataList = skillDataList
+            skillDataList = skillDataList,
+            artifactDataList = artifactDataList
         };
-        Debug.Log("Saving JSON: " + JsonUtility.ToJson(gameData, true)); // 저장되는 JSON 출력
-        SaveSystem.Save(gameData);
+        PlayFabManager.Instance.SaveGameData(gameData);
     }
 
-    public void LoadGameData(ResourceManager resourceManager, List<Skill> skillList)
+    public IEnumerator LoadGameDataCoroutine(ResourceManager resourceManager, List<Skill> skillList, List<Artifact> artifactList, WorldTree worldTree)
     {
-        GameData gameData = SaveSystem.Load();
+        bool isDataLoaded = false;
 
-        if (gameData == null)
+        PlayFabManager.Instance.LoadGameData(gameData =>
         {
-            InitializeDefaultGameData(resourceManager);
-            UIManager.Instance.createObjectButtonUnlockCount = 1;
-            UIManager.Instance.UpdateButtonUI();
-            LifeManager.Instance.lifeAmount = new BigInteger(500000000000000000);
-            UIManager.Instance.touchData.upgradeLifeCost = new BigInteger(1000);
-            UIManager.Instance.touchData.touchIncreaseAmount = new BigInteger(50);
-            return;
-        }                
+            if (gameData == null)
+            {
+                InitializeDefaultGameData(resourceManager);
+                UIManager.Instance.createObjectButtonUnlockCount = 1;
+                UIManager.Instance.UpdateButtonUI();
+                LifeManager.Instance.lifeAmount = new BigInteger(500000000000000000);
+                UIManager.Instance.touchData.upgradeLifeCost = new BigInteger(1000);
+                UIManager.Instance.touchData.touchIncreaseAmount = new BigInteger(50);
+            }
+            else
+            {
+                ApplyLoadedGameData(gameData, resourceManager, skillList, artifactList, worldTree);
+            }
 
-        //gameData = new GameData();
+            isDataLoaded = true;
+        });
 
+        while (!isDataLoaded)
+        {
+            yield return null;
+        }
+    }
+
+    private void ApplyLoadedGameData(GameData gameData, ResourceManager resourceManager, List<Skill> skillList, List<Artifact> artifactList, WorldTree worldTree)
+    {
         List<RootBase> roots = resourceManager.roots;
 
         LifeManager.Instance.lifeAmount = string.IsNullOrEmpty(gameData.lifeAmount) ? BigInteger.Zero : BigInteger.Parse(gameData.lifeAmount);
@@ -156,7 +182,6 @@ public class SaveDataManager
             DataManager.Instance.animalGenerateData.nowCreateCost = string.IsNullOrEmpty(gameData.animalData.nowCreateCost) ? BigInteger.Zero : BigInteger.Parse(gameData.animalData.nowCreateCost);
             DataManager.Instance.animalGenerateData.nowAnimalCount = gameData.animalData.nowAnimalCount;
             DataManager.Instance.animalGenerateData.maxAnimalCount = gameData.animalData.maxAnimalCount;
-
 
             // 직렬화된 딕셔너리 로드
             var deserializedDict = new Dictionary<string, Dictionary<EachCountType, int>>();
@@ -171,8 +196,7 @@ public class SaveDataManager
             }
             DataManager.Instance.animalGenerateData.allTypeCountDic = deserializedDict;
 
-            // 동물 상태 로드
-            Debug.Log($"Loading {gameData.animalData.animalStates.Count} animal states");
+            // 동물 상태 로드            
             foreach (var animalState in gameData.animalData.animalStates)
             {
                 GameObject animalObject = InstantiateAnimal(animalState.animalIndex);
@@ -193,10 +217,6 @@ public class SaveDataManager
                     {
                         LifeManager.Instance.bubbleGenerator.AddAnimalHeartBubbleList(heartButton);
                     }
-                }
-                else
-                {
-                    Debug.LogError($"Failed to instantiate animal with index {animalState.animalIndex}");
                 }
             }
 
@@ -233,7 +253,7 @@ public class SaveDataManager
         {
             resourceManager.SetLifeGenerationRatePerSecond(BigInteger.Parse(gameData.lifeGenerationRatePerSecond));
         }
-        Debug.Log($"LoadGameData - LifeAmount: {LifeManager.Instance.lifeAmount}");
+
         // 초기화 후 모든 루트의 UI 업데이트
         foreach (var root in roots)
         {
@@ -256,11 +276,34 @@ public class SaveDataManager
             }
         }
 
+        // 아티팩트 데이터 로드
+        if (gameData.artifactDataList != null)
+        {
+            foreach (var artifactData in gameData.artifactDataList)
+            {
+                foreach (var artifact in artifactList)
+                {
+                    if (artifact.gameObject.name == artifactData.artifactName)
+                    {
+                        artifact.currentLevel = artifactData.currentLevel;
+                        artifact.UnlockOrUpgradeSkill();
+                        artifact.UpdateUI();
+
+                        if (artifact.currentLevel >= 1)
+                        {
+                            artifact.ActiveObject();
+                        }
+                    }
+                }
+            }
+        }
+        worldTree.UpdateTreeMeshes(DataManager.Instance.touchData.touchIncreaseLevel);
+
         UIManager.Instance.createObjectButtonUnlockCount = gameData.createObjectButtonUnlockCount > 0 ? gameData.createObjectButtonUnlockCount : 1;
         UIManager.Instance.UpdateButtonUI();
     }
 
-    private void InitializeRoots(ResourceManager resourceManager, List<RootData> rootDataList)
+    private void InitializeRoots(ResourceManager resourceManager, List<RootDataSave> rootDataList)
     {
         List<RootBase> roots = resourceManager.roots;
 
@@ -283,9 +326,13 @@ public class SaveDataManager
     {
         root.rootLevel = level;
         root.upgradeLifeCost = root.CalculateUpgradeCost();
+
+        for (int i = 1; i <= level; i++)
+        {
+            root.ActivateNextPlantObject();
+        }
+
         root.UpdateUI();
-        // 디버그 로그 추가
-        Debug.Log($"Root initialized: {root.name}, Level: {level}, UpgradeCost: {root.upgradeLifeCost}");
     }
 
     private void InitializeDefaultGameData(ResourceManager resourceManager)
@@ -329,7 +376,6 @@ public class SaveDataManager
         AnimalDataSO animalData = GetAnimalDataByIndex(animalIndex);
         if (animalData != null)
         {
-            Debug.Log($"Animal prefab found for index: {animalIndex}");
             GameObject animalObject = GameObject.Instantiate(animalData.animalPrefab, DataManager.Instance.spawnData.spawnTr); // 부모 설정 추가
             DataManager.Instance.spawnData.animalObjectList.Add(animalObject);
             if (animalObject != null)
@@ -337,45 +383,28 @@ public class SaveDataManager
                 animalObject.name = animalData.animalPrefab.name; // 프리팹 이름으로 설정
                 Debug.Log($"Animal instantiated successfully at index: {animalIndex}");
             }
-            else
-            {
-                Debug.LogError($"Failed to instantiate animal at index: {animalIndex}");
-            }
             return animalObject;
         }
-        Debug.LogError($"Animal prefab not found for index: {animalIndex}");
         return null;
     }
 
     private AnimalDataSO GetAnimalDataByIndex(int index)
     {
-        Debug.Log($"GetAnimalDataByIndex - Start for index: {index}");
         AnimalDataSO animalData = animalDataList.Find(data => data.animalIndex == index);
-        if (animalData == null)
-        {
-            Debug.LogError($"GetAnimalDataByIndex - No animal data found for index: {index}");
-        }
-        else
-        {
-            Debug.Log($"GetAnimalDataByIndex - Animal data found for index: {index}");
-        }
+
         return animalData;
     }
 
     private AnimalDataSO FindAnimalDataByGameObject(GameObject animal)
     {
         string animalNameWithoutClone = animal.name.Replace("(Clone)", "").Trim();
-        Debug.Log($"Searching AnimalDataSO for game object name: {animalNameWithoutClone}");
         foreach (var data in animalDataList)
         {
-            Debug.Log($"Comparing with AnimalDataSO name: {data.animalPrefab.name}");
             if (animalNameWithoutClone.Equals(data.animalPrefab.name, StringComparison.OrdinalIgnoreCase))
             {
-                Debug.Log($"Found matching AnimalDataSO: {data.animalPrefab.name} for game object name: {animalNameWithoutClone}");
                 return data;
             }
         }
-        Debug.LogError($"AnimalDataSO not found for game object name: {animalNameWithoutClone}");
         return null;
     }
 }

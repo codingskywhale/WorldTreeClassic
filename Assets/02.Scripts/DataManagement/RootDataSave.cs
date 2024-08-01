@@ -1,5 +1,5 @@
 [System.Serializable]
-public class RootData
+public class RootDataSave
 {
     public int rootLevel;
     public bool isUnlocked;
