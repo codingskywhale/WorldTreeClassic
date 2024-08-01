@@ -49,6 +49,7 @@ public class BubbleClickSkill : Skill
     {
         isUseSkill = true;
         float elapsedTime = 0f;
+        WaitForSeconds waitTime = new WaitForSeconds(clickInterval);
 
         while (elapsedTime < skillDuration)
         {
@@ -57,7 +58,7 @@ public class BubbleClickSkill : Skill
                 ClickNextBubble();
             }
 
-            yield return new WaitForSeconds(clickInterval);
+            yield return waitTime;
             elapsedTime += clickInterval;
         }
 

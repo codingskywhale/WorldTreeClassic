@@ -1,6 +1,8 @@
 using System.Collections.Generic;
 using System.Numerics;
 using UnityEngine;
+using UnityEngine.UI;
+using Vector2 = UnityEngine.Vector2;
 
 public class UIManager : MonoBehaviour
 {
@@ -116,7 +118,7 @@ public class UIManager : MonoBehaviour
                             break;
                         case UnlockConditionType.PlantCount:
 
-                            if (AutoObjectManager.Instance.roots[condition.requiredPlantIndex - 1].isUnlocked)
+                            if (AutoObjectManager.Instance.roots[condition.requiredPlantIndex - 1].rootLevel > 0)
                             {
                                 clearCount++;
                                 Debug.Log($"{createAnimalButtons[i].animalData.animalName} 버튼 식물 조건 충족 완료 ");

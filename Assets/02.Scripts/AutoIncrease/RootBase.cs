@@ -116,6 +116,7 @@ public class RootBase : MonoBehaviour, IRoot
         rootLevel++;
         if (rootLevel == 1 || rootLevel % 25 == 0)
         {
+            UIManager.Instance.CheckConditionCleared();
             ActivateNextPlantObject();
             if (rootLevel % 25 == 0)
             {

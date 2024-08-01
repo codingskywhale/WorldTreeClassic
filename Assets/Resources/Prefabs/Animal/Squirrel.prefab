@@ -1970,7 +1970,7 @@ MonoBehaviour:
     animationBool: isDead
   species: Squirrel
   stats: {fileID: 11400000, guid: 7aee07b0e89d4ea4eaf29fb1db6344e2, type: 2}
-  wanderZone: 10
+  wanderZone: 4.5
   constainedToWanderZone: 0
   nonAgressiveTowards: []
   matchSurfaceRotation: 0

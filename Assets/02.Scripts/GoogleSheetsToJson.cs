@@ -22,7 +22,7 @@ public class GoogleSheetsToJson : MonoBehaviour
     static readonly string SheetName = "동물 종류"; // Change to your sheet name
     SheetsService service;
 
-    void Awake()
+    void Start()
     {
         InitializeGoogleSheets();
         GetSheetDataAsSO();
@@ -31,7 +31,7 @@ public class GoogleSheetsToJson : MonoBehaviour
     void InitializeGoogleSheets()
     {
         GoogleCredential credential;
-        using (var stream = new FileStream("Assets/StreamingAssets/helical-ion-430902-s8-1fee718d019d.json", FileMode.Open, FileAccess.Read))
+        using (var stream = new FileStream("Assets/StreamingAssets/helical-ion-430902-s8-4dbd501b3ae0.json", FileMode.Open, FileAccess.Read))
         {
             credential = GoogleCredential.FromStream(stream).CreateScoped(Scopes);
         }

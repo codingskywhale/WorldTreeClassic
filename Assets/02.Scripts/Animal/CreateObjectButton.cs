@@ -17,8 +17,6 @@ public class CreateObjectButton : MonoBehaviour
     public TextMeshProUGUI inButtonCostText;
     public Button createButton;
 
-    public Transform animalSpawnTr;
-
     [Header("Unlock Image")]
     public GameObject lockImage;
     public TextMeshProUGUI lockConditionText;
@@ -44,6 +42,8 @@ public class CreateObjectButton : MonoBehaviour
         }
 
         createButton.onClick.AddListener(OnCreateButtonClick);
+
+        SetCostText();
 
         UIManager.Instance.UpdateButtonUI();
     }
@@ -91,7 +91,8 @@ public class CreateObjectButton : MonoBehaviour
         // 동물을 추가할 여유 공간이 있을 때
         if (DataManager.Instance.animalGenerateData.AddAnimal(true))
         {
-            GameObject go = Instantiate(animalData.animalPrefab, animalSpawnTr);
+            GameObject go = Instantiate(animalData.animalPrefab, DataManager.Instance.animalSpawnTr);
+
             DataManager.Instance.spawnData.AddAnimalSpawnData(go, animalData);
 
             if (DataManager.Instance.animalGenerateData.nowAnimalCount == 1 || DataManager.Instance.animalGenerateData.nowAnimalCount == 2)
