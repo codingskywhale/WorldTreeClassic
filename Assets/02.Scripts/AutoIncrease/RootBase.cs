@@ -175,7 +175,7 @@ public class RootBase : MonoBehaviour, IRoot
             }
 
             flowerPositions.Add(newPosition);
-            usedPositions.add(newPosition); // 위치 저장
+            usedPositions.Add(newPosition); // 위치 저장
         }
     }
 
