@@ -168,7 +168,7 @@ public class SaveDataManager
         }
     }
 
-    private void ApplyLoadedGameData(GameData gameData, ResourceManager resourceManager, List<Skill> skillList, List<Artifact> artifactList, WorldTree worldTree)
+    public void ApplyLoadedGameData(GameData gameData, ResourceManager resourceManager, List<Skill> skillList, List<Artifact> artifactList, WorldTree worldTree)
     {
         List<RootBase> roots = resourceManager.roots;
 
@@ -335,7 +335,7 @@ public class SaveDataManager
         root.UpdateUI();
     }
 
-    private void InitializeDefaultGameData(ResourceManager resourceManager)
+    public void InitializeDefaultGameData(ResourceManager resourceManager)
     {
         LifeManager.Instance.lifeAmount = BigInteger.Zero;
         LifeManager.Instance.currentLevel = 1;

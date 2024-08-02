@@ -1,3 +1,4 @@
+using PlayFab;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -37,6 +38,8 @@ public class GameManager : MonoBehaviour
         {
             Instance = this;
             DontDestroyOnLoad(gameObject); // 인스턴스가 파괴되지 않도록 설정
+
+            //ResetLogin();     //테스트용 로그인 초기화
         }
         else
         {
@@ -96,6 +99,23 @@ public class GameManager : MonoBehaviour
 
     private void OnApplicationQuit()
     {
-        saveDataManager.SaveGameData(resourceManager, skills, artifacts);
+        if (PlayFabClientAPI.IsClientLoggedIn())
+        {
+            saveDataManager.SaveGameData(resourceManager, skills, artifacts);
+            PlayerPrefs.SetInt("GuestLoggedIn", 1);
+            PlayerPrefs.Save();
+        }
+        else
+        {
+            Debug.LogWarning("Not logged in. Skipping save game data.");
+        }
+    }
+
+    public void ResetLogin()
+    {
+        PlayerPrefs.DeleteKey("GuestLoggedIn");
+        PlayerPrefs.DeleteKey("GoogleLoggedIn");
+        PlayFabClientAPI.ForgetAllCredentials();
+        Debug.Log("Login reset complete. You can now log in again.");
     }
 }
