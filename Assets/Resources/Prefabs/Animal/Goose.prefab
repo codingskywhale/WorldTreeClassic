@@ -307,9 +307,10 @@ GameObject:
   - component: {fileID: 600298885915188086}
   - component: {fileID: 600298885915188084}
   - component: {fileID: 600298885915188085}
+  - component: {fileID: -8123542544513578326}
   m_Layer: 0
   m_Name: Goose
-  m_TagString: Untagged
+  m_TagString: Animal
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -459,6 +460,19 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   CurrentState: 0
+--- !u!114 &-8123542544513578326
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 600298885858246675}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 86ed368a899d8614894a78cc74df1559, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  uniqueID: 
 --- !u!1 &600298885858246677
 GameObject:
   m_ObjectHideFlags: 0

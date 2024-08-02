@@ -219,7 +219,7 @@ public class AnimalInfoWindow : MonoBehaviour
         animalGenerateCount = 1;
 
         // 총 비용이 소지 생명보다 적을 때만
-        while (totalCost + previousCost < LifeManager.Instance.lifeAmount)
+        while (totalCost + previousCost * 4 < LifeManager.Instance.lifeAmount)
         {
             previousCost = previousCost * 4;
             totalCost += previousCost;

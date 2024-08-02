@@ -126,7 +126,7 @@ public class RootBase : MonoBehaviour, IRoot
         upgradeLifeCost = CalculateUpgradeCost();
         OnGenerationRateChanged?.Invoke();
 
-        AutoObjectManager.Instance.CalculateTotalAutoGeneration();
+        AutoObjectManagerTest.Instance.CalculateTotalAutoGeneration();
         UpdateUI();
     }
 
@@ -137,7 +137,7 @@ public class RootBase : MonoBehaviour, IRoot
         float baseRadius = brushSize / 4;  // 첫 번째 꽃의 위치를 위한 기본 반경
         float rootRadius = 0; // 각 Root에 고유한 반경
 
-        int rootIndex = Array.IndexOf(AutoObjectManager.Instance.roots, this);
+        int rootIndex = Array.IndexOf(AutoObjectManagerTest.Instance.roots, this);
 
         if (rootIndex < 4)
         {

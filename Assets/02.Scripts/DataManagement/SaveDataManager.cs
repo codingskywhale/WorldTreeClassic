@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class SaveDataManager
 {
-    public List<AnimalDataSO> animalDataList;    
+    public List<AnimalDataSO> animalDataList;
 
     public void SaveGameData(ResourceManager resourceManager, List<Skill> skillList)
     {
@@ -89,7 +89,7 @@ public class SaveDataManager
                 skillName = skill.gameObject.name,
                 currentLevel = skill.currentLevel,
                 upgradeCost = upgradeCost.ToString(),
-                cooldownRemaining = skill.cooldownRemaining 
+                cooldownRemaining = skill.cooldownRemaining
             };
             skillDataList.Add(data);
         }
@@ -134,13 +134,13 @@ public class SaveDataManager
         if (gameData == null)
         {
             InitializeDefaultGameData(resourceManager);
-            UIManager.Instance.createObjectButtonUnlockCount = 1;
+            UIManager.Instance.createObjectButtonUnlockCount = 0;
             UIManager.Instance.UpdateButtonUI();
             LifeManager.Instance.lifeAmount = new BigInteger(9000000000000000000);
             UIManager.Instance.touchData.upgradeLifeCost = new BigInteger(1000);
             UIManager.Instance.touchData.touchIncreaseAmount = new BigInteger(50);
             return;
-        }                
+        }
 
         //gameData = new GameData();
 
@@ -177,6 +177,7 @@ public class SaveDataManager
             {
                 GameObject animalObject = InstantiateAnimal(animalState.animalIndex);
                 DataManager.Instance.spawnData.animalDataSOList.Add(animalState.dataSO);
+                DataManager.Instance.spawnData.animalObjectList.Add(animalObject);
                 if (animalObject != null)
                 {
                     UniqueID uniqueID = animalObject.AddComponent<UniqueID>();
@@ -188,10 +189,15 @@ public class SaveDataManager
                     animalObject.transform.SetParent(DataManager.Instance.spawnData.spawnTr);
 
                     // 하트 버블 추가
-                    var heartButton = animalObject.GetComponent<Animal>().heart;
-                    if (heartButton != null)
+                    //var heartButton = animalObject.GetComponent<Animal>().heart;
+                    //if (heartButton != null)
+                    //{
+                    //    //LifeManager.Instance.bubbleGenerator.AddAnimalHeartBubbleList(heartButton);
+                    //    // 최대 2번 반복하며 버블을 생성한다.
+                    //}
+                    for (int i = 0; i < Mathf.Min(DataManager.Instance.spawnData.animalObjectList.Count, 2); i++)
                     {
-                        LifeManager.Instance.bubbleGenerator.AddAnimalHeartBubbleList(heartButton);
+                        ResourceManager.Instance.bubbleGeneratorPool.GenerateNewHeart();
                     }
                 }
                 else
@@ -368,7 +374,7 @@ public class SaveDataManager
         Debug.Log($"Searching AnimalDataSO for game object name: {animalNameWithoutClone}");
         foreach (var data in animalDataList)
         {
-            //Debug.Log($"Comparing with AnimalDataSO name: {data.animalPrefab.name}");
+            Debug.Log($"Comparing with AnimalDataSO name: {data.animalPrefab.name}");
             if (animalNameWithoutClone.Equals(data.animalPrefab.name, StringComparison.OrdinalIgnoreCase))
             {
                 Debug.Log($"Found matching AnimalDataSO: {data.animalPrefab.name} for game object name: {animalNameWithoutClone}");

@@ -44,9 +44,10 @@ GameObject:
   - component: {fileID: 5964256182838989318}
   - component: {fileID: 5964256182838989316}
   - component: {fileID: 5964256182838989317}
+  - component: {fileID: -6352427147210429827}
   m_Layer: 0
   m_Name: Ostrich
-  m_TagString: Untagged
+  m_TagString: Animal
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -190,6 +191,19 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   CurrentState: 0
+--- !u!114 &-6352427147210429827
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5964256182093435160}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 86ed368a899d8614894a78cc74df1559, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  uniqueID: 
 --- !u!1001 &2997982332206857765
 PrefabInstance:
   m_ObjectHideFlags: 0

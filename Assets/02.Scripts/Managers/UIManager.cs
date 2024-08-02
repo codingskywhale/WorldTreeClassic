@@ -1,8 +1,5 @@
 using System.Collections.Generic;
-using System.Numerics;
 using UnityEngine;
-using UnityEngine.UI;
-using Vector2 = UnityEngine.Vector2;
 
 public class UIManager : MonoBehaviour
 {
@@ -19,7 +16,7 @@ public class UIManager : MonoBehaviour
     public GameObject CreateObjectButton;
     public Transform CreateObjectButtonTr;
     public List<CreateObjectButton> createAnimalButtons;
-    public int createObjectButtonUnlockCount = 1;
+    public int createObjectButtonUnlockCount = 0;
     private bool isCreatedButton = false;
 
     private void Awake()
@@ -66,7 +63,7 @@ public class UIManager : MonoBehaviour
         }
         for (int i = 0; i < createAnimalButtons.Count; i++)
         {
-            createAnimalButtons[i].SetCostText();   
+            createAnimalButtons[i].SetCostText();
         }
     }
 
@@ -118,7 +115,7 @@ public class UIManager : MonoBehaviour
                             break;
                         case UnlockConditionType.PlantCount:
 
-                            if (AutoObjectManager.Instance.roots[condition.requiredPlantIndex - 1].rootLevel > 0)
+                            if (AutoObjectManagerTest.Instance.roots[condition.requiredPlantIndex - 1].rootLevel > 0)
                             {
                                 clearCount++;
                                 Debug.Log($"{createAnimalButtons[i].animalData.animalName} 버튼 식물 조건 충족 완료 ");
@@ -141,10 +138,11 @@ public class UIManager : MonoBehaviour
                 {
                     createAnimalButtons[i].conditionCleared = true;
                     createAnimalButtons[i].SetLockImageOff();
+                    createObjectButtonUnlockCount++;
                     Debug.Log($"{createAnimalButtons[i].animalData.animalName} 락 해제 완료 {createAnimalButtons[i].animalData.animalUnlockConditions.Length}, {clearCount} 개의 조건을 수행함");
                 }
 
-                clearCount = 0;            
+                clearCount = 0;
             }
         }
     }
@@ -157,7 +155,7 @@ public class UIManager : MonoBehaviour
         for (int i = 0; i < GameManager.Instance.animalDataList.Count; i++)
         {
             go = Instantiate(CreateObjectButton);
-            CreateObjectButton button; 
+            CreateObjectButton button;
             button = go.GetComponent<CreateObjectButton>();
             button.buttonIndex = i;
             button.InitailizeSet(GameManager.Instance.animalDataList[i]);
@@ -166,5 +164,15 @@ public class UIManager : MonoBehaviour
         }
 
         isCreatedButton = true;
+        UnlockButton();
+    }
+
+    public void UnlockButton()
+    {
+        for (int i = 0; i < createObjectButtonUnlockCount; i++)
+        {
+            createAnimalButtons[i].conditionCleared = true;
+            createAnimalButtons[i].SetLockImageOff();
+        }
     }
 }
