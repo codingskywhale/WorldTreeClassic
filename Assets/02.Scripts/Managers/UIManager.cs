@@ -154,7 +154,6 @@ public class UIManager : MonoBehaviour
         // 동물 데이터를 기반으로 동물 생성 버튼을 만들어준다. \
         // 트랜스폼을 캔버스의 해당 위치로 설정하자.
         GameObject go;
-        int count = 0;
         for (int i = 0; i < GameManager.Instance.animalDataList.Count; i++)
         {
             go = Instantiate(CreateObjectButton);

@@ -32,7 +32,7 @@ public class BubbleGeneratorPool : MonoBehaviour
     public void HeartOnRandomAnimal()
     {
         // 2개 이상인 경우 더이상 표시해 줄 필요가 없음.
-        if (nowHeartBubbleList.Count >= 2) return;
+        if (nowHeartBubbleList.Count >= maxHeartCount) return;
 
         // 동물이 없을 때는 실행되지 않음.
         // 동물이 한 마리밖에 없는 경우에는 추가로 생성하면 안됨.

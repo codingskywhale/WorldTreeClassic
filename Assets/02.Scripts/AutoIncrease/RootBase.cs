@@ -370,7 +370,6 @@ public class RootBase : MonoBehaviour, IRoot
         OnGenerationRateChanged?.Invoke(); // 잠금 해제 시 이벤트 트리거
         DataManager.Instance.animalGenerateData.AddMaxAnimalCount();
         UpdateUI();
-        Debug.Log("Unlocked successfully.");
     }
 
     private void CheckUnlockCondition()

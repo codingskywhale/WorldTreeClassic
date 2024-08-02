@@ -82,7 +82,6 @@ public class GameManager : MonoBehaviour
         UIManager.Instance.CreateAnimalButtons();
         UIManager.Instance.bag.CreateSlot();
         uiUpdater.UpdateAllUI();
-        Debug.Log($"초기 생명력: {LifeManager.Instance.lifeAmount}");
 
         InvokeRepeating(nameof(AutoSaveGame), 180f, 180f);
     }

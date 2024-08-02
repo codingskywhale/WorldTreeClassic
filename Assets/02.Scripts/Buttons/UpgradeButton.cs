@@ -179,7 +179,7 @@ public class UpgradeButton : MonoBehaviour
         if (upgradeType == UpgradeType.Root && root != null)
         {
             BigInteger upgradeCost = root.CalculateUpgradeCost();
-            Debug.Log($"UpdateUpgradeCostUI called for root level {this.name}, {root.rootLevel}, upgrade cost {upgradeCost}");
+            //Debug.Log($"UpdateUpgradeCostUI called for root level {this.name}, {root.rootLevel}, upgrade cost {upgradeCost}");
             //UIManager.Instance.root.UpdateRootLevelUI(root.rootLevel, upgradeCost);
             root.UpdateRootLevelUI(root.rootLevel, upgradeCost);
         }

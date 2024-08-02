@@ -368,7 +368,7 @@ public class SaveDataManager
         Debug.Log($"Searching AnimalDataSO for game object name: {animalNameWithoutClone}");
         foreach (var data in animalDataList)
         {
-            Debug.Log($"Comparing with AnimalDataSO name: {data.animalPrefab.name}");
+            //Debug.Log($"Comparing with AnimalDataSO name: {data.animalPrefab.name}");
             if (animalNameWithoutClone.Equals(data.animalPrefab.name, StringComparison.OrdinalIgnoreCase))
             {
                 Debug.Log($"Found matching AnimalDataSO: {data.animalPrefab.name} for game object name: {animalNameWithoutClone}");

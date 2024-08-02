@@ -548,7 +548,6 @@ namespace Polyperfect.Common
         {
             var rand = Random.insideUnitSphere * wanderZone;
             var targetPos = startPosition + rand;
-            Debug.Log($"스포 : {startPosition} 타포 : {targetPos}");
             ValidatePosition(ref targetPos);
 
             wanderTarget = targetPos;

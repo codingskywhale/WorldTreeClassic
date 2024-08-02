@@ -23,10 +23,6 @@ public class CreateObjectButton : MonoBehaviour
 
     public int buttonIndex;
 
-    private string conditionX = "(X) ";
-    private string conditionV = "(V) ";
-
-    int count = 0;
     public bool conditionCleared = false;
 
 

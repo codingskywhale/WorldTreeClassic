@@ -35,7 +35,6 @@ public class ResourceManager : MonoBehaviour
 
         // 초당 생명력 생성률을 로드
         LoadLifeGenerationRate();
-        Debug.Log($"로드된 초당 생명력 생성률 (시작 시): {lifeGenerationRatePerSecond}");
         UpdateUI();
     }
 
@@ -89,7 +88,6 @@ public class ResourceManager : MonoBehaviour
     public void UpdateLifeGenerationRatePerSecond()
     {
         lifeGenerationRatePerSecond = GetTotalLifeGenerationPerSecond();
-        Debug.Log($"초당 생명력 생성률: {lifeGenerationRatePerSecond}");
     }
 
     public BigInteger GetTotalLifeGenerationPerSecond()
@@ -99,7 +97,6 @@ public class ResourceManager : MonoBehaviour
         {
             totalLifeIncrease += root.GetTotalLifeGeneration();
         }
-        Debug.Log($"토탈 : {totalLifeIncrease}");
         return totalLifeIncrease;
     }
 
