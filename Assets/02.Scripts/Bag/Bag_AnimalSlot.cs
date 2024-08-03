@@ -40,6 +40,7 @@ public class Bag_AnimalSlot : MonoBehaviour
     {
         if (isUnlocked)
         {
+            WindowsManager.Instance.animalInfoWnd.ActiveCenterUI();
             WindowsManager.Instance.animalInfoWnd.gameObject.SetActive(true);
             WindowsManager.Instance.animalInfoWnd.ChangeBottomUI(true);
             WindowsManager.Instance.animalInfoWnd.SetAnimalInfoWindowData(slotAnimalDataSO);

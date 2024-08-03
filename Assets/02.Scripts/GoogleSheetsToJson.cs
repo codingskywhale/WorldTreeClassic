@@ -45,7 +45,7 @@ public class GoogleSheetsToJson : MonoBehaviour
 
     void GetSheetDataAsSO()
     {
-        var range = $"{SheetName}!A:E"; // Adjust the range according to your sheet
+        var range = $"{SheetName}!A:F"; // Adjust the range according to your sheet
         SpreadsheetsResource.ValuesResource.GetRequest request = service.Spreadsheets.Values.Get(SpreadsheetId, range);
 
         ValueRange response = request.Execute();
@@ -71,6 +71,7 @@ public class GoogleSheetsToJson : MonoBehaviour
             string animalNameKR = row.Count > 2 ? row[2].ToString() : "한글 이름 없음";
             string animalType = row.Count > 3 ? row[3].ToString() : "타입 없음";
             string unlockCondition = row.Count > 4 ? row[4].ToString() : "해금조건 없음";
+            string simpleStoryText = row.Count > 5 ? row[5].ToString() : "스토리 없음";
             string[] eachConditions = unlockCondition.ToString().Split('\n');
 
             // 해금 조건에 대한 세부 설정 적용
@@ -122,6 +123,7 @@ public class GoogleSheetsToJson : MonoBehaviour
             animalDataSO.animalUnlockConditions = unlockConditions;
             animalDataSO.animalIcon = Resources.Load<Sprite>($"Sprites/{animalNameEN}");
             animalDataSO.animalPrefab = Resources.Load<GameObject>($"Prefabs/Animal/{animalNameEN}");
+            animalDataSO.storyText = simpleStoryText;
 
             GameManager.Instance.animalDataList.Add(animalDataSO);
         }

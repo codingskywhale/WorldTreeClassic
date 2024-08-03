@@ -29,9 +29,19 @@ public class AnimalInfoWindow : MonoBehaviour
     public TextMeshProUGUI animalGenerateCountText;
     public TextMeshProUGUI createCostText;
 
+    [Header("Create Animal Result UI")]
+    public GameObject CreateResultUI;
+    public GameObject CreateAnimalCountUI;
+    public TextMeshProUGUI CreatedAnimalNameText;
+    public TextMeshProUGUI CreatedAnimalCountText;
+    public TextMeshProUGUI previousGetText;
+    public TextMeshProUGUI currentGetText;
+
     [Header("UI GameObject")]
+    public GameObject centerUIs;
     public GameObject BagBottomUI;
     public GameObject CreateAnimalBottomUI;
+    public GameObject StoryCenterUI;
 
     public CreateObjectButton createObjectButton;
 
@@ -151,9 +161,21 @@ public class AnimalInfoWindow : MonoBehaviour
         totalStoredCountText.text = DataManager.Instance.animalGenerateData.allTypeCountDic[nowAnimaldataSO.animalNameEN][EachCountType.Stored].ToString();
     }
 
-    public void ChangeBottomUI(bool isBag)
+    public void ChangeBottomUI(bool isBag, bool isCreateResult = false)
     {
+        if (isCreateResult)
+        {
+            CreateAnimalBottomUI.SetActive(false);
+            CreateResultUI.SetActive(true);
+            CreateAnimalCountUI.SetActive(true);
+            previousGetText.text = (ResourceManager.Instance.lifeGenerationRatePerSecond / 2).ToString();
+            currentGetText.text = ResourceManager.Instance.lifeGenerationRatePerSecond.ToString();
+            return;
+        }
+        CreateResultUI.SetActive(false);
+        CreateAnimalCountUI.SetActive(false);
         BagBottomUI.SetActive(isBag);
+        storyButton.gameObject.SetActive(isBag);
         CreateAnimalBottomUI.SetActive(!isBag);
     }
 
@@ -200,6 +222,8 @@ public class AnimalInfoWindow : MonoBehaviour
     {
         WindowsManager.Instance.createAnimalWindow.previousCost = DataManager.Instance.animalGenerateData.nowCreateCost;
 
+        createObjectButton.isBuyAnimal = true;
+
         for(int i = 0; i < animalGenerateCount; i++) createObjectButton.CreateAnimalToScene();
 
         WindowsManager.Instance.createAnimalWindow.SetData(createObjectButton.animalData.animalName, animalGenerateCount);
@@ -231,5 +255,29 @@ public class AnimalInfoWindow : MonoBehaviour
 
         animalGenerateCountText.text = animalGenerateCount.ToString();
         createCostText.text = BigIntegerUtils.FormatBigInteger(totalCost);
+    }
+
+    public void EnableAnimalCreateResultWindow()
+    {
+        nameText.text = "동물을 창조했습니다.";
+        CreateResultUI.SetActive(true);
+        ChangeBottomUI(false, true);
+        CreatedAnimalNameText.text = nowAnimaldataSO.animalNameKR;
+        CreatedAnimalCountText.text = animalGenerateCount.ToString();
+    }
+
+    public void ClickStoryReplaceButton()
+    {
+        centerUIs.SetActive(!centerUIs.activeSelf);
+        StoryCenterUI.SetActive(!StoryCenterUI.activeSelf);
+        BagBottomUI.SetActive(!BagBottomUI.activeSelf);
+        CreateAnimalBottomUI.SetActive(false);
+    }
+
+    public void ActiveCenterUI()
+    {
+        StoryCenterUI.SetActive(false);
+        centerUIs.SetActive(true);
+        storyButton.gameObject.SetActive(true);
     }
 }

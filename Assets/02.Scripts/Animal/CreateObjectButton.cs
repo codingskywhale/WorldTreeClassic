@@ -12,7 +12,7 @@ public class CreateObjectButton : MonoBehaviour
 
     [Header("UIs")]
     public TextMeshProUGUI nameText;
-    public TextMeshProUGUI conditionText;
+    public TextMeshProUGUI SimpleStoryText;
     // 생명 창조 ~~ cost
     public TextMeshProUGUI inButtonCostText;
     public Button createButton;
@@ -25,6 +25,8 @@ public class CreateObjectButton : MonoBehaviour
 
     public bool conditionCleared = false;
 
+    public bool isBuyAnimal = false;
+
 
     public void InitailizeSet(AnimalDataSO animalDataSO)
     {
@@ -36,7 +38,7 @@ public class CreateObjectButton : MonoBehaviour
         {
             lockConditionText.text = GetConditions();
         }
-
+        SimpleStoryText.text = animalData.storyText;
         createButton.onClick.AddListener(OnCreateButtonClick);
 
         SetCostText();
@@ -146,8 +148,15 @@ public class CreateObjectButton : MonoBehaviour
 
     public void ClickAnimalIcon()
     {
-        WindowsManager.Instance.animalInfoWnd.SetAnimalInfoWindowData(animalData);
-        WindowsManager.Instance.animalInfoWnd.ChangeBottomUI(true);
+        if (isBuyAnimal)
+        {
+            WindowsManager.Instance.animalInfoWnd.gameObject.SetActive(true);
+            WindowsManager.Instance.animalInfoWnd.SetAnimalInfoWindowData(animalData);
+            WindowsManager.Instance.animalInfoWnd.StoryCenterUI.SetActive(false);
+            WindowsManager.Instance.animalInfoWnd.centerUIs.SetActive(true);
+            WindowsManager.Instance.animalInfoWnd.ChangeBottomUI(true);
+            WindowsManager.Instance.animalInfoWnd.SetAnimalInfoWindowData(animalData);
+        }
     }
 
     public void SetLockImageText()
@@ -173,6 +182,7 @@ public class CreateObjectButton : MonoBehaviour
     public void OnCreateButtonClick()
     {
         WindowsManager.Instance.animalInfoWnd.gameObject.SetActive(true);
+        WindowsManager.Instance.animalInfoWnd.ActiveCenterUI();
         WindowsManager.Instance.animalInfoWnd.ChangeBottomUI(false);
         WindowsManager.Instance.animalInfoWnd.SetAnimalInfoWindowData(animalData);
     }

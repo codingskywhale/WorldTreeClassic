@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Numerics;
 using UnityEngine;
 
 public class UIManager : MonoBehaviour
@@ -35,7 +36,7 @@ public class UIManager : MonoBehaviour
 
     private void Start()
     {
-        //LifeManager.Instance.OnWaterChanged += CheckEnoughCost;
+        LifeManager.Instance.OnWaterChanged += CheckEnoughCost;
         SetAnimalCountStatus();
     }
 
@@ -67,29 +68,32 @@ public class UIManager : MonoBehaviour
         }
     }
 
-    //public void CheckEnoughCost(BigInteger amount)
-    //{
-    //    // createObjectButtonUnlockCount가 현재 버튼의 인덱스를 넘는지 확인.
-    //    if (LifeManager.Instance.lifeAmount >= (BigInteger)DataManager.Instance.animalGenerateData.nowCreateCost)
-    //    {
-    //        for (int i = 0; i < createObjectButtonUnlockCount; i++)
-    //        {
-    //            if (i < createAnimalButtons.Count)
-    //                createAnimalButtons[i].createButton.interactable = true;
-    //            if (i < createAnimalButtons.Count)
-    //                createAnimalButtons[i].createButton.interactable = true;
-    //        }
-    //    }
-    //    else
-    //    {
-    //        for (int i = 0; i < createObjectButtonUnlockCount; i++)
-    //        {
-    //            createAnimalButtons[i].createButton.interactable = false;
-    //            if (i < createAnimalButtons.Count)
-    //                createAnimalButtons[i].createButton.interactable = false;
-    //        }
-    //    }
-    //}
+    public void CheckEnoughCost(BigInteger amount)
+    {
+        if (isCreatedButton)
+        {
+            // createObjectButtonUnlockCount가 현재 버튼의 인덱스를 넘는지 확인.
+            if (LifeManager.Instance.lifeAmount >= (BigInteger)DataManager.Instance.animalGenerateData.nowCreateCost)
+            {
+                for (int i = 0; i < createObjectButtonUnlockCount; i++)
+                {
+                    if (i < createAnimalButtons.Count)
+                        createAnimalButtons[i].createButton.interactable = true;
+                    if (i < createAnimalButtons.Count)
+                        createAnimalButtons[i].createButton.interactable = true;
+                }
+            }
+            else
+            {
+                for (int i = 0; i < createObjectButtonUnlockCount; i++)
+                {
+                    createAnimalButtons[i].createButton.interactable = false;
+                    if (i < createAnimalButtons.Count)
+                        createAnimalButtons[i].createButton.interactable = false;
+                }
+            }
+        }
+    }
 
     public void CheckConditionCleared()
     {

@@ -280,7 +280,7 @@ GameObject:
   - component: {fileID: 2542015268505038030}
   - component: {fileID: 8342351805093686378}
   m_Layer: 5
-  m_Name: ConditionText
+  m_Name: SimpleStoryText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -333,8 +333,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\uB300\uCDA9 \uCCAB\uBC88\uC9F8 \uC870\uAC74 (0/1)\n\uB300\uCDA9 \uB450\uBC88\uC9F8
-    \uC870\uAC74 (0/1)"
+  m_text: "\uB300\uCDA9 \uC990\uAC70\uC6B4 \uC774\uC57C\uAE30"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 5e83b443025082a41adb5c0e9869d0b5, type: 2}
   m_sharedMaterial: {fileID: -4230123428673298972, guid: 5e83b443025082a41adb5c0e9869d0b5, type: 2}
@@ -369,7 +368,7 @@ MonoBehaviour:
   m_fontSizeMax: 72
   m_fontStyle: 0
   m_HorizontalAlignment: 1
-  m_VerticalAlignment: 256
+  m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
   m_wordSpacing: 0
@@ -721,12 +720,12 @@ MonoBehaviour:
   characterIcon: {fileID: 8532798693944231158}
   characterIconButton: {fileID: 1342163146760496138}
   nameText: {fileID: 4204690495876941066}
-  conditionText: {fileID: 8342351805093686378}
+  SimpleStoryText: {fileID: 8342351805093686378}
   inButtonCostText: {fileID: 798127901691166336}
   createButton: {fileID: 7021877998558537409}
-  animalSpawnTr: {fileID: 0}
   lockImage: {fileID: 5656441940049615739}
   lockConditionText: {fileID: 1953690739789980510}
+  buttonIndex: 0
   conditionCleared: 0
 --- !u!1 &5656441940049615739
 GameObject:
@@ -925,18 +924,6 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 471982828398376434}
-        m_TargetAssemblyTypeName: CreateObjectButton, Assembly-CSharp
-        m_MethodName: ClickAnimalIcon
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
       - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
         m_MethodName: SetActive
@@ -948,6 +935,18 @@ MonoBehaviour:
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 1
+        m_CallState: 2
+      - m_Target: {fileID: 471982828398376434}
+        m_TargetAssemblyTypeName: CreateObjectButton, Assembly-CSharp
+        m_MethodName: ClickAnimalIcon
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
         m_CallState: 2
 --- !u!1 &6274018698098492311
 GameObject:
@@ -1229,7 +1228,7 @@ GameObject:
   - component: {fileID: 6810978956821544660}
   - component: {fileID: 6614855443947100054}
   m_Layer: 5
-  m_Name: ConditionTextBG
+  m_Name: SimpleStoryTextBG
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
