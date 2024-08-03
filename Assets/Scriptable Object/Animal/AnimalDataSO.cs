@@ -11,4 +11,5 @@ public class AnimalDataSO : ScriptableObject
     public UnlockCondition[] animalUnlockConditions;
     public GameObject animalPrefab;
     public string storyText;
+    public string fullStoryText;
 }

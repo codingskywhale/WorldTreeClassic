@@ -1,4 +1,5 @@
 using System.Numerics;
+using System.Resources;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -37,6 +38,9 @@ public class AnimalInfoWindow : MonoBehaviour
     public TextMeshProUGUI previousGetText;
     public TextMeshProUGUI currentGetText;
 
+    [Header("Story UI")]
+    public TextMeshProUGUI fullStoryText;
+
     [Header("UI GameObject")]
     public GameObject centerUIs;
     public GameObject BagBottomUI;
@@ -47,6 +51,7 @@ public class AnimalInfoWindow : MonoBehaviour
 
     private BigInteger totalGenerateValue;
     private BigInteger preCost;
+    private BigInteger preGenerateAmount;
 
     private void OnEnable()
     {
@@ -73,6 +78,7 @@ public class AnimalInfoWindow : MonoBehaviour
         // 총 생산 데이터는 SO에 담지 말자.
         // 해당 동물을 식별할 수 있는 데이터를 AnimalDataSO에 넣고 
         // 이를 바탕으로 판단해서 해당 오브젝트 내의 값에 접근하자 (생성 수, 보관 수, 활동중 수 등)
+        fullStoryText.text = nowAnimaldataSO.fullStoryText;
     }
 
     public void SetBasicData(string name)
@@ -168,8 +174,8 @@ public class AnimalInfoWindow : MonoBehaviour
             CreateAnimalBottomUI.SetActive(false);
             CreateResultUI.SetActive(true);
             CreateAnimalCountUI.SetActive(true);
-            previousGetText.text = (ResourceManager.Instance.lifeGenerationRatePerSecond / 2).ToString();
-            currentGetText.text = ResourceManager.Instance.lifeGenerationRatePerSecond.ToString();
+            previousGetText.text = BigIntegerUtils.FormatBigInteger(preGenerateAmount);
+            currentGetText.text = BigIntegerUtils.FormatBigInteger(ResourceManager.Instance.GetTotalLifeGenerationPerSecond());
             return;
         }
         CreateResultUI.SetActive(false);
@@ -221,7 +227,7 @@ public class AnimalInfoWindow : MonoBehaviour
     public void CreateAnimal()
     {
         WindowsManager.Instance.createAnimalWindow.previousCost = DataManager.Instance.animalGenerateData.nowCreateCost;
-
+        preGenerateAmount = ResourceManager.Instance.GetTotalLifeGenerationPerSecond();
         createObjectButton.isBuyAnimal = true;
 
         for(int i = 0; i < animalGenerateCount; i++) createObjectButton.CreateAnimalToScene();
