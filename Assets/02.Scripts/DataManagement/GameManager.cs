@@ -1,4 +1,5 @@
 using PlayFab;
+using PlayFab.ClientModels;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -37,10 +38,17 @@ public class GameManager : Singleton<GameManager>
 
     private void InitializeGame()
     {
-        //ResetLogin(); // 로그인 초기화
-        //SaveSystem.DeleteSave();  // 데이터 초기화
 
-        Application.targetFrameRate = 60;
+        if (PlayFabManager.Instance != null)
+        {
+            PlayFabManager.Instance.OnLoginSuccessEvent += OnPlayFabLoginSuccess;
+        }
+        else
+        {
+            Debug.LogError("PlayFabManager.Instance가 null입니다.");
+        }
+                
+        //DeleteAllUserData(); // 계정 데이터 삭제       
         saveDataManager = new SaveDataManager();
         saveDataManager.animalDataList = animalDataList;
         uiUpdater = new UIUpdater(resourceManager, upgradeButtons);
@@ -54,6 +62,13 @@ public class GameManager : Singleton<GameManager>
                                                         offlineRewardSkill, offlineRewardAmountSkill);
         touchInput = GetComponent<TouchInput>();
         offlineRewardUIManager.Initialize(offlineRewardManager); // UI 매니저 초기화
+        
+    }
+
+    private void OnPlayFabLoginSuccess(LoginResult result)
+    {
+        // 로그인 성공 후 데이터 삭제
+        DeleteAllUserData();
     }
 
     public void OnIntroAndOpeningCompleted()
@@ -63,9 +78,24 @@ public class GameManager : Singleton<GameManager>
         CalculateOfflineProgress();
         UIManager.Instance.CreateAnimalButtons();
         UIManager.Instance.bag.CreateSlot();
+        PlayFabManager.Instance.LoadGameData(OnGameDataLoaded);
         uiUpdater.UpdateAllUI();
 
         InvokeRepeating(nameof(AutoSaveGame), 180f, 180f);
+    }
+
+    private void OnGameDataLoaded(GameData gameData)
+    {
+        if (gameData != null)
+        {
+            CalculateOfflineProgress(gameData);
+            uiUpdater.UpdateAllUI();
+        }
+        else
+        {
+            Debug.LogWarning("Failed to load game data. Offline rewards will not be calculated.");
+            uiUpdater.UpdateAllUI(); // 데이터 로드 실패 시에도 UI 업데이트
+        }
     }
 
     private void AutoSaveGame()
@@ -73,15 +103,14 @@ public class GameManager : Singleton<GameManager>
         saveDataManager.SaveGameData(resourceManager, skills, artifacts);        
     }
 
-    private void CalculateOfflineProgress()
+    private void CalculateOfflineProgress(GameData gameData)
     {
-        GameData gameData = SaveSystem.Load();
         if (gameData != null && !string.IsNullOrEmpty(gameData.lastSaveTime))
         {
             BigInteger totalLifeIncrease = offlineRewardManager.CalculateTotalLifeIncrease(gameData.lastSaveTime);
             double offlineDurationInSeconds = offlineRewardManager.CalculateOfflineDurationInSeconds(gameData.lastSaveTime);
             double maxOfflineDurationInSeconds = offlineRewardManager.GetMaxOfflineDurationInSeconds();
-           
+                       
             if (totalLifeIncrease > 0)
             {
                 offlineRewardUIManager.ShowOfflineRewardUI(totalLifeIncrease, offlineDurationInSeconds, maxOfflineDurationInSeconds);
@@ -90,8 +119,8 @@ public class GameManager : Singleton<GameManager>
             {
                 offlineRewardUIManager.HideOfflineRewardUI();
             }
-        }
-    }        
+        }       
+    }
 
     private void OnApplicationQuit()
     {
@@ -112,5 +141,37 @@ public class GameManager : Singleton<GameManager>
         PlayerPrefs.DeleteKey("GuestLoggedIn");
         PlayerPrefs.DeleteKey("GoogleLoggedIn");
         PlayFabClientAPI.ForgetAllCredentials();
+    }
+
+    public void DeleteAllUserData()
+    {
+        // 먼저 모든 사용자 데이터를 가져옵니다.
+        PlayFabClientAPI.GetUserData(new GetUserDataRequest(), result =>
+        {
+            if (result.Data != null)
+            {
+                var keysToRemove = new List<string>(result.Data.Keys);
+
+                // 모든 키를 삭제 요청합니다.
+                var deleteRequest = new UpdateUserDataRequest
+                {
+                    KeysToRemove = keysToRemove
+                };
+                PlayFabClientAPI.UpdateUserData(deleteRequest, OnDataDeleteSuccess, OnDataDeleteFailure);
+            }
+        }, error =>
+        {
+            Debug.LogError("Failed to get user data: " + error.GenerateErrorReport());
+        });
+    }
+
+    private void OnDataDeleteSuccess(UpdateUserDataResult result)
+    {
+        Debug.Log("User data deleted successfully.");
+    }
+
+    private void OnDataDeleteFailure(PlayFabError error)
+    {
+        Debug.LogError("Failed to delete user data: " + error.GenerateErrorReport());
     }
 }
