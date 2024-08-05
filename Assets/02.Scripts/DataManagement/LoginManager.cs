@@ -3,7 +3,6 @@ using TMPro;
 using System.Collections;
 using UnityEngine.UI;
 using PlayFab.ClientModels;
-using Google;
 using GooglePlayGames;
 using GooglePlayGames.BasicApi;
 using System.Collections.Generic;
@@ -19,19 +18,12 @@ public class LoginManager : MonoBehaviour
     private string webClientId = "41547311661-himu41jj8sm40obegnj3g60rualr4j57.apps.googleusercontent.com";
 
     private void Start()
-    {
+    {       
         googleLoginButton.onClick.AddListener(OnGoogleLoginButtonClicked);
         guestLoginButton.onClick.AddListener(OnGuestLoginButtonClicked);        
 
         PlayFabManager.Instance.OnLoginSuccessEvent += OnLoginSuccess;
-
-        // Google Sign-In 초기화
-        GoogleSignIn.Configuration = new GoogleSignInConfiguration
-        {
-            WebClientId = webClientId,
-            RequestIdToken = true
-        };
-
+                
         // Google Play Games Services 초기화
         PlayGamesClientConfiguration config = new PlayGamesClientConfiguration.Builder()
             .RequestServerAuthCode(false) // 요청하지 않음

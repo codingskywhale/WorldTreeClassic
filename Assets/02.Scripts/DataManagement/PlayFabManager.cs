@@ -9,6 +9,7 @@ public class PlayFabManager : MonoBehaviour
     public event Action<LoginResult> OnLoginSuccessEvent;
 
     private string playFabTitleId = "2759E";
+    private const string GameDataKey = "gameData";
 
     private void Awake()
     {
@@ -24,7 +25,7 @@ public class PlayFabManager : MonoBehaviour
             Destroy(gameObject);
         }
     }
-
+       
     public void LoginWithGuest()
     {
         var request = new LoginWithCustomIDRequest { CustomId = SystemInfo.deviceUniqueIdentifier, CreateAccount = true };
@@ -40,7 +41,7 @@ public class PlayFabManager : MonoBehaviour
     private void OnLoginSuccess(LoginResult result)
     {
         Debug.Log("PlayFab login successful");
-        OnLoginSuccessEvent?.Invoke(result);
+        OnLoginSuccessEvent?.Invoke(result);        
     }
 
     private void OnLoginFailure(PlayFabError error)
@@ -95,33 +96,5 @@ public class PlayFabManager : MonoBehaviour
     {
         var request = new LoginWithCustomIDRequest { CustomId = SystemInfo.deviceUniqueIdentifier, CreateAccount = true };
         PlayFabClientAPI.LoginWithCustomID(request, OnLoginSuccess, OnLoginFailure);
-    }
-
-    public void DeleteUserData()
-    {
-        // 데이터를 삭제하여 계정을 초기화하는 효과를 만듭니다.
-        var request = new UpdateUserDataRequest
-        {
-            KeysToRemove = new List<string> { "gameData" } // 여기에 삭제할 데이터의 키를 추가
-        };
-        PlayFabClientAPI.UpdateUserData(request, OnDataDeleteSuccess, OnDataDeleteFailure);
-    }
-
-    private void OnDataDeleteSuccess(UpdateUserDataResult result)
-    {
-        Debug.Log("User data deleted successfully.");
-    }
-
-    private void OnDataDeleteFailure(PlayFabError error)
-    {
-        Debug.LogError("Failed to delete user data: " + error.GenerateErrorReport());
-    }
-
-    public void ResetLogin()
-    {
-        PlayerPrefs.DeleteKey("GuestLoggedIn");
-        PlayerPrefs.DeleteKey("GoogleLoggedIn");
-        PlayFabClientAPI.ForgetAllCredentials();
-        Debug.Log("Login reset complete. You can now log in again.");
-    }
+    }        
 }
