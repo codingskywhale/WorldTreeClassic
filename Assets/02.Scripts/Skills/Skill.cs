@@ -326,4 +326,18 @@ public abstract class Skill : MonoBehaviour
         UpgradeSkill();
         ClosePopup();
     }
+    public void ResetCooldown()
+    {
+        onCooldown = false;
+        cooldownRemaining = 0;
+        UpdateCooldownUI(0);
+    }
+    public void SetCooldown(float cooldownTime)
+    {
+        this.cooldownTime = cooldownTime;
+        onCooldown = true;
+        cooldownRemaining = cooldownTime;
+        UpdateCooldownUI(cooldownRemaining);
+    }
+
 }

@@ -76,7 +76,6 @@ public class RewardedAdExample : MonoBehaviour
             {
                 Debug.Log("User earned reward: " + reward.Type + ", amount: " + reward.Amount);
                 onUserEarnedReward?.Invoke(reward);
-                // 여기에 사용자에게 보상을 제공하는 로직을 추가합니다.
             });
         }
         else
