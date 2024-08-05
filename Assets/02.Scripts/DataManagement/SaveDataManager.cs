@@ -208,18 +208,10 @@ public class SaveDataManager
                     UniqueID uniqueID = animalObject.AddComponent<UniqueID>();
                     uniqueID.uniqueID = animalState.uniqueID; // 고유 ID 설정
                     animalObject.transform.position = new UnityEngine.Vector3(animalState.posX, animalState.posY, animalState.posZ);
-                    Debug.Log($"Animal instantiated at position {animalObject.transform.position}");
 
                     // 스폰 트랜스폼 설정
                     animalObject.transform.SetParent(DataManager.Instance.spawnData.spawnTr);
 
-                    // 하트 버블 추가
-                    //var heartButton = animalObject.GetComponent<Animal>().heart;
-                    //if (heartButton != null)
-                    //{
-                    //    //LifeManager.Instance.bubbleGenerator.AddAnimalHeartBubbleList(heartButton);
-                    //    // 최대 2번 반복하며 버블을 생성한다.
-                    //}
                     for (int i = 0; i < Mathf.Min(DataManager.Instance.spawnData.animalObjectList.Count, 2); i++)
                     {
                         ResourceManager.Instance.bubbleGeneratorPool.GenerateNewHeart();
@@ -407,7 +399,6 @@ public class SaveDataManager
             if (animalObject != null)
             {
                 animalObject.name = animalData.animalPrefab.name; // 프리팹 이름으로 설정
-                Debug.Log($"Animal instantiated successfully at index: {animalIndex}");
             }
             return animalObject;
         }

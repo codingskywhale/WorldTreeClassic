@@ -113,7 +113,6 @@ public class UIManager : MonoBehaviour
                             if (dic.ContainsKey(name) && dic[name][EachCountType.Total] >= condition.requiredAnimalCount)
                             {
                                 clearCount++;
-                                Debug.Log($"{createAnimalButtons[i].animalData.animalName} 버튼 동물 조건 충족 완료 ");
                             }
 
                             break;
@@ -122,7 +121,6 @@ public class UIManager : MonoBehaviour
                             if (AutoObjectManagerTest.Instance.roots[condition.requiredPlantIndex - 1].rootLevel > 0)
                             {
                                 clearCount++;
-                                Debug.Log($"{createAnimalButtons[i].animalData.animalName} 버튼 식물 조건 충족 완료 ");
                             }
 
                             break;
@@ -131,7 +129,6 @@ public class UIManager : MonoBehaviour
                             if (DataManager.Instance.touchData.touchIncreaseLevel > condition.requiredWorldTreeLevel)
                             {
                                 clearCount++;
-                                Debug.Log($"{createAnimalButtons[i].animalData.animalName} 버튼 레벨 조건 충족 완료 ");
                             }
 
                             break;
@@ -143,7 +140,6 @@ public class UIManager : MonoBehaviour
                     createAnimalButtons[i].conditionCleared = true;
                     createAnimalButtons[i].SetLockImageOff();
                     createObjectButtonUnlockCount++;
-                    Debug.Log($"{createAnimalButtons[i].animalData.animalName} 락 해제 완료 {createAnimalButtons[i].animalData.animalUnlockConditions.Length}, {clearCount} 개의 조건을 수행함");
                 }
 
                 clearCount = 0;

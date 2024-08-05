@@ -74,7 +74,6 @@ public class RewardedAdExample : MonoBehaviour
         {
             rewardedAd.Show((Reward reward) =>
             {
-                Debug.Log("User earned reward: " + reward.Type + ", amount: " + reward.Amount);
                 onUserEarnedReward?.Invoke(reward);
             });
         }

@@ -92,7 +92,6 @@ public abstract class Skill : MonoBehaviour
         }
         else
         {
-            Debug.Log("Unlock condition not met.");
             ShowPopup("Unlock condition not met.");
         }
     }
@@ -144,7 +143,6 @@ public abstract class Skill : MonoBehaviour
     {
         if (currentLevel >= 21)
         {
-            Debug.Log("Maximum level reached.");
             ShowPopup("Maximum level reached.");
             return;
         }
@@ -159,7 +157,6 @@ public abstract class Skill : MonoBehaviour
         }
         else
         {
-            Debug.Log("Not enough diamonds to upgrade.");
             ShowPopup("Not enough diamonds to upgrade.");
         }
     }
@@ -175,7 +172,6 @@ public abstract class Skill : MonoBehaviour
         NowskillInfoUI();
         LevelUI();
         UpdateUnlockUI(); // 해금 상태 UI 업데이트
-        Debug.Log($"Skill {skillName} UI updated: Level={currentLevel}, Cooldown={cooldownRemaining}");
     }
 
     protected void UpdateUpgradeCostUI()
@@ -203,7 +199,6 @@ public abstract class Skill : MonoBehaviour
             currentLevelText.text = currentLevel > 0
                 ? $"현재 스킬 레벨: {currentLevel}"
                 : "스킬이 해금되지 않았습니다";
-            Debug.Log($"Skill {skillName} level text updated: {currentLevelText.text}");
         }
     }
 

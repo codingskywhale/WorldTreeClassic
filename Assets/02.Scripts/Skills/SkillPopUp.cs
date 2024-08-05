@@ -71,7 +71,6 @@ public class SkillPopUp : MonoBehaviour
         {
             ClickSkillCostText.text = BigIntegerUtils.FormatBigInteger(correspondingSkill.unlockCost);
         }
-        Debug.Log($"Skill popup updated: {correspondingSkill.skillName}, Level={correspondingSkill.currentLevel}");
     }
 
     public void OnUpgradeButtonClicked()

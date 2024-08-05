@@ -48,7 +48,6 @@ public class OfflineRewardUIManager : MonoBehaviour
         if (pendingLifeIncrease > 0)
         {
             LifeManager.Instance.IncreaseWater(pendingLifeIncrease);
-            Debug.Log($"Reward claimed: {pendingLifeIncrease}"); // 지급된 보상 로그
             pendingLifeIncrease = 0; // 보상 지급 후 초기화
             HideOfflineRewardUI();
         }
@@ -59,7 +58,6 @@ public class OfflineRewardUIManager : MonoBehaviour
         RewardedAdExample.Instance.ShowRewardedAd((Reward reward) =>
         {
             pendingLifeIncrease = originalLifeIncrease * 2; // 보상을 두 배로 증가
-            Debug.Log($"Reward doubled: {pendingLifeIncrease}"); // 두 배로 증가된 보상 로그
             ClaimOfflineReward();
         });
     }

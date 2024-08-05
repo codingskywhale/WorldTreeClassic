@@ -261,7 +261,7 @@ public class RootBase : MonoBehaviour, IRoot
         return Mathf.Max(distance1, distance2);
     }
 
-    private void ActivateNextPlantObject()
+    public void ActivateNextPlantObject()
     {
         if (currentPrePlacedFlowerIndex < prePlacedFlowers.Length)
         {

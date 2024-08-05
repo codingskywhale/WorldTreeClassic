@@ -73,19 +73,4 @@ public class AutoMovement : MonoBehaviour
 
         return viewportPosition.x > 1f || viewportPosition.x < 0f;
     }
-
-    //private void SetReturnDirection()
-    //{
-    //    // 카메라의 Viewport 0~1 사이 좌표중 x 값을 잡아준다.
-    //    float viewPortXPos = Random.Range(0f, 1f);
-    //    // worldPoint 값으로 변환해준다.
-    //    Vector3 worldMovePos = cam.ViewportToWorldPoint(new Vector3(viewPortXPos, 0,0));
-    //    Debug.Log(worldMovePos);
-    //    // z 값은 카메라와 나무 사이의 임의의 값을 넣어주면 된다.
-    //    float moveZ = Random.Range(0f, 1f);
-    //    worldMovePos.y = 1.5f;
-    //    worldMovePos.z = moveZ;
-
-    //    targetPos = worldMovePos;
-    //}
 }

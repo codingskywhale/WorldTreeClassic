@@ -83,7 +83,6 @@ namespace GooglePlayGames.Android
 
             InitializeTokenClient();
 
-            Debug.Log("Starting Auth with token client.");
             mTokenClient.FetchTokens(silent, (int result) =>
             {
                 bool succeed = result == 0 /* CommonStatusCodes.SUCCEED */;

@@ -116,7 +116,6 @@ public class ResourceManager : MonoBehaviour
         if (gameData != null && !string.IsNullOrEmpty(gameData.lifeGenerationRatePerSecond))
         {
             lifeGenerationRatePerSecond = BigInteger.Parse(gameData.lifeGenerationRatePerSecond);
-            Debug.Log($"로드된 초당 생명력 생성률: {lifeGenerationRatePerSecond}");
         }
         else
         {

@@ -53,7 +53,6 @@ public class GoogleSheetsToJson : MonoBehaviour
 
         if (values == null || values.Count == 0)
         {
-            Debug.Log("No data found.");
             return;
         }
 
@@ -62,8 +61,6 @@ public class GoogleSheetsToJson : MonoBehaviour
         {
             var row = values[i];
             int conditionCount = Regex.Matches(row[4].ToString(), "\n").Count + 1;
-
-            //Debug.Log("Row data: " + string.Join(",", row)); // 디버그 출력
 
             // Checking if each column exists and converting to string
             string animalIdx = row.Count > 0 ? row[0].ToString() : "번호 없음";

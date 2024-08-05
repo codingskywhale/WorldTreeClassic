@@ -45,7 +45,6 @@ public class OfflineRewardManager
         }
 
         TimeSpan offlineDuration = offlineProgressCalculator.CalculateOfflineDuration(lastSaveTime);
-        Debug.Log($"오프라인 기간 (초): {offlineDuration.TotalSeconds}");
 
         TimeSpan totalOfflineDuration;
         if (offlineRewardSkill.currentLevel == 0)
@@ -60,10 +59,7 @@ public class OfflineRewardManager
             totalOfflineDuration = TimeSpan.FromMinutes(Math.Min(maxOfflineDurationMinutes, totalOfflineDuration.TotalMinutes));
         }
 
-        Debug.Log($"총 오프라인 기간 (스킬 적용) (초): {totalOfflineDuration.TotalSeconds}");
-
         BigInteger lifePerSecond = resourceManager.GetLifeGenerationRatePerSecond();
-        Debug.Log($"초당 생명력 생성률: {lifePerSecond}");
 
         BigInteger totalLifeIncrease = lifePerSecond * (BigInteger)totalOfflineDuration.TotalSeconds;
 
@@ -71,10 +67,7 @@ public class OfflineRewardManager
         {
             float rewardMultiplier = 1.0f + (offlineRewardAmountSkill.currentLevel * 0.10f);
             totalLifeIncrease = BigInteger.Multiply(totalLifeIncrease, new BigInteger(rewardMultiplier));
-            Debug.Log($"오프라인 보상량 증가 적용 후: {totalLifeIncrease}");
         }
-
-        Debug.Log($"총 오프라인 생명력 증가량: {totalLifeIncrease}");
 
         return totalLifeIncrease;
     }

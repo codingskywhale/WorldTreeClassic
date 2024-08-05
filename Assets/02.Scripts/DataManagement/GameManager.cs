@@ -123,6 +123,5 @@ public class GameManager : MonoBehaviour
         PlayerPrefs.DeleteKey("GuestLoggedIn");
         PlayerPrefs.DeleteKey("GoogleLoggedIn");
         PlayFabClientAPI.ForgetAllCredentials();
-        Debug.Log("Login reset complete. You can now log in again.");
     }
 }
