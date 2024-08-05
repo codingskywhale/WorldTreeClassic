@@ -7,6 +7,7 @@ public class UIUpdater
     private ResourceManager resourceManager;
     private List<UpgradeButton> upgradeButtons;
     private List<Skill> skills;
+    private List<Artifact> artifacts;
 
     public UIUpdater(ResourceManager resourceManager, List<UpgradeButton> upgradeButtons)
     {
@@ -19,6 +20,11 @@ public class UIUpdater
         this.skills = skills;
     }
 
+    public void SetArtifacts(List<Artifact> artifacts)
+    {
+        this.artifacts = artifacts;
+    }
+
     public void UpdateAllUI()
     {
         DataManager.Instance.touchData.UpdateUI();
@@ -28,8 +34,7 @@ public class UIUpdater
         foreach (var root in resourceManager.roots)
         {
             if (root.isUnlocked)
-            {
-                Debug.Log($"Updating UI for unlocked root: Level={root.rootLevel}, UpgradeCost={root.upgradeLifeCost}");
+            {                
                 root.UpdateUI();
             }
         }
@@ -64,6 +69,7 @@ public class UIUpdater
 
         //UpdateAnimalButtons();
         UpdateSkillUI();
+        UpdateArtifactUI();
     }
 
     private void UpdateAnimalButtons()
@@ -104,7 +110,18 @@ public class UIUpdater
         {
             foreach (var skill in skills)
             {
-                skill.UpdateUI(); // 각 스킬의 UI 업데이트
+                skill.UpdateUI(); // 각 스킬의 UI 업데이트                
+            }
+        }
+    }
+
+    private void UpdateArtifactUI()
+    {
+        if (artifacts != null)
+        {
+            foreach (var artifact in artifacts)
+            {
+                artifact.UpdateUI(); // 각 아티팩트의 UI 업데이트                
             }
         }
     }

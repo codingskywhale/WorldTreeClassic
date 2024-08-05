@@ -25,8 +25,6 @@ public class IntroManager : MonoBehaviour
         "긍정적인 생각은 \n긍정적인 결과를 가져옵니다. \n힘내세요!"
     };
 
-
-
     public Material backgroundMaterial; // 그라데이션 Shader가 적용된 Material
 
     private void Start()
@@ -53,9 +51,9 @@ public class IntroManager : MonoBehaviour
         // 인트로 애니메이션 완료 후 배경 패널과 텍스트 비활성화
         introText.gameObject.SetActive(false);
         backgroundPanel.gameObject.SetActive(false);
-        GameManager.Instance.cameraTransition.StartCoroutine(GameManager.Instance.cameraTransition.OpeningCamera());
 
         introCanvas.SetActive(false);
 
+        GameManager.Instance.cameraTransition.StartCoroutine(GameManager.Instance.cameraTransition.OpeningCamera());
     }
 }

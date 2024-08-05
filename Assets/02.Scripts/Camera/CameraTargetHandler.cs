@@ -78,14 +78,18 @@ public class CameraTargetHandler : MonoBehaviour
     {
         if (currentTarget != null)
         {
+            // 현재 카메라의 회전 값을 저장
+            Quaternion originalRotation = Camera.main.transform.rotation;
+
+            // 타겟의 위치를 기준으로 카메라 위치를 업데이트
             Vector3 targetPosition = currentTarget.position + offset;
             Camera.main.transform.position = targetPosition;
 
-            // 카메라가 타겟을 계속 바라보도록 설정
-            Camera.main.transform.LookAt(currentTarget);
+            // 저장한 회전 값을 다시 설정하여 회전 값이 변경되지 않도록 함
+            Camera.main.transform.rotation = originalRotation;
         }
     }
-
+    
     public void SetFreeCameraMode(bool isFree)
     {
         isFreeCamera = isFree;

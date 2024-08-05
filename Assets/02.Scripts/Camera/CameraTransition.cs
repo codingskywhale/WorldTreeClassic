@@ -78,24 +78,5 @@ public class CameraTransition : MonoBehaviour
         mainCamera.fieldOfView = newFOV;
         mainCamera.transform.position = newPosition;
     }
-
-    public void ApplyCameraState()
-    {
-        mainCamera.fieldOfView = currentCameraFOV;
-        mainCamera.transform.position = currentCameraPosition;
-    }
-
-    public void SetCameraState(Vector3 position, Quaternion rotation, float FOV)
-    {
-        currentCameraPosition = position;
-        currentCameraRotation = rotation;
-        currentCameraFOV = FOV;
-        ApplyCameraState();
-    }
-
-    public void SetInitialCameraState(Vector3 position, float FOV)
-    {
-        initialPosition = position;
-        currentCameraFOV = FOV;
-    }
 }
+

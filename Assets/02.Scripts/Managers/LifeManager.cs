@@ -16,7 +16,6 @@ public class LifeManager : MonoBehaviour
     public delegate void WaterChanged(BigInteger newAmount);
     public event WaterChanged OnWaterChanged;
 
-
     private void Awake()
     {
         // 싱글톤 인스턴스 설정

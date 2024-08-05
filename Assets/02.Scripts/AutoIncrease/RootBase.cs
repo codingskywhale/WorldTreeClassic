@@ -97,7 +97,7 @@ public class RootBase : MonoBehaviour, IRoot
     {
         // 생명력 생성 이벤트 호출
     }
-
+    
     public BigInteger CalculateUpgradeCost()
     {
         if (rootLevel == 0)

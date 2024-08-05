@@ -93,12 +93,12 @@ public abstract class Artifact : MonoBehaviour
         return unlockCost + (level * 10);
     }
 
-    private void ActiveObject()
+    public void ActiveObject()
     {
         unlockObject.SetActive(true);
     }
-
-    private void UpdateUI()
+        
+    public void UpdateUI()
     {
         UpdateUpgradeCostUI();
         UpdateSkillInfoUI();
