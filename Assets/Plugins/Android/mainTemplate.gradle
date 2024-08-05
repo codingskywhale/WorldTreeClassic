@@ -1,35 +1,33 @@
 apply plugin: 'com.android.library'
-**APPLY_PLUGINS**
 
+// Define dependencies
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-// Android Resolver Dependencies Start
-    implementation 'androidx.constraintlayout:constraintlayout:2.1.4' // Assets/GoogleMobileAds/Editor/GoogleMobileAdsDependencies.xml:12
-    implementation 'com.google.android.gms:play-services-ads:23.2.0' // Assets/GoogleMobileAds/Editor/GoogleMobileAdsDependencies.xml:7
-    implementation 'com.google.android.gms:play-services-auth:20+' // Assets/GoogleSignIn/Editor/GoogleSignInDependencies.xml:10
-    implementation 'com.google.android.ump:user-messaging-platform:2.2.0' // Assets/GoogleMobileAds/Editor/GoogleUmpDependencies.xml:7
-    implementation 'com.google.games:gpgs-plugin-support:0.10.14' // Assets/GooglePlayGames/Editor/GooglePlayGamesPluginDependencies.xml:11
-    implementation 'com.google.signin:google-signin-support:1.0.4' // Assets/GoogleSignIn/Editor/GoogleSignInSupportDependencies.xml:9
-// Android Resolver Dependencies End
-**DEPS**}
+    // Android Resolver Dependencies Start
+    implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
+    implementation 'com.google.android.gms:play-services-ads:23.2.0'
+    implementation 'com.google.android.gms:play-services-auth:20+'
+    implementation 'com.google.android.ump:user-messaging-platform:2.2.0'
+    implementation 'com.google.games:gpgs-plugin-support:0.10.14'
+    implementation 'com.google.signin:google-signin-support:1.0.4'
+    // Android Resolver Dependencies End
+}
 
 // Android Resolver Exclusions Start
 android {
-  packagingOptions {
-      exclude ('/lib/arm64-v8a/*' + '*')
-      exclude ('/lib/armeabi/*' + '*')
-      exclude ('/lib/mips/*' + '*')
-      exclude ('/lib/mips64/*' + '*')
-      exclude ('/lib/x86/*' + '*')
-      exclude ('/lib/x86_64/*' + '*')
-  }
+    packagingOptions {
+        exclude ('/lib/arm64-v8a/*' + '*')
+        exclude ('/lib/armeabi/*' + '*')
+        exclude ('/lib/mips/*' + '*')
+        exclude ('/lib/mips64/*' + '*')
+        exclude ('/lib/x86/*' + '*')
+        exclude ('/lib/x86_64/*' + '*')
+    }
 }
-// Android Resolver Exclusions End
+
+// Android configuration
 android {
     ndkPath "**NDKPATH**"
-
-    compileSdkVersion **APIVERSION**
-    buildToolsVersion '**BUILDTOOLS**'
 
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_11
@@ -37,6 +35,7 @@ android {
     }
 
     defaultConfig {
+        compileSdkVersion 33
         minSdkVersion **MINSDKVERSION**
         targetSdkVersion **TARGETSDKVERSION**
         ndk {

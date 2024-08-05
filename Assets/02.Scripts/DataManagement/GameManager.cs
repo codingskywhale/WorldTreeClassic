@@ -38,16 +38,6 @@ public class GameManager : Singleton<GameManager>
 
     private void InitializeGame()
     {
-
-        if (PlayFabManager.Instance != null)
-        {
-            PlayFabManager.Instance.OnLoginSuccessEvent += OnPlayFabLoginSuccess;
-        }
-        else
-        {
-            Debug.LogError("PlayFabManager.Instance가 null입니다.");
-        }
-                
         //DeleteAllUserData(); // 계정 데이터 삭제       
         saveDataManager = new SaveDataManager();
         saveDataManager.animalDataList = animalDataList;
@@ -75,7 +65,6 @@ public class GameManager : Singleton<GameManager>
     {
         LifeManager.Instance.bubbleGenerator.InitialBubbleSet();
         saveDataManager.animalDataList = animalDataList;
-        CalculateOfflineProgress();
         UIManager.Instance.CreateAnimalButtons();
         UIManager.Instance.bag.CreateSlot();
         PlayFabManager.Instance.LoadGameData(OnGameDataLoaded);

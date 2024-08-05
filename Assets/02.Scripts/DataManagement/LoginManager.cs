@@ -20,6 +20,9 @@ public class LoginManager : MonoBehaviour
 
     private void Start()
     {
+        PlayerPrefs.DeleteKey("GuestLoggedIn");
+        PlayerPrefs.DeleteKey("GoogleLoggedIn");
+
         googleLoginButton.onClick.AddListener(OnGoogleLoginButtonClicked);
         guestLoginButton.onClick.AddListener(OnGuestLoginButtonClicked);        
 
