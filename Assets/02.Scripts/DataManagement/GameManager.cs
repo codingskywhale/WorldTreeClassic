@@ -37,17 +37,23 @@ public class GameManager : MonoBehaviour
         if (Instance == null)
         {
             Instance = this;
-            DontDestroyOnLoad(gameObject); // 인스턴스가 파괴되지 않도록 설정
-
-            //ResetLogin();     //테스트용 로그인 초기화
+            DontDestroyOnLoad(gameObject); // 인스턴스가 파괴되지 않도록 설정                        
         }
         else
         {
             Destroy(gameObject); // 이미 인스턴스가 존재하면 중복 생성된 객체 파괴
+            return;
         }
 
+        InitializeGame();
+    }
+
+    private void InitializeGame()
+    {
+        //ResetLogin(); // 로그인 초기화
+        //SaveSystem.DeleteSave();  // 데이터 초기화
         saveDataManager = new SaveDataManager();
-        saveDataManager.animalDataList = animalDataList;        
+        saveDataManager.animalDataList = animalDataList;
         uiUpdater = new UIUpdater(resourceManager, upgradeButtons);
         uiUpdater.SetSkills(skills);
         uiUpdater.SetArtifacts(artifacts);
@@ -55,9 +61,8 @@ public class GameManager : MonoBehaviour
         // OfflineRewardSkill 인스턴스 생성 및 초기화
         offlineRewardSkill = FindObjectOfType<OfflineRewardSkill>();
         offlineRewardAmountSkill = FindObjectOfType<OfflineRewardAmountSkill>();
-        offlineRewardManager = new OfflineRewardManager(resourceManager, offlineProgressCalculator, 
+        offlineRewardManager = new OfflineRewardManager(resourceManager, offlineProgressCalculator,
                                                         offlineRewardSkill, offlineRewardAmountSkill);
-        //SaveSystem.DeleteSave();  // 개발 중에만 사용
         touchInput = GetComponent<TouchInput>();
         offlineRewardUIManager.Initialize(offlineRewardManager); // UI 매니저 초기화
     }

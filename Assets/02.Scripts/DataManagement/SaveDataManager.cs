@@ -134,7 +134,8 @@ public class SaveDataManager
             allTypeCountDic = serializableDict, // 직렬화된 딕셔너리 저장
             createObjectButtonUnlockCount = UIManager.Instance.createObjectButtonUnlockCount,
             skillDataList = skillDataList,
-            artifactDataList = artifactDataList
+            artifactDataList = artifactDataList,
+            lastSkillSaveTime = DateTime.UtcNow.ToString("o")
         };
         PlayFabManager.Instance.SaveGameData(gameData);
     }
@@ -260,6 +261,25 @@ public class SaveDataManager
             root.UpdateUI();
         }
 
+        TimeSpan timeElapsed = TimeSpan.Zero;
+
+        if (!string.IsNullOrEmpty(gameData.lastSkillSaveTime))
+        {
+            DateTime lastSkillSaveTime;
+            if (DateTime.TryParse(gameData.lastSkillSaveTime, out lastSkillSaveTime))
+            {
+                timeElapsed = DateTime.UtcNow - lastSkillSaveTime;
+            }
+            else
+            {
+                Debug.LogError("Failed to parse last save time.");
+            }
+        }
+        else
+        {
+            Debug.LogWarning("Last save time is null or empty, setting timeElapsed to zero.");
+        }
+
         if (gameData.skillDataList != null)
         {
             foreach (var skillData in gameData.skillDataList)
@@ -269,8 +289,8 @@ public class SaveDataManager
                     if (skill.gameObject.name == skillData.skillName)
                     {
                         skill.currentLevel = skillData.currentLevel;
-                        skill.cooldownRemaining = skillData.cooldownRemaining; // 쿨다운 남은 시간 불러오기
-                        skill.UpdateUI();
+                        skill.cooldownRemaining = Mathf.Max(0, skillData.cooldownRemaining - (float)timeElapsed.TotalSeconds); // 경과 시간 반영
+                        skill.UpdateUI();                                                
                     }
                 }
             }
