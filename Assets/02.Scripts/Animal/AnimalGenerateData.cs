@@ -109,4 +109,24 @@ public class AnimalGenerateData
     {
         return nowAnimalCount < maxAnimalCount;
     }
+
+    public void SetSlotData()
+    {
+        foreach (var kvp in allTypeCountDic)
+        {
+            var animalDataSO = GameManager.Instance.animalDataList.Find(data => data.animalNameEN == kvp.Key);
+            if (animalDataSO != null)
+            {
+                var animalSlot = DataManager.Instance.bag.slots.Find(slot => slot.slotAnimalDataSO == animalDataSO);
+                if (animalSlot != null)
+                {
+                    animalSlot.isUnlocked = kvp.Value[EachCountType.Active] > 0 || kvp.Value[EachCountType.Stored] > 0;
+                    if (animalSlot.isUnlocked)
+                    {
+                        animalSlot.SetSlotData();
+                    }
+                }
+            }
+        }
+    }
 }

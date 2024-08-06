@@ -218,24 +218,6 @@ public class SaveDataManager
                     }
                 }
             }
-
-            // 가방 슬롯 업데이트
-            foreach (var kvp in deserializedDict)
-            {
-                var animalDataSO = animalDataList.Find(data => data.animalName == kvp.Key);
-                if (animalDataSO != null)
-                {
-                    var animalSlot = DataManager.Instance.bag.slots.Find(slot => slot.slotAnimalDataSO == animalDataSO);
-                    if (animalSlot != null)
-                    {
-                        animalSlot.isUnlocked = kvp.Value[EachCountType.Active] > 0 || kvp.Value[EachCountType.Stored] > 0;
-                        if (animalSlot.isUnlocked)
-                        {
-                            animalSlot.SetSlotData();
-                        }
-                    }
-                }
-            }
         }
 
         if (gameData.touchData != null)

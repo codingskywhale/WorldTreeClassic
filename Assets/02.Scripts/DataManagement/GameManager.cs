@@ -69,6 +69,7 @@ public class GameManager : Singleton<GameManager>
         UIManager.Instance.bag.CreateSlot();
         PlayFabManager.Instance.LoadGameData(OnGameDataLoaded);
         uiUpdater.UpdateAllUI();
+        DataManager.Instance.animalGenerateData.SetSlotData();
 
         InvokeRepeating(nameof(AutoSaveGame), 180f, 180f);
     }
