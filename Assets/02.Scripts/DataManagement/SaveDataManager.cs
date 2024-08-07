@@ -149,7 +149,7 @@ public class SaveDataManager
             if (gameData == null)
             {
                 InitializeDefaultGameData(resourceManager);
-                UIManager.Instance.createObjectButtonUnlockCount = 1;
+                UIManager.Instance.createObjectButtonUnlockCount = 0;
                 UIManager.Instance.UpdateButtonUI();
                 LifeManager.Instance.lifeAmount = new BigInteger(500000000000000000);
                 UIManager.Instance.touchData.upgradeLifeCost = new BigInteger(1000);
@@ -202,39 +202,19 @@ public class SaveDataManager
             {
                 GameObject animalObject = InstantiateAnimal(animalState.animalIndex);
                 DataManager.Instance.spawnData.animalDataSOList.Add(animalState.dataSO);
+                DataManager.Instance.spawnData.animalObjectList.Add(animalObject);
                 if (animalObject != null)
                 {
                     UniqueID uniqueID = animalObject.AddComponent<UniqueID>();
                     uniqueID.uniqueID = animalState.uniqueID; // 고유 ID 설정
                     animalObject.transform.position = new UnityEngine.Vector3(animalState.posX, animalState.posY, animalState.posZ);
-                    Debug.Log($"Animal instantiated at position {animalObject.transform.position}");
 
                     // 스폰 트랜스폼 설정
                     animalObject.transform.SetParent(DataManager.Instance.spawnData.spawnTr);
 
-                    // 하트 버블 추가
-                    var heartButton = animalObject.GetComponent<Animal>().heart;
-                    if (heartButton != null)
+                    for (int i = 0; i < Mathf.Min(DataManager.Instance.spawnData.animalObjectList.Count, 2); i++)
                     {
-                        LifeManager.Instance.bubbleGenerator.AddAnimalHeartBubbleList(heartButton);
-                    }
-                }
-            }
-
-            // 가방 슬롯 업데이트
-            foreach (var kvp in deserializedDict)
-            {
-                var animalDataSO = animalDataList.Find(data => data.animalName == kvp.Key);
-                if (animalDataSO != null)
-                {
-                    var animalSlot = Array.Find(DataManager.Instance.bag.slots, slot => slot.slotAnimalDataSO == animalDataSO);
-                    if (animalSlot != null)
-                    {
-                        animalSlot.isUnlocked = kvp.Value[EachCountType.Active] > 0 || kvp.Value[EachCountType.Stored] > 0;
-                        if (animalSlot.isUnlocked)
-                        {
-                            animalSlot.SetSlotData();
-                        }
+                        ResourceManager.Instance.bubbleGeneratorPool.GenerateNewHeart();
                     }
                 }
             }
@@ -401,7 +381,6 @@ public class SaveDataManager
             if (animalObject != null)
             {
                 animalObject.name = animalData.animalPrefab.name; // 프리팹 이름으로 설정
-                Debug.Log($"Animal instantiated successfully at index: {animalIndex}");
             }
             return animalObject;
         }

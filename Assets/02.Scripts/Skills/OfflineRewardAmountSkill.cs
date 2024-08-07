@@ -7,6 +7,7 @@ public class OfflineRewardAmountSkill : Artifact
     protected override void Start()
     {
         artifactName = "오프라인 보상 증가";
+        currentLevel = 0;
         base.Start();
     }
     protected override void UpdateSkillInfoUI()

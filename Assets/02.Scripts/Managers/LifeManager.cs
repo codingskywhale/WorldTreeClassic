@@ -6,12 +6,13 @@ public class LifeManager : MonoBehaviour
 {
     public static LifeManager Instance { get; private set; } // 싱글톤 인스턴스
 
-    public BigInteger lifeAmount = new BigInteger(5000);
+    public BigInteger lifeAmount;
     public int currentLevel = 1;
     public int lifePerLevel = 10;
     public RootBase RootData;
     public List<IRoot> rootData = new List<IRoot>();
     public BubbleGenerator bubbleGenerator;
+    public BubbleGeneratorPool bubbleGenratorPool;
     public delegate void WaterChanged(BigInteger newAmount);
     public event WaterChanged OnWaterChanged;
 
@@ -32,14 +33,10 @@ public class LifeManager : MonoBehaviour
     }
     private void Start()
     {
-        Debug.Log("LifeManager 초기값: " + lifeAmount);
-
         // SaveDataManager의 LoadGameData 호출
         SaveDataManager saveDataManager = new SaveDataManager();
         ResourceManager resourceManager = FindObjectOfType<ResourceManager>();
         //saveDataManager.LoadGameData(skill);
-
-        Debug.Log("LifeManager 로드 후 값: " + lifeAmount);
     }
     public void IncreaseWater(BigInteger amount)
     {

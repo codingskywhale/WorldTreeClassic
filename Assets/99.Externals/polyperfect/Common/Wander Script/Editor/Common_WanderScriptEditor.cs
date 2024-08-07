@@ -150,8 +150,6 @@ namespace Polyperfect.Common
                 EditorGUILayout.PropertyField(logChanges);
                 EditorGUILayout.PropertyField(showGizmos);
                 EditorGUILayout.PropertyField(drawWanderRange);
-                EditorGUILayout.PropertyField(drawScentRange);
-                EditorGUILayout.PropertyField(drawAwarenessRange, true);
             }
 
             serializedObject.ApplyModifiedProperties();

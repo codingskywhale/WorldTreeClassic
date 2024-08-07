@@ -5,7 +5,7 @@ using UnityEngine;
 public class BubbleGenerator : MonoBehaviour
 {
     public List<HeartButton> heartBubbleList = new List<HeartButton>();
-    private List<HeartButton> nowBubbleList = new List<HeartButton>();
+    public List<HeartButton> nowBubbleList = new List<HeartButton>();
     private readonly int maxHeartCount = 2;
     private int nowOnHeartIndex;
     public readonly float heartGenerateDelay = 2f;
@@ -116,5 +116,16 @@ public class BubbleGenerator : MonoBehaviour
             if(heartButton.heartIdx > idx)
                 heartButton.heartIdx--;
         }
+    }
+
+    public void ClearAllBubbles()
+    {
+        heartBubbleList.Clear();
+        for(int i = 0; i < nowBubbleList.Count; i++)
+        {
+            nowBubbleList[i].SetBubbleOff();
+        }
+        nowBubbleList.Clear();
+        buttonIdx = 0;
     }
 }

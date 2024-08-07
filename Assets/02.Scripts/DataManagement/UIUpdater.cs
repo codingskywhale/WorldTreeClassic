@@ -67,7 +67,7 @@ public class UIUpdater
             }
         }
 
-        UpdateAnimalButtons();
+        //UpdateAnimalButtons();
         UpdateSkillUI();
         UpdateArtifactUI();
     }
@@ -77,7 +77,7 @@ public class UIUpdater
         var createAnimalButtons = UIManager.Instance.createAnimalButtons; 
         var nowAnimalCount = UIManager.Instance.createObjectButtonUnlockCount; // 현재 생성된 동물
 
-        for (int i = 0; i < createAnimalButtons.Length; i++) 
+        for (int i = 0; i < createAnimalButtons.Count; i++) 
         {
             var button = createAnimalButtons[i]; 
             var animalData = button.animalData; 
@@ -87,19 +87,19 @@ public class UIUpdater
                 button.nameText.text = animalData.animalName; // 버튼의 이름을 동물 이름으로 설정
 
                 // 해금 상태에 따라 설명 텍스트 업데이트
-                bool conditionCleared = i < nowAnimalCount - 1; 
-                button.conditionText.text = conditionCleared ? "(V) " + animalData.animalUnlockConditions[0] : "(X) " + animalData.animalUnlockConditions[0];
+                //bool conditionCleared = i < nowAnimalCount - 1; 
+                //button.conditionText.text = conditionCleared ? "(V) " + animalData.animalUnlockConditions[0] : "(X) " + animalData.animalUnlockConditions[0];
 
                 // 비용 텍스트 업데이트
                 button.SetCostText(); 
 
-                button.conditionCleared = conditionCleared;
+                //button.conditionCleared = conditionCleared;
 
                 // 버튼 상호작용 가능 여부 업데이트
-                button.createButton.interactable = conditionCleared && LifeManager.Instance.lifeAmount >= (BigInteger)DataManager.Instance.animalGenerateData.nowCreateCost;
+                //button.createButton.interactable = conditionCleared && LifeManager.Instance.lifeAmount >= (BigInteger)DataManager.Instance.animalGenerateData.nowCreateCost;
 
                 // 아이콘 클릭 가능 여부 업데이트
-                button.characterIconButton.interactable = conditionCleared;
+                //button.characterIconButton.interactable = conditionCleared;
             }
         }
     }

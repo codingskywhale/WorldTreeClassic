@@ -1,0 +1,30 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 800bd3ef680550d49883bb83d8765e37, type: 3}
+  m_Name: Animal_PolarBear
+  m_EditorClassIdentifier: 
+  animalIndex: 10
+  animalIcon: {fileID: 21300000, guid: 9c4aa3ce044582c40ac796cdbd6e4c59, type: 3}
+  animalName: "\uBD81\uADF9\uACF0"
+  animalUnlockConditions:
+  - conditionType: 0
+    targetName: "\uACF0"
+    requiredAnimalIndex: 9
+    requiredAnimalCount: 3
+    requiredPlantIndex: 0
+    requiredWorldTreeLevel: 0
+  animalPrefab: {fileID: 1390276149824892, guid: 6ee0769bd911abd4aad799c0b81cab00, type: 3}
+  storyText: "\uBD81\uADF9\uC758 \uD669\uC81C \uBD81\uADF9\uACF0. \uC0DD\uAC01\uBCF4\uB2E4
+    \uCEE4\uB2E4\uB780 \uB369\uCE58\uC5D0 \uCC98\uC74C \uBCF4\uB294 \uB3D9\uBB3C\uC740
+    \uC800\uB3C4 \uBAA8\uB974\uAC8C \uB180\uB780\uB2E4. \uC9D1\uC774 \uB179\uC544\uC11C
+    \uC0C8\uB85C\uC6B4 \uC9D1\uC744 \uAD6C\uD558\uAE30 \uC704\uD574 \uC138\uACC4\uC218\uC5D0
+    \uCC3E\uC544\uC654\uB2E4."

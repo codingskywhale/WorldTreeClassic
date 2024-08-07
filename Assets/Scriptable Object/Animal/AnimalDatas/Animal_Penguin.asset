@@ -1,0 +1,31 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 800bd3ef680550d49883bb83d8765e37, type: 3}
+  m_Name: Animal_Penguin
+  m_EditorClassIdentifier: 
+  animalIndex: 16
+  animalIcon: {fileID: 21300000, guid: 000f94f0cfc861042a8b945e67b33ae0, type: 3}
+  animalName: "\uD3AD\uADC4"
+  animalUnlockConditions:
+  - conditionType: 2
+    targetName: 
+    requiredAnimalIndex: 0
+    requiredAnimalCount: 0
+    requiredPlantIndex: 0
+    requiredWorldTreeLevel: 700
+  animalPrefab: {fileID: 1884597401360746, guid: 6817fd3c5809228498530e5ebe58f46a, type: 3}
+  storyText: "\uB0A8\uADF9\uC758 \uD669\uD0DC\uC790 \uD3AD\uADC4. \uD3C9\uC0DD \uB3D9\uBB3C\uC6D0\uC5D0\uC11C
+    \uC0B4\uC558\uC73C\uB098, \uACE0\uD5A5\uC778 \uB0A8\uADF9\uC5D0 \uAC00\uAE30
+    \uC704\uD574 \uB3D9\uBB3C\uC6D0\uC744 \uD0C8\uCD9C\uD588\uB2E4. \uD3AD\uADC4\uC740
+    \uBCF8\uB2A5\uC801\uC73C\uB85C \uB0A8\uADF9\uC744 \uCC3E\uC544\uAC08 \uC218 \uC788\uB2E4\uB294
+    \uC0AC\uC721\uC0AC\uC758 \uB9D0\uC5D0, \uC138\uACC4\uC218\uAC00 \uC788\uB294
+    \uB545\uC744 \uB0A8\uADF9\uC774\uB77C\uACE0 \uCC29\uAC01\uD558\uACE0 \uC788\uB2E4."

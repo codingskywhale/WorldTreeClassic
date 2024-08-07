@@ -12,6 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fbb645eac80ddc849815837a47ebd0c8, type: 3}
   m_Name: RootData_2
   m_EditorClassIdentifier: 
-  unlockThreshold: 10
+  unlockThreshold: 0
   baseLifeGenerationString: 500
   unlockCostString: 78400
+  unlockConditionText: 
+  requiredOfflineRewardSkillLevel: 0
+  skillCoolDownReductionLevel: 0

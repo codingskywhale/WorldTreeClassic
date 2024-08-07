@@ -59,7 +59,6 @@ public abstract class Artifact : MonoBehaviour
         }
         else
         {
-            Debug.Log("Not enough diamonds to unlock.");
             ShowPopup("Not enough diamonds to unlock.");
         }
     }
@@ -68,7 +67,6 @@ public abstract class Artifact : MonoBehaviour
     {
         if (currentLevel >= 10)
         {
-            Debug.Log("Maximum level reached.");
             ShowPopup("Maximum level reached.");
             return;
         }
@@ -83,7 +81,6 @@ public abstract class Artifact : MonoBehaviour
         }
         else
         {
-            Debug.Log("Not enough diamonds to upgrade.");
             ShowPopup("Not enough diamonds to upgrade.");
         }
     }

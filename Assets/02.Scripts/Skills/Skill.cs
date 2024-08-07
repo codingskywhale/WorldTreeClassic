@@ -10,15 +10,17 @@ public abstract class Skill : MonoBehaviour
     public string skillName; // 스킬 이름
     public float skillDuration; // 스킬 지속시간
     public float cooldownTime = 15.0f; // 기본 쿨타임
-    public TextMeshProUGUI cooldownText; // 쿨타임을 표시할 텍스트
-    public Image cooldownImage; // 회전할 이미지
-
     public Button skillButton; // 스킬 버튼
-    public Button upgradeButton; // 해금/업그레이드 버튼
 
+    [Header("ButtonLock")]
+    public Image useSkillbuttonLockImage; // 해금/업그레이드 버튼
+
+    [Header("Cool Down")]
     protected bool onCooldown = false;
     public float cooldownRemaining;
-
+    public TextMeshProUGUI cooldownText; // 쿨타임을 표시할 텍스트
+    public Image cooldownImage; // 회전할 이미지
+   
     public int currentLevel = 0; // 현재 스킬 레벨 (0 = 잠금 상태)
     public TextMeshProUGUI currentLevelText; // 현재 스킬 레벨 텍스트
     public TextMeshProUGUI skillInfoText; // 현재 스킬 설명 텍스트
@@ -27,6 +29,7 @@ public abstract class Skill : MonoBehaviour
     public TextMeshProUGUI upgradeCostText; // 업그레이드 비용을 표시할 텍스트
     public TextMeshProUGUI upgradeCostText2; // 업그레이드 비용을 표시할 텍스트
     public BigInteger unlockCost = 200; // 해금 비용
+
     [Header("UnlockInfo")]
     public Image lockImage; // 해금 이미지
     public TextMeshProUGUI lockText; // 해금 텍스트
@@ -48,16 +51,6 @@ public abstract class Skill : MonoBehaviour
         {
             skillPopup.SetActive(false);
         }
-
-        if (upgradeButton != null)
-        {
-            upgradeButton.onClick.AddListener(OnUpgradeButtonClicked);
-        }
-
-        //if (skillButton != null)
-        //{
-        //    skillButton.onClick.AddListener(ShowSkillInfoPopup);
-        //}
     }
 
     private void Update()
@@ -89,11 +82,9 @@ public abstract class Skill : MonoBehaviour
     {
         if (DataManager.Instance.touchData != null && DataManager.Instance.touchData.touchIncreaseLevel >= unlockThreshold)
         {
-            isUnlocked = true;            
-            if (currentLevel == 0)
-            {
-                currentLevel = 1;
-            }
+            isUnlocked = true;
+            SetLockImangeOff();
+            currentLevel = 1;
             UpdateClickValues();
             UpdateUpgradeCostUI(); // 업그레이드 비용 UI 업데이트
             UpdateUI(); // UI 업데이트
@@ -101,7 +92,6 @@ public abstract class Skill : MonoBehaviour
         }
         else
         {
-            Debug.Log("Unlock condition not met.");
             ShowPopup("Unlock condition not met.");
         }
     }
@@ -153,7 +143,6 @@ public abstract class Skill : MonoBehaviour
     {
         if (currentLevel >= 21)
         {
-            Debug.Log("Maximum level reached.");
             ShowPopup("Maximum level reached.");
             return;
         }
@@ -168,7 +157,6 @@ public abstract class Skill : MonoBehaviour
         }
         else
         {
-            Debug.Log("Not enough diamonds to upgrade.");
             ShowPopup("Not enough diamonds to upgrade.");
         }
     }
@@ -184,7 +172,6 @@ public abstract class Skill : MonoBehaviour
         NowskillInfoUI();
         LevelUI();
         UpdateUnlockUI(); // 해금 상태 UI 업데이트
-        Debug.Log($"Skill {skillName} UI updated: Level={currentLevel}, Cooldown={cooldownRemaining}");
     }
 
     protected void UpdateUpgradeCostUI()
@@ -212,7 +199,6 @@ public abstract class Skill : MonoBehaviour
             currentLevelText.text = currentLevel > 0
                 ? $"현재 스킬 레벨: {currentLevel}"
                 : "스킬이 해금되지 않았습니다";
-            Debug.Log($"Skill {skillName} level text updated: {currentLevelText.text}");
         }
     }
 
@@ -266,20 +252,6 @@ public abstract class Skill : MonoBehaviour
 
     public void CheckUnlockStatus()
     {
-        if (upgradeButton != null)
-        {
-            if (currentLevel >= 21)
-            {
-                upgradeButton.interactable = false;
-            }
-            else
-            {
-                upgradeButton.interactable = currentLevel == 0
-                    ? DiamondManager.Instance.HasSufficientDiamond(unlockCost)
-                    : DiamondManager.Instance.HasSufficientDiamond(CalculateUpgradeCost(currentLevel));
-            }
-        }
-
         if (skillButton != null)
         {
             skillButton.interactable = currentLevel > 0 && !onCooldown;
@@ -330,5 +302,23 @@ public abstract class Skill : MonoBehaviour
     {
         UpgradeSkill();
         ClosePopup();
+    }
+    public void ResetCooldown()
+    {
+        onCooldown = false;
+        cooldownRemaining = 0;
+        UpdateCooldownUI(0);
+    }
+    public void SetCooldown(float cooldownTime)
+    {
+        this.cooldownTime = cooldownTime;
+        onCooldown = true;
+        cooldownRemaining = cooldownTime;
+        UpdateCooldownUI(cooldownRemaining);
+    }
+
+    public void SetLockImangeOff()
+    {
+        Destroy(useSkillbuttonLockImage.gameObject);
     }
 }

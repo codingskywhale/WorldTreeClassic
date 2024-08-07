@@ -8,6 +8,8 @@ public class ResourceManager : MonoBehaviour
     public static ResourceManager Instance { get; private set; }
 
     public List<RootBase> roots = new List<RootBase>();
+    public ObjectPool objectPool;
+    public BubbleGeneratorPool bubbleGeneratorPool;
     public BigInteger lifeGenerationRatePerSecond;
 
     private void Awake()
@@ -22,6 +24,9 @@ public class ResourceManager : MonoBehaviour
         {
             Destroy(gameObject); // 이미 인스턴스가 존재하면 중복 생성된 객체 파괴
         }
+
+        objectPool = GetComponent<ObjectPool>();
+        bubbleGeneratorPool = GetComponent<BubbleGeneratorPool>();
     }
     private void Start()
     {
@@ -30,7 +35,6 @@ public class ResourceManager : MonoBehaviour
 
         // 초당 생명력 생성률을 로드
         LoadLifeGenerationRate();
-        Debug.Log($"로드된 초당 생명력 생성률 (시작 시): {lifeGenerationRatePerSecond}");
         UpdateUI();
     }
 
@@ -84,7 +88,6 @@ public class ResourceManager : MonoBehaviour
     public void UpdateLifeGenerationRatePerSecond()
     {
         lifeGenerationRatePerSecond = GetTotalLifeGenerationPerSecond();
-        Debug.Log($"초당 생명력 생성률: {lifeGenerationRatePerSecond}");
     }
 
     public BigInteger GetTotalLifeGenerationPerSecond()
@@ -94,7 +97,6 @@ public class ResourceManager : MonoBehaviour
         {
             totalLifeIncrease += root.GetTotalLifeGeneration();
         }
-        Debug.Log($"토탈 : {totalLifeIncrease}");
         return totalLifeIncrease;
     }
 
@@ -114,7 +116,6 @@ public class ResourceManager : MonoBehaviour
         if (gameData != null && !string.IsNullOrEmpty(gameData.lifeGenerationRatePerSecond))
         {
             lifeGenerationRatePerSecond = BigInteger.Parse(gameData.lifeGenerationRatePerSecond);
-            Debug.Log($"로드된 초당 생명력 생성률: {lifeGenerationRatePerSecond}");
         }
         else
         {

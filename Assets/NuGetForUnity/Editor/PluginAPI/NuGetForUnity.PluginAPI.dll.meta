@@ -1,0 +1,39 @@
+fileFormatVersion: 2
+<<<<<<<< HEAD:Assets/androidx.annotation.annotation-experimental-1.1.0.aar.meta
+guid: 7fcf252e51bc3c245a4f5ad6f2d92e91
+labels:
+- gpsr
+========
+guid: d09c45314001be149bac027705381ec6
+>>>>>>>> Dev_6_Test_Test_2:Assets/NuGetForUnity/Editor/PluginAPI/NuGetForUnity.PluginAPI.dll.meta
+PluginImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  iconMap: {}
+  executionOrder: {}
+  defineConstraints: []
+  isPreloaded: 0
+  isOverridable: 1
+  isExplicitlyReferenced: 0
+  validateReferences: 1
+  platformData:
+  - first:
+      Any: 
+    second:
+      enabled: 0
+      settings: {}
+  - first:
+      Editor: Editor
+    second:
+      enabled: 1
+      settings:
+        DefaultValueInitialized: true
+  - first:
+      Windows Store Apps: WindowsStoreApps
+    second:
+      enabled: 0
+      settings:
+        CPU: AnyCPU
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

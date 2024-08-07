@@ -7,6 +7,6 @@ public class AnimalGenerateWindow : MonoBehaviour
 {
     private void Start()
     {
-        UIManager.Instance.CheckEnoughCost(0);
+        //UIManager.Instance.CheckEnoughCost(0);
     }
 }

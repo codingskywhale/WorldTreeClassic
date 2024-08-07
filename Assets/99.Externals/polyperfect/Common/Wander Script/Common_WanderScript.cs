@@ -364,7 +364,7 @@ namespace Polyperfect.Common
 
         private void Start()
         {
-            startPosition = new Vector3(-7.3f, -0.66f, -5f);
+            startPosition = new Vector3(-7.3f, 0.66f, -5f);
 
             StartCoroutine(RandomStartingDelay());
         }
@@ -607,16 +607,6 @@ namespace Polyperfect.Common
             idle.animationBool = "isIdling";
             idleStates = new IdleState[1];
             idleStates[0] = idle;
-
-            attacking.stateName = "Attacking";
-            attacking.animationBool = "isAttacking";
-            attackingStates = new AIState[1];
-            attackingStates[0] = attacking;
-
-            death.stateName = "Dead";
-            death.animationBool = "isDead";
-            deathStates = new AIState[1];
-            deathStates[0] = death;
         }
     }
 }

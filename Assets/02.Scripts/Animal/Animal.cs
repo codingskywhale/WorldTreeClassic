@@ -7,6 +7,7 @@ using UnityEngine.EventSystems;
 public class Animal : MonoBehaviour, IClickableObject //카메라 적용 인터페이스
 {
     public HeartButton heart;
+    public AnimalDataSO animalDataSO;
 
     public void HeartTouch()
     {

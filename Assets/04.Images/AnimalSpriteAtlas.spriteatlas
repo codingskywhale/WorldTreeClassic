@@ -1,0 +1,116 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!687078895 &4343727234628468602
+SpriteAtlas:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: AnimalSpriteAtlas
+  m_EditorData:
+    serializedVersion: 2
+    textureSettings:
+      serializedVersion: 2
+      anisoLevel: 1
+      compressionQuality: 50
+      maxTextureSize: 2048
+      textureCompression: 0
+      filterMode: 1
+      generateMipMaps: 0
+      readable: 0
+      crunchedCompression: 0
+      sRGB: 1
+    platformSettings: []
+    packingSettings:
+      serializedVersion: 2
+      padding: 4
+      blockOffset: 1
+      allowAlphaSplitting: 0
+      enableRotation: 1
+      enableTightPacking: 1
+      enableAlphaDilation: 0
+    secondaryTextureSettings: {}
+    variantMultiplier: 1
+    packables:
+    - {fileID: 2800000, guid: e8d4d70e36d992c4690188f9840c8e30, type: 3}
+    - {fileID: 2800000, guid: 5e2764654b22fee4f9ebdd6b1adb0101, type: 3}
+    - {fileID: 2800000, guid: 5a4dfffbf85206c46b38c1f67b4161d9, type: 3}
+    - {fileID: 2800000, guid: d267572c8964a8b4c82ea3f4d2d54801, type: 3}
+    - {fileID: 2800000, guid: 3a8c97727c4109d4290d8e8dff8e30cb, type: 3}
+    - {fileID: 2800000, guid: d8dc48d15d57ca94fa22c8572c7bfd84, type: 3}
+    - {fileID: 2800000, guid: a7d013e77c3cbc4408c6c4980c735a59, type: 3}
+    - {fileID: 2800000, guid: cb11c545a28b62d488a65fa975a90f45, type: 3}
+    - {fileID: 2800000, guid: af7e9d5e170c9a84d9994379b9abc4fe, type: 3}
+    - {fileID: 2800000, guid: fb04b2d69cea7444ab01b62a7305ab51, type: 3}
+    - {fileID: 2800000, guid: e95b706a014213c419c4ddf3d9a33646, type: 3}
+    - {fileID: 2800000, guid: 9c4aa3ce044582c40ac796cdbd6e4c59, type: 3}
+    - {fileID: 2800000, guid: 770cab90374662a4283396e283586f11, type: 3}
+    - {fileID: 2800000, guid: d89184c3df5fa424ea4cf7bc140d186e, type: 3}
+    - {fileID: 2800000, guid: 57a1d623e40ec0e4296df6c5c3dffeea, type: 3}
+    - {fileID: 2800000, guid: 164e161d38e21d940a7056a2d3f325de, type: 3}
+    - {fileID: 2800000, guid: 50f8984f3ec68014f845294a9620d7fe, type: 3}
+    - {fileID: 2800000, guid: 000f94f0cfc861042a8b945e67b33ae0, type: 3}
+    bindAsDefault: 1
+    isAtlasV2: 0
+    cachedData: {fileID: 0}
+    packedSpriteRenderDataKeys:
+    - 770cab90374662a4283396e283586f11: 21300000
+    - 000f94f0cfc861042a8b945e67b33ae0: 21300000
+    - d8dc48d15d57ca94fa22c8572c7bfd84: 21300000
+    - 3a8c97727c4109d4290d8e8dff8e30cb: 21300000
+    - 57a1d623e40ec0e4296df6c5c3dffeea: 21300000
+    - d89184c3df5fa424ea4cf7bc140d186e: 21300000
+    - cb11c545a28b62d488a65fa975a90f45: 21300000
+    - 5e2764654b22fee4f9ebdd6b1adb0101: 21300000
+    - fb04b2d69cea7444ab01b62a7305ab51: 21300000
+    - a7d013e77c3cbc4408c6c4980c735a59: 21300000
+    - e95b706a014213c419c4ddf3d9a33646: 21300000
+    - 5a4dfffbf85206c46b38c1f67b4161d9: 21300000
+    - d267572c8964a8b4c82ea3f4d2d54801: 21300000
+    - 164e161d38e21d940a7056a2d3f325de: 21300000
+    - e8d4d70e36d992c4690188f9840c8e30: 21300000
+    - af7e9d5e170c9a84d9994379b9abc4fe: 21300000
+    - 9c4aa3ce044582c40ac796cdbd6e4c59: 21300000
+    - 50f8984f3ec68014f845294a9620d7fe: 21300000
+  m_MasterAtlas: {fileID: 0}
+  m_PackedSprites:
+  - {fileID: 21300000, guid: 770cab90374662a4283396e283586f11, type: 3}
+  - {fileID: 21300000, guid: 000f94f0cfc861042a8b945e67b33ae0, type: 3}
+  - {fileID: 21300000, guid: d8dc48d15d57ca94fa22c8572c7bfd84, type: 3}
+  - {fileID: 21300000, guid: 3a8c97727c4109d4290d8e8dff8e30cb, type: 3}
+  - {fileID: 21300000, guid: 57a1d623e40ec0e4296df6c5c3dffeea, type: 3}
+  - {fileID: 21300000, guid: d89184c3df5fa424ea4cf7bc140d186e, type: 3}
+  - {fileID: 21300000, guid: cb11c545a28b62d488a65fa975a90f45, type: 3}
+  - {fileID: 21300000, guid: 5e2764654b22fee4f9ebdd6b1adb0101, type: 3}
+  - {fileID: 21300000, guid: fb04b2d69cea7444ab01b62a7305ab51, type: 3}
+  - {fileID: 21300000, guid: a7d013e77c3cbc4408c6c4980c735a59, type: 3}
+  - {fileID: 21300000, guid: e95b706a014213c419c4ddf3d9a33646, type: 3}
+  - {fileID: 21300000, guid: 5a4dfffbf85206c46b38c1f67b4161d9, type: 3}
+  - {fileID: 21300000, guid: d267572c8964a8b4c82ea3f4d2d54801, type: 3}
+  - {fileID: 21300000, guid: 164e161d38e21d940a7056a2d3f325de, type: 3}
+  - {fileID: 21300000, guid: e8d4d70e36d992c4690188f9840c8e30, type: 3}
+  - {fileID: 21300000, guid: af7e9d5e170c9a84d9994379b9abc4fe, type: 3}
+  - {fileID: 21300000, guid: 9c4aa3ce044582c40ac796cdbd6e4c59, type: 3}
+  - {fileID: 21300000, guid: 50f8984f3ec68014f845294a9620d7fe, type: 3}
+  m_PackedSpriteNamesToIndex:
+  - "\uC0AC\uC2B4-removebg-preview"
+  - "\uD3AD\uADC4-Photoroom"
+  - "\uACE0\uC591\uC774_\uC8FC\uD669_-removebg-preview"
+  - "\uACE0\uB9B4\uB77C-Photoroom"
+  - "\uC545\uC5B4-Photoroom"
+  - "\uC18C-removebg-preview"
+  - "\uAE30\uB9B0-Photoroom"
+  - "\uAC1C_\uB9AC\uD2B8\uB9AC\uBC84_-removebg-preview"
+  - "\uB9D0-removebg-preview"
+  - "\uACF0-Photoroom"
+  - "\uBC40-Photoroom"
+  - "\uAC1C_\uCE58\uC640\uC640_-removebg-preview"
+  - "\uAC70\uBBF8-Photoroom"
+  - "\uCF54\uB07C\uB9AC-Photoroom"
+  - "\uAC1C_\uADF8\uB808\uC774\uD2B8_\uB370\uC778_-removebg-preview"
+  - "\uB291\uB300-removebg-preview"
+  - "\uBD81\uADF9\uACF0-Photoroom"
+  - "\uD1A0\uB07C-removebg-preview"
+  m_RenderDataMap: {}
+  m_Tag: AnimalSpriteAtlas
+  m_IsVariant: 0

@@ -59,7 +59,6 @@ public class OfflineRewardUIManager : MonoBehaviour
         RewardedAdExample.Instance.ShowRewardedAd((Reward reward) =>
         {
             pendingLifeIncrease = originalLifeIncrease * 2; // 보상을 두 배로 증가
-            Debug.Log($"Reward doubled: {pendingLifeIncrease}"); // 두 배로 증가된 보상 로그
             ClaimOfflineReward();
         });
     }

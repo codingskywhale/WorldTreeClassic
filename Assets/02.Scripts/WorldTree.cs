@@ -28,7 +28,7 @@ public class WorldTree : MonoBehaviour
 
     public void UpdateTreeMeshes(int currentLevel)
     {
-        int currentIndex = (currentLevel / 5) % treePrefabs.Length;
+        int currentIndex = GetTreePrefabIndex(currentLevel);
 
         if (currentTreeInstance == null || currentTreeInstance.name != treePrefabs[currentIndex].name)
         {
@@ -44,11 +44,80 @@ public class WorldTree : MonoBehaviour
             currentTreeInstance.name = treePrefabs[currentIndex].name; // 이름 설정
         }
 
-        if (currentLevel % 5 == 0 && currentLevel != 0)
+        UpdateTreeScale(currentLevel);
+
+        if (currentLevel % 10 == 0 && currentLevel != 0)
         {
             IncrementCameraFOV();
             MoveCameraBackwards();
         }
+    }
+
+    private int GetTreePrefabIndex(int currentLevel)
+    {
+        if (currentLevel >= 500) return 6;
+        if (currentLevel >= 400) return 5;
+        if (currentLevel >= 300) return 4;
+        if (currentLevel >= 200) return 3;
+        if (currentLevel >= 150) return 2;
+        if (currentLevel >= 100) return 1;
+        return 0;
+    }
+
+    private void UpdateTreeScale(int currentLevel)
+    {
+        Vector3 newScale = Vector3.one;
+
+        if (currentLevel < 100)
+        {
+            newScale = Vector3.one + Vector3.one * (currentLevel / 10) * 0.2f;
+        }
+        else if (currentLevel < 150)
+        {
+            newScale = Vector3.one * 0.3f + Vector3.one * ((currentLevel - 100) / 10) * 0.1f;
+        }
+        else if (currentLevel < 200)
+        {
+            newScale = Vector3.one * 0.8f + Vector3.one * ((currentLevel - 150) / 10) * 0.1f;
+        }
+        else if (currentLevel < 220)
+        {
+            newScale = Vector3.one * 0.9f;
+        }
+        else if (currentLevel < 240)
+        {
+            newScale = Vector3.one * 0.9f + Vector3.one * ((currentLevel - 220) / 10) * 0.1f;
+        }
+        else if (currentLevel < 280)
+        {
+            newScale = Vector3.one * 1.1f + Vector3.one * ((currentLevel - 240) / 10) * 0.1f;
+        }
+        else if (currentLevel < 300)
+        {
+            newScale = Vector3.one * 1.4f;
+        }
+        else if (currentLevel < 380)
+        {
+            newScale = Vector3.one * 1.4f + Vector3.one * ((currentLevel - 300) / 10) * 0.1f;
+        }
+        else if (currentLevel < 400)
+        {
+            newScale = Vector3.one * 1.5f;
+        }
+        else if (currentLevel < 480)
+        {
+            newScale = Vector3.one * 1.5f + Vector3.one * ((currentLevel - 400) / 10) * 0.1f;
+        }
+        else if (currentLevel < 500)
+        {
+            newScale = Vector3.one * 2f;
+        }
+        else if (currentLevel >= 500)
+        {
+            newScale = Vector3.one * 2f;
+        }
+
+        currentTreeInstance.transform.localScale = newScale;
     }
 
     private void IncrementCameraFOV()

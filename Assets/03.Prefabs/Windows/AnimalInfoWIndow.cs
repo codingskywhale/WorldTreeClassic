@@ -1,4 +1,5 @@
 using System.Numerics;
+using System.Resources;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -20,7 +21,6 @@ public class AnimalInfoWindow : MonoBehaviour
 
     [Header("Bag UI")]
     public TextMeshProUGUI nameText;
-    public TextMeshProUGUI conditionTexts;
     public TextMeshProUGUI totalGeneratedCountText;
     public TextMeshProUGUI totalActiveCountText;
     public TextMeshProUGUI totalStoredCountText;
@@ -30,14 +30,28 @@ public class AnimalInfoWindow : MonoBehaviour
     public TextMeshProUGUI animalGenerateCountText;
     public TextMeshProUGUI createCostText;
 
+    [Header("Create Animal Result UI")]
+    public GameObject CreateResultUI;
+    public GameObject CreateAnimalCountUI;
+    public TextMeshProUGUI CreatedAnimalNameText;
+    public TextMeshProUGUI CreatedAnimalCountText;
+    public TextMeshProUGUI previousGetText;
+    public TextMeshProUGUI currentGetText;
+
+    [Header("Story UI")]
+    public TextMeshProUGUI fullStoryText;
+
     [Header("UI GameObject")]
+    public GameObject centerUIs;
     public GameObject BagBottomUI;
     public GameObject CreateAnimalBottomUI;
+    public GameObject StoryCenterUI;
 
     public CreateObjectButton createObjectButton;
 
     private BigInteger totalGenerateValue;
     private BigInteger preCost;
+    private BigInteger preGenerateAmount;
 
     private void OnEnable()
     {
@@ -53,15 +67,18 @@ public class AnimalInfoWindow : MonoBehaviour
     public void SetAnimalInfoWindowData(AnimalDataSO dataSO)
     {
         nowAnimaldataSO = dataSO;
-        animalImage.sprite = dataSO.animalIcon;
-        nameText.text = dataSO.animalName;
-        conditionTexts.text = dataSO.animalUnlockConditions[0];
-        totalGeneratedCountText.text = DataManager.Instance.animalGenerateData.allTypeCountDic[dataSO.animalName][EachCountType.Total].ToString();
-        totalActiveCountText.text = DataManager.Instance.animalGenerateData.allTypeCountDic[dataSO.animalName][EachCountType.Active].ToString();
-        totalStoredCountText.text = DataManager.Instance.animalGenerateData.allTypeCountDic[dataSO.animalName][EachCountType.Stored].ToString();
+        animalImage.sprite = nowAnimaldataSO.animalIcon;
+        nameText.text = nowAnimaldataSO.animalNameKR;
+        if (BagBottomUI.activeInHierarchy)
+        {
+            totalGeneratedCountText.text = DataManager.Instance.animalGenerateData.allTypeCountDic[dataSO.animalNameEN][EachCountType.Total].ToString();
+            totalActiveCountText.text = DataManager.Instance.animalGenerateData.allTypeCountDic[dataSO.animalNameEN][EachCountType.Active].ToString();
+            totalStoredCountText.text = DataManager.Instance.animalGenerateData.allTypeCountDic[dataSO.animalNameEN][EachCountType.Stored].ToString();
+        }
         // 총 생산 데이터는 SO에 담지 말자.
         // 해당 동물을 식별할 수 있는 데이터를 AnimalDataSO에 넣고 
         // 이를 바탕으로 판단해서 해당 오브젝트 내의 값에 접근하자 (생성 수, 보관 수, 활동중 수 등)
+        fullStoryText.text = nowAnimaldataSO.fullStoryText;
     }
 
     public void SetBasicData(string name)
@@ -89,13 +106,14 @@ public class AnimalInfoWindow : MonoBehaviour
         int count = 0;
         // 활동 중인 동물이 있을 경우
         // 해당하는 동물을 찾아야 한다.
-        if (DataManager.Instance.animalGenerateData.allTypeCountDic[nowAnimaldataSO.animalName][EachCountType.Active] > 0)
+        if (DataManager.Instance.animalGenerateData.allTypeCountDic[nowAnimaldataSO.animalNameEN][EachCountType.Active] > 0)
         {
             foreach (var animalDataSO in DataManager.Instance.spawnData.animalDataSOList)
             {
-                if (animalDataSO.animalName == nowAnimaldataSO.animalName)
+                if (animalDataSO.animalNameEN == nowAnimaldataSO.animalNameEN)
                 {
-                    LifeManager.Instance.bubbleGenerator.RemoveBubble(count);
+                    //LifeManager.Instance.bubbleGenerator.RemoveBubble(count);
+                    ResourceManager.Instance.bubbleGeneratorPool.RemoveBubble(count);
                     DataManager.Instance.DestroyAnimal(animalDataSO, count);
 
                     break;
@@ -118,11 +136,11 @@ public class AnimalInfoWindow : MonoBehaviour
     {
         // 보관 중인 동물이 있을 경우
         // 해당 동물을 찾아야 한다.
-        if (DataManager.Instance.animalGenerateData.allTypeCountDic[nowAnimaldataSO.animalName][EachCountType.Stored] > 0
+        if (DataManager.Instance.animalGenerateData.allTypeCountDic[nowAnimaldataSO.animalNameEN][EachCountType.Stored] > 0
             && DataManager.Instance.animalGenerateData.CanAnimalReplace())
         {
-            DataManager.Instance.animalGenerateData.allTypeCountDic[nowAnimaldataSO.animalName][EachCountType.Stored]--;
-            DataManager.Instance.animalGenerateData.allTypeCountDic[nowAnimaldataSO.animalName][EachCountType.Active]++;
+            DataManager.Instance.animalGenerateData.allTypeCountDic[nowAnimaldataSO.animalNameEN][EachCountType.Stored]--;
+            DataManager.Instance.animalGenerateData.allTypeCountDic[nowAnimaldataSO.animalNameEN][EachCountType.Active]++;
 
             if (DataManager.Instance.animalGenerateData.AddAnimal())
             {
@@ -130,11 +148,12 @@ public class AnimalInfoWindow : MonoBehaviour
                 DataManager.Instance.spawnData.AddAnimalSpawnData(go, nowAnimaldataSO);
 
                 // 하트 버블 리스트에 추가
-                LifeManager.Instance.bubbleGenerator.AddAnimalHeartBubbleList(go.GetComponent<Animal>().heart);
+                //LifeManager.Instance.bubbleGenerator.AddAnimalHeartBubbleList(go.GetComponent<Animal>().heart);
 
                 if (DataManager.Instance.animalGenerateData.nowAnimalCount == 1 || DataManager.Instance.animalGenerateData.nowAnimalCount == 2)
                 {
-                    LifeManager.Instance.bubbleGenerator.GenerateNewHeart();
+                    //LifeManager.Instance.bubbleGenerator.GenerateNewHeart();
+                    ResourceManager.Instance.bubbleGeneratorPool.GenerateNewHeart();
                 }
             }
 
@@ -144,13 +163,25 @@ public class AnimalInfoWindow : MonoBehaviour
 
     public void SetActiveStoreCountUI()
     {
-        totalActiveCountText.text = DataManager.Instance.animalGenerateData.allTypeCountDic[nowAnimaldataSO.animalName][EachCountType.Active].ToString();
-        totalStoredCountText.text = DataManager.Instance.animalGenerateData.allTypeCountDic[nowAnimaldataSO.animalName][EachCountType.Stored].ToString();
+        totalActiveCountText.text = DataManager.Instance.animalGenerateData.allTypeCountDic[nowAnimaldataSO.animalNameEN][EachCountType.Active].ToString();
+        totalStoredCountText.text = DataManager.Instance.animalGenerateData.allTypeCountDic[nowAnimaldataSO.animalNameEN][EachCountType.Stored].ToString();
     }
 
-    public void ChangeBottomUI(bool isBag)
+    public void ChangeBottomUI(bool isBag, bool isCreateResult = false)
     {
+        if (isCreateResult)
+        {
+            CreateAnimalBottomUI.SetActive(false);
+            CreateResultUI.SetActive(true);
+            CreateAnimalCountUI.SetActive(true);
+            previousGetText.text = BigIntegerUtils.FormatBigInteger(preGenerateAmount);
+            currentGetText.text = BigIntegerUtils.FormatBigInteger(ResourceManager.Instance.GetTotalLifeGenerationPerSecond());
+            return;
+        }
+        CreateResultUI.SetActive(false);
+        CreateAnimalCountUI.SetActive(false);
         BagBottomUI.SetActive(isBag);
+        storyButton.gameObject.SetActive(isBag);
         CreateAnimalBottomUI.SetActive(!isBag);
     }
 
@@ -196,6 +227,8 @@ public class AnimalInfoWindow : MonoBehaviour
     public void CreateAnimal()
     {
         WindowsManager.Instance.createAnimalWindow.previousCost = DataManager.Instance.animalGenerateData.nowCreateCost;
+        preGenerateAmount = ResourceManager.Instance.GetTotalLifeGenerationPerSecond();
+        createObjectButton.isBuyAnimal = true;
 
         for(int i = 0; i < animalGenerateCount; i++) createObjectButton.CreateAnimalToScene();
 
@@ -216,7 +249,7 @@ public class AnimalInfoWindow : MonoBehaviour
         animalGenerateCount = 1;
 
         // 총 비용이 소지 생명보다 적을 때만
-        while (totalCost + previousCost < LifeManager.Instance.lifeAmount)
+        while (totalCost + previousCost * 4 < LifeManager.Instance.lifeAmount)
         {
             previousCost = previousCost * 4;
             totalCost += previousCost;
@@ -228,5 +261,29 @@ public class AnimalInfoWindow : MonoBehaviour
 
         animalGenerateCountText.text = animalGenerateCount.ToString();
         createCostText.text = BigIntegerUtils.FormatBigInteger(totalCost);
+    }
+
+    public void EnableAnimalCreateResultWindow()
+    {
+        nameText.text = "동물을 창조했습니다.";
+        CreateResultUI.SetActive(true);
+        ChangeBottomUI(false, true);
+        CreatedAnimalNameText.text = nowAnimaldataSO.animalNameKR;
+        CreatedAnimalCountText.text = animalGenerateCount.ToString();
+    }
+
+    public void ClickStoryReplaceButton()
+    {
+        centerUIs.SetActive(!centerUIs.activeSelf);
+        StoryCenterUI.SetActive(!StoryCenterUI.activeSelf);
+        BagBottomUI.SetActive(!BagBottomUI.activeSelf);
+        CreateAnimalBottomUI.SetActive(false);
+    }
+
+    public void ActiveCenterUI()
+    {
+        StoryCenterUI.SetActive(false);
+        centerUIs.SetActive(true);
+        storyButton.gameObject.SetActive(true);
     }
 }

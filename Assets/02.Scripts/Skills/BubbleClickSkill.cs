@@ -49,15 +49,16 @@ public class BubbleClickSkill : Skill
     {
         isUseSkill = true;
         float elapsedTime = 0f;
+        WaitForSeconds waitTime = new WaitForSeconds(clickInterval);
 
         while (elapsedTime < skillDuration)
         {
-            if (LifeManager.Instance.bubbleGenerator.GetNowBubbleList().Count > 0)
+            if (ResourceManager.Instance.bubbleGeneratorPool.nowHeartBubbleList.Count > 0)
             {
                 ClickNextBubble();
             }
 
-            yield return new WaitForSeconds(clickInterval);
+            yield return waitTime;
             elapsedTime += clickInterval;
         }
 
@@ -66,12 +67,12 @@ public class BubbleClickSkill : Skill
 
     private void ClickNextBubble()
     {
-        if (LifeManager.Instance.bubbleGenerator.GetNowBubbleList().Count > 0)
+        if (ResourceManager.Instance.bubbleGeneratorPool.nowHeartBubbleList.Count > 0)
         {
-            HeartButton bubble = LifeManager.Instance.bubbleGenerator.GetNowBubbleList()[0];
+            GameObject bubble = ResourceManager.Instance.bubbleGeneratorPool.nowHeartBubbleList[0];
             if (bubble != null)
             {
-                bubble.TouchHeartBubble();
+                bubble.GetComponentInChildren<HeartButton>().TouchHeartBubble();
             }
         }
     }

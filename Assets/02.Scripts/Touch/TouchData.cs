@@ -33,8 +33,9 @@ public class TouchData : MonoBehaviour
         }
         // 업그레이드 비용 공식 적용
         upgradeLifeCost = upgradeLifeCost * 120 / 100; // n레벨 업그레이드 비용 공식 적용
-        UpdateUI();
         UIManager.Instance.tree.UpdateTreeMeshes(touchIncreaseLevel); // 나무 모습 업데이트
+        AutoObjectManagerTest.Instance.CheckUnlockCondition();
+        UpdateUI();
     }
 
     public void ApplyIncreaseRate(BigInteger rate)

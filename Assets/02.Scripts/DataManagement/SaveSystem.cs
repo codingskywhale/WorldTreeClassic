@@ -11,7 +11,6 @@ public static class SaveSystem
     public static void Save(GameData gameData)
     {
         string json = CustomJsonUtility.ToJson(gameData, true);
-        Debug.Log("Saving JSON: " + json); // 저장되는 JSON 출력
         File.WriteAllText(savePath, json);
     }
 
@@ -20,7 +19,6 @@ public static class SaveSystem
         if (File.Exists(savePath))
         {
             string json = File.ReadAllText(savePath);
-            Debug.Log("Loaded JSON: " + json);  // 디버깅을 위해 JSON 문자열 출력
             return CustomJsonUtility.FromJson<GameData>(json);
         }
         return null; // 새로운 데이터를 리턴

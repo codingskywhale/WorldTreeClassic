@@ -8,6 +8,7 @@ public class Bag_AnimalSlot : MonoBehaviour
     public AnimalDataSO slotAnimalDataSO;
 
     public Image animalIcon;
+    public Button animalIconButton;
     public TextMeshProUGUI explainText;
     public Button slotButton;
 
@@ -18,28 +19,37 @@ public class Bag_AnimalSlot : MonoBehaviour
         slotButton = GetComponent<Button>();
         if (!isUnlocked)
         {
-            animalIcon.sprite = slotAnimalDataSO.animalIcon;
             animalIcon.color = Color.black;
 
             slotButton.interactable = false;
             explainText.text = string.Empty;
         }
+        animalIconButton.onClick.AddListener(ClickAnimalIcon);
     }        
-
+     
     public void SetSlotData()
     {
         animalIcon.color = Color.white; 
         slotButton.interactable = true;
 
-        explainText.text = $"{DataManager.Instance.animalGenerateData.nowAnimalCount} / {DataManager.Instance.animalGenerateData.maxAnimalCount}";
+        explainText.text = $"{DataManager.Instance.animalGenerateData.allTypeCountDic[slotAnimalDataSO.animalNameEN][EachCountType.Active]} " +
+                            $"/ {DataManager.Instance.animalGenerateData.allTypeCountDic[slotAnimalDataSO.animalNameEN][EachCountType.Total]}";
     }
 
     public void ClickAnimalIcon()
     {
         if (isUnlocked)
         {
+            WindowsManager.Instance.animalInfoWnd.ActiveCenterUI();
             WindowsManager.Instance.animalInfoWnd.gameObject.SetActive(true);
+            WindowsManager.Instance.animalInfoWnd.ChangeBottomUI(true);
             WindowsManager.Instance.animalInfoWnd.SetAnimalInfoWindowData(slotAnimalDataSO);
         }
+    }
+
+    public void UpdateUI()
+    {
+        explainText.text = $"{DataManager.Instance.animalGenerateData.allTypeCountDic[slotAnimalDataSO.animalNameEN][EachCountType.Active]} " +
+                            $"/ {DataManager.Instance.animalGenerateData.allTypeCountDic[slotAnimalDataSO.animalNameEN][EachCountType.Total]}";
     }
 }

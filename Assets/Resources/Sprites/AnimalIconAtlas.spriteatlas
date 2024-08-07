@@ -1,0 +1,152 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!687078895 &4343727234628468602
+SpriteAtlas:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: AnimalIconAtlas
+  m_EditorData:
+    serializedVersion: 2
+    textureSettings:
+      serializedVersion: 2
+      anisoLevel: 1
+      compressionQuality: 50
+      maxTextureSize: 2048
+      textureCompression: 0
+      filterMode: 1
+      generateMipMaps: 0
+      readable: 0
+      crunchedCompression: 0
+      sRGB: 1
+    platformSettings: []
+    packingSettings:
+      serializedVersion: 2
+      padding: 8
+      blockOffset: 1
+      allowAlphaSplitting: 0
+      enableRotation: 0
+      enableTightPacking: 0
+      enableAlphaDilation: 0
+    secondaryTextureSettings: {}
+    variantMultiplier: 1
+    packables:
+    - {fileID: 2800000, guid: ea8a5581c44cca34db0a96046033e7f6, type: 3}
+    - {fileID: 2800000, guid: c79d983ce09c50f4f84fb9a1f1cd3dc9, type: 3}
+    - {fileID: 2800000, guid: 007307c813cd6064c9aa8e622c4c0bf0, type: 3}
+    - {fileID: 2800000, guid: b150bc2ae333761449a4aaab98965f81, type: 3}
+    - {fileID: 2800000, guid: 01c7f6a1014f4f84794cf66a9d6c2b41, type: 3}
+    - {fileID: 2800000, guid: 7b5ba9d6383879e46837ea5ceace8e10, type: 3}
+    - {fileID: 2800000, guid: 5ad7166ee4592ab45925d9dd0e0d1716, type: 3}
+    - {fileID: 2800000, guid: 87ceccedee44d744ea6feeec398c589f, type: 3}
+    - {fileID: 2800000, guid: e9c1ae8991c856b4185bd9f2eb719068, type: 3}
+    - {fileID: 2800000, guid: f3f17770e34160948a28c19470691099, type: 3}
+    - {fileID: 2800000, guid: f18a1ed4740063844ab10800d6467243, type: 3}
+    - {fileID: 2800000, guid: ad674d8ce74d89e43be385d104c5f616, type: 3}
+    - {fileID: 2800000, guid: f8268ea0eca2a1149b08995cab7d2b13, type: 3}
+    - {fileID: 2800000, guid: 1c8d21775319ce64896133e36746e212, type: 3}
+    - {fileID: 2800000, guid: 6977d5062f0938a4bbd224e17a428cdf, type: 3}
+    - {fileID: 2800000, guid: d702259222db88c438bbd73e88cb7070, type: 3}
+    - {fileID: 2800000, guid: f415f1597659d2f4caed0b26045c0489, type: 3}
+    - {fileID: 2800000, guid: c14aa2708ce974a4ab6d18fe67f8e1fe, type: 3}
+    - {fileID: 2800000, guid: c10ce41a72b9ca64ca283c68b161758c, type: 3}
+    - {fileID: 2800000, guid: 833709b3fe8e0a741aec4b700c85bcc2, type: 3}
+    - {fileID: 2800000, guid: 068fc0bb8b9fba54d88f1b69aa42cead, type: 3}
+    - {fileID: 2800000, guid: 59be466d8878605478e55efc0a64f080, type: 3}
+    - {fileID: 2800000, guid: d3961f7e571cebd4d9a0a1636964db04, type: 3}
+    - {fileID: 2800000, guid: 934ba02face49f0458acc5e7a39fc9b8, type: 3}
+    - {fileID: 2800000, guid: 1917b97a0fd5bf6458970f66508f30e1, type: 3}
+    - {fileID: 2800000, guid: ea16bb71c6a4caf478e0ec2c27b233be, type: 3}
+    - {fileID: 2800000, guid: f5bcdbf255714f44687dd3d93c6851ba, type: 3}
+    bindAsDefault: 1
+    isAtlasV2: 0
+    cachedData: {fileID: 0}
+    packedSpriteRenderDataKeys:
+    - c14aa2708ce974a4ab6d18fe67f8e1fe: 21300000
+    - f3f17770e34160948a28c19470691099: 21300000
+    - f8268ea0eca2a1149b08995cab7d2b13: 21300000
+    - ea16bb71c6a4caf478e0ec2c27b233be: 21300000
+    - ea8a5581c44cca34db0a96046033e7f6: 21300000
+    - 01c7f6a1014f4f84794cf66a9d6c2b41: 21300000
+    - d702259222db88c438bbd73e88cb7070: 21300000
+    - f5bcdbf255714f44687dd3d93c6851ba: 21300000
+    - 833709b3fe8e0a741aec4b700c85bcc2: 21300000
+    - f18a1ed4740063844ab10800d6467243: 21300000
+    - 6977d5062f0938a4bbd224e17a428cdf: 21300000
+    - 7b5ba9d6383879e46837ea5ceace8e10: 21300000
+    - 1c8d21775319ce64896133e36746e212: 21300000
+    - 007307c813cd6064c9aa8e622c4c0bf0: 21300000
+    - f415f1597659d2f4caed0b26045c0489: 21300000
+    - e9c1ae8991c856b4185bd9f2eb719068: 21300000
+    - c10ce41a72b9ca64ca283c68b161758c: 21300000
+    - b150bc2ae333761449a4aaab98965f81: 21300000
+    - 1917b97a0fd5bf6458970f66508f30e1: 21300000
+    - 068fc0bb8b9fba54d88f1b69aa42cead: 21300000
+    - c79d983ce09c50f4f84fb9a1f1cd3dc9: 21300000
+    - ad674d8ce74d89e43be385d104c5f616: 21300000
+    - 59be466d8878605478e55efc0a64f080: 21300000
+    - 87ceccedee44d744ea6feeec398c589f: 21300000
+    - 5ad7166ee4592ab45925d9dd0e0d1716: 21300000
+    - d3961f7e571cebd4d9a0a1636964db04: 21300000
+    - 934ba02face49f0458acc5e7a39fc9b8: 21300000
+  m_MasterAtlas: {fileID: 0}
+  m_PackedSprites:
+  - {fileID: 21300000, guid: c14aa2708ce974a4ab6d18fe67f8e1fe, type: 3}
+  - {fileID: 21300000, guid: f3f17770e34160948a28c19470691099, type: 3}
+  - {fileID: 21300000, guid: f8268ea0eca2a1149b08995cab7d2b13, type: 3}
+  - {fileID: 21300000, guid: ea16bb71c6a4caf478e0ec2c27b233be, type: 3}
+  - {fileID: 21300000, guid: ea8a5581c44cca34db0a96046033e7f6, type: 3}
+  - {fileID: 21300000, guid: 01c7f6a1014f4f84794cf66a9d6c2b41, type: 3}
+  - {fileID: 21300000, guid: d702259222db88c438bbd73e88cb7070, type: 3}
+  - {fileID: 21300000, guid: f5bcdbf255714f44687dd3d93c6851ba, type: 3}
+  - {fileID: 21300000, guid: 833709b3fe8e0a741aec4b700c85bcc2, type: 3}
+  - {fileID: 21300000, guid: f18a1ed4740063844ab10800d6467243, type: 3}
+  - {fileID: 21300000, guid: 6977d5062f0938a4bbd224e17a428cdf, type: 3}
+  - {fileID: 21300000, guid: 7b5ba9d6383879e46837ea5ceace8e10, type: 3}
+  - {fileID: 21300000, guid: 1c8d21775319ce64896133e36746e212, type: 3}
+  - {fileID: 21300000, guid: 007307c813cd6064c9aa8e622c4c0bf0, type: 3}
+  - {fileID: 21300000, guid: f415f1597659d2f4caed0b26045c0489, type: 3}
+  - {fileID: 21300000, guid: e9c1ae8991c856b4185bd9f2eb719068, type: 3}
+  - {fileID: 21300000, guid: c10ce41a72b9ca64ca283c68b161758c, type: 3}
+  - {fileID: 21300000, guid: b150bc2ae333761449a4aaab98965f81, type: 3}
+  - {fileID: 21300000, guid: 1917b97a0fd5bf6458970f66508f30e1, type: 3}
+  - {fileID: 21300000, guid: 068fc0bb8b9fba54d88f1b69aa42cead, type: 3}
+  - {fileID: 21300000, guid: c79d983ce09c50f4f84fb9a1f1cd3dc9, type: 3}
+  - {fileID: 21300000, guid: ad674d8ce74d89e43be385d104c5f616, type: 3}
+  - {fileID: 21300000, guid: 59be466d8878605478e55efc0a64f080, type: 3}
+  - {fileID: 21300000, guid: 87ceccedee44d744ea6feeec398c589f, type: 3}
+  - {fileID: 21300000, guid: 5ad7166ee4592ab45925d9dd0e0d1716, type: 3}
+  - {fileID: 21300000, guid: d3961f7e571cebd4d9a0a1636964db04, type: 3}
+  - {fileID: 21300000, guid: 934ba02face49f0458acc5e7a39fc9b8, type: 3}
+  m_PackedSpriteNamesToIndex:
+  - Meerkat
+  - Fox
+  - Goose
+  - Tiger
+  - Anteater
+  - Chihuahua_Yellow
+  - Horse_Brown
+  - Wolf_Grey
+  - Pig
+  - Giraffe
+  - Greatdane_Brown
+  - Chimpanzee
+  - Gorilla_Black
+  - Boar
+  - Lion
+  - Elephant
+  - Ostrich
+  - Cat_Orange
+  - Squirrel
+  - Rabbit_White
+  - Bear_Brown
+  - GoldenRetriever
+  - Rhino
+  - Deer_Brown
+  - Cow_Brown
+  - Roaster
+  - Sheep
+  m_RenderDataMap: {}
+  m_Tag: AnimalIconAtlas
+  m_IsVariant: 0

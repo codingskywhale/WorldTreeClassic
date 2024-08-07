@@ -5,40 +5,43 @@ using UnityEngine.UI;
 
 public class CreateObjectButton : MonoBehaviour
 {
+    [Header("Animal Basic Datas")]
     public AnimalDataSO animalData;
     public Image characterIcon;
     public Button characterIconButton;
+
+    [Header("UIs")]
     public TextMeshProUGUI nameText;
-    public TextMeshProUGUI conditionText;
+    public TextMeshProUGUI SimpleStoryText;
     // 생명 창조 ~~ cost
     public TextMeshProUGUI inButtonCostText;
     public Button createButton;
-    public Transform animalSpawnTr;
 
-    private int buttonIndex;
+    [Header("Unlock Image")]
+    public GameObject lockImage;
+    public TextMeshProUGUI lockConditionText;
 
-    private string conditionX = "(X) ";
-    private string conditionV = "(V) ";
+    public int buttonIndex;
 
-    int count = 0;
     public bool conditionCleared = false;
 
-    private void Awake()
-    {
-        InitailizeSet();
-    }
-    private void InitailizeSet()
-    {
-        nameText.text = animalData.animalName;
-        conditionText.text = conditionX + animalData.animalUnlockConditions[0];
-        // 일단 첫 번째 버튼은 해금된 상태여야 함.
-        if (!conditionCleared) SetButtonLock();
+    public bool isBuyAnimal = false;
 
-        else
+
+    public void InitailizeSet(AnimalDataSO animalDataSO)
+    {
+        animalData = animalDataSO;
+
+        nameText.text = animalData.animalNameKR;
+        characterIcon.sprite = animalData.animalIcon;
+        if (lockImage != null)
         {
-            for (int i = 0; i < UIManager.Instance.createObjectButtonUnlockCount; i++)
-                CheckConditionCleared(i);
+            lockConditionText.text = GetConditions();
         }
+        SimpleStoryText.text = animalData.storyText;
+        createButton.onClick.AddListener(OnCreateButtonClick);
+
+        SetCostText();
 
         UIManager.Instance.UpdateButtonUI();
     }
@@ -49,7 +52,7 @@ public class CreateObjectButton : MonoBehaviour
         if (LifeManager.Instance.lifeAmount >= (BigInteger)DataManager.Instance.animalGenerateData.nowCreateCost)
         {
             WindowsManager.Instance.animalInfoWnd.createObjectButton = this;
-            buttonIndex = buttonIdx;
+            WindowsManager.Instance.animalInfoWnd.animalImage.sprite = animalData.animalIcon;
 
             WindowsManager.Instance.animalInfoWnd.SetBasicData(animalData.animalName);
         }
@@ -59,9 +62,9 @@ public class CreateObjectButton : MonoBehaviour
     {
         LifeManager.Instance.DecreaseWater(DataManager.Instance.animalGenerateData.nowCreateCost);
 
-        UnlockButton(buttonIndex);
-
         AddAnimal();
+
+        UnlockButton(buttonIndex);
     }
 
     public void UnlockButton(int buttonIdx)
@@ -73,12 +76,12 @@ public class CreateObjectButton : MonoBehaviour
             UIManager.Instance.createObjectButtonUnlockCount++;
             characterIconButton.interactable = true;
 
-            if(UIManager.Instance.createAnimalButtons.Length > buttonIdx + 1)
-                CheckConditionCleared(buttonIdx + 1);
+            if (UIManager.Instance.createAnimalButtons.Count > buttonIdx + 1)
+                UIManager.Instance.CheckConditionCleared();
 
-            //해당 버튼에 대응되는 동물을 해금시켜준다.
-            UIManager.Instance.bag.UnlockSlot(buttonIdx);
         }
+        //해당 버튼에 대응되는 동물을 해금시켜준다.
+        UIManager.Instance.bag.UnlockSlot(buttonIdx);
     }
 
     public void AddAnimal()
@@ -86,34 +89,37 @@ public class CreateObjectButton : MonoBehaviour
         // 동물을 추가할 여유 공간이 있을 때
         if (DataManager.Instance.animalGenerateData.AddAnimal(true))
         {
-            GameObject go = Instantiate(animalData.animalPrefab, animalSpawnTr);
-            DataManager.Instance.spawnData.AddAnimalSpawnData(go, animalData);
+            GameObject go = Instantiate(animalData.animalPrefab, DataManager.Instance.animalSpawnTr);
 
-            // 하트 버블 리스트에 추가
-            LifeManager.Instance.bubbleGenerator.AddAnimalHeartBubbleList(go.GetComponent<Animal>().heart);
+            DataManager.Instance.spawnData.AddAnimalSpawnData(go, animalData);
 
             if (DataManager.Instance.animalGenerateData.nowAnimalCount == 1 || DataManager.Instance.animalGenerateData.nowAnimalCount == 2)
             {
-                LifeManager.Instance.bubbleGenerator.GenerateNewHeart();
+                ResourceManager.Instance.bubbleGeneratorPool.GenerateNewHeart();
             }
 
-            DataManager.Instance.animalGenerateData.AddAnimalToDictionary(animalData.animalName, true);
+            DataManager.Instance.animalGenerateData.AddAnimalToDictionary(animalData.animalNameEN, true);
         }
 
         // 여유 공간이 없을 때
         else
         {
             // 가방으로 이동하도록 해야함
-            DataManager.Instance.animalGenerateData.AddAnimalToDictionary(animalData.animalName, false);
+            DataManager.Instance.animalGenerateData.AddAnimalToDictionary(animalData.animalNameEN, false);
         }
+
+        DataManager.Instance.bag.UpdateSlotDataUI(buttonIndex);
         // 생산량 2배 증가.
         DataManager.Instance.touchData.ApplyIncreaseRate(1);
         LifeManager.Instance.ApplyIncreaseRateToAllRoots(1);
         UIManager.Instance.status.UpdateLifeIncreaseUI(ResourceManager.Instance.GetTotalLifeGenerationPerSecond());
 
-        UIManager.Instance.CheckEnoughCost(0);
+        //UIManager.Instance.CheckEnoughCost(0);
         UIManager.Instance.UpdateButtonUI();
+
+        UIManager.Instance.CheckConditionCleared();
     }
+
     // 모든 버튼에 적용 시켜야함
     public void SetCostText()
     {
@@ -128,15 +134,56 @@ public class CreateObjectButton : MonoBehaviour
         inButtonCostText.text = "잠김";
     }
 
-    // 뭔가 버튼을 누르는 이벤트가 일어났을 때?
-    // 어떠한 조건이 일어났을 때 확인
-    public void CheckConditionCleared(int buttonIdx)
+    public string GetConditions()
     {
-        UIManager.Instance.createAnimalButtons[buttonIdx].conditionText.text = conditionV + animalData.animalUnlockConditions[0];
+        string conditions = "";
+        foreach (var condition in animalData.animalUnlockConditions)
+        {
+            conditions += condition.ShowCondition();
+        }
+        if (conditions.Length == 0) conditions = "조건 없음";
+
+        return conditions;
     }
 
     public void ClickAnimalIcon()
     {
+        if (isBuyAnimal)
+        {
+            WindowsManager.Instance.animalInfoWnd.gameObject.SetActive(true);
+            WindowsManager.Instance.animalInfoWnd.SetAnimalInfoWindowData(animalData);
+            WindowsManager.Instance.animalInfoWnd.StoryCenterUI.SetActive(false);
+            WindowsManager.Instance.animalInfoWnd.centerUIs.SetActive(true);
+            WindowsManager.Instance.animalInfoWnd.ChangeBottomUI(true);
+            WindowsManager.Instance.animalInfoWnd.SetAnimalInfoWindowData(animalData);
+        }
+    }
+
+    public void SetLockImageText()
+    {
+
+    }
+
+    public void SetLockImageOff()
+    {
+        characterIconButton.interactable = true;
+        lockImage.SetActive(false);
+    }
+
+    public CreateObjectButton GetNextButton()
+    {
+        if (buttonIndex <= UIManager.Instance.createAnimalButtons.Count)
+            return UIManager.Instance.createAnimalButtons[buttonIndex + 1];
+
+        else
+            return null;
+    }
+
+    public void OnCreateButtonClick()
+    {
+        WindowsManager.Instance.animalInfoWnd.gameObject.SetActive(true);
+        WindowsManager.Instance.animalInfoWnd.ActiveCenterUI();
+        WindowsManager.Instance.animalInfoWnd.ChangeBottomUI(false);
         WindowsManager.Instance.animalInfoWnd.SetAnimalInfoWindowData(animalData);
     }
 }

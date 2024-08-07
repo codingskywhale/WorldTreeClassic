@@ -1,17 +1,19 @@
 using System.Numerics;
+using UnityEngine;
+using Vector3 = UnityEngine.Vector3;
 
 public class Root1 : RootBase
 {
-    protected override void Start()
-    {
-        unlockThreshold = 5;
-        baseLifeGeneration = 100;
-        unlockCost = 1600;
-        base.Start();
-        LifeManager.Instance.RegisterRoot(this);
-        UpdateUI();
-
-    }
+    //protected override void Start()
+    //{
+    //    unlockThreshold = 5;
+    //    baseLifeGeneration = 100;
+    //    unlockCost = 1600;
+    //    base.Start();
+    //    LifeManager.Instance.RegisterRoot(this);
+    //    UpdateUI();
+    //    CalculateFlowerPositions();
+    //}
 
 
     protected override void GenerateLife()
@@ -28,4 +30,6 @@ public class Root1 : RootBase
     {
         return base.GetTotalLifeGeneration(); // 기본 클래스의 동작을 유지
     }
+
+
 }

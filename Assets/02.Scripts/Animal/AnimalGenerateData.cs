@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.Numerics;
 using System.Collections.Generic;
+using System;
 
 public enum EachCountType
 {
@@ -8,6 +9,7 @@ public enum EachCountType
     Active,
     Stored
 }
+
 public class AnimalGenerateData
 {
     // 생성 시 가격
@@ -23,6 +25,8 @@ public class AnimalGenerateData
     private Dictionary<EachCountType, int> countDic;
     // 동물의 이름별로 총 생성된 데이터를 가지고 있는 Dictionary
     public Dictionary<string, Dictionary<EachCountType, int>> allTypeCountDic;
+
+    public Action OnAnimalGenerateEvent;
 
     public AnimalGenerateData()
     {
@@ -104,5 +108,25 @@ public class AnimalGenerateData
     public bool CanAnimalReplace()
     {
         return nowAnimalCount < maxAnimalCount;
+    }
+
+    public void SetSlotData()
+    {
+        foreach (var kvp in allTypeCountDic)
+        {
+            var animalDataSO = GameManager.Instance.animalDataList.Find(data => data.animalNameEN == kvp.Key);
+            if (animalDataSO != null)
+            {
+                var animalSlot = DataManager.Instance.bag.slots.Find(slot => slot.slotAnimalDataSO == animalDataSO);
+                if (animalSlot != null)
+                {
+                    animalSlot.isUnlocked = kvp.Value[EachCountType.Active] > 0 || kvp.Value[EachCountType.Stored] > 0;
+                    if (animalSlot.isUnlocked)
+                    {
+                        animalSlot.SetSlotData();
+                    }
+                }
+            }
+        }
     }
 }

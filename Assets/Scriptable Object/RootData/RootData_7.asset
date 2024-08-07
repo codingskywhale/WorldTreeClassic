@@ -12,6 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fbb645eac80ddc849815837a47ebd0c8, type: 3}
   m_Name: RootData_7
   m_EditorClassIdentifier: 
-  unlockThreshold: 70
+  unlockThreshold: 300
   baseLifeGenerationString: 36266000000000
   unlockCostString: 105784665359075000000000000
+  unlockConditionText: "\"\uC7A0\uAE08 \uD574\uC81C \uC870\uAC74: \uC138\uACC4\uC218
+    \uB808\uBCA8 300 \\n\uAF43 \uD574\uAE08 \uC2DC \uBC30\uCE58 \uAC00\uB2A5 \uB3D9\uBB3C
+    \uC218 + 5\""
+  requiredOfflineRewardSkillLevel: 0
+  skillCoolDownReductionLevel: 0

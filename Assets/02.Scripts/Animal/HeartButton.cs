@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class HeartButton : MonoBehaviour
 {
@@ -10,6 +11,9 @@ public class HeartButton : MonoBehaviour
     public int heartIdx;
 
     private BubbleClickSkill bubbleClickSkill;
+    private Button heartButton;
+
+    public GainIndicatorTextObject gainText;
     private void Awake()
     {
         cam = Camera.main;
@@ -17,6 +21,8 @@ public class HeartButton : MonoBehaviour
     private void Start()
     {
         bubbleClickSkill = FindObjectOfType<BubbleClickSkill>();
+        heartButton = GetComponent<Button>();
+        heartButton.onClick.AddListener(TouchHeartBubble);
     }
     private void Update()
     {
@@ -40,7 +46,7 @@ public class HeartButton : MonoBehaviour
     {
         gameObject.SetActive(false);
     }
-
+    
     public void TouchHeartBubble()
     {
         // 화면 터치시 효과음 재생
@@ -48,11 +54,9 @@ public class HeartButton : MonoBehaviour
         // 재화를 획득한다.
         LifeManager.Instance.IncreaseWater(DataManager.Instance.touchData.touchIncreaseAmount);
 
-        //LifeManager.Instance.bubbleGenerator.OnAutoTouchBubbleSkill(heartIdx);
+        gainText.gameObject.SetActive(true);
+        ResourceManager.Instance.bubbleGeneratorPool.RemoveBubble(heartIdx);
 
-        LifeManager.Instance.bubbleGenerator.RemoveIdxFromNowBubbleList(heartIdx);
-
-        // 사라진다.
-        gameObject.SetActive(false); 
+        SetBubbleOff();
     }
 }
