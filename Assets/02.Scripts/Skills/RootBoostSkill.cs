@@ -13,7 +13,7 @@ public class RootBoostSkill : Skill
     {
         skillName = "획득량 증가";
         cooldownTime = 7200f; // 스킬 쿨타임 120분 (2시간)
-        currentLevel = 0;
+        //currentLevel = 0;
 
         // IRoot 컴포넌트를 찾아서 참조합니다.
         roots = FindObjectsOfType<RootBase>();
@@ -25,6 +25,7 @@ public class RootBoostSkill : Skill
         UpdateCooldownUI(0);
         UpdateUI();
         CheckUnlockStatus(); // 해금 상태를 초기화
+        Debug.Log($"{currentLevel}루트부스트 레벨");
     }
 
     //public override string GetCurrentAbilityDescription()

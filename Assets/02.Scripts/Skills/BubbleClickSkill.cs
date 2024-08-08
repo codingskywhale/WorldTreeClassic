@@ -14,11 +14,12 @@ public class BubbleClickSkill : Skill
         skillName = "자동 클릭";
         skillDuration = 60f; // 스킬 지속 시간 1분
         cooldownTime = 1800f; // 스킬 쿨타임 30분
-        currentLevel = 0;
+        //currentLevel = 0;
 
         // 초기 UI 설정
         UpdateUI();
         UpdateCooldownUI(0);
+        Debug.Log($"{currentLevel}클릭부스트 레벨");
     }
 
     public override void ActivateSkill()

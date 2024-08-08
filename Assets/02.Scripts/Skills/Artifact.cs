@@ -16,6 +16,7 @@ public abstract class Artifact : MonoBehaviour
     public GameObject skillPopup; // 팝업 오브젝트
     public TextMeshProUGUI skillPopupInfoText; // 팝업에 표시될 텍스트
     public TextMeshProUGUI skillPopupCostText; // 팝업 비용 텍스트
+    public Sprite artifactImage; // 아티팩트 이미지를 저장할 필드
 
     protected virtual void Start()
     {
