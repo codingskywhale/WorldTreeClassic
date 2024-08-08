@@ -7,7 +7,7 @@ public class RootBoostSkill : Skill
     public BigInteger baseBoostMultiplier = 100; // 초기 부스트 배수
     public BigInteger boostMultiplier; // 현재 부스트 배수
     public float boostDuration = 300f; // 부스트 지속 시간 (5분)
-    private IRoot[] roots;
+    public RootBase[] roots;
 
     protected override void Start()
     {
@@ -24,8 +24,7 @@ public class RootBoostSkill : Skill
         // 초기 UI 설정
         UpdateCooldownUI(0);
         UpdateUI();
-        CheckUnlockStatus(); // 해금 상태를 초기화
-        Debug.Log($"{currentLevel}루트부스트 레벨");
+
     }
 
     //public override string GetCurrentAbilityDescription()
