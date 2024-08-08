@@ -31,9 +31,36 @@ public class GoogleSheetsToJson : MonoBehaviour
     void InitializeGoogleSheets()
     {
         GoogleCredential credential;
-        using (var stream = new FileStream("Assets/StreamingAssets/helical-ion-430902-s8-4dbd501b3ae0.json", FileMode.Open, FileAccess.Read))
+        // StreamingAssets 폴더 내의 파일을 Android에서도 접근할 수 있게 함
+        string path = Path.Combine(Application.streamingAssetsPath, "helical-ion-430902-s8-4dbd501b3ae0.json");
+
+        if (Application.platform == RuntimePlatform.Android)
         {
-            credential = GoogleCredential.FromStream(stream).CreateScoped(Scopes);
+            // Android에서는 파일을 직접 읽기 위해 UnityWebRequest 사용
+            using (var www = UnityEngine.Networking.UnityWebRequest.Get(path))
+            {
+                www.SendWebRequest();
+                while (!www.isDone) { }
+
+                if (www.result == UnityEngine.Networking.UnityWebRequest.Result.ConnectionError || www.result == UnityEngine.Networking.UnityWebRequest.Result.ProtocolError)
+                {
+                    Debug.LogError(www.error);
+                    return;
+                }
+
+                using (var memoryStream = new MemoryStream(www.downloadHandler.data))
+                {
+                    credential = GoogleCredential.FromStream(memoryStream).CreateScoped(Scopes);
+                }
+            }
+        }
+        else
+        {
+            // Android가 아닌 플랫폼 (예: 에디터)에서는 일반 파일 스트림 사용
+            using (var stream = new FileStream(path, FileMode.Open, FileAccess.Read))
+            {
+                credential = GoogleCredential.FromStream(stream).CreateScoped(Scopes);
+            }
         }
 
         service = new SheetsService(new BaseClientService.Initializer()

@@ -148,9 +148,10 @@ public class SaveDataManager
         {
             if (gameData == null)
             {
+                Debug.Log("gameData is not null");
                 InitializeDefaultGameData(resourceManager);
                 UIManager.Instance.createObjectButtonUnlockCount = 0;
-                UIManager.Instance.UpdateButtonUI();
+                //UIManager.Instance.UpdateButtonUI();
                 LifeManager.Instance.lifeAmount = new BigInteger(500000000000000000);
                 UIManager.Instance.touchData.upgradeLifeCost = new BigInteger(1000);
                 UIManager.Instance.touchData.touchIncreaseAmount = new BigInteger(50);
@@ -162,6 +163,7 @@ public class SaveDataManager
 
             isDataLoaded = true;
         });
+
 
         while (!isDataLoaded)
         {
@@ -227,7 +229,7 @@ public class SaveDataManager
             DataManager.Instance.touchData.upgradeLifeCost = string.IsNullOrEmpty(gameData.touchData.upgradeLifeCost) ? BigInteger.Zero : BigInteger.Parse(gameData.touchData.upgradeLifeCost);
         }
 
-        InitializeRoots(resourceManager, gameData.roots);
+        InitializeRoots(gameData.roots);
 
         // 초당 생명력 생성률 로드
         if (!string.IsNullOrEmpty(gameData.lifeGenerationRatePerSecond))
@@ -300,12 +302,11 @@ public class SaveDataManager
         worldTree.UpdateTreeMeshes(DataManager.Instance.touchData.touchIncreaseLevel);
 
         UIManager.Instance.createObjectButtonUnlockCount = gameData.createObjectButtonUnlockCount > 0 ? gameData.createObjectButtonUnlockCount : 1;
-        UIManager.Instance.UpdateButtonUI();
     }
 
-    private void InitializeRoots(ResourceManager resourceManager, List<RootDataSave> rootDataList)
+    private void InitializeRoots(List<RootDataSave> rootDataList)
     {
-        List<RootBase> roots = resourceManager.roots;
+        List<RootBase> roots = ResourceManager.Instance.roots;
 
         for (int i = 0; i < roots.Count && i < rootDataList.Count; i++)
         {
@@ -327,7 +328,7 @@ public class SaveDataManager
         root.rootLevel = level;
         root.upgradeLifeCost = root.CalculateUpgradeCost();
 
-        for (int i = 1; i <= level; i++)
+        for (int i = 0; i <= (int)(level / 25); i++)
         {
             root.ActivateNextPlantObject();
         }

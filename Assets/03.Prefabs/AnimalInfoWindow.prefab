@@ -2993,7 +2993,7 @@ GameObject:
   - component: {fileID: 6787624216689699947}
   - component: {fileID: 3638565234890228864}
   m_Layer: 5
-  m_Name: Text (TMP)
+  m_Name: StoryText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4188,6 +4188,7 @@ MonoBehaviour:
   CreatedAnimalCountText: {fileID: 2175547266728889312}
   previousGetText: {fileID: 6284363005722305921}
   currentGetText: {fileID: 8033863397813221670}
+  fullStoryText: {fileID: 3638565234890228864}
   centerUIs: {fileID: 2620938445450885101}
   BagBottomUI: {fileID: 5607523289681402608}
   CreateAnimalBottomUI: {fileID: 746102817087726475}

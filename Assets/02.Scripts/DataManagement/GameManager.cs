@@ -50,8 +50,7 @@ public class GameManager : Singleton<GameManager>
         offlineRewardManager = new OfflineRewardManager(resourceManager, offlineProgressCalculator,
                                                         offlineRewardSkill, offlineRewardAmountSkill);
         touchInput = GetComponent<TouchInput>();
-        offlineRewardUIManager.Initialize(offlineRewardManager); // UI 매니저 초기화
-        
+        offlineRewardUIManager.Initialize(offlineRewardManager); // UI 매니저 초기화        
     }    
 
     public void OnIntroAndOpeningCompleted()

@@ -40,15 +40,6 @@ public class UIManager : MonoBehaviour
         SetAnimalCountStatus();
     }
 
-    private void Update()
-    {
-        if (Input.GetKey(KeyCode.Q))
-        {
-
-            CreateAnimalButtons();
-        }
-    }
-
     public void SetAnimalCountStatus()
     {
         status.animalCountText.text = $"{DataManager.Instance.animalGenerateData.nowAnimalCount} / {DataManager.Instance.animalGenerateData.maxAnimalCount}";
@@ -161,7 +152,8 @@ public class UIManager : MonoBehaviour
             button.InitailizeSet(GameManager.Instance.animalDataList[i]);
             createAnimalButtons.Add(button);
             go.transform.SetParent(CreateObjectButtonTr);
-        }
+            go.transform.localScale = new UnityEngine.Vector3(1, 1, 1);
+        } 
 
         isCreatedButton = true;
         UnlockButton();

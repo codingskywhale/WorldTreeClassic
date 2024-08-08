@@ -28,6 +28,7 @@ public class UIUpdater
     public void UpdateAllUI()
     {
         DataManager.Instance.touchData.UpdateUI();
+        ResourceManager.Instance.UpdateUI();
         UIManager.Instance.status.UpdateLifeUI(LifeManager.Instance.lifeAmount, LifeManager.Instance.CalculateWaterNeededForUpgrade(1));
         UIManager.Instance.status.UpdateAnimalCountText(DataManager.Instance.animalGenerateData.nowAnimalCount, DataManager.Instance.animalGenerateData.maxAnimalCount);
 
