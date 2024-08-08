@@ -167,4 +167,19 @@ public class UIManager : MonoBehaviour
             createAnimalButtons[i].SetLockImageOff();
         }
     }
-}
+
+    public void LoadAnimalBuyStatus()
+    {
+        foreach (var kvp in DataManager.Instance.animalGenerateData.allTypeCountDic)
+        {
+            for(int i = 0; i < GameManager.Instance.animalDataList.Count; i++)
+            {
+                // 동물 이름과 애니멀 데이터가 일치한다면? 해당 애니멀 데이터에 해당하는 버튼을 활성화 시켜준다.
+                if (kvp.Key == GameManager.Instance.animalDataList[i].animalNameEN)
+                {
+                    createAnimalButtons[i].isBuyAnimal = true;
+                }
+            }
+        }
+    }
+    }

@@ -60,6 +60,7 @@ public class GameManager : Singleton<GameManager>
         UIManager.Instance.CreateAnimalButtons();
         UIManager.Instance.bag.CreateSlot();
         PlayFabManager.Instance.LoadGameData(OnGameDataLoaded);
+        UIManager.Instance.LoadAnimalBuyStatus();
         uiUpdater.UpdateAllUI();
         DataManager.Instance.animalGenerateData.SetSlotData();
 
