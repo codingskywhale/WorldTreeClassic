@@ -8,18 +8,17 @@ public class BubbleClickSkill : Skill
     public int baseClickRateIncrease = 10; // 초당 클릭 횟수
 
     public bool isUseSkill = false;
+    private float baseSkillDuration = 60f; // 기본 스킬 지속 시간 1분
 
     protected override void Start()
     {
         skillName = "자동 클릭";
-        skillDuration = 60f; // 스킬 지속 시간 1분
+        skillDuration = baseSkillDuration; // 기본 스킬 지속 시간 설정
         cooldownTime = 1800f; // 스킬 쿨타임 30분
-        //currentLevel = 0;
 
         // 초기 UI 설정
         UpdateUI();
         UpdateCooldownUI(0);
-        Debug.Log($"{currentLevel}클릭부스트 레벨");
     }
 
     public override void ActivateSkill()
@@ -30,16 +29,9 @@ public class BubbleClickSkill : Skill
         }
     }
 
-    //public override string GetCurrentAbilityDescription()
-    //{
-    //    return currentLevel > 0
-    //        ? $"지속 시간: {skillDuration / 60:F0}분"
-    //        : "스킬이 해금되지 않았습니다";
-    //}
-
     public override string GetNextAbilityDescription()
     {
-        float nextSkillDuration = skillDuration + skillDurationIncrease;
+        float nextSkillDuration = baseSkillDuration + currentLevel * skillDurationIncrease;
 
         return currentLevel > 0
             ? $"{skillDuration / 60:F0} → {nextSkillDuration / 60:F0}"
@@ -80,7 +72,8 @@ public class BubbleClickSkill : Skill
 
     protected override void UpdateClickValues()
     {
-        skillDuration += skillDurationIncrease;
+        skillDuration = baseSkillDuration + (currentLevel - 1) * skillDurationIncrease;
+        Debug.Log($"Updated skill duration: {skillDuration} seconds for level: {currentLevel}");
     }
 
     protected override void LevelUI()
