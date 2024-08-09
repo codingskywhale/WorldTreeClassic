@@ -115,8 +115,8 @@ public abstract class Artifact : MonoBehaviour
             {
                 BigInteger nextCost = currentLevel > 0 ? CalculateUpgradeCost(currentLevel) : unlockCost;
                 upgradeCostText.text = currentLevel > 0
-                    ? $"업그레이드 비용: {BigIntegerUtils.FormatBigInteger(nextCost)} 다이아"
-                    : $"해금 비용: {BigIntegerUtils.FormatBigInteger(nextCost)} 다이아";
+                    ? $"{BigIntegerUtils.FormatBigInteger(nextCost)}"
+                    : $"{BigIntegerUtils.FormatBigInteger(nextCost)}";
             }
         }
     }

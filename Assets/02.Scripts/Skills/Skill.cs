@@ -52,7 +52,7 @@ public abstract class Skill : MonoBehaviour
     public float fadeOutDuration = 2.0f; // 서서히 사라지는 시간
 
     private float skillTimeRemaining;
-
+    private Coroutine disableCoroutine;
     protected virtual void Start()
     {
         // 각 스킬의 지속시간과 쿨타임은 서브 클래스에서 설정됩니다.
@@ -261,8 +261,8 @@ public abstract class Skill : MonoBehaviour
             {
                 BigInteger nextCost = currentLevel > 0 ? CalculateUpgradeCost(currentLevel) : unlockCost;
                 upgradeCostText.text = currentLevel > 0
-                    ? $"업그레이드 비용: {BigIntegerUtils.FormatBigInteger(nextCost)} 다이아"
-                    : $"해금 비용: {BigIntegerUtils.FormatBigInteger(nextCost)} 다이아";
+                    ? $" {BigIntegerUtils.FormatBigInteger(nextCost)}"
+                    : $"{BigIntegerUtils.FormatBigInteger(nextCost)}";
             }
         }
     }
@@ -413,7 +413,14 @@ public abstract class Skill : MonoBehaviour
         if (skillTextObject != null)
         {
             skillTextObject.SetActive(true);
-            StartCoroutine(DisableAfterDelay(skillTextObject, 2.0f)); // 2초 후에 비활성화
+
+            // 이미 코루틴이 실행 중이라면 중지하고 새로 시작
+            if (disableCoroutine != null)
+            {
+                StopCoroutine(disableCoroutine);
+            }
+
+            disableCoroutine = StartCoroutine(DisableAfterDelay(skillTextObject, 2.0f)); // 2초 후에 비활성화
         }
     }
 
@@ -438,6 +445,12 @@ public abstract class Skill : MonoBehaviour
     private IEnumerator DisableAfterDelay(GameObject target, float delay)
     {
         yield return new WaitForSeconds(delay);
-        target.SetActive(false);
+
+        // 코루틴이 끝나기 전에 타겟이 비활성화 상태가 되었는지 확인
+        if (target.activeSelf)
+        {
+            target.SetActive(false);
+        }
+        disableCoroutine = null; // 코루틴이 끝난 후 null로 설정
     }
 }

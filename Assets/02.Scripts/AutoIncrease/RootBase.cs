@@ -114,6 +114,7 @@ public class RootBase : MonoBehaviour, IRoot
     {
         if (!isUnlocked) return; // 잠금 해제된 경우에만 업그레이드 가능
         rootLevel++;
+        //ActivateNextPlantObject();
         if (rootLevel == 1 || rootLevel % 25 == 0)
         {
             UIManager.Instance.CheckConditionCleared();
@@ -297,7 +298,7 @@ public class RootBase : MonoBehaviour, IRoot
 
         if (rootUpgradeCostText != null)
         {
-            rootUpgradeCostText.text = $"강화 비용: {BigIntegerUtils.FormatBigInteger(upgradeCost)} 물";
+            rootUpgradeCostText.text = $"{BigIntegerUtils.FormatBigInteger(upgradeCost)}";
         }
     }
 
