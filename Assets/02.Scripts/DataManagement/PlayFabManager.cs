@@ -8,7 +8,7 @@ public class PlayFabManager : MonoBehaviour
     public static PlayFabManager Instance { get; private set; }
     public event Action<LoginResult> OnLoginSuccessEvent;
 
-    private string playFabTitleId = "2759E";
+    private string playFabTitleId = "295EF";
     private const string GameDataKey = "gameData";
 
     private void Awake()
@@ -24,6 +24,9 @@ public class PlayFabManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
+
+        //PlayerPrefs.DeleteAll();
+        //PlayerPrefs.Save();
     }
        
     public void LoginWithGuest()

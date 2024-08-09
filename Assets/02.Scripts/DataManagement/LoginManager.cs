@@ -18,10 +18,7 @@ public class LoginManager : MonoBehaviour
     private string webClientId = "41547311661-himu41jj8sm40obegnj3g60rualr4j57.apps.googleusercontent.com";
 
     private void Start()
-    {
-        //PlayerPrefs.DeleteKey("GuestLoggedIn");
-        //PlayerPrefs.DeleteKey("GoogleLoggedIn");
-
+    {        
         googleLoginButton.onClick.AddListener(OnGoogleLoginButtonClicked);
         guestLoginButton.onClick.AddListener(OnGuestLoginButtonClicked);        
 
@@ -75,7 +72,7 @@ public class LoginManager : MonoBehaviour
     private void OnGuestLoginButtonClicked()
     {
         loadingText.text = "Guest로 로그인 중...";
-        PlayFabManager.Instance.LoginWithGuest();
+        PlayFabManager.Instance.LoginWithGuest();        
     }
 
     private void OnLoginSuccess(LoginResult result)
