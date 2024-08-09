@@ -30,6 +30,8 @@ public class GameManager : Singleton<GameManager>
     private int saveBufferCounter = 0; // 저장 버퍼 카운터
     private const int SaveBufferThreshold = 10; // 생명력 업그레이드 저장 버퍼 임계값
 
+    public Tutorial TutorialObject;
+
     private void Awake()
     {
         base.Awake();
@@ -63,7 +65,8 @@ public class GameManager : Singleton<GameManager>
         UIManager.Instance.LoadAnimalBuyStatus();
         uiUpdater.UpdateAllUI();
         DataManager.Instance.animalGenerateData.SetSlotData();
-
+        TutorialObject.gameObject.SetActive(true);
+        TutorialObject.StartTutorial();
         InvokeRepeating(nameof(AutoSaveGame), 180f, 180f);
     }
 

@@ -64,7 +64,7 @@ public class UpgradeButton : MonoBehaviour
         upgradeButton.interactable = canUpgrade;
     }
 
-    private void OnUpgradeButtonClicked()
+    public void OnUpgradeButtonClicked()
     {
         switch (upgradeType)
         {

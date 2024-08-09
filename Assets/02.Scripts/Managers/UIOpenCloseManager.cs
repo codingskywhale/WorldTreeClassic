@@ -55,7 +55,7 @@ public class UIOpenCloseManager : MonoBehaviour
         StartCoroutine(ClosePanelCoroutine());
     }
 
-    private void OpenPanels()
+    public void OpenPanels()
     {
         StartCoroutine(OpenPanelsCoroutine());
     }
