@@ -51,6 +51,7 @@ public class Tutorial : MonoBehaviour
         plantButton.interactable = false;
         animalButton.interactable = false;
         menuButton.interactable = false;
+        upgradeButton.GetComponent<UpgradeButton>().isTutorial = true;
     }
 
     public void StartTutorial()
@@ -87,7 +88,7 @@ public class Tutorial : MonoBehaviour
                 break;
             case 4:
                 arrow.rectTransform.position = animalCountTr.GetComponent<RectTransform>().position;
-                arrow.rectTransform.position += new Vector3(100f, 130f, 0f);
+                arrow.rectTransform.position += new Vector3(100f, 115f, 0f);
                 break;
             case 5:
                 plantButton.interactable = false;
@@ -179,6 +180,7 @@ public class Tutorial : MonoBehaviour
         if (nowDialogueIndex < 3)
         {
             isPlantConditionEnd = true;
+            upgradeButton.GetComponent<UpgradeButton>().OnUpgradeButtonClicked();
             upgradeButton.gameObject.SetActive(false);
         }
         else
@@ -190,6 +192,7 @@ public class Tutorial : MonoBehaviour
         if(nowDialogueIndex > 5)
         { 
             createAnimalButton.CreateAnimalToScene();
+            upgradeButton.gameObject.SetActive(false);
         }
     }
 

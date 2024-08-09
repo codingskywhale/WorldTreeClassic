@@ -6,6 +6,7 @@ public class UpgradeButton : MonoBehaviour
 {
     public ResourceManager resourceManager;
     public RootBase root;
+    public bool isTutorial = false;
     //public TouchInputManager touchInputManager;
 
     public enum UpgradeType
@@ -23,7 +24,8 @@ public class UpgradeButton : MonoBehaviour
     private void Start()
     {
         upgradeButton = GetComponent<Button>();
-        upgradeButton.onClick.AddListener(OnUpgradeButtonClicked);
+        if(!isTutorial)
+            upgradeButton.onClick.AddListener(OnUpgradeButtonClicked);
         resourceManager.UpdateUI();
 
         if (upgradeType == UpgradeType.Root && root != null)

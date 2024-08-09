@@ -28,7 +28,8 @@ public class PlayFabManager : MonoBehaviour
        
     public void LoginWithGuest()
     {
-        var request = new LoginWithCustomIDRequest { CustomId = SystemInfo.deviceUniqueIdentifier, CreateAccount = true };
+        string customId = Guid.NewGuid().ToString();
+        var request = new LoginWithCustomIDRequest { CustomId = customId, CreateAccount = true };
         PlayFabClientAPI.LoginWithCustomID(request, OnLoginSuccess, OnLoginFailure);
     }
 
