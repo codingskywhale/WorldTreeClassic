@@ -15,6 +15,7 @@ public class CameraTransition : MonoBehaviour
     public bool isZooming = false;
 
     private Camera mainCamera;
+    public WorldTree worldTree;
 
     private Vector3 currentCameraPosition;
     private Quaternion currentCameraRotation;
@@ -24,9 +25,22 @@ public class CameraTransition : MonoBehaviour
     {
         mainCamera = Camera.main;
 
+        int currentLevel = DataManager.Instance.touchData.touchIncreaseLevel;
+        AdjustInitialCameraValues(currentLevel);
+
         currentCameraPosition = mainCamera.transform.position;
         currentCameraRotation = mainCamera.transform.rotation;
         currentCameraFOV = mainCamera.fieldOfView;
+    }
+
+    private void AdjustInitialCameraValues(int treeLevel)
+    {
+        int levelFactor = treeLevel / 10;
+
+        if (levelFactor > 0)
+        {
+            initialPosition -= mainCamera.transform.forward * (worldTree.positionIncrement * levelFactor);
+        }
     }
 
     public IEnumerator OpeningCamera()

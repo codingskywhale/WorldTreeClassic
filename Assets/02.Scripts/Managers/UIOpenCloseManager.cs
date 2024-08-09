@@ -20,7 +20,6 @@ public class UIOpenCloseManager : MonoBehaviour
     private Vector2 panelOriginalPosition2;
     private Vector2 panelOriginalPosition3;
     private Vector2[] buttonOriginalPositions;
-    private Vector3 cameraOriginalPosition;
     private bool isPanelOpen = false; // 패널이 닫혀 있는 상태로 시작
 
     public bool IsPanelOpen => isPanelOpen;
@@ -30,7 +29,6 @@ public class UIOpenCloseManager : MonoBehaviour
         panelOriginalPosition1 = bottomUIPanel1.anchoredPosition;
         panelOriginalPosition2 = bottomUIPanel2.anchoredPosition;
         panelOriginalPosition3 = bottomUIPanel3.anchoredPosition;
-        cameraOriginalPosition = mainCamera.transform.position;
 
         // 각 버튼의 원래 위치를 저장
         buttonOriginalPositions = new Vector2[otherButtons.Length];
@@ -62,25 +60,26 @@ public class UIOpenCloseManager : MonoBehaviour
 
     private IEnumerator ClosePanelCoroutine(bool instant = false)
     {
+        // 패널이 닫힐 때 카메라의 현재 위치를 기준으로 Y축을 이동
+        Vector3 cameraTargetPosition = new Vector3(mainCamera.transform.position.x, mainCamera.transform.position.y + cameraMoveAmount, mainCamera.transform.position.z);
+
         Vector2 targetPosition1 = panelOriginalPosition1 - new Vector2(0, bottomUIPanel1.rect.height);
         Vector2 targetPosition2 = panelOriginalPosition2 - new Vector2(0, bottomUIPanel2.rect.height);
         Vector2 targetPosition3 = panelOriginalPosition3 - new Vector2(0, bottomUIPanel3.rect.height);
-        Vector3 cameraTargetPosition = new Vector3(cameraOriginalPosition.x, cameraOriginalPosition.y + cameraMoveAmount, cameraOriginalPosition.z); // 카메라를 위로 이동
 
         if (instant)
         {
+            // 즉시 이동하는 경우
+            mainCamera.transform.position = cameraTargetPosition;
             bottomUIPanel1.anchoredPosition = targetPosition1;
             bottomUIPanel2.anchoredPosition = targetPosition2;
             bottomUIPanel3.anchoredPosition = targetPosition3;
-            mainCamera.transform.position = cameraTargetPosition;
-            foreach (var button in otherButtons)
-            {
-                button.anchoredPosition -= new Vector2(0, bottomUIPanel1.rect.height);
-            }
+            AdjustOtherButtons(-bottomUIPanel1.rect.height);
         }
         else
         {
-            yield return StartCoroutine(MoveUIPanelsAndButtons(targetPosition1, targetPosition2, targetPosition3, cameraTargetPosition, true));
+            // 애니메이션을 통한 이동
+            yield return StartCoroutine(MoveUIPanelsAndCamera(cameraTargetPosition, targetPosition1, targetPosition2, targetPosition3));
         }
 
         // 열기 버튼 활성화
@@ -95,12 +94,14 @@ public class UIOpenCloseManager : MonoBehaviour
     {
         openButton.gameObject.SetActive(false);
 
+        // 패널이 열릴 때 카메라의 현재 위치를 기준으로 Y축을 이동
+        Vector3 cameraTargetPosition = new Vector3(mainCamera.transform.position.x, mainCamera.transform.position.y - cameraMoveAmount, mainCamera.transform.position.z);
+
         Vector2 targetPosition1 = panelOriginalPosition1;
         Vector2 targetPosition2 = panelOriginalPosition2;
         Vector2 targetPosition3 = panelOriginalPosition3;
-        Vector3 cameraTargetPosition = new Vector3(cameraOriginalPosition.x, cameraOriginalPosition.y - cameraMoveAmount, cameraOriginalPosition.z); // 카메라를 아래로 이동
 
-        yield return StartCoroutine(MoveUIPanelsAndButtons(targetPosition1, targetPosition2, targetPosition3, cameraTargetPosition, false));
+        yield return StartCoroutine(MoveUIPanelsAndCamera(cameraTargetPosition, targetPosition1, targetPosition2, targetPosition3));
 
         // 닫기 버튼 활성화
         closeButton.gameObject.SetActive(true);
@@ -108,47 +109,39 @@ public class UIOpenCloseManager : MonoBehaviour
         isPanelOpen = true;
     }
 
-    private IEnumerator MoveUIPanelsAndButtons(Vector2 targetPosition1, Vector2 targetPosition2, Vector2 targetPosition3, Vector3 cameraTargetPosition, bool closing)
+    private IEnumerator MoveUIPanelsAndCamera(Vector3 cameraTargetPosition, Vector2 targetPosition1, Vector2 targetPosition2, Vector2 targetPosition3)
     {
         float elapsedTime = 0f;
+        Vector3 cameraStartingPosition = mainCamera.transform.position;
+
         Vector2 startingPosition1 = bottomUIPanel1.anchoredPosition;
         Vector2 startingPosition2 = bottomUIPanel2.anchoredPosition;
         Vector2 startingPosition3 = bottomUIPanel3.anchoredPosition;
-        Vector3 cameraStartingPosition = mainCamera.transform.position;
-        Vector2[] startingPositions = new Vector2[otherButtons.Length];
-
-        for (int i = 0; i < otherButtons.Length; i++)
-        {
-            startingPositions[i] = otherButtons[i].anchoredPosition;
-        }
 
         while (elapsedTime < animationDuration)
         {
+            mainCamera.transform.position = Vector3.Lerp(cameraStartingPosition, cameraTargetPosition, elapsedTime / animationDuration);
             bottomUIPanel1.anchoredPosition = Vector2.Lerp(startingPosition1, targetPosition1, elapsedTime / animationDuration);
             bottomUIPanel2.anchoredPosition = Vector2.Lerp(startingPosition2, targetPosition2, elapsedTime / animationDuration);
             bottomUIPanel3.anchoredPosition = Vector2.Lerp(startingPosition3, targetPosition3, elapsedTime / animationDuration);
-            mainCamera.transform.position = new Vector3(
-                cameraStartingPosition.x,
-                Mathf.Lerp(cameraStartingPosition.y, cameraTargetPosition.y, elapsedTime / animationDuration),
-                cameraOriginalPosition.z); // Z 값을 원래 값으로 고정
-
-            for (int i = 0; i < otherButtons.Length; i++)
-            {
-                otherButtons[i].anchoredPosition = Vector2.Lerp(startingPositions[i], closing ? startingPositions[i] - new Vector2(0, bottomUIPanel1.rect.height) : buttonOriginalPositions[i], elapsedTime / animationDuration);
-            }
 
             elapsedTime += Time.deltaTime;
             yield return null;
         }
 
+        mainCamera.transform.position = cameraTargetPosition;
         bottomUIPanel1.anchoredPosition = targetPosition1;
         bottomUIPanel2.anchoredPosition = targetPosition2;
         bottomUIPanel3.anchoredPosition = targetPosition3;
-        mainCamera.transform.position = new Vector3(cameraTargetPosition.x, cameraTargetPosition.y, cameraOriginalPosition.z); // Z 값을 원래 값으로 고정
 
+        AdjustOtherButtons(targetPosition1.y - startingPosition1.y);
+    }
+
+    private void AdjustOtherButtons(float adjustment)
+    {
         for (int i = 0; i < otherButtons.Length; i++)
         {
-            otherButtons[i].anchoredPosition = closing ? startingPositions[i] - new Vector2(0, bottomUIPanel1.rect.height) : buttonOriginalPositions[i];
+            otherButtons[i].anchoredPosition += new Vector2(0, adjustment);
         }
     }
 }

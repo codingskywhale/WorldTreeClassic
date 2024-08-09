@@ -299,7 +299,14 @@ public class SaveDataManager
                 }
             }
         }
+
         worldTree.UpdateTreeMeshes(DataManager.Instance.touchData.touchIncreaseLevel);
+
+        for (int i = 10; i <= DataManager.Instance.touchData.touchIncreaseLevel; i += 10)
+        {
+            worldTree.IncrementCameraFOV();
+            worldTree.MoveCameraBackwards();
+        }
 
         UIManager.Instance.createObjectButtonUnlockCount = gameData.createObjectButtonUnlockCount > 0 ? gameData.createObjectButtonUnlockCount : 1;
     }

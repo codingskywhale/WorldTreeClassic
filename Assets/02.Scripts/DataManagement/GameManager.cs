@@ -63,6 +63,14 @@ public class GameManager : Singleton<GameManager>
         uiUpdater.UpdateAllUI();
         DataManager.Instance.animalGenerateData.SetSlotData();
 
+        worldTree.UpdateTreeMeshes(DataManager.Instance.touchData.touchIncreaseLevel);
+
+        for (int i = 10; i <= DataManager.Instance.touchData.touchIncreaseLevel; i += 10)
+        {
+            worldTree.IncrementCameraFOV();
+            worldTree.MoveCameraBackwards();
+        }
+
         InvokeRepeating(nameof(AutoSaveGame), 180f, 180f);
     }
 

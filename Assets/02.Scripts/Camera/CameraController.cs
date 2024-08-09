@@ -4,7 +4,6 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using TMPro;
-using static UnityEngine.GraphicsBuffer;
 
 public class CameraController : MonoBehaviour
 {
@@ -27,6 +26,8 @@ public class CameraController : MonoBehaviour
         cameraTransition = GetComponent<CameraTransition>();
         cameraTargetHandler = GetComponent<CameraTargetHandler>();
         worldTree = FindObjectOfType<WorldTree>();
+
+        AdjustInitialCameraValues(DataManager.Instance.touchData.touchIncreaseLevel);
 
         // 초기 위치와 회전 설정
         Camera.main.transform.position = cameraTransition.initialPosition;
@@ -61,6 +62,15 @@ public class CameraController : MonoBehaviour
         }
     }
 
+    private void AdjustInitialCameraValues(int treeLevel)
+    {
+        int levelFactor = treeLevel / 10;
+
+        if (levelFactor > 0)
+        {
+            cameraTransition.initialPosition -= Camera.main.transform.forward * (worldTree.positionIncrement * levelFactor);
+        }
+    }
 
     private void HandleFreeCamera()
     {

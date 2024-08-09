@@ -8,6 +8,7 @@ public class CameraTargetHandler : MonoBehaviour
     public bool isObjectTarget = false;
     private Vector3 offset = new Vector3(-1.7f, 2.5f, -2.3f); // 타겟에 대한 카메라 오프셋
     private CameraTransition cameraTransition;
+    public WorldTree worldTree;
 
     public float minVerticalAngle = 0f; // 최소 각도 제한
     public float maxVerticalAngle = 30f; // 최대 각도 제한
@@ -31,6 +32,18 @@ public class CameraTargetHandler : MonoBehaviour
     private void Start()
     {
         cameraTransition = GetComponent<CameraTransition>();
+
+        AdjustOffsetBasedOnTreeLevel(DataManager.Instance.touchData.touchIncreaseLevel);
+    }
+
+    private void AdjustOffsetBasedOnTreeLevel(int treeLevel)
+    {
+        int levelFactor = treeLevel / 10;
+
+        if (levelFactor > 0)
+        {
+            offset -= Camera.main.transform.forward * (worldTree.positionIncrement * levelFactor);
+        }
     }
 
     public void SetTarget(Transform newTarget)
