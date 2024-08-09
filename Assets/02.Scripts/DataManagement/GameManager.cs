@@ -111,8 +111,7 @@ public class GameManager : Singleton<GameManager>
             }
         }       
     }
-
-    private void OnApplicationQuit()
+    private void SaveGameIfLoggedIn()
     {
         if (PlayFabClientAPI.IsClientLoggedIn())
         {
@@ -125,4 +124,26 @@ public class GameManager : Singleton<GameManager>
             Debug.LogWarning("Not logged in. Skipping save game data.");
         }
     }
+
+    private void OnApplicationQuit()
+    {
+        SaveGameIfLoggedIn();
+    }
+
+    private void OnApplicationPause(bool pauseStatus)
+    {
+        if (pauseStatus)
+        {
+            SaveGameIfLoggedIn();
+        }
+    }
+
+    private void OnApplicationFocus(bool hasFocus)
+    {
+        if (!hasFocus)
+        {
+            SaveGameIfLoggedIn();
+        }
+    }
+
 }

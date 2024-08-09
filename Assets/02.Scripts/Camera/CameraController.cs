@@ -43,7 +43,7 @@ public class CameraController : MonoBehaviour
                 cameraTargetHandler.FollowObject();
             }
 
-            if (Input.GetMouseButtonDown(0))
+            if (Input.GetMouseButtonDown(0) || (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Began))
             {
                 HandleClick();
             }
@@ -54,17 +54,17 @@ public class CameraController : MonoBehaviour
     {
         if (CameraSettings.Instance.isZooming) return;
 
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButtonDown(0) || (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Began))
         {
             isDragging = true; // 드래그 시작
         }
-        else if (Input.GetMouseButtonUp(0))
+        else if (Input.GetMouseButtonUp(0) || (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Ended))
         {
             isDragging = false; // 드래그 종료
         }
 
         if (isDragging)
-        {            
+        {
             RotateCamera();
         }
         else if (cameraTargetHandler.currentTarget != null)

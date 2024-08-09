@@ -66,12 +66,15 @@ SpriteAtlas:
     - {fileID: 2800000, guid: 8be8f9fd3917db740bc921e0dee67c5e, type: 3}
     - {fileID: 2800000, guid: e0d287dd0254dcf4b8928272f8ab4c06, type: 3}
     - {fileID: 2800000, guid: 2a941afa0b6b78c4ab83921ab447685b, type: 3}
+    - {fileID: 2800000, guid: 23ad5faf252de0142a09200da34ec18c, type: 3}
+    - {fileID: 2800000, guid: 635aebd09d6fe1142b598eaf73425b23, type: 3}
     bindAsDefault: 1
     isAtlasV2: 0
     cachedData: {fileID: 0}
     packedSpriteRenderDataKeys:
     - 23196c20eeddf9e4abe336d3e07796f5: 21300000
     - 65c71c304b50e8f428ba36b2813f09bf: 21300000
+    - 635aebd09d6fe1142b598eaf73425b23: 21300000
     - 1da94b4257ad12043a81ff32d48f874c: 21300000
     - e3c98a43ba5ec5b48be49425a82d3547: 21300000
     - e0f50c836deade24e912db7387e24c5e: 21300000
@@ -91,10 +94,12 @@ SpriteAtlas:
     - 8be8f9fd3917db740bc921e0dee67c5e: 21300000
     - 272b294e38a4d3649a6aa63ba260f1e5: 21300000
     - 71133baff74593c439ec51c33c36de88: 21300000
+    - 23ad5faf252de0142a09200da34ec18c: 21300000
   m_MasterAtlas: {fileID: 0}
   m_PackedSprites:
   - {fileID: 21300000, guid: 23196c20eeddf9e4abe336d3e07796f5, type: 3}
   - {fileID: 21300000, guid: 65c71c304b50e8f428ba36b2813f09bf, type: 3}
+  - {fileID: 21300000, guid: 635aebd09d6fe1142b598eaf73425b23, type: 3}
   - {fileID: 21300000, guid: 1da94b4257ad12043a81ff32d48f874c, type: 3}
   - {fileID: 21300000, guid: e3c98a43ba5ec5b48be49425a82d3547, type: 3}
   - {fileID: 21300000, guid: e0f50c836deade24e912db7387e24c5e, type: 3}
@@ -114,9 +119,11 @@ SpriteAtlas:
   - {fileID: 21300000, guid: 8be8f9fd3917db740bc921e0dee67c5e, type: 3}
   - {fileID: 21300000, guid: 272b294e38a4d3649a6aa63ba260f1e5, type: 3}
   - {fileID: 21300000, guid: 71133baff74593c439ec51c33c36de88, type: 3}
+  - {fileID: 21300000, guid: 23ad5faf252de0142a09200da34ec18c, type: 3}
   m_PackedSpriteNamesToIndex:
   - Musicicon
   - TreeIcon
+  - QuestIcon
   - AnimalIcon
   - ArrowRightIcon
   - DiamondIcon
@@ -136,6 +143,7 @@ SpriteAtlas:
   - UpdateIcon
   - ArrowDownIcon
   - PlantsIcon
+  - OptionIcon
   m_RenderDataMap: {}
   m_Tag: UISpriteAtlas
   m_IsVariant: 0
