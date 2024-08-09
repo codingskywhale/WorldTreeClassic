@@ -4,19 +4,13 @@ using UnityEngine;
 public class CameraTargetHandler : MonoBehaviour
 {
     public static CameraTargetHandler Instance { get; private set; }
-    public Transform currentTarget; // 현재 타겟
-    public bool isObjectTarget = false;
-    private Vector3 offset = new Vector3(-1.7f, 2.5f, -2.3f); // 타겟에 대한 카메라 오프셋
-    private CameraTransition cameraTransition;
-    public WorldTree worldTree;
 
-    public float minVerticalAngle = 0f; // 최소 각도 제한
-    public float maxVerticalAngle = 30f; // 최대 각도 제한
-    public float minHeight = 1f; // 카메라의 최소 높이 제한
-    public float maxHeight = 15f; // 카메라의 최대 높이 제한
+    public Transform currentTarget; // 현재 타겟
+    public bool isObjectTarget = false;    
+    private CameraTransition cameraTransition;
 
     private bool isFreeCamera = false; // 자유시점 모드 여부
-
+        
     private void Awake()
     {
         if (Instance == null)
@@ -27,24 +21,11 @@ public class CameraTargetHandler : MonoBehaviour
         {
             Destroy(gameObject);
         }
-    }
-
+    }       
     private void Start()
     {
         cameraTransition = GetComponent<CameraTransition>();
-
-        AdjustOffsetBasedOnTreeLevel(DataManager.Instance.touchData.touchIncreaseLevel);
-    }
-
-    private void AdjustOffsetBasedOnTreeLevel(int treeLevel)
-    {
-        int levelFactor = treeLevel / 10;
-
-        if (levelFactor > 0)
-        {
-            offset -= Camera.main.transform.forward * (worldTree.positionIncrement * levelFactor);
-        }
-    }
+    }        
 
     public void SetTarget(Transform newTarget)
     {
@@ -66,25 +47,25 @@ public class CameraTargetHandler : MonoBehaviour
 
     private IEnumerator ZoomToTarget(Transform newTarget)
     {
-        cameraTransition.isZooming = true;
+        CameraSettings.Instance.isZooming = true;
         float startTime = Time.time;
         Vector3 startPosition = Camera.main.transform.position;
         Quaternion startRotation = Camera.main.transform.rotation;
 
-        Vector3 targetPosition = newTarget.position + offset; // 타겟의 위치를 기준으로 카메라 위치 조정
+        Vector3 targetPosition = newTarget.position + CameraSettings.Instance.currentCameraPosition; // 타겟의 위치를 기준으로 카메라 위치 조정
         Quaternion targetRotation = Quaternion.LookRotation(newTarget.position - targetPosition);
-        
-        while (Time.time < startTime + cameraTransition.zoomDuration)
+
+        while (Time.time < startTime + CameraSettings.Instance.zoomDuration)
         {
-            float t = (Time.time - startTime) / cameraTransition.zoomDuration;
+            float t = (Time.time - startTime) / CameraSettings.Instance.zoomDuration;
             Camera.main.transform.position = Vector3.Lerp(startPosition, targetPosition, t);
             Camera.main.transform.rotation = Quaternion.Slerp(startRotation, targetRotation, t);
             yield return null;
         }
 
         Camera.main.transform.position = targetPosition;
-        Camera.main.transform.rotation = targetRotation;        
-        cameraTransition.isZooming = false;
+        Camera.main.transform.rotation = targetRotation;
+        CameraSettings.Instance.isZooming = false;
     }
 
     public void FollowObject()
@@ -95,14 +76,14 @@ public class CameraTargetHandler : MonoBehaviour
             Quaternion originalRotation = Camera.main.transform.rotation;
 
             // 타겟의 위치를 기준으로 카메라 위치를 업데이트
-            Vector3 targetPosition = currentTarget.position + offset;
+            Vector3 targetPosition = currentTarget.position + CameraSettings.Instance.currentCameraPosition;
             Camera.main.transform.position = targetPosition;
 
             // 저장한 회전 값을 다시 설정하여 회전 값이 변경되지 않도록 함
             Camera.main.transform.rotation = originalRotation;
         }
     }
-    
+
     public void SetFreeCameraMode(bool isFree)
     {
         isFreeCamera = isFree;

@@ -118,6 +118,12 @@ public class UIOpenCloseManager : MonoBehaviour
         Vector2 startingPosition2 = bottomUIPanel2.anchoredPosition;
         Vector2 startingPosition3 = bottomUIPanel3.anchoredPosition;
 
+        Vector2[] buttonStartingPositions = new Vector2[otherButtons.Length];
+        for (int i = 0; i < otherButtons.Length; i++)
+        {
+            buttonStartingPositions[i] = otherButtons[i].anchoredPosition;
+        }
+
         while (elapsedTime < animationDuration)
         {
             mainCamera.transform.position = Vector3.Lerp(cameraStartingPosition, cameraTargetPosition, elapsedTime / animationDuration);
@@ -125,6 +131,10 @@ public class UIOpenCloseManager : MonoBehaviour
             bottomUIPanel2.anchoredPosition = Vector2.Lerp(startingPosition2, targetPosition2, elapsedTime / animationDuration);
             bottomUIPanel3.anchoredPosition = Vector2.Lerp(startingPosition3, targetPosition3, elapsedTime / animationDuration);
 
+            for (int i = 0; i < otherButtons.Length; i++)
+            {
+                otherButtons[i].anchoredPosition = Vector2.Lerp(buttonStartingPositions[i], buttonStartingPositions[i] + new Vector2(0, targetPosition1.y - startingPosition1.y), elapsedTime / animationDuration);
+            }
             elapsedTime += Time.deltaTime;
             yield return null;
         }
@@ -132,9 +142,7 @@ public class UIOpenCloseManager : MonoBehaviour
         mainCamera.transform.position = cameraTargetPosition;
         bottomUIPanel1.anchoredPosition = targetPosition1;
         bottomUIPanel2.anchoredPosition = targetPosition2;
-        bottomUIPanel3.anchoredPosition = targetPosition3;
-
-        AdjustOtherButtons(targetPosition1.y - startingPosition1.y);
+        bottomUIPanel3.anchoredPosition = targetPosition3;        
     }
 
     private void AdjustOtherButtons(float adjustment)

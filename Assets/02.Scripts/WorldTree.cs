@@ -16,7 +16,7 @@ public class WorldTree : MonoBehaviour
     public float initialFOV = 60f; // 초기 FOV 값
     public float FOVIncrement = 2f; // 나무의 외형이 바뀔 때마다 증가할 FOV 값
     public float maxFOV = 100f; // 최대 FOV 값    
-    public float positionIncrement = 0.5f;
+    public float positionIncrement = 0.4f;
 
     private Vector3 positionOffset = Vector3.zero;
     private float fovOffset = 0f;
