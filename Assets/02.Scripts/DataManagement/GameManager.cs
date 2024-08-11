@@ -4,6 +4,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Numerics;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class GameManager : Singleton<GameManager>
@@ -65,8 +66,6 @@ public class GameManager : Singleton<GameManager>
         UIManager.Instance.LoadAnimalBuyStatus();
         uiUpdater.UpdateAllUI();
         DataManager.Instance.animalGenerateData.SetSlotData();
-        TutorialObject.gameObject.SetActive(true);
-        TutorialObject.StartTutorial();
         InvokeRepeating(nameof(AutoSaveGame), 180f, 180f);
     }
 
@@ -80,6 +79,8 @@ public class GameManager : Singleton<GameManager>
         else
         {
             Debug.LogWarning("Failed to load game data. Offline rewards will not be calculated.");
+            TutorialObject.gameObject.SetActive(true);
+            TutorialObject.StartTutorial();
             uiUpdater.UpdateAllUI(); // 데이터 로드 실패 시에도 UI 업데이트
         }
     }

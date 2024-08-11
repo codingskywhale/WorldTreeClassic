@@ -8,7 +8,7 @@ public class PlayFabManager : MonoBehaviour
     public static PlayFabManager Instance { get; private set; }
     public event Action<LoginResult> OnLoginSuccessEvent;
 
-    private string playFabTitleId = "2759E";
+    private string playFabTitleId = "295EF";
     private const string GameDataKey = "gameData";
 
     private void Awake()
@@ -28,8 +28,7 @@ public class PlayFabManager : MonoBehaviour
        
     public void LoginWithGuest()
     {
-        string customId = Guid.NewGuid().ToString();
-        var request = new LoginWithCustomIDRequest { CustomId = customId, CreateAccount = true };
+        var request = new LoginWithCustomIDRequest { CustomId = SystemInfo.deviceUniqueIdentifier, CreateAccount = true };
         PlayFabClientAPI.LoginWithCustomID(request, OnLoginSuccess, OnLoginFailure);
     }
 
