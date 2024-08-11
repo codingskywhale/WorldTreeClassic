@@ -1,9 +1,18 @@
-using System.Collections;
+using UnityEngine.UI;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class PictorialBookWindow : MonoBehaviour
 {
+    public TextMeshProUGUI animalCountText;
+    public Slider collectionSlider;
+
+    private void OnEnable()
+    {
+        animalCountText.text = $"활동 중 : {DataManager.Instance.animalGenerateData.nowAnimalCount} / {DataManager.Instance.animalGenerateData.maxAnimalCount}";
+        ApplyCollectionRate();
+    }
     public void TouchRandomReplaceButton()
     {
         //랜덤으로 모든 동물을 배치하는 기능.
@@ -35,5 +44,10 @@ public class PictorialBookWindow : MonoBehaviour
             LifeManager.Instance.bubbleGenerator.ClearAllBubbles();
             DataManager.Instance.DestroyAllAnimal();
         }
+    }
+
+    public void ApplyCollectionRate()
+    {
+        collectionSlider.value = (float)DataManager.Instance.animalGenerateData.allTypeCountDic.Count / (float)GameManager.Instance.animalDataList.Count;
     }
 }
