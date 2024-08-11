@@ -4,7 +4,6 @@ using UnityEngine.UI;
 
 public class UpgradeButton : MonoBehaviour
 {
-    public ResourceManager resourceManager;
     public RootBase root;
     public bool isTutorial = false;
     //public TouchInputManager touchInputManager;
@@ -26,13 +25,13 @@ public class UpgradeButton : MonoBehaviour
         upgradeButton = GetComponent<Button>();
         if(!isTutorial)
             upgradeButton.onClick.AddListener(OnUpgradeButtonClicked);
-        resourceManager.UpdateUI();
+        ResourceManager.Instance.UpdateUI();
 
         if (upgradeType == UpgradeType.Root && root != null)
         {
             UpdateUpgradeCostUI(root.rootLevel);
         }
-        else if (upgradeType == UpgradeType.Tree && resourceManager != null)
+        else if (upgradeType == UpgradeType.Tree && ResourceManager.Instance != null)
         {
             UpdateUpgradeCostUI(LifeManager.Instance.currentLevel);
         }
@@ -129,9 +128,9 @@ public class UpgradeButton : MonoBehaviour
             LifeManager.Instance.DecreaseWater(upgradeCost);
             root.UpgradeLifeGeneration();
             root.UpdateUI();
-            resourceManager.UpdateLifeGenerationRatePerSecond();  // 초당 생명력 생성률 업데이트
-            resourceManager.UpdateUI();
-            resourceManager.GetTotalLifeGenerationPerSecond();        
+            ResourceManager.Instance.UpdateLifeGenerationRatePerSecond();  // 초당 생명력 생성률 업데이트
+            ResourceManager.Instance.UpdateUI();
+            ResourceManager.Instance.GetTotalLifeGenerationPerSecond();        
         }
         else
         {
@@ -168,7 +167,7 @@ public class UpgradeButton : MonoBehaviour
         {
             LifeManager.Instance.DecreaseWater(waterNeededForUpgrade);
             LifeManager.Instance.currentLevel += upgradeAmount;
-            resourceManager.UpdateGroundSize();
+            ResourceManager.Instance.UpdateGroundSize();
         }
         else
         {
@@ -191,7 +190,7 @@ public class UpgradeButton : MonoBehaviour
                                     DataManager.Instance.touchData.touchIncreaseAmount,
                                     DataManager.Instance.touchData.upgradeLifeCost);
         }
-        else if (upgradeType == UpgradeType.Tree && resourceManager != null)
+        else if (upgradeType == UpgradeType.Tree && ResourceManager.Instance != null)
         {
             BigInteger waterNeededForCurrentLevel = LifeManager.Instance.CalculateWaterNeededForUpgrade(1);
             // uiManager.UpdateUpgradeRequirementUI(resourceManager.lifeManager.currentLevel, waterNeededForCurrentLevel);

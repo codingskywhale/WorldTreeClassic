@@ -25,6 +25,7 @@ public class BubbleClickSkill : Skill
     {
         if (!onCooldown && currentLevel > 0) // 해금된 경우에만 스킬 사용 가능
         {
+            StartCoroutine(ApplySkillEffect());
             StartCoroutine(SkillEffect());
         }
     }
