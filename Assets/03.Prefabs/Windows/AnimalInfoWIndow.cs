@@ -113,6 +113,9 @@ public class AnimalInfoWindow : MonoBehaviour
             {
                 if (animalDataSO.animalNameEN == nowAnimaldataSO.animalNameEN)
                 {
+                    if (DataManager.Instance.spawnData.animalObjectList[0] == null)
+                        DataManager.Instance.spawnData.animalObjectList.Remove(DataManager.Instance.spawnData.animalObjectList[0]);
+
                     if (DataManager.Instance.spawnData.animalObjectList[count].GetComponentInChildren<Canvas>() != null)
                     {
                         GameObject go = DataManager.Instance.spawnData.animalObjectList[count].GetComponentInChildren<Canvas>().gameObject;
@@ -127,6 +130,7 @@ public class AnimalInfoWindow : MonoBehaviour
             count = 0;
 
             DataManager.Instance.StoreAnimalCount(nowAnimaldataSO);
+            WindowsManager.Instance.bookWindow.ApplyActiveAnimalUI();
 
             SetActiveStoreCountUI();
         }
@@ -161,6 +165,7 @@ public class AnimalInfoWindow : MonoBehaviour
                 }
             }
 
+            WindowsManager.Instance.bookWindow.ApplyActiveAnimalUI();
             SetActiveStoreCountUI();
         }
     }

@@ -8,6 +8,10 @@ public class PictorialBookWindow : MonoBehaviour
     public TextMeshProUGUI animalCountText;
     public Slider collectionSlider;
 
+    private void Awake()
+    {
+        WindowsManager.Instance.bookWindow = this;
+    }
     private void OnEnable()
     {
         animalCountText.text = $"활동 중 : {DataManager.Instance.animalGenerateData.nowAnimalCount} / {DataManager.Instance.animalGenerateData.maxAnimalCount}";
@@ -49,5 +53,10 @@ public class PictorialBookWindow : MonoBehaviour
     public void ApplyCollectionRate()
     {
         collectionSlider.value = (float)DataManager.Instance.animalGenerateData.allTypeCountDic.Count / (float)GameManager.Instance.animalDataList.Count;
+    }
+
+    public void ApplyActiveAnimalUI()
+    {
+        animalCountText.text = $"활동 중 : {DataManager.Instance.animalGenerateData.nowAnimalCount} / {DataManager.Instance.animalGenerateData.maxAnimalCount}";
     }
 }
