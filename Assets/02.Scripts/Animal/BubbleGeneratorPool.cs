@@ -18,6 +18,7 @@ public class BubbleGeneratorPool : MonoBehaviour
     {
         LifeManager.Instance.bubbleGenratorPool = this;
     }
+
     public void GenerateNewHeart()
     {
         StartCoroutine(GenerateHeart());
@@ -36,15 +37,16 @@ public class BubbleGeneratorPool : MonoBehaviour
 
         // 동물이 없을 때는 실행되지 않음.
         // 동물이 한 마리밖에 없는 경우에는 추가로 생성하면 안됨.
-        if (DataManager.Instance.spawnData.animalObjectList.Count == nowHeartBubbleList.Count) return;
-        
-        
+
+        if (DataManager.Instance.animalSpawnTr.childCount <= nowHeartBubbleList.Count) return;
+
+
         int randomIdx = 0;
 
         randomIdx = Random.Range(0, DataManager.Instance.spawnData.animalObjectList.Count);
 
         // 가져오는게 성공할 시에는 이미 있다는 걸 의미함.
-        while (DataManager.Instance.spawnData.animalObjectList[randomIdx].GetComponentInChildren<HeartButton>() != null)
+        while (DataManager.Instance.spawnData.animalObjectList[randomIdx] != null && DataManager.Instance.spawnData.animalObjectList[randomIdx].GetComponentInChildren<HeartButton>() != null)
         {
             randomIdx = Random.Range(0, DataManager.Instance.spawnData.animalObjectList.Count);
         }
@@ -59,21 +61,18 @@ public class BubbleGeneratorPool : MonoBehaviour
     }
 
     // 버블을 제거할 때 발생할 메서드
-    public void RemoveBubble(int idx)
+    public void RemoveBubble(GameObject go)
     {
-        for(int i = 0; i < nowHeartBubbleList.Count; i++)
+        for (int i = 0; i < nowHeartBubbleList.Count; i++)
         {
-            GameObject go = nowHeartBubbleList[i];
-            if(go.GetComponentInChildren<HeartButton>().heartIdx == idx)
-            {
-                nowHeartBubbleList.Remove(go);
-                StartCoroutine(WaitTimeForBubble(go));
-            }
-        }
-        
-        GenerateNewHeart();
-    }
+            nowHeartBubbleList.Remove(go);
+            StartCoroutine(WaitTimeForBubble(go));
+            WaitTimeForBubble(go);
 
+
+            GenerateNewHeart();
+        }
+    }
     IEnumerator WaitTimeForBubble(GameObject go)
     {
         yield return new WaitForSeconds(2f);
@@ -82,3 +81,5 @@ public class BubbleGeneratorPool : MonoBehaviour
         go.transform.SetParent(ResourceManager.Instance.transform);
     }
 }
+
+

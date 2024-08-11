@@ -1,6 +1,7 @@
 using System.Numerics;
 using System.Resources;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -112,8 +113,11 @@ public class AnimalInfoWindow : MonoBehaviour
             {
                 if (animalDataSO.animalNameEN == nowAnimaldataSO.animalNameEN)
                 {
-                    //LifeManager.Instance.bubbleGenerator.RemoveBubble(count);
-                    ResourceManager.Instance.bubbleGeneratorPool.RemoveBubble(count);
+                    if (DataManager.Instance.spawnData.animalObjectList[count].GetComponentInChildren<Canvas>() != null)
+                    {
+                        GameObject go = DataManager.Instance.spawnData.animalObjectList[count].GetComponentInChildren<Canvas>().gameObject;
+                        ResourceManager.Instance.bubbleGeneratorPool.RemoveBubble(go);
+                    }
                     DataManager.Instance.DestroyAnimal(animalDataSO, count);
 
                     break;
@@ -144,7 +148,7 @@ public class AnimalInfoWindow : MonoBehaviour
 
             if (DataManager.Instance.animalGenerateData.AddAnimal())
             {
-                GameObject go = Instantiate(nowAnimaldataSO.animalPrefab);
+                GameObject go = Instantiate(nowAnimaldataSO.animalPrefab, DataManager.Instance.animalSpawnTr);
                 DataManager.Instance.spawnData.AddAnimalSpawnData(go, nowAnimaldataSO);
 
                 // 하트 버블 리스트에 추가

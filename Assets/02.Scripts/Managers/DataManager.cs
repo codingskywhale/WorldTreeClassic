@@ -34,15 +34,19 @@ public class DataManager : MonoBehaviour
     // 지정 동물을 파괴하는 기능
     public void DestroyAnimal(AnimalDataSO animalDataSO, int count)
     {
+        if (spawnData.animalObjectList[0] == null)
+            spawnData.animalObjectList.Remove(spawnData.animalObjectList[0]);
+
         Canvas heartCanvas = spawnData.animalObjectList[count].transform.GetComponentInChildren<Canvas>();
         if (heartCanvas != null)
         {
             heartCanvas.transform.SetParent(ResourceManager.Instance.transform);
             heartCanvas.gameObject.SetActive(false);
         }
-        Destroy(spawnData.animalObjectList[count]);
-        spawnData.animalObjectList.Remove(spawnData.animalObjectList[count]);
+        GameObject go = spawnData.animalObjectList[count];
+        spawnData.animalObjectList.Remove(go);
         spawnData.animalDataSOList.Remove(animalDataSO);
+        Destroy(go);
     }
 
     public void DestroyAllAnimal()

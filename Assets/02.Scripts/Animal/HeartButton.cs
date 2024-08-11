@@ -55,7 +55,7 @@ public class HeartButton : MonoBehaviour
         LifeManager.Instance.IncreaseWater(DataManager.Instance.touchData.touchIncreaseAmount);
 
         gainText.ShowGainIndicator(heartButton.transform.position);
-        ResourceManager.Instance.bubbleGeneratorPool.RemoveBubble(heartIdx);
+        ResourceManager.Instance.bubbleGeneratorPool.RemoveBubble(this.transform.parent.gameObject);
 
         SetBubbleOff();
     }

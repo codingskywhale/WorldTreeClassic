@@ -203,6 +203,7 @@ public class SaveDataManager
             foreach (var animalState in gameData.animalData.animalStates)
             {
                 GameObject animalObject = InstantiateAnimal(animalState.animalIndex);
+                animalState.dataSO = GetAnimalDataByIndex(animalState.animalIndex);
                 DataManager.Instance.spawnData.animalDataSOList.Add(animalState.dataSO);
                 DataManager.Instance.spawnData.animalObjectList.Add(animalObject);
                 if (animalObject != null)
