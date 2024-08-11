@@ -75,7 +75,7 @@ public class LoginManager : MonoBehaviour
     private void OnGuestLoginButtonClicked()
     {
         loadingText.text = "Guest로 로그인 중...";
-        PlayFabManager.Instance.LoginWithGuest();
+        PlayFabManager.Instance.LoginWithGuest();        
     }
 
     private void OnLoginSuccess(LoginResult result)

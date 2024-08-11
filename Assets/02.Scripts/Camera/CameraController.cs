@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using TMPro;
-using static UnityEngine.GraphicsBuffer;
+using System.Diagnostics;
 
 public class CameraController : MonoBehaviour
 {
@@ -13,37 +13,26 @@ public class CameraController : MonoBehaviour
     public float rotationSpeed = 10f; // 회전 속도
     public GameObject messagePrefab; // 메시지를 표시할 프리팹
     public Transform messageParent; // 메시지를 표시할 부모 객체
-
-    private CameraTransition cameraTransition;
+           
     private CameraTargetHandler cameraTargetHandler;
+    private CameraTransition cameraTransition;
     private GameObject currentMessage;
-    private WorldTree worldTree;
 
     public bool isFreeCamera = false;
     private bool isDragging = false;
 
     private void Start()
-    {
-        cameraTransition = GetComponent<CameraTransition>();
+    {        
         cameraTargetHandler = GetComponent<CameraTargetHandler>();
-        worldTree = FindObjectOfType<WorldTree>();
+        cameraTransition = GetComponent<CameraTransition>();
 
-        // 초기 위치와 회전 설정
-        Camera.main.transform.position = cameraTransition.initialPosition;
-        cameraTransition.initialRotation = Quaternion.Euler(-90, -116, 0);
-        cameraTransition.finalRotation = Quaternion.Euler(20, -116, 0);
-        cameraTransition.zoomInRotation = Quaternion.Euler(25, -116, 0);        
-        Camera.main.transform.rotation = cameraTransition.initialRotation;       
-
-        // 애니메이션 시작
-        //StartCoroutine(cameraTransition.OpeningCamera());
-
+        // 메시지 표시 등 초기화
         messageParent.gameObject.SetActive(false);
     }
 
     private void Update()
     {
-        if (cameraTransition.animationCompleted)
+        if (CameraSettings.Instance.animationCompleted)
         {
             if (isFreeCamera)
             {
@@ -54,23 +43,22 @@ public class CameraController : MonoBehaviour
                 cameraTargetHandler.FollowObject();
             }
 
-            if (Input.GetMouseButtonDown(0))
+            if (Input.GetMouseButtonDown(0) || (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Began))
             {
                 HandleClick();
             }
         }
     }
 
-
     private void HandleFreeCamera()
     {
-        if (cameraTransition.isZooming) return;
+        if (CameraSettings.Instance.isZooming) return;
 
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButtonDown(0) || (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Began))
         {
             isDragging = true; // 드래그 시작
         }
-        else if (Input.GetMouseButtonUp(0))
+        else if (Input.GetMouseButtonUp(0) || (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Ended))
         {
             isDragging = false; // 드래그 종료
         }
@@ -92,35 +80,26 @@ public class CameraController : MonoBehaviour
 
         if (cameraTargetHandler.currentTarget != null)
         {
-            // 기존 위치와 회전을 백업
-            Vector3 originalPosition = Camera.main.transform.position;
-            Quaternion originalRotation = Camera.main.transform.rotation;
-
             // 카메라의 위치 이동
             Camera.main.transform.RotateAround(cameraTargetHandler.currentTarget.position, Vector3.up, horizontal);
             Camera.main.transform.RotateAround(cameraTargetHandler.currentTarget.position, Camera.main.transform.right, -vertical);
 
-            // 카메라의 각도 제한 적용
+            // 카메라의 각도 및 높이 제한이 필요한 경우 적용
             Vector3 angles = Camera.main.transform.eulerAngles;
-            angles.x = Mathf.Clamp(angles.x, cameraTargetHandler.minVerticalAngle, cameraTargetHandler.maxVerticalAngle);
-
-            // 카메라의 높이 제한 적용
+            angles.x = Mathf.Clamp(angles.x, CameraSettings.Instance.minVerticalAngle, CameraSettings.Instance.maxVerticalAngle);
             Vector3 position = Camera.main.transform.position;
-            position.y = Mathf.Clamp(position.y, cameraTargetHandler.minHeight, cameraTargetHandler.maxHeight);
+            position.y = Mathf.Clamp(position.y, CameraSettings.Instance.minHeight, CameraSettings.Instance.maxHeight);
 
             // 제한된 각도 및 높이로 카메라 설정
             Camera.main.transform.eulerAngles = angles;
             Camera.main.transform.position = position;
 
-            // 각도나 높이가 제한을 벗어나면 회전을 취소하고 원래 상태로 되돌리기
-            if (position.y != Camera.main.transform.position.y || angles.x != Camera.main.transform.eulerAngles.x)
-            {
-                Camera.main.transform.position = originalPosition;
-                Camera.main.transform.rotation = originalRotation;
-            }
-
             // 카메라가 타겟을 계속 바라보도록 설정
             Camera.main.transform.LookAt(cameraTargetHandler.currentTarget);
+
+            // 카메라의 위치와 회전을 자유시점 모드에서 업데이트
+            CameraSettings.Instance.currentCameraPosition = Camera.main.transform.position;
+            CameraSettings.Instance.currentCameraRotation = Camera.main.transform.rotation;
         }
     }
 
@@ -138,9 +117,11 @@ public class CameraController : MonoBehaviour
 
     public void ToggleCameraMode()
     {
-        if (cameraTransition.isZooming || !cameraTransition.animationCompleted) return;
+        if (CameraSettings.Instance.isZooming || !CameraSettings.Instance.animationCompleted) return;
 
         StopAllCoroutines();
+        Vector3 currentPosition = Camera.main.transform.position;
+
         if (isFreeCamera)
         {
             // 자유 시점 모드에서 고정 시점 모드로 전환
@@ -148,9 +129,9 @@ public class CameraController : MonoBehaviour
             cameraTargetHandler.isObjectTarget = false;
 
             // WorldTree의 위치 오프셋을 적용하여 새로운 위치 계산
-            Vector3 newPosition = cameraTransition.initialPosition + worldTree.GetPositionOffset();
-            
-            StartCoroutine(cameraTransition.ZoomCamera(newPosition, cameraTransition.finalRotation));
+            Vector3 newPosition = CameraSettings.Instance.GetInitialPosition(DataManager.Instance.touchData.touchIncreaseLevel);
+
+            StartCoroutine(cameraTransition.ZoomCamera(newPosition, CameraSettings.Instance.GetFinalRotation(), CameraSettings.Instance.zoomDuration));
             ShowMessage("카메라가 나무에 고정됩니다.");
         }
         else
@@ -159,11 +140,8 @@ public class CameraController : MonoBehaviour
             cameraTargetHandler.SetTarget(target);
             cameraTargetHandler.isObjectTarget = false;
 
-            // WorldTree의 위치 오프셋을 적용하여 새로운 위치 계산
-            Vector3 newPosition = cameraTransition.zoomInPosition + worldTree.GetPositionOffset();
-            
-
-            StartCoroutine(cameraTransition.ZoomCamera(newPosition, cameraTransition.zoomInRotation));
+            // 자유 시점 모드로 전환 시 현재 위치를 유지하고, 오프셋을 추가적으로 적용하지 않음
+            StartCoroutine(cameraTransition.ZoomCamera(currentPosition, CameraSettings.Instance.GetFinalRotation(), CameraSettings.Instance.zoomDuration));
             ShowMessage("카메라 자유 조작이 활성화됩니다.");
         }
 
@@ -171,10 +149,11 @@ public class CameraController : MonoBehaviour
         isFreeCamera = !isFreeCamera;
 
         cameraTargetHandler.SetFreeCameraMode(isFreeCamera); // 자유시점 모드 설정
-                
+
         // 1초 후 버튼 다시 활성화
         StartCoroutine(EnableButtonAfterDelay(1.0f));
     }
+
 
     private IEnumerator EnableButtonAfterDelay(float delay)
     {

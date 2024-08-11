@@ -66,6 +66,15 @@ public class GameManager : Singleton<GameManager>
         UIManager.Instance.LoadAnimalBuyStatus();
         uiUpdater.UpdateAllUI();
         DataManager.Instance.animalGenerateData.SetSlotData();
+
+        worldTree.UpdateTreeMeshes(DataManager.Instance.touchData.touchIncreaseLevel);
+
+        for (int i = 10; i <= DataManager.Instance.touchData.touchIncreaseLevel; i += 10)
+        {
+            worldTree.IncrementCameraFOV();
+            worldTree.MoveCameraBackwards();
+        }
+
         InvokeRepeating(nameof(AutoSaveGame), 180f, 180f);
     }
 
@@ -108,8 +117,7 @@ public class GameManager : Singleton<GameManager>
             }
         }       
     }
-
-    private void OnApplicationQuit()
+    private void SaveGameIfLoggedIn()
     {
         if (PlayFabClientAPI.IsClientLoggedIn())
         {
@@ -122,4 +130,26 @@ public class GameManager : Singleton<GameManager>
             Debug.LogWarning("Not logged in. Skipping save game data.");
         }
     }
+
+    private void OnApplicationQuit()
+    {
+        SaveGameIfLoggedIn();
+    }
+
+    private void OnApplicationPause(bool pauseStatus)
+    {
+        if (pauseStatus)
+        {
+            SaveGameIfLoggedIn();
+        }
+    }
+
+    private void OnApplicationFocus(bool hasFocus)
+    {
+        if (!hasFocus)
+        {
+            SaveGameIfLoggedIn();
+        }
+    }
+
 }

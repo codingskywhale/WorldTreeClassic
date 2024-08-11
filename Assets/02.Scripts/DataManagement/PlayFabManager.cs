@@ -24,6 +24,9 @@ public class PlayFabManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
+
+        //PlayerPrefs.DeleteAll();
+        //PlayerPrefs.Save();
     }
        
     public void LoginWithGuest()
