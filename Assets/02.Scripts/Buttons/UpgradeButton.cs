@@ -1,4 +1,5 @@
 using System.Numerics;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -6,6 +7,12 @@ public class UpgradeButton : MonoBehaviour
 {
     public RootBase root;
     public bool isTutorial = false;
+
+    [Header("MultiUpgrade")]
+    public Button x10Button;
+    public Button x100Button;
+    public TextMeshProUGUI x10Text;
+    public TextMeshProUGUI x100Text;
     //public TouchInputManager touchInputManager;
 
     public enum UpgradeType
@@ -23,7 +30,7 @@ public class UpgradeButton : MonoBehaviour
     private void Start()
     {
         upgradeButton = GetComponent<Button>();
-        if(!isTutorial)
+        if (!isTutorial)
             upgradeButton.onClick.AddListener(OnUpgradeButtonClicked);
         ResourceManager.Instance.UpdateUI();
 
@@ -50,8 +57,8 @@ public class UpgradeButton : MonoBehaviour
         {
             case UpgradeType.Root:
                 canUpgrade = root != null && (!root.isUnlocked &&
-                                              DataManager.Instance.touchData.touchIncreaseLevel >= root.unlockThreshold && 
-                                              LifeManager.Instance.HasSufficientWater(root.CalculateUpgradeCost())) || 
+                                              DataManager.Instance.touchData.touchIncreaseLevel >= root.unlockThreshold &&
+                                              LifeManager.Instance.HasSufficientWater(root.CalculateUpgradeCost())) ||
                                               (root.isUnlocked && LifeManager.Instance.HasSufficientWater(root.CalculateUpgradeCost()));
                 break;
             case UpgradeType.Touch:
@@ -91,7 +98,7 @@ public class UpgradeButton : MonoBehaviour
         //}
         //else
         //{
-            HandleRootUpgrade();
+        HandleRootUpgrade();
         //}
     }
 
@@ -130,7 +137,7 @@ public class UpgradeButton : MonoBehaviour
             root.UpdateUI();
             ResourceManager.Instance.UpdateLifeGenerationRatePerSecond();  // 초당 생명력 생성률 업데이트
             ResourceManager.Instance.UpdateUI();
-            ResourceManager.Instance.GetTotalLifeGenerationPerSecond();        
+            ResourceManager.Instance.GetTotalLifeGenerationPerSecond();
         }
         else
         {
@@ -151,7 +158,7 @@ public class UpgradeButton : MonoBehaviour
         {
             LifeManager.Instance.DecreaseWater(upgradeLifeCost);
             DataManager.Instance.touchData.UpgradeTouchGeneration();
-            UIManager.Instance.touchData.UpdateTouchUI(touchData.touchIncreaseLevel, touchData.touchIncreaseAmount, 
+            UIManager.Instance.touchData.UpdateTouchUI(touchData.touchIncreaseLevel, touchData.touchIncreaseAmount,
                                                         touchData.upgradeLifeCost);
         }
         else
@@ -195,5 +202,96 @@ public class UpgradeButton : MonoBehaviour
             BigInteger waterNeededForCurrentLevel = LifeManager.Instance.CalculateWaterNeededForUpgrade(1);
             // uiManager.UpdateUpgradeRequirementUI(resourceManager.lifeManager.currentLevel, waterNeededForCurrentLevel);
         }
+    }
+
+    public void SetMultiUpgradeButton()
+    {
+        BigInteger UpgradeCost = DataManager.Instance.touchData.upgradeLifeCost;
+        int canUpgradeCount = 1;
+
+        for (int i = 0; i < 2; i++)
+        {
+            if (LifeManager.Instance.lifeAmount > UpgradeCost)
+            {
+                if ((DataManager.Instance.touchData.touchIncreaseLevel + canUpgradeCount) % 25 == 0)
+                {
+                    UpgradeCost *= 2;
+                }
+                else
+                {
+                    UpgradeCost = UpgradeCost * 120 / 100;
+                }
+            }
+            else
+            {
+                x10Button.gameObject.SetActive(false);
+                return;
+            }
+        }
+        UpgradeCost = DataManager.Instance.touchData.upgradeLifeCost;
+        x10Button.gameObject.SetActive(true);
+
+        for (int i = 0; i < 10; i++)
+        {
+            if (LifeManager.Instance.lifeAmount > UpgradeCost)
+            {
+                if ((DataManager.Instance.touchData.touchIncreaseLevel + canUpgradeCount) % 25 == 0)
+                {
+                    UpgradeCost *= 2;
+                }
+                else
+                {
+                    UpgradeCost = UpgradeCost * 120 / 100;
+                }
+            }
+            else
+            {
+                x100Button.gameObject.SetActive(false);
+                return;
+            }
+        }
+        x100Button.gameObject.SetActive(true);
+    }
+
+    // 버튼 인덱스에 따라 다른 업그레이드 수행 (x10 / x100)
+    public void SetMultiTreeUpgradeText(int CalculateCount)
+    {
+        BigInteger UpgradeCost = DataManager.Instance.touchData.upgradeLifeCost;
+
+        int canUpgradeCount = 1;
+
+        for (int i = 0; i < CalculateCount; i++)
+        {
+            if (LifeManager.Instance.lifeAmount > UpgradeCost)
+            {
+                if ((DataManager.Instance.touchData.touchIncreaseLevel + canUpgradeCount) % 25 == 0)
+                {
+                    UpgradeCost *= 2;
+                }
+                else
+                {
+                    UpgradeCost = UpgradeCost * 120 / 100;
+                }
+                // 업그레이드 비용 공식 적용
+                canUpgradeCount++;
+            }
+            else
+            {
+                if (canUpgradeCount > 10)
+                {
+                    x100Text.text = canUpgradeCount.ToString();
+                    x10Text.text = 10.ToString();
+                }
+                return;
+            }
+        }
+        canUpgradeCount--;
+        if (canUpgradeCount > 10)
+        {
+            x100Text.text = canUpgradeCount.ToString();
+            x10Text.text = 10.ToString();
+        }
+        else
+            x10Text.text = canUpgradeCount.ToString();
     }
 }
