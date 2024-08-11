@@ -50,6 +50,10 @@ public class CameraSettings : MonoBehaviour
         currentCameraFOV = Camera.main.fieldOfView;
     }
 
+    private void Start()
+    {
+        
+    }
     //private void AdjustOffsetBasedOnTreeLevel(int treeLevel)
     //{
     //    int levelFactor = treeLevel / 10;
