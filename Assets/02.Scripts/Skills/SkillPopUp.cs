@@ -1,6 +1,7 @@
 using System.Numerics;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class SkillPopUp : MonoBehaviour
 {
@@ -12,6 +13,7 @@ public class SkillPopUp : MonoBehaviour
     public TextMeshProUGUI LevelUpAbilityText;
     public TextMeshProUGUI UnlockExplainText;
     public TextMeshProUGUI ClickSkillCostText;
+    public Image SkillImage; // 스킬 이미지를 표시할 UI 이미지
 
     public BigInteger cost;
     private Skill correspondingSkill;
@@ -29,6 +31,7 @@ public class SkillPopUp : MonoBehaviour
             string nextAbility = correspondingArtifact.GetNextAbilityDescription();
 
             SetArtifactTexts(nextAbility);
+            SkillImage.sprite = correspondingArtifact.artifactImage; // 스킬 이미지 설정
         }
         else
         {
@@ -38,6 +41,7 @@ public class SkillPopUp : MonoBehaviour
             string nextAbility = correspondingSkill.GetNextAbilityDescription();
 
             SetSkillTexts(nextAbility);
+            SkillImage.sprite = correspondingSkill.skillImage; // 아티팩트 이미지 설정
         }
     }
 

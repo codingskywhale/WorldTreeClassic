@@ -54,6 +54,6 @@ public class TouchData : MonoBehaviour
     {
         touchLevelText.text = $"외로운 나무 레벨:{BigIntegerUtils.FormatBigInteger(touchIncreaseLevel)}";
         touchIncreaseText.text = $"현재 터치당 얻는 생명력 : {BigIntegerUtils.FormatBigInteger(touchIncreaseAmount)}";
-        upgradelifeCostText.text = $"강화 비용: {BigIntegerUtils.FormatBigInteger(upgradelifeCost)} 생명력";
+        upgradelifeCostText.text = $"{BigIntegerUtils.FormatBigInteger(upgradelifeCost)}";
     }
 }

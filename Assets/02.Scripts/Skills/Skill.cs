@@ -11,6 +11,7 @@ public abstract class Skill : MonoBehaviour
     public float skillDuration; // 스킬 지속시간
     public float cooldownTime = 15.0f; // 기본 쿨타임
     public Button skillButton; // 스킬 버튼
+    public Sprite skillImage; // 스킬 이미지를 저장할 필드
 
     [Header("ButtonLock")]
     public Image useSkillbuttonLockImage; // 해금/업그레이드 버튼
@@ -20,7 +21,7 @@ public abstract class Skill : MonoBehaviour
     public float cooldownRemaining;
     public TextMeshProUGUI cooldownText; // 쿨타임을 표시할 텍스트
     public Image cooldownImage; // 회전할 이미지
-   
+
     public int currentLevel = 0; // 현재 스킬 레벨 (0 = 잠금 상태)
     public TextMeshProUGUI currentLevelText; // 현재 스킬 레벨 텍스트
     public TextMeshProUGUI skillInfoText; // 현재 스킬 설명 텍스트
@@ -35,10 +36,23 @@ public abstract class Skill : MonoBehaviour
     public TextMeshProUGUI lockText; // 해금 텍스트
     private bool isUnlocked = false; // 해금 상태를 나타내는 변수 추가
     public int unlockThreshold; // 해금에 필요한 세계수 레벨
+
+    [Header("Skill Info Display")]
+    public GameObject skillInfoObject; // 스킬 정보를 표시할 오브젝트
+    public TextMeshProUGUI skillInfoTextField; // 스킬 정보를 표시할 텍스트 필드
+    public Button skillInfoButton; // 스킬 정보를 표시할 오브젝트의 버튼
+    public Image skillDurationImage; // 스킬 지속 시간을 나타내는 이미지
+
     [Header("PopUp Info")]
     // 팝업 관련 변수
     public GameObject skillPopup; // 팝업 오브젝트
 
+    [Header("Skill Text Info")]
+    public GameObject skillTextObject; // 스킬 텍스트를 표시할 오브젝트
+    public float fadeOutDuration = 2.0f; // 서서히 사라지는 시간
+
+    private float skillTimeRemaining;
+    private Coroutine disableCoroutine;
     protected virtual void Start()
     {
         // 각 스킬의 지속시간과 쿨타임은 서브 클래스에서 설정됩니다.
@@ -51,6 +65,33 @@ public abstract class Skill : MonoBehaviour
         {
             skillPopup.SetActive(false);
         }
+
+        // 스킬 정보 오브젝트 초기 상태 비활성화
+        if (skillInfoObject != null)
+        {
+            skillInfoObject.SetActive(false);
+        }
+
+        // 스킬 텍스트 오브젝트 초기 상태 비활성화
+        if (skillTextObject != null)
+        {
+            skillTextObject.SetActive(false);
+        }
+
+        // 스킬 버튼 이벤트 리스너 추가
+        if (skillButton != null)
+        {
+            skillButton.onClick.AddListener(OnSkillButtonClick);
+        }
+
+        // 스킬 정보 오브젝트의 버튼 이벤트 리스너 추가
+        if (skillInfoButton != null)
+        {
+            skillInfoButton.onClick.AddListener(OnSkillInfoButtonClick);
+        }
+
+        // 초기 스킬 시간 설정
+        skillTimeRemaining = skillDuration;
     }
 
     private void Update()
@@ -63,8 +104,20 @@ public abstract class Skill : MonoBehaviour
             UpdateCooldownUI(cooldownRemaining);
         }
 
+        if (skillInfoObject != null && skillInfoObject.activeSelf)
+        {
+            UpdateSkillInfoUI();
+        }
+
+        // 터치 이벤트를 체크하여 skillTextObject 비활성화
+        if (Input.GetMouseButtonDown(0) && skillTextObject.activeSelf)
+        {
+            skillTextObject.SetActive(false);
+        }
+
         CheckUnlockCondition();
     }
+
 
     public void UnlockOrUpgradeSkill()
     {
@@ -102,17 +155,39 @@ public abstract class Skill : MonoBehaviour
     {
         onCooldown = true;
         cooldownRemaining = cooldownTime;
+        skillTimeRemaining = skillDuration;
 
-        yield return StartCoroutine(ApplySkillEffect());
+        // 스킬 정보 오브젝트 활성화
+        if (skillInfoObject != null)
+        {
+            skillInfoObject.SetActive(true);
+        }
 
+        // 스킬 지속 시간 동안 대기
+        float elapsedSkillTime = 0f;
+        while (elapsedSkillTime < skillDuration)
+        {
+            elapsedSkillTime += Time.deltaTime;
+            yield return null;
+        }
+
+        // 스킬 지속 시간이 끝났을 때 스킬 정보 오브젝트 비활성화
+        if (skillInfoObject != null)
+        {
+            skillInfoObject.SetActive(false);
+        }
+
+        // 쿨다운 시간 동안 대기
         while (cooldownRemaining > 0)
         {
+            cooldownRemaining -= Time.deltaTime;
             yield return null;
         }
 
         onCooldown = false;
         UpdateCooldownUI(0);
     }
+
 
     public void UpdateCooldownUI(float remaining)
     {
@@ -186,8 +261,8 @@ public abstract class Skill : MonoBehaviour
             {
                 BigInteger nextCost = currentLevel > 0 ? CalculateUpgradeCost(currentLevel) : unlockCost;
                 upgradeCostText.text = currentLevel > 0
-                    ? $"업그레이드 비용: {BigIntegerUtils.FormatBigInteger(nextCost)} 다이아"
-                    : $"해금 비용: {BigIntegerUtils.FormatBigInteger(nextCost)} 다이아";
+                    ? $" {BigIntegerUtils.FormatBigInteger(nextCost)}"
+                    : $"{BigIntegerUtils.FormatBigInteger(nextCost)}";
             }
         }
     }
@@ -320,5 +395,62 @@ public abstract class Skill : MonoBehaviour
     public void SetLockImangeOff()
     {
         Destroy(useSkillbuttonLockImage.gameObject);
+    }
+
+    // 스킬 버튼 클릭 시 호출되는 함수
+    private void OnSkillButtonClick()
+    {
+        if (skillInfoObject != null)
+        {
+            skillInfoObject.SetActive(true);
+            skillTimeRemaining = skillDuration; // 스킬 정보 오브젝트가 활성화될 때 남은 시간 초기화
+        }
+    }
+
+    // 스킬 정보 오브젝트의 버튼 클릭 시 호출되는 함수
+    public void OnSkillInfoButtonClick()
+    {
+        if (skillTextObject != null)
+        {
+            skillTextObject.SetActive(true);
+
+            // 이미 코루틴이 실행 중이라면 중지하고 새로 시작
+            if (disableCoroutine != null)
+            {
+                StopCoroutine(disableCoroutine);
+            }
+
+            disableCoroutine = StartCoroutine(DisableAfterDelay(skillTextObject, 2.0f)); // 2초 후에 비활성화
+        }
+    }
+
+    private void UpdateSkillInfoUI()
+    {
+        if (skillInfoTextField != null)
+        {
+            int minutes = Mathf.FloorToInt(skillTimeRemaining / 60);
+            int seconds = Mathf.CeilToInt(skillTimeRemaining % 60);
+            skillInfoTextField.text = $"스킬 이름: {skillName}\n남은 시간: {minutes:D2}:{seconds:D2}초";
+
+            skillTimeRemaining -= Time.deltaTime;
+            if (skillTimeRemaining < 0) skillTimeRemaining = 0;
+        }
+
+        if (skillDurationImage != null)
+        {
+            skillDurationImage.fillAmount = skillTimeRemaining / skillDuration;
+        }
+    }
+
+    private IEnumerator DisableAfterDelay(GameObject target, float delay)
+    {
+        yield return new WaitForSeconds(delay);
+
+        // 코루틴이 끝나기 전에 타겟이 비활성화 상태가 되었는지 확인
+        if (target.activeSelf)
+        {
+            target.SetActive(false);
+        }
+        disableCoroutine = null; // 코루틴이 끝난 후 null로 설정
     }
 }

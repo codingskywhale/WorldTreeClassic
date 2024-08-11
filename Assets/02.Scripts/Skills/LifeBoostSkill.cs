@@ -12,7 +12,7 @@ public class LifeBoostSkill : Skill
     {
         skillName = "즉시 획득";
         cooldownTime = 3600f; // 스킬 쿨타임 30분
-        currentLevel = 0; // 초기 레벨
+        //currentLevel = 0; // 초기 레벨
 
         // TouchData 컴포넌트를 찾아서 참조합니다.
         touchData = FindObjectOfType<TouchData>();

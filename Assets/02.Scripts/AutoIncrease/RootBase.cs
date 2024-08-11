@@ -114,6 +114,7 @@ public class RootBase : MonoBehaviour, IRoot
     {
         if (!isUnlocked) return; // 잠금 해제된 경우에만 업그레이드 가능
         rootLevel++;
+        //ActivateNextPlantObject();
         if (rootLevel == 1 || rootLevel % 25 == 0)
         {
             UIManager.Instance.CheckConditionCleared();
@@ -297,7 +298,7 @@ public class RootBase : MonoBehaviour, IRoot
 
         if (rootUpgradeCostText != null)
         {
-            rootUpgradeCostText.text = $"강화 비용: {BigIntegerUtils.FormatBigInteger(upgradeCost)} 물";
+            rootUpgradeCostText.text = $"{BigIntegerUtils.FormatBigInteger(upgradeCost)}";
         }
     }
 
@@ -305,20 +306,26 @@ public class RootBase : MonoBehaviour, IRoot
     {
         if (generationRateText != null)
         {
-            generationRateText.text = $"생산률: {BigIntegerUtils.FormatBigInteger(generationRate)} 물/초";
-
             if (isUnlocked && rootLevel == 0)
             {
+                generationRateText.fontSize = 32; // 특정 조건에서의 폰트 사이즈
                 BigInteger levelOneGenerationRate = baseLifeGeneration * BigInteger.Pow(103, 0) / BigInteger.Pow(100, 0);
-                generationRateText.text = $"생산률: {BigIntegerUtils.FormatBigInteger(generationRate)} 물/초 \n1레벨 업그레이드시 자동생산: {BigIntegerUtils.FormatBigInteger(levelOneGenerationRate)} 물/초";
+                generationRateText.text = $"1레벨 업그레이드시 자동생산: {BigIntegerUtils.FormatBigInteger(levelOneGenerationRate)} 생명력/초";
             }
-            if (!isUnlocked && rootLevel == 0)
+            else if (!isUnlocked && rootLevel == 0)
             {
+                generationRateText.fontSize = 32; // 다른 조건에서의 폰트 사이즈
                 BigInteger levelOneGenerationRate = baseLifeGeneration * BigInteger.Pow(103, 0) / BigInteger.Pow(100, 0);
-                generationRateText.text = $"생산률: {BigIntegerUtils.FormatBigInteger(generationRate)} 물/초 \n1레벨 업그레이드시 자동생산: {BigIntegerUtils.FormatBigInteger(levelOneGenerationRate)} 물/초";
+                generationRateText.text = $"1레벨 업그레이드시 자동생산: {BigIntegerUtils.FormatBigInteger(levelOneGenerationRate)} 생명력/초";
+            }
+            else
+            {
+                generationRateText.fontSize = 36; // 기본 폰트 사이즈
+                generationRateText.text = $"생산률: {BigIntegerUtils.FormatBigInteger(generationRate)} 생명력/초";
             }
         }
     }
+
 
     public virtual void UpdateUnlockUI()
     {

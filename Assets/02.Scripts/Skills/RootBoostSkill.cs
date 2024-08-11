@@ -7,13 +7,13 @@ public class RootBoostSkill : Skill
     public BigInteger baseBoostMultiplier = 100; // 초기 부스트 배수
     public BigInteger boostMultiplier; // 현재 부스트 배수
     public float boostDuration = 300f; // 부스트 지속 시간 (5분)
-    private IRoot[] roots;
+    public RootBase[] roots;
 
     protected override void Start()
     {
         skillName = "획득량 증가";
         cooldownTime = 7200f; // 스킬 쿨타임 120분 (2시간)
-        currentLevel = 0;
+        //currentLevel = 0;
 
         // IRoot 컴포넌트를 찾아서 참조합니다.
         roots = FindObjectsOfType<RootBase>();
@@ -24,7 +24,7 @@ public class RootBoostSkill : Skill
         // 초기 UI 설정
         UpdateCooldownUI(0);
         UpdateUI();
-        CheckUnlockStatus(); // 해금 상태를 초기화
+
     }
 
     //public override string GetCurrentAbilityDescription()
