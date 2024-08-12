@@ -68,6 +68,7 @@ SpriteAtlas:
     - {fileID: 2800000, guid: 23ad5faf252de0142a09200da34ec18c, type: 3}
     - {fileID: 2800000, guid: 635aebd09d6fe1142b598eaf73425b23, type: 3}
     - {fileID: 2800000, guid: e3baac466a7061a41aa13ad8f3e2af50, type: 3}
+    - {fileID: 2800000, guid: ac83f407c08dc344a9143cef44f46999, type: 3}
     bindAsDefault: 1
     isAtlasV2: 0
     cachedData: {fileID: 0}
@@ -83,6 +84,7 @@ SpriteAtlas:
     - 0a23dfa54560d79478c26effb91520fd: 21300000
     - e3baac466a7061a41aa13ad8f3e2af50: 21300000
     - ea9563e6bc3c05c4c962a695a3da8cfe: 21300000
+    - ac83f407c08dc344a9143cef44f46999: 21300000
     - cabf4129351a97a43bb9209e2347230c: 21300000
     - aea30c79e4a2e7c40b290c76ade4456a: 21300000
     - 2a941afa0b6b78c4ab83921ab447685b: 21300000
@@ -108,6 +110,7 @@ SpriteAtlas:
   - {fileID: 21300000, guid: 0a23dfa54560d79478c26effb91520fd, type: 3}
   - {fileID: 21300000, guid: e3baac466a7061a41aa13ad8f3e2af50, type: 3}
   - {fileID: 21300000, guid: ea9563e6bc3c05c4c962a695a3da8cfe, type: 3}
+  - {fileID: 21300000, guid: ac83f407c08dc344a9143cef44f46999, type: 3}
   - {fileID: 21300000, guid: cabf4129351a97a43bb9209e2347230c, type: 3}
   - {fileID: 21300000, guid: aea30c79e4a2e7c40b290c76ade4456a, type: 3}
   - {fileID: 21300000, guid: 2a941afa0b6b78c4ab83921ab447685b, type: 3}
@@ -132,6 +135,7 @@ SpriteAtlas:
   - BagIcon
   - TreeAppIcon
   - SquareUI
+  - BackGround
   - free-icon-music-notes-476799
   - free-icon-note-4780299
   - 29button_blue
