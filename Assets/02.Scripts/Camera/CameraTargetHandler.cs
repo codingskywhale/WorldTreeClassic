@@ -1,6 +1,5 @@
 using System.Collections;
 using UnityEngine;
-using static UnityEditor.SceneView;
 
 public class CameraTargetHandler : MonoBehaviour
 {

@@ -145,6 +145,7 @@ public class GameManager : Singleton<GameManager>
 
     private void OnApplicationPause(bool pauseStatus)
     {
+        SaveGameIfLoggedIn();
         if (pauseStatus)
         {
             if (!isPaused)
@@ -165,6 +166,7 @@ public class GameManager : Singleton<GameManager>
 
     private void OnApplicationFocus(bool hasFocus)
     {
+        SaveGameIfLoggedIn();
         if (!hasFocus)
         {
             if (!isPaused)
