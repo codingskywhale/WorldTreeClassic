@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Numerics;
+using TMPro.EditorUtilities;
 using UnityEngine;
 
 public class SaveDataManager
@@ -310,6 +311,8 @@ public class SaveDataManager
         }
 
         UIManager.Instance.createObjectButtonUnlockCount = gameData.createObjectButtonUnlockCount > 0 ? gameData.createObjectButtonUnlockCount : 1;
+        DataManager.Instance.touchData.UpdateUI();
+        ResourceManager.Instance.UpdateUI();
     }
 
     private void InitializeRoots(List<RootDataSave> rootDataList)
@@ -386,6 +389,8 @@ public class SaveDataManager
         if (animalData != null)
         {
             GameObject animalObject = GameObject.Instantiate(animalData.animalPrefab, DataManager.Instance.spawnData.spawnTr); // 부모 설정 추가
+            LifeManager.Instance.ApplyIncreaseRateToAllRoots(1);
+
             if (animalObject != null)
             {
                 animalObject.name = animalData.animalPrefab.name; // 프리팹 이름으로 설정

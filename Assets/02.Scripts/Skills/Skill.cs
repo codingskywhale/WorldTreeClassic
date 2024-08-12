@@ -36,6 +36,7 @@ public abstract class Skill : MonoBehaviour
     public TextMeshProUGUI lockText; // 해금 텍스트
     private bool isUnlocked = false; // 해금 상태를 나타내는 변수 추가
     public int unlockThreshold; // 해금에 필요한 세계수 레벨
+    public ADSkillManager adSkillManager;
 
     [Header("Skill Info Display")]
     public GameObject skillInfoObject; // 스킬 정보를 표시할 오브젝트
@@ -244,6 +245,7 @@ public abstract class Skill : MonoBehaviour
 
     public virtual void UpdateUI()
     {
+        adSkillManager.UnlockCondition();
         UpdateUpgradeCostUI();
         NowskillInfoUI();
         LevelUI();

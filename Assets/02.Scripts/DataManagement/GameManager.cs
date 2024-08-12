@@ -30,8 +30,8 @@ public class GameManager : Singleton<GameManager>
     private int maxOfflineDurationMinutes = 120; // 최대 오프라인 기간 설정 (기본값 120분)
     private int saveBufferCounter = 0; // 저장 버퍼 카운터
     private const int SaveBufferThreshold = 10; // 생명력 업그레이드 저장 버퍼 임계값
-    private Coroutine logoutCoroutine;
-    private DateTime pauseTime;
+    private Coroutine exitCoroutine;
+    private bool isPaused = false;
 
     public Tutorial TutorialObject;
 
@@ -147,16 +147,60 @@ public class GameManager : Singleton<GameManager>
     {
         if (pauseStatus)
         {
-            // 앱이 백그라운드로 전환될 때
-            pauseTime = DateTime.Now;
-            SaveGameIfLoggedIn(); // 앱이 백그라운드로 전환될 때 데이터를 저장
+            if (!isPaused)
+            {
+                isPaused = true;
+                StartExitTimer(); // 백그라운드로 전환 시 타이머 시작
+            }
         }
         else
         {
-            // 앱이 다시 활성화될 때
-            GameData gameData = new GameData(); 
-            gameData.lastSaveTime = pauseTime.ToString("o"); 
-            CalculateOfflineProgress(gameData); 
+            if (isPaused)
+            {
+                isPaused = false;
+                StopExitTimer(); // 다시 활성화 시 타이머 중단
+            }
         }
+    }
+
+    private void OnApplicationFocus(bool hasFocus)
+    {
+        if (!hasFocus)
+        {
+            if (!isPaused)
+            {
+                isPaused = true;
+                StartExitTimer(); // 포커스를 잃었을 때 타이머 시작
+            }
+        }
+        else
+        {
+            if (isPaused)
+            {
+                isPaused = false;
+                StopExitTimer(); // 다시 활성화 시 타이머 중단
+            }
+        }
+    }
+
+    private void StartExitTimer()
+    {
+        exitCoroutine = StartCoroutine(ExitAfterDelay(10f)); // 10초 후 앱 종료
+    }
+
+    private void StopExitTimer()
+    {
+        if (exitCoroutine != null)
+        {
+            StopCoroutine(exitCoroutine); // 코루틴 중지
+            exitCoroutine = null;
+        }
+    }
+
+    private IEnumerator ExitAfterDelay(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        SaveGameIfLoggedIn(); // 앱 종료 전 게임 데이터 저장
+        Application.Quit(); // 앱 종료
     }
 }

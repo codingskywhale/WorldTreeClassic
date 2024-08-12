@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using static UnityEditor.SceneView;
 
 public class CameraTargetHandler : MonoBehaviour
 {
@@ -40,7 +41,8 @@ public class CameraTargetHandler : MonoBehaviour
         }
 
         currentTarget = newTarget;
-        isObjectTarget = true;        
+        isObjectTarget = true;
+        CameraSettings.Instance.currentCameraPosition = Vector3.zero;
         StartCoroutine(ZoomToTarget(newTarget));
     }
 
@@ -52,7 +54,7 @@ public class CameraTargetHandler : MonoBehaviour
         Vector3 startPosition = Camera.main.transform.position;
         Quaternion startRotation = Camera.main.transform.rotation;
 
-        Vector3 targetPosition = newTarget.position + CameraSettings.Instance.currentCameraPosition; // 타겟의 위치를 기준으로 카메라 위치 조정
+        Vector3 targetPosition = newTarget.position + (startPosition - newTarget.position).normalized * CameraSettings.Instance.currentCameraPosition.magnitude;
         Quaternion targetRotation = Quaternion.LookRotation(newTarget.position - targetPosition);
 
         while (Time.time < startTime + CameraSettings.Instance.zoomDuration)
@@ -76,7 +78,7 @@ public class CameraTargetHandler : MonoBehaviour
             Quaternion originalRotation = Camera.main.transform.rotation;
 
             // 타겟의 위치를 기준으로 카메라 위치를 업데이트
-            Vector3 targetPosition = currentTarget.position + CameraSettings.Instance.currentCameraPosition;
+            Vector3 targetPosition = currentTarget.position + (Camera.main.transform.position - Camera.main.transform.parent.position).normalized * CameraSettings.Instance.currentCameraPosition.magnitude;
             Camera.main.transform.position = targetPosition;
 
             // 저장한 회전 값을 다시 설정하여 회전 값이 변경되지 않도록 함

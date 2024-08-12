@@ -84,7 +84,7 @@ public class ADSkillManager : MonoBehaviour
         }
     }
 
-    private void UnlockCondition()
+    public void UnlockCondition()
     {
         if (bubbleClickSkill.currentLevel == 1 && LockImage != null)
         {

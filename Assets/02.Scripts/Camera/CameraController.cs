@@ -133,6 +133,10 @@ public class CameraController : MonoBehaviour
 
             StartCoroutine(cameraTransition.ZoomCamera(newPosition, newRotation, CameraSettings.Instance.zoomDuration));
             ShowMessage("카메라가 나무에 고정됩니다.");
+
+            // 여기서 자유 시점 모드에서 사용된 카메라 위치를 리셋 
+            CameraSettings.Instance.currentCameraPosition = newPosition;
+            CameraSettings.Instance.currentCameraRotation = newRotation;
         }
         else
         {
@@ -156,8 +160,6 @@ public class CameraController : MonoBehaviour
         // 1초 후 버튼 다시 활성화
         StartCoroutine(EnableButtonAfterDelay(1.0f));
     }
-
-
 
     private IEnumerator EnableButtonAfterDelay(float delay)
     {
