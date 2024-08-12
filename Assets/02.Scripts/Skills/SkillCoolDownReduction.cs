@@ -11,7 +11,15 @@ public class SkillCoolDownReduction : Artifact
         base.Start();
         ApplyCooldownReduction();
     }
-
+    public override void UpdateLevelUI()
+    {
+        if (currentLevelText != null)
+        {
+            currentLevelText.text = currentLevel > 0
+                ? $"스킬 쿨다운 스킬 레벨: {currentLevel}"
+                : "스킬이 해금되지 않았습니다";
+        }
+    }
     protected override void UpdateSkillInfoUI()
     {
         if (skillInfoText != null)
