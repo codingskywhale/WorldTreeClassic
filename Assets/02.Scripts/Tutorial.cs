@@ -47,6 +47,7 @@ public class Tutorial : MonoBehaviour
     private void Awake()
     {
         DialogueAddToList();
+        Buttons.SetActive(false);
         treeButton.interactable = false;
         plantButton.interactable = false;
         animalButton.interactable = false;
@@ -76,6 +77,7 @@ public class Tutorial : MonoBehaviour
                 break;
             case 2:
                 yield return new WaitForSeconds(0.5f);
+                Buttons.SetActive(true);
                 upgradeButton.gameObject.SetActive(true);
                 upgradeButton.GetComponentInChildren<TextMeshProUGUI>().text = "해금하기";
                 arrow.gameObject.SetActive(true);
