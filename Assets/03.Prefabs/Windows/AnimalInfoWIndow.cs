@@ -133,6 +133,16 @@ public class AnimalInfoWindow : MonoBehaviour
             WindowsManager.Instance.bookWindow.ApplyActiveAnimalUI();
 
             SetActiveStoreCountUI();
+
+            foreach (var button in UIManager.Instance.createAnimalButtons)
+            {
+                if (button.animalData.animalNameEN == nowAnimaldataSO.animalNameEN)
+                {
+                    button.ApplyAnimalCountText();
+                    break;
+                }
+            }
+
             UIManager.Instance.bag.UpdateSlotDataUI(nowAnimaldataSO.animalIndex - 1);
         }
     }

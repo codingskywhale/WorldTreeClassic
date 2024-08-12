@@ -16,6 +16,8 @@ public class CreateObjectButton : MonoBehaviour
     // 생명 창조 ~~ cost
     public TextMeshProUGUI inButtonCostText;
     public Button createButton;
+    public GameObject AnimalCountObject;
+    public TextMeshProUGUI AnimalCountText;
 
     [Header("Unlock Image")]
     public GameObject lockImage;
@@ -117,7 +119,9 @@ public class CreateObjectButton : MonoBehaviour
         //UIManager.Instance.CheckEnoughCost(0);
         UIManager.Instance.UpdateButtonUI();
 
+        AnimalCountObject.SetActive(true);
         UIManager.Instance.CheckConditionCleared();
+        ApplyAnimalCountText();
     }
 
     // 모든 버튼에 적용 시켜야함
@@ -185,5 +189,10 @@ public class CreateObjectButton : MonoBehaviour
         WindowsManager.Instance.animalInfoWnd.ActiveCenterUI();
         WindowsManager.Instance.animalInfoWnd.ChangeBottomUI(false);
         WindowsManager.Instance.animalInfoWnd.SetAnimalInfoWindowData(animalData);
+    }
+
+    public void ApplyAnimalCountText()
+    {
+        AnimalCountText.text = ($"{DataManager.Instance.animalGenerateData.allTypeCountDic[animalData.animalNameEN][EachCountType.Active]} / { DataManager.Instance.animalGenerateData.allTypeCountDic[animalData.animalNameEN][EachCountType.Total]}");
     }
 }

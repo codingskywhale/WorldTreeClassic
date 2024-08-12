@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Numerics;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class UIManager : MonoBehaviour
 {
@@ -164,7 +165,14 @@ public class UIManager : MonoBehaviour
         for (int i = 0; i < createObjectButtonUnlockCount; i++)
         {
             createAnimalButtons[i].conditionCleared = true;
+            createAnimalButtons[i].characterIconButton.interactable = true;
             createAnimalButtons[i].SetLockImageOff();
+
+            if (DataManager.Instance.animalGenerateData.allTypeCountDic.ContainsKey(createAnimalButtons[i].animalData.animalNameEN))
+            {
+                createAnimalButtons[i].AnimalCountObject.SetActive(true);
+                createAnimalButtons[i].AnimalCountText.text = ($"{DataManager.Instance.animalGenerateData.allTypeCountDic[createAnimalButtons[i].animalData.animalNameEN][EachCountType.Active]} / {DataManager.Instance.animalGenerateData.allTypeCountDic[createAnimalButtons[i].animalData.animalNameEN][EachCountType.Total]}");
+            }
         }
     }
 
