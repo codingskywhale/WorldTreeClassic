@@ -30,6 +30,7 @@ public class GameManager : Singleton<GameManager>
     private int maxOfflineDurationMinutes = 120; // 최대 오프라인 기간 설정 (기본값 120분)
     private int saveBufferCounter = 0; // 저장 버퍼 카운터
     private const int SaveBufferThreshold = 10; // 생명력 업그레이드 저장 버퍼 임계값
+    private Coroutine logoutCoroutine;
 
     public Tutorial TutorialObject;
 
@@ -131,25 +132,40 @@ public class GameManager : Singleton<GameManager>
         }
     }
 
+    private IEnumerator DelayedQuit()
+    {
+        SaveGameIfLoggedIn(); // 먼저 저장 수행
+        yield return new WaitForSeconds(10); // 10초 대기
+        Application.Quit(); // 게임 종료
+    }
+
     private void OnApplicationQuit()
     {
+        if (logoutCoroutine != null)
+        {
+            StopCoroutine(logoutCoroutine); // 종료 지연 코루틴이 이미 실행 중이라면 중단
+        }
         SaveGameIfLoggedIn();
+        Application.Quit(); // 앱 종료
     }
+
 
     private void OnApplicationPause(bool pauseStatus)
     {
         if (pauseStatus)
         {
-            SaveGameIfLoggedIn();
+            if (logoutCoroutine != null)
+            {
+                StopCoroutine(logoutCoroutine); // 이전 코루틴이 있으면 중단
+            }
+            logoutCoroutine = StartCoroutine(DelayedQuit()); // 저장 후 10초 지연 후 앱 종료
         }
-    }
-
-    private void OnApplicationFocus(bool hasFocus)
-    {
-        if (!hasFocus)
+        else
         {
-            SaveGameIfLoggedIn();
+            if (logoutCoroutine != null)
+            {
+                StopCoroutine(logoutCoroutine);
+            }
         }
     }
-
 }

@@ -10,7 +10,7 @@ public class CameraController : MonoBehaviour
 {
     public Transform target; // 나무의 Transform을 에디터에서 할당
     public Button toggleButton;
-    public float rotationSpeed = 10f; // 회전 속도
+    public float rotationSpeed = 2f; // 회전 속도
     public GameObject messagePrefab; // 메시지를 표시할 프리팹
     public Transform messageParent; // 메시지를 표시할 부모 객체
            
@@ -120,7 +120,6 @@ public class CameraController : MonoBehaviour
         if (CameraSettings.Instance.isZooming || !CameraSettings.Instance.animationCompleted) return;
 
         StopAllCoroutines();
-        Vector3 currentPosition = Camera.main.transform.position;
 
         if (isFreeCamera)
         {
@@ -128,10 +127,11 @@ public class CameraController : MonoBehaviour
             cameraTargetHandler.SetTarget(target);
             cameraTargetHandler.isObjectTarget = false;
 
-            // WorldTree의 위치 오프셋을 적용하여 새로운 위치 계산
+            // 고정 시점 모드로 전환 시, 나무의 레벨에 따른 위치를 다시 계산
             Vector3 newPosition = CameraSettings.Instance.GetInitialPosition(DataManager.Instance.touchData.touchIncreaseLevel);
+            Quaternion newRotation = CameraSettings.Instance.GetFinalRotation();
 
-            StartCoroutine(cameraTransition.ZoomCamera(newPosition, CameraSettings.Instance.GetFinalRotation(), CameraSettings.Instance.zoomDuration));
+            StartCoroutine(cameraTransition.ZoomCamera(newPosition, newRotation, CameraSettings.Instance.zoomDuration));
             ShowMessage("카메라가 나무에 고정됩니다.");
         }
         else
@@ -141,7 +141,10 @@ public class CameraController : MonoBehaviour
             cameraTargetHandler.isObjectTarget = false;
 
             // 자유 시점 모드로 전환 시 현재 위치를 유지하고, 오프셋을 추가적으로 적용하지 않음
-            StartCoroutine(cameraTransition.ZoomCamera(currentPosition, CameraSettings.Instance.GetFinalRotation(), CameraSettings.Instance.zoomDuration));
+            Vector3 currentPosition = Camera.main.transform.position;
+            Quaternion currentRotation = Camera.main.transform.rotation;
+
+            StartCoroutine(cameraTransition.ZoomCamera(currentPosition, currentRotation, CameraSettings.Instance.zoomDuration));
             ShowMessage("카메라 자유 조작이 활성화됩니다.");
         }
 
@@ -153,6 +156,7 @@ public class CameraController : MonoBehaviour
         // 1초 후 버튼 다시 활성화
         StartCoroutine(EnableButtonAfterDelay(1.0f));
     }
+
 
 
     private IEnumerator EnableButtonAfterDelay(float delay)
