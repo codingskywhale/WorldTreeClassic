@@ -59,6 +59,7 @@ public class AnimalInfoWindow : MonoBehaviour
         animalGenerateCount = 1;
         animalGenerateCountText.text = animalGenerateCount.ToString();
         createCostText.text = BigIntegerUtils.FormatBigInteger(DataManager.Instance.animalGenerateData.nowCreateCost);
+        preCost = DataManager.Instance.animalGenerateData.nowCreateCost;
     }
     private void Start()
     {
@@ -133,6 +134,9 @@ public class AnimalInfoWindow : MonoBehaviour
             WindowsManager.Instance.bookWindow.ApplyActiveAnimalUI();
 
             SetActiveStoreCountUI();
+
+            ApplyAnimalCount();
+
             UIManager.Instance.bag.UpdateSlotDataUI(nowAnimaldataSO.animalIndex - 1);
         }
     }
@@ -168,6 +172,7 @@ public class AnimalInfoWindow : MonoBehaviour
 
             WindowsManager.Instance.bookWindow.ApplyActiveAnimalUI();
             SetActiveStoreCountUI();
+            ApplyAnimalCount();
             UIManager.Instance.bag.UpdateSlotDataUI(nowAnimaldataSO.animalIndex - 1);
         }
     }
@@ -204,6 +209,7 @@ public class AnimalInfoWindow : MonoBehaviour
 
     public void AnimalCountPlus()
     {
+        // 맨 처음 이 루프에 들어오게 되면 preCost가 
         if (LifeManager.Instance.lifeAmount > totalGenerateValue + preCost * 4)
         {
             animalGenerateCount++;
@@ -296,5 +302,17 @@ public class AnimalInfoWindow : MonoBehaviour
         StoryCenterUI.SetActive(false);
         centerUIs.SetActive(true);
         storyButton.gameObject.SetActive(true);
+    }
+
+    public void ApplyAnimalCount()
+    {
+        foreach (var button in UIManager.Instance.createAnimalButtons)
+        {
+            if (button.animalData.animalNameEN == nowAnimaldataSO.animalNameEN)
+            {
+                button.ApplyAnimalCountText();
+                break;
+            }
+        }
     }
 }

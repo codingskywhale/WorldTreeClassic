@@ -110,10 +110,11 @@ public abstract class Skill : MonoBehaviour
         }
 
         // 터치 이벤트를 체크하여 skillTextObject 비활성화
-        if (Input.GetMouseButtonDown(0) && skillTextObject.activeSelf)
+        if (skillTextObject != null && Input.GetMouseButtonDown(0) && skillTextObject.activeSelf)
         {
             skillTextObject.SetActive(false);
         }
+
 
         CheckUnlockCondition();
     }

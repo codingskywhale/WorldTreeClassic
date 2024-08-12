@@ -204,8 +204,7 @@ public class SaveDataManager
             {
                 GameObject animalObject = InstantiateAnimal(animalState.animalIndex);
                 animalState.dataSO = GetAnimalDataByIndex(animalState.animalIndex);
-                DataManager.Instance.spawnData.animalDataSOList.Add(animalState.dataSO);
-                DataManager.Instance.spawnData.animalObjectList.Add(animalObject);
+                DataManager.Instance.spawnData.AddAnimalSpawnData(animalObject, animalState.dataSO);
                 if (animalObject != null)
                 {
                     UniqueID uniqueID = animalObject.AddComponent<UniqueID>();
@@ -387,7 +386,6 @@ public class SaveDataManager
         if (animalData != null)
         {
             GameObject animalObject = GameObject.Instantiate(animalData.animalPrefab, DataManager.Instance.spawnData.spawnTr); // 부모 설정 추가
-            DataManager.Instance.spawnData.animalObjectList.Add(animalObject);
             if (animalObject != null)
             {
                 animalObject.name = animalData.animalPrefab.name; // 프리팹 이름으로 설정
