@@ -127,16 +127,20 @@ public class CameraController : MonoBehaviour
             cameraTargetHandler.SetTarget(target);
             cameraTargetHandler.isObjectTarget = false;
 
-            // 고정 시점 모드로 전환 시, 나무의 레벨에 따른 위치를 다시 계산
+            // 고정 시점 모드로 전환 시, 나무의 레벨에 따른 위치와 회전을 다시 계산
             Vector3 newPosition = CameraSettings.Instance.GetInitialPosition(DataManager.Instance.touchData.touchIncreaseLevel);
             Quaternion newRotation = CameraSettings.Instance.GetFinalRotation();
 
-            StartCoroutine(cameraTransition.ZoomCamera(newPosition, newRotation, CameraSettings.Instance.zoomDuration));
-            ShowMessage("카메라가 나무에 고정됩니다.");
+            // 고정 시점 모드로 전환 시, 현재 카메라의 위치와 회전을 초기화
+            Camera.main.transform.position = newPosition;
+            Camera.main.transform.rotation = newRotation;
 
-            // 여기서 자유 시점 모드에서 사용된 카메라 위치를 리셋 
+            // 자유 시점 모드의 상태를 고정 시점 모드의 상태로 덮어쓰기
             CameraSettings.Instance.currentCameraPosition = newPosition;
             CameraSettings.Instance.currentCameraRotation = newRotation;
+
+            StartCoroutine(cameraTransition.ZoomCamera(newPosition, newRotation, CameraSettings.Instance.zoomDuration));
+            ShowMessage("카메라가 나무에 고정됩니다.");
         }
         else
         {
