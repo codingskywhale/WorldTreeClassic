@@ -289,12 +289,13 @@ public class SaveDataManager
                     if (artifact.gameObject.name == artifactData.artifactName)
                     {
                         artifact.currentLevel = artifactData.currentLevel;
-                        artifact.UnlockOrUpgradeSkill();
-                        artifact.UpdateUI();
 
-                        if (artifact.currentLevel >= 1)
+                        // UnlockOrUpgradeSkill 대신에 레벨이 0이 아닐 때만 상태를 업데이트
+                        if (artifact.currentLevel > 0)
                         {
-                            artifact.ActiveObject();
+                            artifact.UpdateUpgradeCostUI(); // 업그레이드 비용 UI 업데이트
+                            artifact.UpdateUI(); // UI 업데이트
+                            artifact.ActiveObject(); // 아티팩트 활성화
                         }
                     }
                 }

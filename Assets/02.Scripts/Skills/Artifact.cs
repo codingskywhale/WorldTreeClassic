@@ -103,7 +103,7 @@ public abstract class Artifact : MonoBehaviour
         UpdateLevelUI();
     }
 
-    private void UpdateUpgradeCostUI()
+    public void UpdateUpgradeCostUI()
     {
         if (upgradeCostText != null)
         {
