@@ -121,7 +121,7 @@ public abstract class Artifact : MonoBehaviour
         }
     }
 
-    private void UpdateLevelUI()
+    public virtual void UpdateLevelUI()
     {
         if (currentLevelText != null)
         {
