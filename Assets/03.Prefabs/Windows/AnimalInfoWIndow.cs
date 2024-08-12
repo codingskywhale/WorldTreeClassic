@@ -134,14 +134,7 @@ public class AnimalInfoWindow : MonoBehaviour
 
             SetActiveStoreCountUI();
 
-            foreach (var button in UIManager.Instance.createAnimalButtons)
-            {
-                if (button.animalData.animalNameEN == nowAnimaldataSO.animalNameEN)
-                {
-                    button.ApplyAnimalCountText();
-                    break;
-                }
-            }
+            ApplyAnimalCount();
 
             UIManager.Instance.bag.UpdateSlotDataUI(nowAnimaldataSO.animalIndex - 1);
         }
@@ -178,6 +171,7 @@ public class AnimalInfoWindow : MonoBehaviour
 
             WindowsManager.Instance.bookWindow.ApplyActiveAnimalUI();
             SetActiveStoreCountUI();
+            ApplyAnimalCount();
             UIManager.Instance.bag.UpdateSlotDataUI(nowAnimaldataSO.animalIndex - 1);
         }
     }
@@ -306,5 +300,17 @@ public class AnimalInfoWindow : MonoBehaviour
         StoryCenterUI.SetActive(false);
         centerUIs.SetActive(true);
         storyButton.gameObject.SetActive(true);
+    }
+
+    public void ApplyAnimalCount()
+    {
+        foreach (var button in UIManager.Instance.createAnimalButtons)
+        {
+            if (button.animalData.animalNameEN == nowAnimaldataSO.animalNameEN)
+            {
+                button.ApplyAnimalCountText();
+                break;
+            }
+        }
     }
 }
