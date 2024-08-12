@@ -53,7 +53,8 @@ public class CameraTargetHandler : MonoBehaviour
         Vector3 startPosition = Camera.main.transform.position;
         Quaternion startRotation = Camera.main.transform.rotation;
 
-        Vector3 targetPosition = newTarget.position + (startPosition - newTarget.position).normalized * CameraSettings.Instance.currentCameraPosition.magnitude;
+        Vector3 direction = (startPosition - newTarget.position).normalized;
+        Vector3 targetPosition = newTarget.position + direction * (startPosition - newTarget.position).magnitude;
         Quaternion targetRotation = Quaternion.LookRotation(newTarget.position - targetPosition);
 
         while (Time.time < startTime + CameraSettings.Instance.zoomDuration)
@@ -77,8 +78,8 @@ public class CameraTargetHandler : MonoBehaviour
             Quaternion originalRotation = Camera.main.transform.rotation;
 
             // 타겟의 위치를 기준으로 카메라 위치를 업데이트
-            Vector3 targetPosition = currentTarget.position + (Camera.main.transform.position - Camera.main.transform.parent.position).normalized * CameraSettings.Instance.currentCameraPosition.magnitude;
-            Camera.main.transform.position = targetPosition;
+            Vector3 offset = (Camera.main.transform.position - currentTarget.position).normalized * CameraSettings.Instance.currentCameraPosition.magnitude;
+            Camera.main.transform.position = currentTarget.position + offset;
 
             // 저장한 회전 값을 다시 설정하여 회전 값이 변경되지 않도록 함
             Camera.main.transform.rotation = originalRotation;

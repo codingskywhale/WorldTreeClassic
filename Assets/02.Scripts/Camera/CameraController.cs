@@ -135,8 +135,8 @@ public class CameraController : MonoBehaviour
             ShowMessage("카메라가 나무에 고정됩니다.");
 
             // 여기서 자유 시점 모드에서 사용된 카메라 위치를 리셋 
-            //CameraSettings.Instance.currentCameraPosition = newPosition;
-            //CameraSettings.Instance.currentCameraRotation = newRotation;
+            CameraSettings.Instance.currentCameraPosition = newPosition;
+            CameraSettings.Instance.currentCameraRotation = newRotation;
         }
         else
         {
