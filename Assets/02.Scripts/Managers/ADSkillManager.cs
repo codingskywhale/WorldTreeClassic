@@ -10,7 +10,8 @@ public class ADSkillManager : MonoBehaviour
     public Image adCooldownFillImage; // 광고 스킬 쿨타임을 표시할 이미지
     public TextMeshProUGUI adCooldownText; // 광고 스킬 쿨타임을 표시할 텍스트
     public Button adButton; // 광고 버튼
-
+    public Image LockImage; //해금 이미지
+    public BubbleClickSkill BubbleClickSkill;
     private bool adOnCooldown = false;
     private float adCooldownRemaining;
     private float adCooldownTime = 1800f; // 30분

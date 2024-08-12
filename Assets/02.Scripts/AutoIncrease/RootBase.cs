@@ -310,18 +310,18 @@ public class RootBase : MonoBehaviour, IRoot
             {
                 generationRateText.fontSize = 27; // 특정 조건에서의 폰트 사이즈
                 BigInteger levelOneGenerationRate = baseLifeGeneration * BigInteger.Pow(103, 0) / BigInteger.Pow(100, 0);
-                generationRateText.text = $"1레벨 업그레이드시 자동생산: {BigIntegerUtils.FormatBigInteger(levelOneGenerationRate)} 생명력/초";
+                generationRateText.text = $"1레벨 업그레이드시 자동생산: {BigIntegerUtils.FormatBigInteger(levelOneGenerationRate)}/s";
             }
             else if (!isUnlocked && rootLevel == 0)
             {
                 generationRateText.fontSize = 27; // 다른 조건에서의 폰트 사이즈
                 BigInteger levelOneGenerationRate = baseLifeGeneration * BigInteger.Pow(103, 0) / BigInteger.Pow(100, 0);
-                generationRateText.text = $"1레벨 업그레이드시 자동생산: {BigIntegerUtils.FormatBigInteger(levelOneGenerationRate)} 생명력/초";
+                generationRateText.text = $"1레벨 업그레이드시 자동생산: {BigIntegerUtils.FormatBigInteger(levelOneGenerationRate)}/s";
             }
             else
             {
                 generationRateText.fontSize = 36; // 기본 폰트 사이즈
-                generationRateText.text = $"생산률: {BigIntegerUtils.FormatBigInteger(generationRate)} 생명력/초";
+                generationRateText.text = $"{BigIntegerUtils.FormatBigInteger(generationRate)}/s";
             }
         }
     }
