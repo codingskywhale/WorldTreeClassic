@@ -124,6 +124,25 @@ public class GameManager : Singleton<GameManager>
         }
     }
 
+    private void SaveGameIfLoggedIn()
+    {
+        if (PlayFabClientAPI.IsClientLoggedIn())
+        {
+            saveDataManager.SaveGameData(resourceManager, skills, artifacts);
+            PlayerPrefs.SetInt("GuestLoggedIn", 1);
+            PlayerPrefs.Save();
+        }
+        else
+        {
+            Debug.LogWarning("Not logged in. Skipping save game data.");
+        }
+    }
+
+    private void OnApplicationQuit()
+    {
+        SaveGameIfLoggedIn();
+    }
+
     private void OnApplicationPause(bool pauseStatus)
     {
         if (pauseStatus)
@@ -140,19 +159,4 @@ public class GameManager : Singleton<GameManager>
             CalculateOfflineProgress(gameData); 
         }
     }
-
-    private void SaveGameIfLoggedIn()
-    {
-        if (PlayFabClientAPI.IsClientLoggedIn())
-        {
-            saveDataManager.SaveGameData(resourceManager, skills, artifacts);
-            PlayerPrefs.SetInt("GuestLoggedIn", 1);
-            PlayerPrefs.Save();
-        }
-        else
-        {
-            Debug.LogWarning("Not logged in. Skipping save game data.");
-        }
-    }
-
 }

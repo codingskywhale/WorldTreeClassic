@@ -14,7 +14,7 @@ public class IdleUIManager : MonoBehaviour
     public TMP_Text songTitleText; // 현재 노래 제목 텍스트
     public TMP_Text timeText; // 현재 시간 텍스트
     public TMP_Text dateText; // 오늘 날짜 텍스트
-    public float idleTime = 10f; // 방치 시간 (초)
+    public float idleTime = 20f; // 방치 시간 (초)
     public float scrollSpeed = 0.5f;
 
     private float timer;

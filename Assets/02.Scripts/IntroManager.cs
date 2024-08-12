@@ -8,8 +8,9 @@ public class IntroManager : MonoBehaviour
 {
     public TextMeshProUGUI introText; // 인트로 글귀를 표시할 텍스트
     public Image backgroundPanel; // 인트로 배경 패널    
-    public float introDisplayDuration = 4f; // 인트로 글귀를 표시할 시간
+    public float introDisplayDuration = 2f; // 인트로 글귀를 표시할 시간
     public GameObject introCanvas;
+    public float fadeDuration = 2.5f;
 
     private List<string> messages = new List<string>
     {
@@ -24,13 +25,10 @@ public class IntroManager : MonoBehaviour
         "오늘의 작은 성취가 \n내일의 큰 행복을 만듭니다.",
         "긍정적인 생각은 \n긍정적인 결과를 가져옵니다. \n힘내세요!"
     };
-
-    public Material backgroundMaterial; // 그라데이션 Shader가 적용된 Material
-
+    
     private void Start()
     {
-        introCanvas.SetActive(true);
-        backgroundPanel.material = backgroundMaterial; // 배경 패널에 Material 적용
+        introCanvas.SetActive(true);       
     }
 
     public IEnumerator PlayIntro()
@@ -41,19 +39,57 @@ public class IntroManager : MonoBehaviour
         string randomMessage = messages[Random.Range(0, messages.Count)];
         introText.text = randomMessage;
 
-        // 글귀와 배경 패널을 즉시 나타나게 합니다.
-        introText.gameObject.SetActive(true);
-        backgroundPanel.gameObject.SetActive(true);
-
         // 4초 동안 글귀와 배경 패널을 그대로 유지합니다.
         yield return new WaitForSeconds(introDisplayDuration);
 
-        // 인트로 애니메이션 완료 후 배경 패널과 텍스트 비활성화
-        introText.gameObject.SetActive(false);
-        backgroundPanel.gameObject.SetActive(false);
+        // 배경 패널을 서서히 사라지게 합니다.
+        yield return StartCoroutine(FadeOutImage(backgroundPanel, fadeDuration -1f));
 
-        introCanvas.SetActive(false);
-
+        // 카메라 전환 코루틴 실행
         GameManager.Instance.cameraTransition.StartCoroutine(GameManager.Instance.cameraTransition.OpeningCamera());
+
+        yield return new WaitForSeconds(1.5f);
+
+        // 배경 패널이 사라진 후 텍스트를 위로 올리면서 서서히 사라지게 합니다.
+        yield return StartCoroutine(MoveAndFadeText(introText, fadeDuration));
+        
+        // 모든 애니메이션이 끝난 후 캔버스를 비활성화합니다.
+        introCanvas.SetActive(false);
+    }
+
+
+    private IEnumerator FadeOutImage(Image image, float duration)
+    {
+        Color startColor = image.color;
+        float time = 0;
+
+        while (time < duration)
+        {
+            time += Time.deltaTime;
+            float t = Mathf.SmoothStep(0f, 1f, time / duration);  // 투명해지는 속도 조절
+            image.color = new Color(startColor.r, startColor.g, startColor.b, Mathf.Lerp(startColor.a, 0, t));
+            yield return null;
+        }
+
+        image.color = new Color(startColor.r, startColor.g, startColor.b, 0);
+    }
+
+    private IEnumerator MoveAndFadeText(TextMeshProUGUI text, float duration)
+    {
+        Vector3 startPosition = text.rectTransform.localPosition;
+        Vector3 endPosition = startPosition + Vector3.up * 50f; // 50 유닛 위로 이동
+        Color startColor = text.color;
+        float time = 0;
+
+        while (time < duration)
+        {
+            time += Time.deltaTime;
+            text.rectTransform.localPosition = Vector3.Lerp(startPosition, endPosition, time / duration);
+            text.color = new Color(startColor.r, startColor.g, startColor.b, Mathf.Lerp(startColor.a, 0, time / duration));
+            yield return null;
+        }
+
+        text.rectTransform.localPosition = endPosition;
+        text.color = new Color(startColor.r, startColor.g, startColor.b, 0);
     }
 }
