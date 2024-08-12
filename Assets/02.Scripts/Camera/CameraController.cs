@@ -97,9 +97,7 @@ public class CameraController : MonoBehaviour
             // 카메라가 타겟을 계속 바라보도록 설정
             Camera.main.transform.LookAt(cameraTargetHandler.currentTarget);
 
-            // 카메라의 위치와 회전을 자유시점 모드에서 업데이트
-            CameraSettings.Instance.currentCameraPosition = Camera.main.transform.position;
-            CameraSettings.Instance.currentCameraRotation = Camera.main.transform.rotation;
+            // 자유시점 모드에서는 위치와 회전 값을 저장하지 않음
         }
     }
 
@@ -131,15 +129,9 @@ public class CameraController : MonoBehaviour
             Vector3 newPosition = CameraSettings.Instance.GetInitialPosition(DataManager.Instance.touchData.touchIncreaseLevel);
             Quaternion newRotation = CameraSettings.Instance.GetFinalRotation();
 
-            // 고정 시점 모드로 전환 시, 현재 카메라의 위치와 회전을 초기화
-            Camera.main.transform.position = newPosition;
-            Camera.main.transform.rotation = newRotation;
+            // 코루틴이 종료된 후에도 강제로 고정 시점의 위치와 회전을 적용
+            StartCoroutine(ForceApplyCameraTransform(newPosition, newRotation, CameraSettings.Instance.zoomDuration));
 
-            // 자유 시점 모드의 상태를 고정 시점 모드의 상태로 덮어쓰기
-            CameraSettings.Instance.currentCameraPosition = newPosition;
-            CameraSettings.Instance.currentCameraRotation = newRotation;
-
-            StartCoroutine(cameraTransition.ZoomCamera(newPosition, newRotation, CameraSettings.Instance.zoomDuration));
             ShowMessage("카메라가 나무에 고정됩니다.");
         }
         else
@@ -163,6 +155,19 @@ public class CameraController : MonoBehaviour
 
         // 1초 후 버튼 다시 활성화
         StartCoroutine(EnableButtonAfterDelay(1.0f));
+    }
+
+    private IEnumerator ForceApplyCameraTransform(Vector3 newPosition, Quaternion newRotation, float duration)
+    {
+        yield return cameraTransition.ZoomCamera(newPosition, newRotation, duration);
+
+        // 코루틴이 끝난 후 강제로 위치와 회전을 적용
+        Camera.main.transform.position = newPosition;
+        Camera.main.transform.rotation = newRotation;
+
+        // 고정 시점 모드의 상태로 덮어쓰기
+        CameraSettings.Instance.currentCameraPosition = newPosition;
+        CameraSettings.Instance.currentCameraRotation = newRotation;
     }
 
     private IEnumerator EnableButtonAfterDelay(float delay)
