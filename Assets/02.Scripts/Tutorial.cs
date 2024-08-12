@@ -84,11 +84,11 @@ public class Tutorial : MonoBehaviour
                 break;
             case 3:
                 arrow.rectTransform.position = lifeIncreseRatePerSecTr.GetComponent<RectTransform>().position;
-                arrow.rectTransform.position += new Vector3(130f, 130f, 0f);
+                arrow.rectTransform.position += new Vector3(130f, 115f, 0f);
                 break;
             case 4:
                 arrow.rectTransform.position = animalCountTr.GetComponent<RectTransform>().position;
-                arrow.rectTransform.position += new Vector3(100f, 115f, 0f);
+                arrow.rectTransform.position += new Vector3(-100f, 75f, 0f);
                 break;
             case 5:
                 plantButton.interactable = false;
