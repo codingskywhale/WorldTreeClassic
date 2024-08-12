@@ -46,7 +46,7 @@ public class RootBoostSkill : Skill
 
     public override void ActivateSkill()
     {
-        if (!onCooldown && roots != null && roots.Length > 0)
+        if (!onCooldown && roots != null && roots.Length > 0 && currentLevel > 0)
         {
             StartCoroutine(SkillEffect());
         }
