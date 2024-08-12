@@ -59,6 +59,7 @@ public class AnimalInfoWindow : MonoBehaviour
         animalGenerateCount = 1;
         animalGenerateCountText.text = animalGenerateCount.ToString();
         createCostText.text = BigIntegerUtils.FormatBigInteger(DataManager.Instance.animalGenerateData.nowCreateCost);
+        preCost = DataManager.Instance.animalGenerateData.nowCreateCost;
     }
     private void Start()
     {
@@ -208,6 +209,7 @@ public class AnimalInfoWindow : MonoBehaviour
 
     public void AnimalCountPlus()
     {
+        // 맨 처음 이 루프에 들어오게 되면 preCost가 
         if (LifeManager.Instance.lifeAmount > totalGenerateValue + preCost * 4)
         {
             animalGenerateCount++;
