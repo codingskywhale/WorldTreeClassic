@@ -31,6 +31,7 @@ public class GameManager : Singleton<GameManager>
     private int saveBufferCounter = 0; // 저장 버퍼 카운터
     private const int SaveBufferThreshold = 10; // 생명력 업그레이드 저장 버퍼 임계값
     private Coroutine logoutCoroutine;
+    private DateTime pauseTime;
 
     public Tutorial TutorialObject;
 
@@ -104,20 +105,42 @@ public class GameManager : Singleton<GameManager>
     {
         if (gameData != null && !string.IsNullOrEmpty(gameData.lastSaveTime))
         {
-            BigInteger totalLifeIncrease = offlineRewardManager.CalculateTotalLifeIncrease(gameData.lastSaveTime);
             double offlineDurationInSeconds = offlineRewardManager.CalculateOfflineDurationInSeconds(gameData.lastSaveTime);
-            double maxOfflineDurationInSeconds = offlineRewardManager.GetMaxOfflineDurationInSeconds();
-                       
-            if (totalLifeIncrease > 0)
+
+            if (offlineDurationInSeconds >= 10) // 오프라인 시간이 10초 이상인지 확인
             {
-                offlineRewardUIManager.ShowOfflineRewardUI(totalLifeIncrease, offlineDurationInSeconds, maxOfflineDurationInSeconds);
+                BigInteger totalLifeIncrease = offlineRewardManager.CalculateTotalLifeIncrease(gameData.lastSaveTime);
+                double maxOfflineDurationInSeconds = offlineRewardManager.GetMaxOfflineDurationInSeconds();
+
+                if (totalLifeIncrease > 0)
+                {
+                    offlineRewardUIManager.ShowOfflineRewardUI(totalLifeIncrease, offlineDurationInSeconds, maxOfflineDurationInSeconds);
+                }
+                else
+                {
+                    offlineRewardUIManager.HideOfflineRewardUI();
+                }
             }
-            else
-            {
-                offlineRewardUIManager.HideOfflineRewardUI();
-            }
-        }       
+        }
     }
+
+    private void OnApplicationPause(bool pauseStatus)
+    {
+        if (pauseStatus)
+        {
+            // 앱이 백그라운드로 전환될 때
+            pauseTime = DateTime.Now;
+            SaveGameIfLoggedIn(); // 앱이 백그라운드로 전환될 때 데이터를 저장
+        }
+        else
+        {
+            // 앱이 다시 활성화될 때
+            GameData gameData = new GameData(); 
+            gameData.lastSaveTime = pauseTime.ToString("o"); 
+            CalculateOfflineProgress(gameData); 
+        }
+    }
+
     private void SaveGameIfLoggedIn()
     {
         if (PlayFabClientAPI.IsClientLoggedIn())
@@ -132,40 +155,4 @@ public class GameManager : Singleton<GameManager>
         }
     }
 
-    private IEnumerator DelayedQuit()
-    {
-        SaveGameIfLoggedIn(); // 먼저 저장 수행
-        yield return new WaitForSeconds(10); // 10초 대기
-        Application.Quit(); // 게임 종료
-    }
-
-    private void OnApplicationQuit()
-    {
-        if (logoutCoroutine != null)
-        {
-            StopCoroutine(logoutCoroutine); // 종료 지연 코루틴이 이미 실행 중이라면 중단
-        }
-        SaveGameIfLoggedIn();
-        Application.Quit(); // 앱 종료
-    }
-
-
-    private void OnApplicationPause(bool pauseStatus)
-    {
-        if (pauseStatus)
-        {
-            if (logoutCoroutine != null)
-            {
-                StopCoroutine(logoutCoroutine); // 이전 코루틴이 있으면 중단
-            }
-            logoutCoroutine = StartCoroutine(DelayedQuit()); // 저장 후 10초 지연 후 앱 종료
-        }
-        else
-        {
-            if (logoutCoroutine != null)
-            {
-                StopCoroutine(logoutCoroutine);
-            }
-        }
-    }
 }
