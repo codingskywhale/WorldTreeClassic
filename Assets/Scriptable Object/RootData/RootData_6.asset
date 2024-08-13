@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fbb645eac80ddc849815837a47ebd0c8, type: 3}
   m_Name: RootData_6
   m_EditorClassIdentifier: 
-  unlockThreshold: 500
+  unlockThreshold: 1000
   baseLifeGenerationString: 33820000000
   unlockCostString: 128145593220929000000
   unlockConditionText: "\"\uC7A0\uAE08 \uD574\uC81C \uC870\uAC74: \uC2A4\uD0AC\uCFE8\uB2E4\uC6B4
