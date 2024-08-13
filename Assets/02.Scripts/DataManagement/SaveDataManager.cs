@@ -152,7 +152,7 @@ public class SaveDataManager
                 InitializeDefaultGameData(resourceManager);
                 UIManager.Instance.createObjectButtonUnlockCount = 0;
                 //UIManager.Instance.UpdateButtonUI();
-                BigInteger bigNumber = BigInteger.Parse("9000000000000000000000000000000000000000000000000000000000000000");
+                BigInteger bigNumber = BigInteger.Parse("900000000000000000000000000000000000000000000000000000000000000000000000000000000");
                 LifeManager.Instance.lifeAmount = bigNumber;
                 UIManager.Instance.touchData.upgradeLifeCost = new BigInteger(1000);
                 UIManager.Instance.touchData.touchIncreaseAmount = new BigInteger(50);

@@ -52,7 +52,7 @@ public class TouchData : MonoBehaviour
 
     public void UpdateTouchUI(int touchIncreaseLevel, BigInteger touchIncreaseAmount, BigInteger upgradelifeCost)
     {
-        touchLevelText.text = $"외로운 나무 레벨:{BigIntegerUtils.FormatBigInteger(touchIncreaseLevel)}";
+        touchLevelText.text = $"외로운 나무 레벨:{touchIncreaseLevel}";
         touchIncreaseText.text = $"현재 터치당 얻는 생명력 : {BigIntegerUtils.FormatBigInteger(touchIncreaseAmount)}";
         upgradelifeCostText.text = $"{BigIntegerUtils.FormatBigInteger(upgradelifeCost)}";
     }
