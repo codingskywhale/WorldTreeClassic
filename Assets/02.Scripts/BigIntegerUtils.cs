@@ -59,9 +59,10 @@ public static class BigIntegerUtils
             return ((double)number / (double)BigInteger.Pow(10, 6)).ToString("0.##") + "c";
         if (number >= BigInteger.Pow(10, 3))
             return ((double)number / (double)BigInteger.Pow(10, 3)).ToString("0.##") + "b";
-        if (number >= BigInteger.Pow(10, 1))
-            return ((double)number / (double)BigInteger.Pow(10, 1)).ToString("0.##") + "a";
+
+        // 1000 미만의 숫자는 그대로 출력
         return number.ToString();
     }
+
 
 }
