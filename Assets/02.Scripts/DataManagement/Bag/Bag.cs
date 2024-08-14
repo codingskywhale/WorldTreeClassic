@@ -1,12 +1,15 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Bag : MonoBehaviour
 {
     // 동물을 보관할 수 있는 인벤토리
     public GameObject slot;
     public List<Bag_AnimalSlot> slots;
+    public GridLayoutGroup layoutGroup;
     // 모든 동물에 대한 데이터를 가지고 있어야 한다.
     // 필요한 데이터 : 동물 이미지, 동물 별 생산 수
     // 해당 동물을 눌렀을 때 정보를 보여주는 창
@@ -22,6 +25,8 @@ public class Bag : MonoBehaviour
             go.transform.SetParent(this.transform);
             slots.Add(nowSlot);
         }
+
+        SetHeightDynamic();
     }
 
     public void UnlockSlot(int slotIdx)
@@ -33,5 +38,19 @@ public class Bag : MonoBehaviour
     public void UpdateSlotDataUI(int slotIdx)
     {
         slots[slotIdx].UpdateUI();
+    }
+
+    private void SetHeightDynamic()
+    {
+        float height = slots[0].transform.GetChild(0).GetComponent<RectTransform>().sizeDelta.y;
+
+        int heightCount = (slots.Count / 4) + 1;
+        float margin = layoutGroup.spacing.x;
+
+        Debug.Log(slots[0].GetComponentInChildren<RectTransform>().name + height);
+        Debug.Log(margin);
+        // 정사각임.
+
+        this.GetComponent<RectTransform>().sizeDelta = new Vector2((height + margin) * 4, (height + margin) * heightCount);
     }
 }
