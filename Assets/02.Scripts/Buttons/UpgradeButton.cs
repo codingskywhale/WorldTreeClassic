@@ -14,6 +14,7 @@ public class UpgradeButton : MonoBehaviour
     public TextMeshProUGUI x10Text;
     public TextMeshProUGUI x100Text;
     //public TouchInputManager touchInputManager;
+    private int buttonIdx;
 
     public enum UpgradeType
     {
@@ -125,7 +126,7 @@ public class UpgradeButton : MonoBehaviour
     //    }
     //}
 
-    private void HandleRootUpgrade()
+    public void HandleRootUpgrade()
     {
         if (root == null || !root.isUnlocked) return;
 
@@ -145,7 +146,7 @@ public class UpgradeButton : MonoBehaviour
         }
     }
 
-    private void HandleTouchUpgrade()
+    public void HandleTouchUpgrade()
     {
         TouchData touchData = DataManager.Instance.touchData;
         if (touchData == null)
@@ -160,6 +161,7 @@ public class UpgradeButton : MonoBehaviour
             DataManager.Instance.touchData.UpgradeTouchGeneration();
             UIManager.Instance.touchData.UpdateTouchUI(touchData.touchIncreaseLevel, touchData.touchIncreaseAmount,
                                                         touchData.upgradeLifeCost);
+            UIManager.Instance.CheckConditionCleared();
         }
         else
         {
@@ -204,94 +206,39 @@ public class UpgradeButton : MonoBehaviour
         }
     }
 
-    public void SetMultiUpgradeButton()
+    public void SetButtonIndex(int buttonIdx)
     {
-        BigInteger UpgradeCost = DataManager.Instance.touchData.upgradeLifeCost;
-        int canUpgradeCount = 1;
-
-        for (int i = 0; i < 2; i++)
-        {
-            if (LifeManager.Instance.lifeAmount > UpgradeCost)
-            {
-                if ((DataManager.Instance.touchData.touchIncreaseLevel + canUpgradeCount) % 25 == 0)
-                {
-                    UpgradeCost *= 2;
-                }
-                else
-                {
-                    UpgradeCost = UpgradeCost * 120 / 100;
-                }
-            }
-            else
-            {
-                x10Button.gameObject.SetActive(false);
-                return;
-            }
-        }
-        UpgradeCost = DataManager.Instance.touchData.upgradeLifeCost;
-        x10Button.gameObject.SetActive(true);
-
-        for (int i = 0; i < 10; i++)
-        {
-            if (LifeManager.Instance.lifeAmount > UpgradeCost)
-            {
-                if ((DataManager.Instance.touchData.touchIncreaseLevel + canUpgradeCount) % 25 == 0)
-                {
-                    UpgradeCost *= 2;
-                }
-                else
-                {
-                    UpgradeCost = UpgradeCost * 120 / 100;
-                }
-            }
-            else
-            {
-                x100Button.gameObject.SetActive(false);
-                return;
-            }
-        }
-        x100Button.gameObject.SetActive(true);
+        this.buttonIdx = buttonIdx;
     }
 
-    // 버튼 인덱스에 따라 다른 업그레이드 수행 (x10 / x100)
-    public void SetMultiTreeUpgradeText(int CalculateCount)
+    public void SetMultiUpgradeButton()
     {
-        BigInteger UpgradeCost = DataManager.Instance.touchData.upgradeLifeCost;
+        int maxUpgradeCount = GetMaxUpgradeCount();
 
-        int canUpgradeCount = 1;
+        x10Button.gameObject.SetActive(maxUpgradeCount > 1);
+        x100Button.gameObject.SetActive(maxUpgradeCount > 10);
+    }
 
-        for (int i = 0; i < CalculateCount; i++)
+    public void SetMultiTreeUpgradeText()
+    {
+        int maxUpgradeCount = Mathf.Min(100, GetMaxUpgradeCount());
+        x10Text.text = Mathf.Min(maxUpgradeCount, 10).ToString();
+        x100Text.text = maxUpgradeCount.ToString();
+    }
+
+    private int GetMaxUpgradeCount()
+    {
+        int count = 0;
+        BigInteger cost = upgradeType == UpgradeType.Touch ? DataManager.Instance.touchData.upgradeLifeCost : AutoObjectManagerTest.Instance.roots[buttonIdx].GetTotalLifeGeneration();
+        BigInteger totalCost = cost;
+
+        while (LifeManager.Instance.lifeAmount >= totalCost)
         {
-            if (LifeManager.Instance.lifeAmount > UpgradeCost)
-            {
-                if ((DataManager.Instance.touchData.touchIncreaseLevel + canUpgradeCount) % 25 == 0)
-                {
-                    UpgradeCost *= 2;
-                }
-                else
-                {
-                    UpgradeCost = UpgradeCost * 120 / 100;
-                }
-                // 업그레이드 비용 공식 적용
-                canUpgradeCount++;
-            }
-            else
-            {
-                if (canUpgradeCount > 10)
-                {
-                    x100Text.text = canUpgradeCount.ToString();
-                    x10Text.text = 10.ToString();
-                }
-                return;
-            }
+            count++;
+            cost = cost * 120 / 100;
+            totalCost += cost;
         }
-        canUpgradeCount--;
-        if (canUpgradeCount > 10)
-        {
-            x100Text.text = canUpgradeCount.ToString();
-            x10Text.text = 10.ToString();
-        }
-        else
-            x10Text.text = canUpgradeCount.ToString();
+
+        return count;
     }
 }

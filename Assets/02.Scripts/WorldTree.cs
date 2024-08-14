@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using TMPro;
+using Unity.AI.Navigation;
 using UnityEngine;
 
 public class WorldTree : MonoBehaviour
@@ -50,6 +51,7 @@ public class WorldTree : MonoBehaviour
         {
             IncrementCameraFOV();
             MoveCameraBackwards();
+            DataManager.Instance.animalSpawnTr.transform.position += Vector3.right / 2;
         }
     }
 
