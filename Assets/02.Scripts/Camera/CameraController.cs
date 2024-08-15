@@ -80,24 +80,21 @@ public class CameraController : MonoBehaviour
 
         if (cameraTargetHandler.currentTarget != null)
         {
-            // 카메라의 위치 이동
+            // 카메라의 기존 위치에서 회전 시도
             Camera.main.transform.RotateAround(cameraTargetHandler.currentTarget.position, Vector3.up, horizontal);
             Camera.main.transform.RotateAround(cameraTargetHandler.currentTarget.position, Camera.main.transform.right, -vertical);
 
-            // 카메라의 각도 및 높이 제한이 필요한 경우 적용
+            // 각도 제한: 위쪽 회전을 제한 (예: -85도에서 85도 사이)
             Vector3 angles = Camera.main.transform.eulerAngles;
+
+            // X축 각도 제한 (위아래 회전)
             angles.x = Mathf.Clamp(angles.x, CameraSettings.Instance.minVerticalAngle, CameraSettings.Instance.maxVerticalAngle);
-            Vector3 position = Camera.main.transform.position;
-            position.y = Mathf.Clamp(position.y, CameraSettings.Instance.minHeight, CameraSettings.Instance.maxHeight);
 
-            // 제한된 각도 및 높이로 카메라 설정
+            // 제한된 각도를 적용
             Camera.main.transform.eulerAngles = angles;
-            Camera.main.transform.position = position;
 
-            // 카메라가 타겟을 계속 바라보도록 설정
+            // 타겟을 바라보도록 설정
             Camera.main.transform.LookAt(cameraTargetHandler.currentTarget);
-
-            // 자유시점 모드에서는 위치와 회전 값을 저장하지 않음
         }
     }
 
@@ -117,57 +114,71 @@ public class CameraController : MonoBehaviour
     {
         if (CameraSettings.Instance.isZooming || !CameraSettings.Instance.animationCompleted) return;
 
-        StopAllCoroutines();
-
         if (isFreeCamera)
         {
-            // 자유 시점 모드에서 고정 시점 모드로 전환
-            cameraTargetHandler.SetTarget(target);
-            cameraTargetHandler.isObjectTarget = false;
-
-            // 고정 시점 모드로 전환 시, 나무의 레벨에 따른 위치와 회전을 다시 계산
-            Vector3 newPosition = CameraSettings.Instance.GetInitialPosition(DataManager.Instance.touchData.touchIncreaseLevel);
-            Quaternion newRotation = CameraSettings.Instance.GetFinalRotation();
-
-            // 코루틴이 종료된 후에도 강제로 고정 시점의 위치와 회전을 적용
-            StartCoroutine(ForceApplyCameraTransform(newPosition, newRotation, CameraSettings.Instance.zoomDuration));
-
-            ShowMessage("카메라가 나무에 고정됩니다.");
+            SwitchToFixedCameraMode();
         }
         else
         {
-            // 고정 시점 모드에서 자유 시점 모드로 전환
-            cameraTargetHandler.SetTarget(target);
-            cameraTargetHandler.isObjectTarget = false;
-
-            // 자유 시점 모드로 전환 시 현재 위치를 유지하고, 오프셋을 추가적으로 적용하지 않음
-            Vector3 currentPosition = Camera.main.transform.position;
-            Quaternion currentRotation = Camera.main.transform.rotation;
-
-            StartCoroutine(cameraTransition.ZoomCamera(currentPosition, currentRotation, CameraSettings.Instance.zoomDuration));
-            ShowMessage("카메라 자유 조작이 활성화됩니다.");
+            SwitchToFreeCameraMode();
         }
+    }
 
-        // 모드 전환
-        isFreeCamera = !isFreeCamera;
+    public void SwitchToFixedCameraMode()
+    {
+        // 코루틴 중지
+        StopAllCoroutines();
 
-        cameraTargetHandler.SetFreeCameraMode(isFreeCamera); // 자유시점 모드 설정
+        // 고정된 위치와 회전 설정
+        Vector3 fixedPosition = CameraSettings.Instance.GetInitialPosition(DataManager.Instance.touchData.touchIncreaseLevel);
+        Quaternion fixedRotation = CameraSettings.Instance.GetFinalRotation();
 
-        // 1초 후 버튼 다시 활성화
+        // 타겟을 고정시점모드의 타겟으로 설정
+        cameraTargetHandler.SetTarget(target);
+        cameraTargetHandler.isObjectTarget = false;
+
+        // 강제 위치와 회전 설정 (자유시점모드에서의 영향 무시)
+        Camera.main.transform.position = fixedPosition;
+        Camera.main.transform.rotation = fixedRotation;
+
+        // CameraSettings에 상태를 갱신
+        CameraSettings.Instance.currentCameraPosition = fixedPosition;
+        CameraSettings.Instance.currentCameraRotation = fixedRotation;
+
+        // 디버그 로그 추가 (테스트용)
+        UnityEngine.Debug.Log($"[SwitchToFixedCameraMode] Position: {fixedPosition}, Rotation: {fixedRotation}");
+
+        ShowMessage("카메라가 나무에 고정됩니다.");
+
+        // 모드 플래그 설정
+        isFreeCamera = false;
+        cameraTargetHandler.SetFreeCameraMode(isFreeCamera);
+
+        // 버튼 다시 활성화
         StartCoroutine(EnableButtonAfterDelay(1.0f));
     }
 
-    private IEnumerator ForceApplyCameraTransform(Vector3 newPosition, Quaternion newRotation, float duration)
+    public void SwitchToFreeCameraMode()
     {
-        yield return cameraTransition.ZoomCamera(newPosition, newRotation, duration);
+        // 타겟을 자유시점모드의 타겟으로 설정 (필요시)
+        cameraTargetHandler.SetTarget(target);
+        cameraTargetHandler.isObjectTarget = false;
 
-        // 코루틴이 끝난 후 강제로 위치와 회전을 적용
-        Camera.main.transform.position = newPosition;
-        Camera.main.transform.rotation = newRotation;
+        // 자유시점모드로 전환 시 현재 위치와 회전 유지
+        Vector3 currentPosition = Camera.main.transform.position;
+        Quaternion currentRotation = Camera.main.transform.rotation;
 
-        // 고정 시점 모드의 상태로 덮어쓰기
-        CameraSettings.Instance.currentCameraPosition = newPosition;
-        CameraSettings.Instance.currentCameraRotation = newRotation;
+        // Camera.main.transform.position = currentPosition; // 줌 코루틴 제거
+        // Camera.main.transform.rotation = currentRotation; // 줌 코루틴 제거
+
+        ShowMessage("카메라 자유 조작이 활성화됩니다.");
+
+        // 모드 플래그 설정
+        isFreeCamera = true;
+        cameraTargetHandler.SetFreeCameraMode(isFreeCamera);
+
+        // 버튼 다시 활성화
+        StartCoroutine(EnableButtonAfterDelay(1.0f));
     }
 
     private IEnumerator EnableButtonAfterDelay(float delay)

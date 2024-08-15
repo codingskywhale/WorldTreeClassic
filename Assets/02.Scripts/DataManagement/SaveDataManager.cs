@@ -140,6 +140,13 @@ public class SaveDataManager
         PlayFabManager.Instance.SaveGameData(gameData);
     }
 
+    public void SaveOfflineTime(float offlineTime)
+    {
+        // 예시: 오프라인 시간을 PlayerPrefs에 저장
+        PlayerPrefs.SetFloat("OfflineTime", offlineTime);
+        PlayerPrefs.Save();
+    }
+
     public IEnumerator LoadGameDataCoroutine(ResourceManager resourceManager, List<Skill> skillList, List<Artifact> artifactList, WorldTree worldTree)
     {
         bool isDataLoaded = false;

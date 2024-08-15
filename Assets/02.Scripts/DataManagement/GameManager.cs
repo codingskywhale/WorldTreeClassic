@@ -6,6 +6,8 @@ using System.Collections.Generic;
 using System.Numerics;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Playables;
+using UnityEngine.SceneManagement;
 
 public class GameManager : Singleton<GameManager>
 {
@@ -32,6 +34,8 @@ public class GameManager : Singleton<GameManager>
     private const int SaveBufferThreshold = 10; // 생명력 업그레이드 저장 버퍼 임계값
     private Coroutine exitCoroutine;
     private bool isPaused = false;
+
+    private float timeInBackground = 0f;
 
     public Tutorial TutorialObject;
 
@@ -145,13 +149,12 @@ public class GameManager : Singleton<GameManager>
 
     private void OnApplicationPause(bool pauseStatus)
     {
-        SaveGameIfLoggedIn();
         if (pauseStatus)
         {
             if (!isPaused)
             {
                 isPaused = true;
-                StartExitTimer(); // 백그라운드로 전환 시 타이머 시작
+                SaveGameIfLoggedIn();  // 백그라운드 전환 시 게임 저장 (기존 로직 유지)
             }
         }
         else
@@ -159,50 +162,53 @@ public class GameManager : Singleton<GameManager>
             if (isPaused)
             {
                 isPaused = false;
-                StopExitTimer(); // 다시 활성화 시 타이머 중단
+                FetchLastSaveTimeFromPlayFab();  // 포그라운드 복귀 시 lastSaveTime만 가져오기
             }
         }
     }
 
-    private void OnApplicationFocus(bool hasFocus)
+    private void FetchLastSaveTimeFromPlayFab()
     {
-        SaveGameIfLoggedIn();
-        if (!hasFocus)
-        {
-            if (!isPaused)
+        PlayFabClientAPI.GetUserData(new GetUserDataRequest(),  // PlayFab에서 사용자 데이터를 요청
+            result =>
             {
-                isPaused = true;
-                StartExitTimer(); // 포커스를 잃었을 때 타이머 시작
-            }
-        }
-        else
-        {
-            if (isPaused)
+                if (result.Data != null && result.Data.ContainsKey("lastSaveTime"))
+                {
+                    string lastSaveTime = result.Data["lastSaveTime"].Value;  // lastSaveTime 가져오기
+                    ProcessOfflineRewards(lastSaveTime);  // 오프라인 보상 처리
+                }
+                else
+                {
+                    Debug.LogWarning("Failed to fetch lastSaveTime from PlayFab.");
+                }
+            },
+            error =>
             {
-                isPaused = false;
-                StopExitTimer(); // 다시 활성화 시 타이머 중단
+                Debug.LogError("Error fetching lastSaveTime from PlayFab: " + error.GenerateErrorReport());
+            });
+    }
+
+    private void ProcessOfflineRewards(string lastSaveTime)
+    {
+        if (!string.IsNullOrEmpty(lastSaveTime))
+        {
+            double offlineDurationInSeconds = offlineRewardManager.CalculateOfflineDurationInSeconds(lastSaveTime);
+
+            if (offlineDurationInSeconds >= 10)  // 오프라인 시간이 10초 이상인지 확인
+            {
+                BigInteger totalLifeIncrease = offlineRewardManager.CalculateTotalLifeIncrease(lastSaveTime);
+                double maxOfflineDurationInSeconds = offlineRewardManager.GetMaxOfflineDurationInSeconds();
+
+                // 보상 UI 표시
+                if (totalLifeIncrease > 0)
+                {
+                    offlineRewardUIManager.ShowOfflineRewardUI(totalLifeIncrease, offlineDurationInSeconds, maxOfflineDurationInSeconds);
+                }
+                else
+                {
+                    offlineRewardUIManager.HideOfflineRewardUI();
+                }
             }
         }
-    }
-
-    private void StartExitTimer()
-    {
-        exitCoroutine = StartCoroutine(ExitAfterDelay(10f)); // 10초 후 앱 종료
-    }
-
-    private void StopExitTimer()
-    {
-        if (exitCoroutine != null)
-        {
-            StopCoroutine(exitCoroutine); // 코루틴 중지
-            exitCoroutine = null;
-        }
-    }
-
-    private IEnumerator ExitAfterDelay(float delay)
-    {
-        yield return new WaitForSeconds(delay);
-        SaveGameIfLoggedIn(); // 앱 종료 전 게임 데이터 저장
-        Application.Quit(); // 앱 종료
     }
 }

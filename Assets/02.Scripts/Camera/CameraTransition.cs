@@ -53,7 +53,21 @@ public class CameraTransition : MonoBehaviour
             yield return null;
         }
 
+        // 카메라 위치와 회전을 목표값으로 설정
+        Camera.main.transform.position = targetPosition;
+        Camera.main.transform.rotation = targetRotation;
+
         CameraSettings.Instance.isZooming = false;
+
+        // 고정 시점 모드로 돌아올 때 이 값을 무시하고 초기화
+        if (!CameraTargetHandler.Instance.isFreeCamera)
+        {
+            Vector3 fixedPosition = CameraSettings.Instance.GetInitialPosition(DataManager.Instance.touchData.touchIncreaseLevel);
+            Quaternion fixedRotation = CameraSettings.Instance.GetFinalRotation();
+
+            Camera.main.transform.position = fixedPosition;
+            Camera.main.transform.rotation = fixedRotation;
+        }
     }
 
     public void UpdateCameraState(float newFOV, Vector3 newPosition)

@@ -9,7 +9,7 @@ public class CameraTargetHandler : MonoBehaviour
     public bool isObjectTarget = false;    
     private CameraTransition cameraTransition;
 
-    private bool isFreeCamera = false; // 자유시점 모드 여부
+    public bool isFreeCamera = false; // 자유시점 모드 여부
         
     private void Awake()
     {
@@ -25,26 +25,28 @@ public class CameraTargetHandler : MonoBehaviour
     private void Start()
     {
         cameraTransition = GetComponent<CameraTransition>();
-    }        
+    }
 
     public void SetTarget(Transform newTarget)
     {
         if (!isFreeCamera) // 자유시점 모드가 아닌 경우 타겟 변경 무시
-        {            
+        {
             return;
         }
 
         if (currentTarget == newTarget) // 이미 타겟이 설정된 경우 이벤트 무시
-        {            
+        {
             return;
         }
 
         currentTarget = newTarget;
         isObjectTarget = true;
+
+        // 여기에 기존 카메라 위치를 초기화하여 누적 오프셋을 방지
         CameraSettings.Instance.currentCameraPosition = Vector3.zero;
+
         StartCoroutine(ZoomToTarget(newTarget));
     }
-
 
     private IEnumerator ZoomToTarget(Transform newTarget)
     {
@@ -53,8 +55,10 @@ public class CameraTargetHandler : MonoBehaviour
         Vector3 startPosition = Camera.main.transform.position;
         Quaternion startRotation = Camera.main.transform.rotation;
 
+        // 카메라와 타겟 사이의 적절한 거리 유지
         Vector3 direction = (startPosition - newTarget.position).normalized;
         Vector3 targetPosition = newTarget.position + direction * (startPosition - newTarget.position).magnitude;
+
         Quaternion targetRotation = Quaternion.LookRotation(newTarget.position - targetPosition);
 
         while (Time.time < startTime + CameraSettings.Instance.zoomDuration)

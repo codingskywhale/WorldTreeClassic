@@ -20,7 +20,7 @@ public class CameraSettings : MonoBehaviour
     public float zoomDuration = 1.0f;
 
     public float minVerticalAngle = 0f; // 최소 각도 제한
-    public float maxVerticalAngle = 30f; // 최대 각도 제한
+    public float maxVerticalAngle = 85f; // 최대 각도 제한
     public float minHeight = 1f; // 카메라의 최소 높이 제한
     public float maxHeight = 15f;
 
