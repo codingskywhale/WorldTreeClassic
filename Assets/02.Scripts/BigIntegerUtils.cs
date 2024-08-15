@@ -11,7 +11,7 @@ public static class BigIntegerUtils
     public static string FormatBigInteger(BigInteger number)
     {
         string[] standardSuffixes = {
-        "K", "M", "B", "T", "P", "Q", "s", "S", "O", "N",
+        "","K", "M", "B", "T", "P", "Q", "s", "S", "O", "N",
         "D", "U", "d", "Tt", "Qd", "Qt", "Sx", "Sp", "Oc", "No", "V"
     };
 

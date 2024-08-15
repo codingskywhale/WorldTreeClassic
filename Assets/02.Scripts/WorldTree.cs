@@ -51,7 +51,7 @@ public class WorldTree : MonoBehaviour
         {
             IncrementCameraFOV();
             MoveCameraBackwards();
-            DataManager.Instance.animalSpawnTr.transform.position += Vector3.right / 2;
+            DataManager.Instance.animalSpawnTr.transform.position += Vector3.right / 10;
         }
     }
 

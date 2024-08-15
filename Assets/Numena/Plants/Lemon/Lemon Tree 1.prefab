@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 23738215718669960}
   - component: {fileID: 136989556097122434}
   - component: {fileID: -7082325719766253853}
+  - component: {fileID: -9050039818841889865}
   m_Layer: 0
   m_Name: Lemon Tree 1
   m_TagString: Untagged
@@ -122,3 +123,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _quality: 1
+--- !u!208 &-9050039818841889865
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1139572726157748}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 0
+  m_Extents: {x: 0.01, y: 0.005, z: 0.01}
+  m_MoveThreshold: 0.1
+  m_Carve: 1
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0, y: 0, z: 0}
+  m_TimeToStationary: 0.5

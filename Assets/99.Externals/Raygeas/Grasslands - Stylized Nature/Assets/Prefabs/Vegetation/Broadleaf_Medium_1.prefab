@@ -97,6 +97,7 @@ GameObject:
   - component: {fileID: 6493304190029624035}
   - component: {fileID: 868608378989199101}
   - component: {fileID: 5610724702469414446}
+  - component: {fileID: -1831252346444161800}
   m_Layer: 0
   m_Name: Broadleaf_Medium_1
   m_TagString: Untagged
@@ -222,6 +223,22 @@ CapsuleCollider:
   m_Height: 11
   m_Direction: 1
   m_Center: {x: 0.14, y: 4.52, z: -0.08}
+--- !u!208 &-1831252346444161800
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4691666359185756982}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 0
+  m_Extents: {x: 0.5, y: 0.25, z: 0.5}
+  m_MoveThreshold: 0.1
+  m_Carve: 1
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0, y: 0, z: 0}
+  m_TimeToStationary: 0.5
 --- !u!1 &5654127863593275303
 GameObject:
   m_ObjectHideFlags: 0
