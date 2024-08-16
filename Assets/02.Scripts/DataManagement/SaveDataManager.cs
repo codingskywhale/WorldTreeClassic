@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using System.Numerics;
 using UnityEngine;
 
@@ -27,7 +28,10 @@ public class SaveDataManager
 
         // 동물 상태 저장
         List<AnimalDataSave.AnimalState> animalStates = new List<AnimalDataSave.AnimalState>();
-        GameObject[] animalObjects = GameObject.FindGameObjectsWithTag("Animal");
+        GameObject[] animalObjects = DataManager.Instance.animalSpawnTr.GetComponentsInChildren<Transform>()
+                                          .Where(t => t != DataManager.Instance.animalSpawnTr) // 부모 자신을 제외
+                                          .Select(t => t.gameObject) // Transform에서 GameObject로 변환
+                                          .ToArray();
 
         foreach (var animal in animalObjects)
         {

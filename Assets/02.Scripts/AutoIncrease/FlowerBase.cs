@@ -80,7 +80,6 @@ public class FlowerBase : MonoBehaviour, IFlower
         }
 
         OnGenerationRateChanged += UpdateUI; // 이벤트 핸들러 추가
-        cameraTransition = FindObjectOfType<CameraTransition>(); // CameraTransition 컴포넌트 참조 초기화
         currentMultiplier = 1;
         LifeManager.Instance.RegisterFlower(this);
         UpdateUI();
