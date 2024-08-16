@@ -38,7 +38,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: -75, y: 35}
+  m_AnchoredPosition: {x: -65, y: 35}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 1, y: 1}
 --- !u!114 &2965522995446914247
@@ -59,7 +59,7 @@ MonoBehaviour:
     m_Top: 0
     m_Bottom: 0
   m_ChildAlignment: 0
-  m_Spacing: 10
+  m_Spacing: 6
   m_ChildForceExpandWidth: 1
   m_ChildForceExpandHeight: 1
   m_ChildControlWidth: 0
@@ -372,6 +372,7 @@ GameObject:
   m_Component:
   - component: {fileID: 669867870014874769}
   - component: {fileID: 3349313369465218031}
+  - component: {fileID: 4738921717307289757}
   m_Layer: 5
   m_Name: AchievementSlot
   m_TagString: Untagged
@@ -407,6 +408,26 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1535089907049277850}
   m_CullTransparentMesh: 1
+--- !u!114 &4738921717307289757
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1535089907049277850}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 13c07a20ced685c4f928f89e0593868f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  needCount: 0
+  starImages:
+  - {fileID: 8907050874005427602}
+  - {fileID: 8903416184769303324}
+  - {fileID: 7838527493320092486}
+  - {fileID: 2804986123713677669}
+  - {fileID: 5189665889620764882}
+  explainText: {fileID: 6807128693660317488}
 --- !u!1 &1871873540278356555
 GameObject:
   m_ObjectHideFlags: 0
