@@ -18,8 +18,6 @@ public class ADSkill : MonoBehaviour
 
     void Start()
     {
-        // 모든 스킬을 초기화합니다.
-        allSkills = FindObjectsOfType<Skill>();
         adButton.onClick.AddListener(OnShowAdButtonClicked); // 클릭 이벤트 리스너 추가
 
         // UnlockCondition 호출하여 초기 상태 설정

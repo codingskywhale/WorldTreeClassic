@@ -8,8 +8,7 @@ public class AutoObjectManager : Singleton<AutoObjectManager>
     public FlowerBase[] flowers;
     BigInteger totalGeneration = BigInteger.Zero;
     public float generationInterval = 1f;
-    public delegate void LifeGenerated(BigInteger amount);
-    public event LifeGenerated OnLifeGenerated;
+    public Action<BigInteger> OnLifeGenerated;
     private float timer;
 
     private void Start()
