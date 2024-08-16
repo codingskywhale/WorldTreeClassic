@@ -10,20 +10,20 @@ public class SaveDataManager
 
     public void SaveGameData(ResourceManager resourceManager, List<Skill> skillList, List<Artifact> artifactList)
     {
-        List<RootBase> roots = resourceManager.roots;
+        List<FlowerBase> flowers = resourceManager.flowers;
 
-        List<RootDataSave> rootDataList = new List<RootDataSave>();
-        foreach (var root in roots)
+        List<FlowerDataSave> flowerDataList = new List<FlowerDataSave>();
+        foreach (var flower in flowers)
         {
-            rootDataList.Add(new RootDataSave
+            flowerDataList.Add(new FlowerDataSave
             {
-                rootLevel = root.rootLevel,
-                isUnlocked = root.isUnlocked,
-                upgradeLifeCost = root.upgradeLifeCost.ToString()
+                flowerLevel = flower.flowerLevel,
+                isUnlocked = flower.isUnlocked,
+                upgradeLifeCost = flower.upgradeLifeCost.ToString()
             });
         }
 
-        BigInteger totalLifeIncrease = CalculateTotalLifeIncrease(roots);
+        BigInteger totalLifeIncrease = CalculateTotalLifeIncrease(flowers);
 
         // 동물 상태 저장
         List<AnimalDataSave.AnimalState> animalStates = new List<AnimalDataSave.AnimalState>();
@@ -114,7 +114,7 @@ public class SaveDataManager
             nowAnimalCount = DataManager.Instance.animalGenerateData.nowAnimalCount,
             maxAnimalCount = DataManager.Instance.animalGenerateData.maxAnimalCount,
             currentLevel = LifeManager.Instance.currentLevel,
-            roots = rootDataList,
+            flowers = flowerDataList,
             animalData = new AnimalDataSave
             {
                 nowCreateCost = DataManager.Instance.animalGenerateData.nowCreateCost.ToString(),
@@ -182,7 +182,7 @@ public class SaveDataManager
 
     public void ApplyLoadedGameData(GameData gameData, ResourceManager resourceManager, List<Skill> skillList, List<Artifact> artifactList, WorldTree worldTree)
     {
-        List<RootBase> roots = resourceManager.roots;
+        List<FlowerBase> flowers = resourceManager.flowers;
 
         LifeManager.Instance.lifeAmount = string.IsNullOrEmpty(gameData.lifeAmount) ? BigInteger.Zero : BigInteger.Parse(gameData.lifeAmount);
         LifeManager.Instance.currentLevel = gameData.currentLevel;
@@ -238,7 +238,7 @@ public class SaveDataManager
             DataManager.Instance.touchData.upgradeLifeCost = string.IsNullOrEmpty(gameData.touchData.upgradeLifeCost) ? BigInteger.Zero : BigInteger.Parse(gameData.touchData.upgradeLifeCost);
         }
 
-        InitializeRoots(gameData.roots);
+        InitializeFlowers(gameData.flowers);
 
         // 초당 생명력 생성률 로드
         if (!string.IsNullOrEmpty(gameData.lifeGenerationRatePerSecond))
@@ -247,9 +247,9 @@ public class SaveDataManager
         }
 
         // 초기화 후 모든 루트의 UI 업데이트
-        foreach (var root in roots)
+        foreach (var flower in flowers)
         {
-            root.UpdateUI();
+            flower.UpdateUI();
         }
 
         TimeSpan timeElapsed = TimeSpan.Zero;
@@ -323,36 +323,36 @@ public class SaveDataManager
         ResourceManager.Instance.UpdateUI();
     }
 
-    private void InitializeRoots(List<RootDataSave> rootDataList)
+    private void InitializeFlowers(List<FlowerDataSave> flowerDataList)
     {
-        List<RootBase> roots = ResourceManager.Instance.roots;
+        List<FlowerBase> flowers = ResourceManager.Instance.flowers;
 
-        for (int i = 0; i < roots.Count && i < rootDataList.Count; i++)
+        for (int i = 0; i < flowers.Count && i < flowerDataList.Count; i++)
         {
-            roots[i].rootLevel = rootDataList[i].rootLevel;
-            roots[i].isUnlocked = rootDataList[i].isUnlocked;
-            roots[i].upgradeLifeCost = string.IsNullOrEmpty(rootDataList[i].upgradeLifeCost) ? BigInteger.Zero : BigInteger.Parse(rootDataList[i].upgradeLifeCost);
+            flowers[i].flowerLevel = flowerDataList[i].flowerLevel;
+            flowers[i].isUnlocked = flowerDataList[i].isUnlocked;
+            flowers[i].upgradeLifeCost = string.IsNullOrEmpty(flowerDataList[i].upgradeLifeCost) ? BigInteger.Zero : BigInteger.Parse(flowerDataList[i].upgradeLifeCost);
 
-            if (roots[i].isUnlocked)
+            if (flowers[i].isUnlocked)
             {
-                InitializeRoot(roots[i], rootDataList[i].rootLevel);
+                InitializeFlower(flowers[i], flowerDataList[i].flowerLevel);
             }
 
-            roots[i].UpdateUI();
+            flowers[i].UpdateUI();
         }
     }
 
-    private void InitializeRoot(RootBase root, int level)
+    private void InitializeFlower(FlowerBase flower, int level)
     {
-        root.rootLevel = level;
-        root.upgradeLifeCost = root.CalculateUpgradeCost();
+        flower.flowerLevel = level;
+        flower.upgradeLifeCost = flower.CalculateUpgradeCost();
 
         for (int i = 0; i <= (int)(level / 25); i++)
         {
-            root.ActivateNextPlantObject();
+            flower.ActivateNextPlantObject();
         }
 
-        root.UpdateUI();
+        flower.UpdateUI();
     }
 
     public void InitializeDefaultGameData(ResourceManager resourceManager)
@@ -366,26 +366,26 @@ public class SaveDataManager
         DataManager.Instance.touchData.touchIncreaseAmount = 10;
         DataManager.Instance.touchData.upgradeLifeCost = 20;
 
-        List<RootBase> roots = resourceManager.roots;
-        foreach (var root in roots)
+        List<FlowerBase> flowers = resourceManager.flowers;
+        foreach (var flower in flowers)
         {
-            root.rootLevel = 0;
-            root.isUnlocked = false;
-            root.upgradeLifeCost = root.CalculateUpgradeCost();
-            root.UpdateUI();
+            flower.flowerLevel = 0;
+            flower.isUnlocked = false;
+            flower.upgradeLifeCost = flower.CalculateUpgradeCost();
+            flower.UpdateUI();
         }
 
         resourceManager.SetLifeGenerationRatePerSecond(BigInteger.Zero); // 초기 값 설정
     }
 
-    private BigInteger CalculateTotalLifeIncrease(List<RootBase> roots)
+    private BigInteger CalculateTotalLifeIncrease(List<FlowerBase> flowers)
     {
         BigInteger totalLifeIncrease = 0;
-        foreach (var root in roots)
+        foreach (var flower in flowers)
         {
-            if (root.isUnlocked)
+            if (flower.isUnlocked)
             {
-                totalLifeIncrease += root.GetTotalLifeGeneration();
+                totalLifeIncrease += flower.GetTotalLifeGeneration();
             }
         }
         return totalLifeIncrease;
@@ -397,7 +397,7 @@ public class SaveDataManager
         if (animalData != null)
         {
             GameObject animalObject = GameObject.Instantiate(animalData.animalPrefab, DataManager.Instance.spawnData.spawnTr); // 부모 설정 추가
-            LifeManager.Instance.ApplyIncreaseRateToAllRoots(1);
+            LifeManager.Instance.ApplyIncreaseRateToAllFlowers(1);
 
             if (animalObject != null)
             {

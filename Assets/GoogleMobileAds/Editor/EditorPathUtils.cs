@@ -51,7 +51,7 @@ public class EditorPathUtils : ScriptableObject
      * Returns true if GMA import is done via unity package manager,
      * false otherwise.
      */
-    public bool IsPackageRootPath()
+    public bool IsPackageFlowerPath()
     {
         return GetFilePath().StartsWith("Packages");
     }

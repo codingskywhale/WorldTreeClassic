@@ -1933,7 +1933,7 @@ namespace PlayFab.ServerModels
         RequestMultiplayerServersThrottledFromRateLimiter,
         TitleDataOverrideNotFound,
         DuplicateKeys,
-        WasNotCreatedWithCloudRoot,
+        WasNotCreatedWithCloudFlower,
         LegacyMultiplayerServersDeprecated,
         VirtualCurrencyCurrentlyUnavailable,
         SteamUserNotFound,

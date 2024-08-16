@@ -72,7 +72,7 @@ public class ManifestProcessor : IPreprocessBuild
          */
         EditorPathUtils pathUtils =
             ScriptableObject.CreateInstance<EditorPathUtils>();
-        if (pathUtils.IsPackageRootPath())
+        if (pathUtils.IsPackageFlowerPath())
         {
             // pathUtils.GetParentDirectoryAssetPath() returns "Packages/.../GoogleMobileAds" but
             // Plugins is at the same level of GoogleMobileAds so we go up one directory before

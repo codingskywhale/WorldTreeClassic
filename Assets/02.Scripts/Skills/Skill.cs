@@ -224,9 +224,9 @@ public abstract class Skill : MonoBehaviour
             return;
         }
         BigInteger upgradeCost = CalculateUpgradeCost(currentLevel);
-        if (DiamondManager.Instance.HasSufficientDiamond(upgradeCost))
+        if (LifeManager.Instance.diamond.HasSufficientDiamond(upgradeCost))
         {
-            DiamondManager.Instance.DecreaseDiamond(upgradeCost);
+            LifeManager.Instance.diamond.DecreaseDiamond(upgradeCost);
             currentLevel++;
             UpdateClickValues(); // 필요 시 업데이트
             UpdateUpgradeCostUI(); // 업그레이드 비용 UI 업데이트

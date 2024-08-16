@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class UpgradeButton : MonoBehaviour
 {
-    public RootBase root;
+    public FlowerBase root;
     public bool isTutorial = false;
 
     [Header("MultiUpgrade")]
@@ -18,7 +18,7 @@ public class UpgradeButton : MonoBehaviour
 
     public enum UpgradeType
     {
-        Root,
+        Flower,
         Touch,
         Tree
     }
@@ -35,9 +35,9 @@ public class UpgradeButton : MonoBehaviour
             upgradeButton.onClick.AddListener(OnUpgradeButtonClicked);
         ResourceManager.Instance.UpdateUI();
 
-        if (upgradeType == UpgradeType.Root && root != null)
+        if (upgradeType == UpgradeType.Flower && root != null)
         {
-            UpdateUpgradeCostUI(root.rootLevel);
+            UpdateUpgradeCostUI(root.flowerLevel);
         }
         else if (upgradeType == UpgradeType.Tree && ResourceManager.Instance != null)
         {
@@ -56,7 +56,7 @@ public class UpgradeButton : MonoBehaviour
 
         switch (upgradeType)
         {
-            case UpgradeType.Root:
+            case UpgradeType.Flower:
                 canUpgrade = root != null && (!root.isUnlocked &&
                                               DataManager.Instance.touchData.touchIncreaseLevel >= root.unlockThreshold &&
                                               LifeManager.Instance.HasSufficientWater(root.CalculateUpgradeCost())) ||
@@ -77,8 +77,8 @@ public class UpgradeButton : MonoBehaviour
     {
         switch (upgradeType)
         {
-            case UpgradeType.Root:
-                HandleRootUpgradeOrUnlock();
+            case UpgradeType.Flower:
+                HandleFlowerUpgradeOrUnlock();
                 break;
             case UpgradeType.Touch:
                 HandleTouchUpgrade();
@@ -89,26 +89,26 @@ public class UpgradeButton : MonoBehaviour
         }
     }
 
-    private void HandleRootUpgradeOrUnlock()
+    private void HandleFlowerUpgradeOrUnlock()
     {
         if (root == null) return;
 
         //if (!root.isUnlocked)
         //{
-        //    //HandleRootUnlock();
+        //    //HandleFlowerUnlock();
         //}
         //else
         //{
-        HandleRootUpgrade();
+        HandleFlowerUpgrade();
         //}
     }
 
-    //private void HandleRootUnlock()
+    //private void HandleFlowerUnlock()
     //{
     //    if (root == null || root.isUnlocked) return;
 
     //    BigInteger unlockCost = root.unlockCost; // CalculateUpgradeCost가 아닌 unlockCost 사용
-    //    Debug.Log($"HandleRootUnlock - Unlock Cost: {unlockCost}, Current Water: {LifeManager.Instance.lifeAmount}");
+    //    Debug.Log($"HandleFlowerUnlock - Unlock Cost: {unlockCost}, Current Water: {LifeManager.Instance.lifeAmount}");
     //    if (LifeManager.Instance.HasSufficientWater(unlockCost))
     //    {
     //        LifeManager.Instance.DecreaseWater(unlockCost);
@@ -126,7 +126,7 @@ public class UpgradeButton : MonoBehaviour
     //    }
     //}
 
-    public void HandleRootUpgrade()
+    public void HandleFlowerUpgrade()
     {
         if (root == null || !root.isUnlocked) return;
 
@@ -186,12 +186,12 @@ public class UpgradeButton : MonoBehaviour
 
     public void UpdateUpgradeCostUI(int newLevel)
     { // 저장 때문에 퍼블릭으로 수정!!
-        if (upgradeType == UpgradeType.Root && root != null)
+        if (upgradeType == UpgradeType.Flower && root != null)
         {
             BigInteger upgradeCost = root.CalculateUpgradeCost();
             //Debug.Log($"UpdateUpgradeCostUI called for root level {this.name}, {root.rootLevel}, upgrade cost {upgradeCost}");
-            //UIManager.Instance.root.UpdateRootLevelUI(root.rootLevel, upgradeCost);
-            root.UpdateRootLevelUI(root.rootLevel, upgradeCost);
+            //UIManager.Instance.root.UpdateFlowerLevelUI(root.rootLevel, upgradeCost);
+            root.UpdateFlowerLevelUI(root.flowerLevel, upgradeCost);
         }
         else if (upgradeType == UpgradeType.Touch) //&& touchInputManager != null
         {
@@ -229,7 +229,7 @@ public class UpgradeButton : MonoBehaviour
     private int GetMaxUpgradeCount()
     {
         int count = 0;
-        BigInteger cost = upgradeType == UpgradeType.Touch ? DataManager.Instance.touchData.upgradeLifeCost : AutoObjectManagerTest.Instance.roots[buttonIdx].GetTotalLifeGeneration();
+        BigInteger cost = upgradeType == UpgradeType.Touch ? DataManager.Instance.touchData.upgradeLifeCost : AutoObjectManagerTest.Instance.flowers[buttonIdx].GetTotalLifeGeneration();
         BigInteger totalCost = cost;
 
         while (LifeManager.Instance.lifeAmount >= totalCost)

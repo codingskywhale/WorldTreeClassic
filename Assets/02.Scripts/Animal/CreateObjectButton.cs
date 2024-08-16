@@ -113,7 +113,7 @@ public class CreateObjectButton : MonoBehaviour
         DataManager.Instance.bag.UpdateSlotDataUI(buttonIndex);
         // 생산량 2배 증가.
         DataManager.Instance.touchData.ApplyIncreaseRate(1);
-        LifeManager.Instance.ApplyIncreaseRateToAllRoots(1);
+        LifeManager.Instance.ApplyIncreaseRateToAllFlowers(1);
         UIManager.Instance.status.UpdateLifeIncreaseUI(ResourceManager.Instance.GetTotalLifeGenerationPerSecond());
 
         //UIManager.Instance.CheckEnoughCost(0);

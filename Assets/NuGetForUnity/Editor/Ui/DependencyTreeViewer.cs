@@ -174,7 +174,7 @@ namespace NugetForUnity.Ui
 
         private void BuildTree()
         {
-            roots = InstalledPackagesManager.GetInstalledRootPackages();
+            roots = InstalledPackagesManager.GetInstalledFlowerPackages();
         }
 
         private void DrawDependency(INugetPackageIdentifier dependency)

@@ -32,7 +32,7 @@ public class UIUpdater
         UIManager.Instance.status.UpdateLifeUI(LifeManager.Instance.lifeAmount, LifeManager.Instance.CalculateWaterNeededForUpgrade(1));
         UIManager.Instance.status.UpdateAnimalCountText(DataManager.Instance.animalGenerateData.nowAnimalCount, DataManager.Instance.animalGenerateData.maxAnimalCount);
 
-        foreach (var root in resourceManager.roots)
+        foreach (var root in resourceManager.flowers)
         {
             if (root.isUnlocked)
             {                
@@ -42,9 +42,9 @@ public class UIUpdater
 
         foreach (var button in upgradeButtons)
         {
-            if (button.upgradeType == UpgradeButton.UpgradeType.Root)
+            if (button.upgradeType == UpgradeButton.UpgradeType.Flower)
             {
-                button.UpdateUpgradeCostUI(button.root.rootLevel);
+                button.UpdateUpgradeCostUI(button.root.flowerLevel);
             }
             else if (button.upgradeType == UpgradeButton.UpgradeType.Tree)
             {
@@ -56,7 +56,7 @@ public class UIUpdater
             }
         }
 
-        foreach (var root in resourceManager.roots)
+        foreach (var root in resourceManager.flowers)
         {
             if (root.isUnlocked)
             {
@@ -64,7 +64,7 @@ public class UIUpdater
             }
             else
             {
-                root.UpdateRootLevelUI(0, root.unlockCost);
+                root.UpdateFlowerLevelUI(0, root.unlockCost);
             }
         }
 
@@ -127,7 +127,7 @@ public class UIUpdater
         }
     }
 
-    private BigInteger CalculateTotalLifeIncrease(List<RootBase> roots)
+    private BigInteger CalculateTotalLifeIncrease(List<FlowerBase> roots)
     {
         BigInteger totalLifeIncrease = 0;
         foreach (var root in roots)

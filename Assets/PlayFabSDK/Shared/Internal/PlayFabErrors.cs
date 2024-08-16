@@ -511,7 +511,7 @@ namespace PlayFab
         RequestMultiplayerServersThrottledFromRateLimiter = 1507,
         TitleDataOverrideNotFound = 1508,
         DuplicateKeys = 1509,
-        WasNotCreatedWithCloudRoot = 1510,
+        WasNotCreatedWithCloudFlower = 1510,
         LegacyMultiplayerServersDeprecated = 1511,
         VirtualCurrencyCurrentlyUnavailable = 1512,
         SteamUserNotFound = 1513,

@@ -6,7 +6,7 @@ using UnityEngine;
 public class AutoObjectManager : MonoBehaviour
 {
     public static AutoObjectManager Instance;
-    public RootBase[] roots;
+    public FlowerBase[] roots;
     BigInteger totalGeneration = BigInteger.Zero;
     public float generationInterval = 1f;
     public delegate void LifeGenerated(BigInteger amount);

@@ -91,11 +91,11 @@ namespace PlayFab.PfEditor
                         // this probably means the editor folder was moved.
                         // see if we can locate the moved root and reload the assets
 
-                        var movedRootFiles = Directory.GetFiles(Application.dataPath, PLAYFAB_EDEX_MAINFILE, SearchOption.AllDirectories);
-                        if (movedRootFiles.Length > 0)
+                        var movedFlowerFiles = Directory.GetFiles(Application.dataPath, PLAYFAB_EDEX_MAINFILE, SearchOption.AllDirectories);
+                        if (movedFlowerFiles.Length > 0)
                         {
                             relocatedEdEx = true;
-                            EDEX_ROOT = movedRootFiles[0].Substring(0, movedRootFiles[0].LastIndexOf(PLAYFAB_EDEX_MAINFILE) - 1);
+                            EDEX_ROOT = movedFlowerFiles[0].Substring(0, movedFlowerFiles[0].LastIndexOf(PLAYFAB_EDEX_MAINFILE) - 1);
                             PlayFabEditorPrefsSO.Instance.EdExPath = EDEX_ROOT;
                             PlayFabEditorDataService.SaveEnvDetails();
                         }
@@ -118,8 +118,8 @@ namespace PlayFab.PfEditor
 
         private static GUISkin GetUiStyle()
         {
-            var searchRootAssetFolder = Application.dataPath;
-            var pfGuiPaths = Directory.GetFiles(searchRootAssetFolder, "PlayFabStyles.guiskin", SearchOption.AllDirectories);
+            var searchFlowerAssetFolder = Application.dataPath;
+            var pfGuiPaths = Directory.GetFiles(searchFlowerAssetFolder, "PlayFabStyles.guiskin", SearchOption.AllDirectories);
             foreach (var eachPath in pfGuiPaths)
             {
                 var loadPath = eachPath.Substring(eachPath.LastIndexOf("Assets"));

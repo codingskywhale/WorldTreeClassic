@@ -1,4 +1,4 @@
-﻿#pragma warning disable SA1512,SA1124 // Single-line comments should not be followed by blank line
+#pragma warning disable SA1512,SA1124 // Single-line comments should not be followed by blank line
 
 using System;
 using System.Collections.Generic;

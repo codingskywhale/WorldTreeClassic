@@ -60,7 +60,6 @@ public class GameManager : Singleton<GameManager>
 
     public void OnIntroAndOpeningCompleted()
     {
-        LifeManager.Instance.bubbleGenerator.InitialBubbleSet();
         saveDataManager.animalDataList = animalDataList;
         UIManager.Instance.CreateAnimalButtons();
         UIManager.Instance.bag.CreateSlot();

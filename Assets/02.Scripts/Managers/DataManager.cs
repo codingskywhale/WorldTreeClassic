@@ -3,10 +3,8 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class DataManager : MonoBehaviour
+public class DataManager : Singleton<DataManager>
 {
-    public static DataManager Instance { get; private set; } // 싱글톤 인스턴스
-
     public AnimalGenerateData animalGenerateData;
     public AnimalSpawnData spawnData;
     public TouchData touchData;
@@ -14,18 +12,9 @@ public class DataManager : MonoBehaviour
     public List<AnimalDataSO> animalDataList = new List<AnimalDataSO>();
     public Transform animalSpawnTr;
 
-    private void Awake()
+    protected override void Awake()
     {
-        // 싱글톤 인스턴스 설정
-        if (Instance == null)
-        {
-            Instance = this;
-            DontDestroyOnLoad(gameObject); // 인스턴스가 파괴되지 않도록 설정
-        }
-        else
-        {
-            Destroy(gameObject); // 이미 인스턴스가 존재하면 중복 생성된 객체 파괴
-        }
+        base.Awake();
         animalGenerateData = new AnimalGenerateData();
 
         touchData = GetComponent<TouchData>();

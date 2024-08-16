@@ -116,7 +116,7 @@ public static class PListProcessor
          * Handle importing GMA via Unity Package Manager.
          */
         EditorPathUtils pathUtils = ScriptableObject.CreateInstance<EditorPathUtils>();
-        if (pathUtils.IsPackageRootPath())
+        if (pathUtils.IsPackageFlowerPath())
         {
             string parentDirectoryPath = pathUtils.GetDirectoryAssetPath();
             path = Path.Combine(parentDirectoryPath, SKADNETWORKS_FILE_NAME);

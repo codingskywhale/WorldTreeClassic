@@ -19,8 +19,8 @@ public class MultiUpgradeButton : MonoBehaviour
             if(upgradeType == UpgradeType.Touch)
                 upgradeButton.HandleTouchUpgrade();
 
-            else if(upgradeType == UpgradeType.Root)
-                upgradeButton.HandleRootUpgrade();
+            else if(upgradeType == UpgradeType.Flower)
+                upgradeButton.HandleFlowerUpgrade();
         }
 
         upgradeButton.SetMultiUpgradeButton();

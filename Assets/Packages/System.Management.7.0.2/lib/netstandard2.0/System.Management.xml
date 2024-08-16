@@ -1147,7 +1147,7 @@
       <returns>
         <see langword="true" /> if the object is synchronized; otherwise, <see langword="false" />.</returns>
     </member>
-    <member name="P:System.Management.ManagementObjectCollection.SyncRoot">
+    <member name="P:System.Management.ManagementObjectCollection.SyncFlower">
       <summary>Gets the object to be used for synchronization.</summary>
       <returns>An object that can be used for synchronization.</returns>
     </member>
@@ -1800,7 +1800,7 @@
       <param name="methodName">The name of the method requested.</param>
       <returns>Returns a <see cref="T:System.Management.MethodData" /> containing the method data for a specified method from the collection.</returns>
     </member>
-    <member name="P:System.Management.MethodDataCollection.SyncRoot">
+    <member name="P:System.Management.MethodDataCollection.SyncFlower">
       <summary>Gets the object to be used for synchronization.</summary>
       <returns>Returns an <see cref="T:System.Object" /> value representing the object to be used for synchronization.</returns>
     </member>
@@ -1999,7 +1999,7 @@
       <param name="propertyName">The name of the property to retrieve.</param>
       <returns>Returns a <see cref="T:System.Management.PropertyData" /> containing the data for a specified property in the collection.</returns>
     </member>
-    <member name="P:System.Management.PropertyDataCollection.SyncRoot">
+    <member name="P:System.Management.PropertyDataCollection.SyncFlower">
       <summary>Gets the object to be used for synchronization.</summary>
       <returns>Returns an <see cref="T:System.Object" /> value containing the object to be used for synchronization.</returns>
     </member>
@@ -2157,7 +2157,7 @@
       <param name="qualifierName">The name of the <see cref="T:System.Management.QualifierData" /> to access in the <see cref="T:System.Management.QualifierDataCollection" />.</param>
       <returns>The data for a specified qualifier in the collection.</returns>
     </member>
-    <member name="P:System.Management.QualifierDataCollection.SyncRoot">
+    <member name="P:System.Management.QualifierDataCollection.SyncFlower">
       <summary>Gets the object to be used for synchronization.</summary>
       <returns>The object to be used for synchronization.</returns>
     </member>

@@ -2565,7 +2565,7 @@ namespace PlayFab.AdminModels
         RequestMultiplayerServersThrottledFromRateLimiter,
         TitleDataOverrideNotFound,
         DuplicateKeys,
-        WasNotCreatedWithCloudRoot,
+        WasNotCreatedWithCloudFlower,
         LegacyMultiplayerServersDeprecated,
         VirtualCurrencyCurrentlyUnavailable,
         SteamUserNotFound,

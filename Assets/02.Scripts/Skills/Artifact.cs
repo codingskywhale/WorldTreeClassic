@@ -49,9 +49,9 @@ public abstract class Artifact : MonoBehaviour
 
     private void UnlockArtifact()
     {
-        if (DiamondManager.Instance.HasSufficientDiamond(unlockCost))
+        if (LifeManager.Instance.diamond.HasSufficientDiamond(unlockCost))
         {
-            DiamondManager.Instance.DecreaseDiamond(unlockCost);
+            LifeManager.Instance.diamond.DecreaseDiamond(unlockCost);
             currentLevel = 1;
             ActiveObject();
             UpdateUpgradeCostUI(); // 업그레이드 비용 UI 업데이트
@@ -72,9 +72,9 @@ public abstract class Artifact : MonoBehaviour
             return;
         }
         BigInteger upgradeCost = CalculateUpgradeCost(currentLevel);
-        if (DiamondManager.Instance.HasSufficientDiamond(upgradeCost))
+        if (LifeManager.Instance.diamond.HasSufficientDiamond(upgradeCost))
         {
-            DiamondManager.Instance.DecreaseDiamond(upgradeCost);
+            LifeManager.Instance.diamond.DecreaseDiamond(upgradeCost);
             currentLevel++;
             UpdateClickValues(); // 필요 시 업데이트
             UpdateUpgradeCostUI(); // 업그레이드 비용 UI 업데이트

@@ -43,14 +43,14 @@ namespace UnityMeshSimplifier
         /// <summary>
         /// Combines an array of mesh renderers into one single mesh.
         /// </summary>
-        /// <param name="rootTransform">The root transform to create the combine mesh based from, essentially the origin of the new mesh.</param>
+        /// <param name="flowerTransform">The flower transform to create the combine mesh based from, essentially the origin of the new mesh.</param>
         /// <param name="renderers">The array of mesh renderers to combine.</param>
         /// <param name="resultMaterials">The resulting materials for the combined mesh.</param>
         /// <returns>The combined mesh.</returns>
-        public static Mesh CombineMeshes(Transform rootTransform, MeshRenderer[] renderers, out Material[] resultMaterials)
+        public static Mesh CombineMeshes(Transform flowerTransform, MeshRenderer[] renderers, out Material[] resultMaterials)
         {
-            if (rootTransform == null)
-                throw new System.ArgumentNullException(nameof(rootTransform));
+            if (flowerTransform == null)
+                throw new System.ArgumentNullException(nameof(flowerTransform));
             else if (renderers == null)
                 throw new System.ArgumentNullException(nameof(renderers));
 
@@ -74,7 +74,7 @@ namespace UnityMeshSimplifier
                     throw new System.ArgumentException(string.Format("The mesh in the mesh filter for renderer at index {0} is not readable.", i), nameof(renderers));
 
                 meshes[i] = meshFilter.sharedMesh;
-                transforms[i] = rootTransform.worldToLocalMatrix * rendererTransform.localToWorldMatrix;
+                transforms[i] = flowerTransform.worldToLocalMatrix * rendererTransform.localToWorldMatrix;
                 materials[i] = renderer.sharedMaterials;
             }
 
@@ -84,15 +84,15 @@ namespace UnityMeshSimplifier
         /// <summary>
         /// Combines an array of skinned mesh renderers into one single skinned mesh.
         /// </summary>
-        /// <param name="rootTransform">The root transform to create the combine mesh based from, essentially the origin of the new mesh.</param>
+        /// <param name="flowerTransform">The flower transform to create the combine mesh based from, essentially the origin of the new mesh.</param>
         /// <param name="renderers">The array of skinned mesh renderers to combine.</param>
         /// <param name="resultMaterials">The resulting materials for the combined mesh.</param>
         /// <param name="resultBones">The resulting bones for the combined mesh.</param>
         /// <returns>The combined mesh.</returns>
-        public static Mesh CombineMeshes(Transform rootTransform, SkinnedMeshRenderer[] renderers, out Material[] resultMaterials, out Transform[] resultBones)
+        public static Mesh CombineMeshes(Transform flowerTransform, SkinnedMeshRenderer[] renderers, out Material[] resultMaterials, out Transform[] resultBones)
         {
-            if (rootTransform == null)
-                throw new System.ArgumentNullException(nameof(rootTransform));
+            if (flowerTransform == null)
+                throw new System.ArgumentNullException(nameof(flowerTransform));
             else if (renderers == null)
                 throw new System.ArgumentNullException(nameof(renderers));
 
@@ -113,7 +113,7 @@ namespace UnityMeshSimplifier
 
                 var rendererTransform = renderer.transform;
                 meshes[i] = renderer.sharedMesh;
-                transforms[i] = rootTransform.worldToLocalMatrix * rendererTransform.localToWorldMatrix;
+                transforms[i] = flowerTransform.worldToLocalMatrix * rendererTransform.localToWorldMatrix;
                 materials[i] = renderer.sharedMaterials;
                 bones[i] = renderer.bones;
             }
