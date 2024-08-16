@@ -1,0 +1,80 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!687078895 &4343727234628468602
+SpriteAtlas:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: AchievementIconAtlas
+  m_EditorData:
+    serializedVersion: 2
+    textureSettings:
+      serializedVersion: 2
+      anisoLevel: 1
+      compressionQuality: 50
+      maxTextureSize: 2048
+      textureCompression: 0
+      filterMode: 1
+      generateMipMaps: 0
+      readable: 0
+      crunchedCompression: 0
+      sRGB: 1
+    platformSettings: []
+    packingSettings:
+      serializedVersion: 2
+      padding: 4
+      blockOffset: 1
+      allowAlphaSplitting: 0
+      enableRotation: 0
+      enableTightPacking: 0
+      enableAlphaDilation: 0
+    secondaryTextureSettings: {}
+    variantMultiplier: 1
+    packables:
+    - {fileID: 2800000, guid: 2852295342276424a85cb36987ba44bc, type: 3}
+    - {fileID: 2800000, guid: 019fabaa2fa633d40885c0f27bbfcd6f, type: 3}
+    - {fileID: 2800000, guid: c80b5a38824d6e045b5f264a0f2ce574, type: 3}
+    - {fileID: 2800000, guid: 6b88d145dd2643e4ab4e25f22ab658ac, type: 3}
+    - {fileID: 2800000, guid: 1f29582cea1367a428f5aa0efaa7f2e0, type: 3}
+    - {fileID: 2800000, guid: 8522dfc1c99cada4ea03a235f78f4b32, type: 3}
+    - {fileID: 2800000, guid: cd9b1f996d3bde04fafab0dc828ec79f, type: 3}
+    - {fileID: 2800000, guid: 1d7e1ed577385d84ca1eea547a67fa98, type: 3}
+    - {fileID: 2800000, guid: bee04c2201f1159499f1b08fa902467c, type: 3}
+    bindAsDefault: 1
+    isAtlasV2: 0
+    cachedData: {fileID: 0}
+    packedSpriteRenderDataKeys:
+    - 8522dfc1c99cada4ea03a235f78f4b32: 21300000
+    - bee04c2201f1159499f1b08fa902467c: 21300000
+    - 2852295342276424a85cb36987ba44bc: 21300000
+    - 6b88d145dd2643e4ab4e25f22ab658ac: 21300000
+    - 1d7e1ed577385d84ca1eea547a67fa98: 21300000
+    - c80b5a38824d6e045b5f264a0f2ce574: 21300000
+    - cd9b1f996d3bde04fafab0dc828ec79f: 21300000
+    - 019fabaa2fa633d40885c0f27bbfcd6f: 21300000
+    - 1f29582cea1367a428f5aa0efaa7f2e0: 21300000
+  m_MasterAtlas: {fileID: 0}
+  m_PackedSprites:
+  - {fileID: 21300000, guid: 8522dfc1c99cada4ea03a235f78f4b32, type: 3}
+  - {fileID: 21300000, guid: bee04c2201f1159499f1b08fa902467c, type: 3}
+  - {fileID: 21300000, guid: 2852295342276424a85cb36987ba44bc, type: 3}
+  - {fileID: 21300000, guid: 6b88d145dd2643e4ab4e25f22ab658ac, type: 3}
+  - {fileID: 21300000, guid: 1d7e1ed577385d84ca1eea547a67fa98, type: 3}
+  - {fileID: 21300000, guid: c80b5a38824d6e045b5f264a0f2ce574, type: 3}
+  - {fileID: 21300000, guid: cd9b1f996d3bde04fafab0dc828ec79f, type: 3}
+  - {fileID: 21300000, guid: 019fabaa2fa633d40885c0f27bbfcd6f, type: 3}
+  - {fileID: 21300000, guid: 1f29582cea1367a428f5aa0efaa7f2e0, type: 3}
+  m_PackedSpriteNamesToIndex:
+  - TimerIcon
+  - HeartBubble
+  - AnimalCountIcon
+  - PlantLevelIcon
+  - ADIcon
+  - PictorialBookIcon
+  - TreeLevelIcon 1
+  - OnlineIcon
+  - skillCountIcon
+  m_RenderDataMap: {}
+  m_Tag: AchievementIconAtlas
+  m_IsVariant: 0

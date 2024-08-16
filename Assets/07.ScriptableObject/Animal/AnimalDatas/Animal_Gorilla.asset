@@ -1,0 +1,30 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 800bd3ef680550d49883bb83d8765e37, type: 3}
+  m_Name: Animal_Gorilla
+  m_EditorClassIdentifier: 
+  animalIndex: 11
+  animalIcon: {fileID: 21300000, guid: 3a8c97727c4109d4290d8e8dff8e30cb, type: 3}
+  animalName: "\uACE0\uB9B4\uB77C"
+  animalUnlockConditions:
+  - conditionType: 1
+    targetName: 
+    requiredAnimalIndex: 0
+    requiredAnimalCount: 0
+    requiredPlantIndex: 3
+    requiredWorldTreeLevel: 0
+  animalPrefab: {fileID: 1791417161093438, guid: 57a429f4b3b3c754e975b792ed61d63a, type: 3}
+  storyText: "\uD2BC\uD2BC\uD55C \uBCF5\uADFC\uC744 \uAC00\uC9C4 \uACE0\uB9B4\uB77C.
+    \uC5B8\uC81C\uB098 \uB098\uB978\uD55C \uD45C\uC815\uC744 \uC9D3\uACE0 \uC788\uC9C0\uB9CC,
+    \uD654\uB0A0 \uB54C\uB294 \uB204\uAD6C\uB3C4 \uBABB\uB9D0\uB9B0\uB2E4\uACE0 \uD55C\uB2E4.
+    \uC544\uCE68\uB9C8\uB2E4 \uB4DC\uB7EC\uBC0D\uC73C\uB85C \uB3D9\uBB3C\uB4E4\uC744
+    \uB2E8\uC7A0\uC5D0\uC11C \uAE68\uC6B4\uB2E4."
