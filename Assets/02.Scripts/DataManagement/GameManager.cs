@@ -11,7 +11,6 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : Singleton<GameManager>
 {
-    public ResourceManager resourceManager;
     public List<UpgradeButton> upgradeButtons;
     public List<AnimalDataSO> animalDataList;
     public List<SkillCoolDownReduction> skillCoolDownReductions; 
@@ -45,14 +44,14 @@ public class GameManager : Singleton<GameManager>
     {           
         saveDataManager = new SaveDataManager();
         saveDataManager.animalDataList = animalDataList;
-        uiUpdater = new UIUpdater(resourceManager, upgradeButtons);
+        uiUpdater = new UIUpdater(upgradeButtons);
         uiUpdater.SetSkills(skills);
         uiUpdater.SetArtifacts(artifacts);
         offlineProgressCalculator = new OfflineProgressCalculator();
         // OfflineRewardSkill 인스턴스 생성 및 초기화
         offlineRewardSkill = FindObjectOfType<OfflineRewardSkill>();
         offlineRewardAmountSkill = FindObjectOfType<OfflineRewardAmountSkill>();
-        offlineRewardManager = new OfflineRewardManager(resourceManager, offlineProgressCalculator,
+        offlineRewardManager = new OfflineRewardManager(offlineProgressCalculator,
                                                         offlineRewardSkill, offlineRewardAmountSkill);
         touchInput = GetComponent<TouchInput>();
         offlineRewardUIManager.Initialize(offlineRewardManager); // UI 매니저 초기화        
@@ -97,7 +96,7 @@ public class GameManager : Singleton<GameManager>
 
     private void AutoSaveGame()
     {
-        saveDataManager.SaveGameData(resourceManager, skills, artifacts);        
+        saveDataManager.SaveGameData(skills, artifacts);        
     }
 
     private void CalculateOfflineProgress(GameData gameData)
@@ -127,7 +126,7 @@ public class GameManager : Singleton<GameManager>
     {
         if (PlayFabClientAPI.IsClientLoggedIn())
         {
-            saveDataManager.SaveGameData(resourceManager, skills, artifacts);
+            saveDataManager.SaveGameData(skills, artifacts);
             PlayerPrefs.SetInt("GuestLoggedIn", 1);
             PlayerPrefs.Save();
         }

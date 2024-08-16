@@ -16,19 +16,13 @@ public class LifeManager : Singleton<LifeManager>
     public Diamond diamond;
 
     [Header("Flower")]
-    public FlowerBase FlowerData;
     public List<IFlower> rootData = new List<IFlower>();
-
-    [Header("Bubble")] // Resource로 이전
-    public BubbleGenerator bubbleGenerator;
-    public BubbleGeneratorPool bubbleGenratorPool;
 
 
     protected override void Awake()
     {
         base.Awake();
         diamond = GetComponent<Diamond>();
-        bubbleGenerator = GetComponent<BubbleGenerator>();
     }
     private void Start()
     {

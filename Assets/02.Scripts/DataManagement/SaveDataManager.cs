@@ -8,9 +8,9 @@ public class SaveDataManager
 {
     public List<AnimalDataSO> animalDataList;
 
-    public void SaveGameData(ResourceManager resourceManager, List<Skill> skillList, List<Artifact> artifactList)
+    public void SaveGameData(List<Skill> skillList, List<Artifact> artifactList)
     {
-        List<FlowerBase> flowers = resourceManager.flowers;
+        List<FlowerBase> flowers = ResourceManager.Instance.flowers;
 
         List<FlowerDataSave> flowerDataList = new List<FlowerDataSave>();
         foreach (var flower in flowers)
@@ -130,7 +130,7 @@ public class SaveDataManager
                 upgradeLifeCost = DataManager.Instance.touchData.upgradeLifeCost.ToString()
             },
             lastSaveTime = DateTime.UtcNow.ToString("o"),
-            lifeGenerationRatePerSecond = resourceManager.GetTotalLifeGenerationPerSecond().ToString(),
+            lifeGenerationRatePerSecond = ResourceManager.Instance.GetTotalLifeGenerationPerSecond().ToString(),
             allTypeCountDic = serializableDict, // 직렬화된 딕셔너리 저장
             createObjectButtonUnlockCount = UIManager.Instance.createObjectButtonUnlockCount,
             skillDataList = skillDataList,
@@ -147,7 +147,7 @@ public class SaveDataManager
         PlayerPrefs.Save();
     }
 
-    public IEnumerator LoadGameDataCoroutine(ResourceManager resourceManager, List<Skill> skillList, List<Artifact> artifactList, WorldTree worldTree)
+    public IEnumerator LoadGameDataCoroutine(List<Skill> skillList, List<Artifact> artifactList, WorldTree worldTree)
     {
         bool isDataLoaded = false;
 
@@ -156,7 +156,7 @@ public class SaveDataManager
             if (gameData == null)
             {
                 Debug.Log("gameData is not null");
-                InitializeDefaultGameData(resourceManager);
+                InitializeDefaultGameData();
                 UIManager.Instance.createObjectButtonUnlockCount = 0;
                 //UIManager.Instance.UpdateButtonUI();
                 BigInteger bigNumber = BigInteger.Parse("900000000000000000000000000000000000000000000" +
@@ -167,7 +167,7 @@ public class SaveDataManager
             }
             else
             {
-                ApplyLoadedGameData(gameData, resourceManager, skillList, artifactList, worldTree);
+                ApplyLoadedGameData(gameData, skillList, artifactList, worldTree);
             }
 
             isDataLoaded = true;
@@ -180,9 +180,9 @@ public class SaveDataManager
         }
     }
 
-    public void ApplyLoadedGameData(GameData gameData, ResourceManager resourceManager, List<Skill> skillList, List<Artifact> artifactList, WorldTree worldTree)
+    public void ApplyLoadedGameData(GameData gameData, List<Skill> skillList, List<Artifact> artifactList, WorldTree worldTree)
     {
-        List<FlowerBase> flowers = resourceManager.flowers;
+        List<FlowerBase> flowers = ResourceManager.Instance.flowers;
 
         LifeManager.Instance.lifeAmount = string.IsNullOrEmpty(gameData.lifeAmount) ? BigInteger.Zero : BigInteger.Parse(gameData.lifeAmount);
         LifeManager.Instance.currentLevel = gameData.currentLevel;
@@ -243,7 +243,7 @@ public class SaveDataManager
         // 초당 생명력 생성률 로드
         if (!string.IsNullOrEmpty(gameData.lifeGenerationRatePerSecond))
         {
-            resourceManager.SetLifeGenerationRatePerSecond(BigInteger.Parse(gameData.lifeGenerationRatePerSecond));
+            ResourceManager.Instance.SetLifeGenerationRatePerSecond(BigInteger.Parse(gameData.lifeGenerationRatePerSecond));
         }
 
         // 초기화 후 모든 루트의 UI 업데이트
@@ -311,6 +311,7 @@ public class SaveDataManager
         }
 
         worldTree.UpdateTreeMeshes(DataManager.Instance.touchData.touchIncreaseLevel);
+        DataManager.Instance.animalSpawnTr.transform.position = new UnityEngine.Vector3(0, 0, (DataManager.Instance.touchData.touchIncreaseLevel / 10) * 0.1f);
 
         for (int i = 10; i <= DataManager.Instance.touchData.touchIncreaseLevel; i += 10)
         {
@@ -355,7 +356,7 @@ public class SaveDataManager
         flower.UpdateUI();
     }
 
-    public void InitializeDefaultGameData(ResourceManager resourceManager)
+    public void InitializeDefaultGameData()
     {
         LifeManager.Instance.lifeAmount = BigInteger.Zero;
         LifeManager.Instance.currentLevel = 1;
@@ -366,7 +367,7 @@ public class SaveDataManager
         DataManager.Instance.touchData.touchIncreaseAmount = 10;
         DataManager.Instance.touchData.upgradeLifeCost = 20;
 
-        List<FlowerBase> flowers = resourceManager.flowers;
+        List<FlowerBase> flowers = ResourceManager.Instance.flowers;
         foreach (var flower in flowers)
         {
             flower.flowerLevel = 0;
@@ -375,7 +376,7 @@ public class SaveDataManager
             flower.UpdateUI();
         }
 
-        resourceManager.SetLifeGenerationRatePerSecond(BigInteger.Zero); // 초기 값 설정
+        ResourceManager.Instance.SetLifeGenerationRatePerSecond(BigInteger.Zero); // 초기 값 설정
     }
 
     private BigInteger CalculateTotalLifeIncrease(List<FlowerBase> flowers)

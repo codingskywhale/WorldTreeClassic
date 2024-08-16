@@ -4,14 +4,12 @@ using UnityEngine;
 
 public class UIUpdater
 {
-    private ResourceManager resourceManager;
     private List<UpgradeButton> upgradeButtons;
     private List<Skill> skills;
     private List<Artifact> artifacts;
 
-    public UIUpdater(ResourceManager resourceManager, List<UpgradeButton> upgradeButtons)
+    public UIUpdater(List<UpgradeButton> upgradeButtons)
     {
-        this.resourceManager = resourceManager;
         this.upgradeButtons = upgradeButtons;
     }
 
@@ -32,7 +30,7 @@ public class UIUpdater
         UIManager.Instance.status.UpdateLifeUI(LifeManager.Instance.lifeAmount, LifeManager.Instance.CalculateWaterNeededForUpgrade(1));
         UIManager.Instance.status.UpdateAnimalCountText(DataManager.Instance.animalGenerateData.nowAnimalCount, DataManager.Instance.animalGenerateData.maxAnimalCount);
 
-        foreach (var root in resourceManager.flowers)
+        foreach (var root in ResourceManager.Instance.flowers)
         {
             if (root.isUnlocked)
             {                
@@ -44,7 +42,7 @@ public class UIUpdater
         {
             if (button.upgradeType == UpgradeButton.UpgradeType.Flower)
             {
-                button.UpdateUpgradeCostUI(button.root.flowerLevel);
+                button.UpdateUpgradeCostUI(button.flower.flowerLevel);
             }
             else if (button.upgradeType == UpgradeButton.UpgradeType.Tree)
             {
@@ -56,7 +54,7 @@ public class UIUpdater
             }
         }
 
-        foreach (var root in resourceManager.flowers)
+        foreach (var root in ResourceManager.Instance.flowers)
         {
             if (root.isUnlocked)
             {

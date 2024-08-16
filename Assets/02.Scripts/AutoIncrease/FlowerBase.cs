@@ -47,7 +47,7 @@ public class FlowerBase : MonoBehaviour, IFlower
     public int requiredOfflineRewardSkillLevel = 1; // 오프라인 보상 스킬 해금 조건 레벨
     public int skillCoolDownReductionLevel = 1; // 스킬쿨다운 아티팩트 스킬 해금 조건 레벨
 
-    public event System.Action OnGenerationRateChanged;
+    public event Action OnGenerationRateChanged;
 
     protected CameraTransition cameraTransition; // CameraTransition 참조 추가
     private BigInteger currentMultiplier; // 현재 적용 중인 배수

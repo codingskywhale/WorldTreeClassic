@@ -7,7 +7,7 @@ public class UIManager : Singleton<UIManager>
 {
     [Header("Datas")]
     public Status status;
-    public FlowerBase root;
+    public FlowerBase flower;
     public TouchData touchData;
     public WorldTree tree;
     public Bag bag;

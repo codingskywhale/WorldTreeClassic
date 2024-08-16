@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class UpgradeButton : MonoBehaviour
 {
-    public FlowerBase root;
+    public FlowerBase flower;
     public bool isTutorial = false;
 
     [Header("MultiUpgrade")]
@@ -35,9 +35,9 @@ public class UpgradeButton : MonoBehaviour
             upgradeButton.onClick.AddListener(OnUpgradeButtonClicked);
         ResourceManager.Instance.UpdateUI();
 
-        if (upgradeType == UpgradeType.Flower && root != null)
+        if (upgradeType == UpgradeType.Flower && flower != null)
         {
-            UpdateUpgradeCostUI(root.flowerLevel);
+            UpdateUpgradeCostUI(flower.flowerLevel);
         }
         else if (upgradeType == UpgradeType.Tree && ResourceManager.Instance != null)
         {
@@ -57,10 +57,10 @@ public class UpgradeButton : MonoBehaviour
         switch (upgradeType)
         {
             case UpgradeType.Flower:
-                canUpgrade = root != null && (!root.isUnlocked &&
-                                              DataManager.Instance.touchData.touchIncreaseLevel >= root.unlockThreshold &&
-                                              LifeManager.Instance.HasSufficientWater(root.CalculateUpgradeCost())) ||
-                                              (root.isUnlocked && LifeManager.Instance.HasSufficientWater(root.CalculateUpgradeCost()));
+                canUpgrade = flower != null && (!flower.isUnlocked &&
+                                              DataManager.Instance.touchData.touchIncreaseLevel >= flower.unlockThreshold &&
+                                              LifeManager.Instance.HasSufficientWater(flower.CalculateUpgradeCost())) ||
+                                              (flower.isUnlocked && LifeManager.Instance.HasSufficientWater(flower.CalculateUpgradeCost()));
                 break;
             case UpgradeType.Touch:
                 canUpgrade = LifeManager.Instance.HasSufficientWater(DataManager.Instance.touchData.upgradeLifeCost);
@@ -91,9 +91,9 @@ public class UpgradeButton : MonoBehaviour
 
     private void HandleFlowerUpgradeOrUnlock()
     {
-        if (root == null) return;
+        if (flower == null) return;
 
-        //if (!root.isUnlocked)
+        //if (!flower.isUnlocked)
         //{
         //    //HandleFlowerUnlock();
         //}
@@ -105,16 +105,16 @@ public class UpgradeButton : MonoBehaviour
 
     //private void HandleFlowerUnlock()
     //{
-    //    if (root == null || root.isUnlocked) return;
+    //    if (flower == null || flower.isUnlocked) return;
 
-    //    BigInteger unlockCost = root.unlockCost; // CalculateUpgradeCost가 아닌 unlockCost 사용
+    //    BigInteger unlockCost = flower.unlockCost; // CalculateUpgradeCost가 아닌 unlockCost 사용
     //    Debug.Log($"HandleFlowerUnlock - Unlock Cost: {unlockCost}, Current Water: {LifeManager.Instance.lifeAmount}");
     //    if (LifeManager.Instance.HasSufficientWater(unlockCost))
     //    {
     //        LifeManager.Instance.DecreaseWater(unlockCost);
-    //        root.Unlock();
+    //        flower.Unlock();
     //        resourceManager.UpdateLifeGenerationRatePerSecond();  // 초당 생명력 생성률 업데이트
-    //        root.UpdateUI();
+    //        flower.UpdateUI();
     //        resourceManager.UpdateUI();
     //        resourceManager.GetTotalLifeGenerationPerSecond();
     //        DataManager.Instance.animalGenerateData.maxAnimalCount += 5;
@@ -128,14 +128,14 @@ public class UpgradeButton : MonoBehaviour
 
     public void HandleFlowerUpgrade()
     {
-        if (root == null || !root.isUnlocked) return;
+        if (flower == null || !flower.isUnlocked) return;
 
-        BigInteger upgradeCost = root.CalculateUpgradeCost();
+        BigInteger upgradeCost = flower.CalculateUpgradeCost();
         if (LifeManager.Instance.HasSufficientWater(upgradeCost))
         {
             LifeManager.Instance.DecreaseWater(upgradeCost);
-            root.UpgradeLifeGeneration();
-            root.UpdateUI();
+            flower.UpgradeLifeGeneration();
+            flower.UpdateUI();
             ResourceManager.Instance.UpdateLifeGenerationRatePerSecond();  // 초당 생명력 생성률 업데이트
             ResourceManager.Instance.UpdateUI();
             ResourceManager.Instance.GetTotalLifeGenerationPerSecond();
@@ -186,12 +186,12 @@ public class UpgradeButton : MonoBehaviour
 
     public void UpdateUpgradeCostUI(int newLevel)
     { // 저장 때문에 퍼블릭으로 수정!!
-        if (upgradeType == UpgradeType.Flower && root != null)
+        if (upgradeType == UpgradeType.Flower && flower != null)
         {
-            BigInteger upgradeCost = root.CalculateUpgradeCost();
-            //Debug.Log($"UpdateUpgradeCostUI called for root level {this.name}, {root.rootLevel}, upgrade cost {upgradeCost}");
-            //UIManager.Instance.root.UpdateFlowerLevelUI(root.rootLevel, upgradeCost);
-            root.UpdateFlowerLevelUI(root.flowerLevel, upgradeCost);
+            BigInteger upgradeCost = flower.CalculateUpgradeCost();
+            //Debug.Log($"UpdateUpgradeCostUI called for flower level {this.name}, {flower.flowerLevel}, upgrade cost {upgradeCost}");
+            //UIManager.Instance.flower.UpdateFlowerLevelUI(flower.flowerLevel, upgradeCost);
+            flower.UpdateFlowerLevelUI(flower.flowerLevel, upgradeCost);
         }
         else if (upgradeType == UpgradeType.Touch) //&& touchInputManager != null
         {

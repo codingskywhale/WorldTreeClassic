@@ -111,13 +111,4 @@ public class ResourceManager : Singleton<ResourceManager>
             UpdateLifeGenerationRatePerSecond();  // 초기 값을 계산
         }
     }
-
-    private void OnDestroy()
-    {
-        LifeManager.Instance.OnLifeChanged -= UpdateLifeUI;
-        foreach (var flower in flowers)
-        {
-            flower.OnGenerationRateChanged -= UpdateLifeGenerationRatePerSecond;
-        }
-    }
 }

@@ -98,7 +98,7 @@ public class LoginManager : MonoBehaviour
 
     private IEnumerator StartIntroAndLoadData()
     {
-        var loadGameDataCoroutine = GameManager.Instance.saveDataManager.LoadGameDataCoroutine(GameManager.Instance.resourceManager, GameManager.Instance.skills, GameManager.Instance.artifacts, GameManager.Instance.worldTree);
+        var loadGameDataCoroutine = GameManager.Instance.saveDataManager.LoadGameDataCoroutine(GameManager.Instance.skills, GameManager.Instance.artifacts, GameManager.Instance.worldTree);
         StartCoroutine(loadGameDataCoroutine);
 
         yield return StartCoroutine(GameManager.Instance.introManager.PlayIntro());

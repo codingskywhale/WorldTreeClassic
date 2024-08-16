@@ -14,11 +14,6 @@ public class BubbleGeneratorPool : MonoBehaviour
     public readonly float heartGenerateDelay = 3f;
     private readonly string bubbleTr = "BubblePosition";
 
-    void Start()
-    {
-        LifeManager.Instance.bubbleGenratorPool = this;
-    }
-
     public void GenerateNewHeart()
     {
         StartCoroutine(GenerateHeart());

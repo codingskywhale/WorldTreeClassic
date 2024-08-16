@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class OfflineRewardManager
 {
-    private ResourceManager resourceManager;
     private OfflineProgressCalculator offlineProgressCalculator;
     private OfflineRewardSkill offlineRewardSkill;
     private OfflineRewardAmountSkill offlineRewardAmountSkill;
@@ -12,11 +11,10 @@ public class OfflineRewardManager
 
     public int AdditionalOfflineRewardMinutes { get; private set; } = 0;
 
-    public OfflineRewardManager(ResourceManager resourceManager, OfflineProgressCalculator offlineProgressCalculator,
+    public OfflineRewardManager(OfflineProgressCalculator offlineProgressCalculator,
                                 OfflineRewardSkill offlineRewardSkill, OfflineRewardAmountSkill offlineRewardAmountSkill,
                                 int maxOfflineDurationMinutes = 120) // 기본값 120분
     {
-        this.resourceManager = resourceManager;
         this.offlineProgressCalculator = offlineProgressCalculator;
         this.offlineRewardSkill = offlineRewardSkill;
         this.offlineRewardAmountSkill = offlineRewardAmountSkill;
@@ -59,7 +57,7 @@ public class OfflineRewardManager
             totalOfflineDuration = TimeSpan.FromMinutes(Math.Min(maxOfflineDurationMinutes, totalOfflineDuration.TotalMinutes));
         }
 
-        BigInteger lifePerSecond = resourceManager.GetLifeGenerationRatePerSecond();
+        BigInteger lifePerSecond = ResourceManager.Instance.GetLifeGenerationRatePerSecond();
 
         BigInteger totalLifeIncrease = lifePerSecond * (BigInteger)totalOfflineDuration.TotalSeconds;
 

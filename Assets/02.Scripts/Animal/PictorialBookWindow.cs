@@ -45,7 +45,7 @@ public class PictorialBookWindow : MonoBehaviour
                 DataManager.Instance.animalGenerateData.UpdateUIText();
             }
 
-            LifeManager.Instance.bubbleGenerator.ClearAllBubbles();
+            //ResourceManager.Instance.bubbleGeneratorPool.ClearAllBubbles();
             DataManager.Instance.DestroyAllAnimal();
         }
     }
