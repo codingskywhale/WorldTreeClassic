@@ -34,7 +34,7 @@ public class BuildPreProcessor : IPreprocessBuild
          * Handle importing GMA via Unity Package Manager.
          */
         EditorPathUtils pathUtils = ScriptableObject.CreateInstance<EditorPathUtils>();
-        if (pathUtils.IsPackageRootPath())
+        if (pathUtils.IsPackageFlowerPath())
         {
             string parentDirectoryPath = pathUtils.GetParentDirectoryAssetPath();
             string linkXmlPath = Path.Combine(parentDirectoryPath, "link.xml");

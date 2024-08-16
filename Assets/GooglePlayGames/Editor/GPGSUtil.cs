@@ -110,18 +110,18 @@ namespace GooglePlayGames.Editor
         private const string ManifestRelativePath =
             "../Plugins/Android/GooglePlayGamesManifest.androidlib/AndroidManifest.xml";
 
-        private const string RootFolderName = "GooglePlayGames";
+        private const string FlowerFolderName = "GooglePlayGames";
 
         /// <summary>
         /// The root path of the Google Play Games plugin
         /// </summary>
-        public static string RootPath
+        public static string FlowerPath
         {
             get
             {
-                if (string.IsNullOrEmpty(mRootPath))
+                if (string.IsNullOrEmpty(mFlowerPath))
                 {
-                    string[] dirs = Directory.GetDirectories("Assets", RootFolderName, SearchOption.AllDirectories);
+                    string[] dirs = Directory.GetDirectories("Assets", FlowerFolderName, SearchOption.AllDirectories);
                     switch (dirs.Length)
                     {
                         case 0:
@@ -129,7 +129,7 @@ namespace GooglePlayGames.Editor
                             throw new Exception("GooglePlayGames folder was renamed");
 
                         case 1:
-                            mRootPath = SlashesToPlatformSeparator(dirs[0]);
+                            mFlowerPath = SlashesToPlatformSeparator(dirs[0]);
                             break;
 
                         default:
@@ -138,12 +138,12 @@ namespace GooglePlayGames.Editor
                                 if (File.Exists(SlashesToPlatformSeparator(Path.Combine(dirs[i], GameInfoRelativePath)))
                                 )
                                 {
-                                    mRootPath = SlashesToPlatformSeparator(dirs[i]);
+                                    mFlowerPath = SlashesToPlatformSeparator(dirs[i]);
                                     break;
                                 }
                             }
 
-                            if (string.IsNullOrEmpty(mRootPath))
+                            if (string.IsNullOrEmpty(mFlowerPath))
                             {
                                 Alert("Plugin error: GooglePlayGames folder was renamed");
                                 throw new Exception("GooglePlayGames folder was renamed");
@@ -153,7 +153,7 @@ namespace GooglePlayGames.Editor
                     }
                 }
 
-                return mRootPath;
+                return mFlowerPath;
             }
         }
 
@@ -162,7 +162,7 @@ namespace GooglePlayGames.Editor
         /// </summary>
         private static string GameInfoPath
         {
-            get { return SlashesToPlatformSeparator(Path.Combine(RootPath, GameInfoRelativePath)); }
+            get { return SlashesToPlatformSeparator(Path.Combine(FlowerPath, GameInfoRelativePath)); }
         }
 
         /// <summary>
@@ -172,13 +172,13 @@ namespace GooglePlayGames.Editor
         ///     file. </remarks>
         private static string ManifestPath
         {
-            get { return SlashesToPlatformSeparator(Path.Combine(RootPath, ManifestRelativePath)); }
+            get { return SlashesToPlatformSeparator(Path.Combine(FlowerPath, ManifestRelativePath)); }
         }
 
         /// <summary>
         /// The root path of the Google Play Games plugin
         /// </summary>
-        private static string mRootPath = "";
+        private static string mFlowerPath = "";
 
         /// <summary>
         /// The map of replacements for filling in code templates.  The
@@ -237,7 +237,7 @@ namespace GooglePlayGames.Editor
         public static string ReadEditorTemplate(string name)
         {
             return ReadFile(
-                Path.Combine(RootPath, string.Format("Editor{0}{1}.txt", Path.DirectorySeparatorChar, name)));
+                Path.Combine(FlowerPath, string.Format("Editor{0}{1}.txt", Path.DirectorySeparatorChar, name)));
         }
 
         /// <summary>
@@ -444,7 +444,7 @@ namespace GooglePlayGames.Editor
         /// <returns>The android sdk path.</returns>
         public static string GetAndroidSdkPath()
         {
-            string sdkPath = EditorPrefs.GetString("AndroidSdkRoot");
+            string sdkPath = EditorPrefs.GetString("AndroidSdkFlower");
 #if UNITY_2019_1_OR_NEWER
             // Unity 2019.x added installation of the Android SDK in the AndroidPlayer directory
             // so fallback to searching for it there.
@@ -648,7 +648,7 @@ namespace GooglePlayGames.Editor
         public static void CheckAndFixDependencies()
         {
             string depPath =
-                SlashesToPlatformSeparator(Path.Combine(GPGSUtil.RootPath,
+                SlashesToPlatformSeparator(Path.Combine(GPGSUtil.FlowerPath,
                     "Editor/GooglePlayGamesPluginDependencies.xml"));
 
             XmlDocument doc = new XmlDocument();
@@ -659,11 +659,11 @@ namespace GooglePlayGames.Editor
             {
                 if (!Directory.Exists(repo.InnerText))
                 {
-                    int pos = repo.InnerText.IndexOf(RootFolderName);
+                    int pos = repo.InnerText.IndexOf(FlowerFolderName);
                     if (pos != -1)
                     {
                         repo.InnerText =
-                            Path.Combine(RootPath, repo.InnerText.Substring(pos + RootFolderName.Length + 1))
+                            Path.Combine(FlowerPath, repo.InnerText.Substring(pos + FlowerFolderName.Length + 1))
                                 .Replace("\\", "/");
                     }
                 }
@@ -680,7 +680,7 @@ namespace GooglePlayGames.Editor
         public static void CheckAndFixVersionedAssestsPaths()
         {
             string[] foundPaths =
-                Directory.GetFiles(RootPath, "GooglePlayGamesPlugin_v*.txt", SearchOption.AllDirectories);
+                Directory.GetFiles(FlowerPath, "GooglePlayGamesPlugin_v*.txt", SearchOption.AllDirectories);
 
             if (foundPaths.Length == 1)
             {
@@ -692,10 +692,10 @@ namespace GooglePlayGames.Editor
                     string assetPath;
                     while ((assetPath = reader.ReadLine()) != null)
                     {
-                        int pos = assetPath.IndexOf(RootFolderName);
+                        int pos = assetPath.IndexOf(FlowerFolderName);
                         if (pos != -1)
                         {
-                            assetPath = Path.Combine(RootPath, assetPath.Substring(pos + RootFolderName.Length + 1))
+                            assetPath = Path.Combine(FlowerPath, assetPath.Substring(pos + FlowerFolderName.Length + 1))
                                 .Replace("\\", "/");
                         }
 

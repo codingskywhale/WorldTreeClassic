@@ -1,35 +1,28 @@
+using System;
 using System.Collections.Generic;
 using System.Numerics;
 using UnityEngine;
 
-public class LifeManager : MonoBehaviour
+public class LifeManager : Singleton<LifeManager>
 {
-    public static LifeManager Instance { get; private set; } // 싱글톤 인스턴스
-
+    [Header("Life")]
     public BigInteger lifeAmount;
     public int currentLevel = 1;
     public int lifePerLevel = 10;
-    public RootBase RootData;
-    public List<IRoot> rootData = new List<IRoot>();
-    public BubbleGenerator bubbleGenerator;
-    public BubbleGeneratorPool bubbleGenratorPool;
-    public delegate void WaterChanged(BigInteger newAmount);
-    public event WaterChanged OnWaterChanged;
+    public delegate void LifeChanged(BigInteger newAmount);
+    public event LifeChanged OnLifeChanged;
 
-    private void Awake()
+    [Header("Diamond")]
+    public Diamond diamond;
+
+    [Header("Flower")]
+    public List<IFlower> rootData = new List<IFlower>();
+
+
+    protected override void Awake()
     {
-        // 싱글톤 인스턴스 설정
-        if (Instance == null)
-        {
-            Instance = this;
-            DontDestroyOnLoad(gameObject); // 인스턴스가 파괴되지 않도록 설정
-        }
-        else
-        {
-            Destroy(gameObject); // 이미 인스턴스가 존재하면 중복 생성된 객체 파괴
-        }
-
-        bubbleGenerator = GetComponent<BubbleGenerator>();
+        base.Awake();
+        diamond = GetComponent<Diamond>();
     }
     private void Start()
     {
@@ -41,13 +34,13 @@ public class LifeManager : MonoBehaviour
     public void IncreaseWater(BigInteger amount)
     {
         lifeAmount += amount;
-        OnWaterChanged?.Invoke(lifeAmount);
+        OnLifeChanged?.Invoke(lifeAmount);
     }
 
     public void DecreaseWater(BigInteger amount)
     {
         lifeAmount -= amount;
-        OnWaterChanged?.Invoke(lifeAmount);
+        OnLifeChanged?.Invoke(lifeAmount);
     }
 
     public bool HasSufficientWater(BigInteger requiredAmount)
@@ -60,7 +53,7 @@ public class LifeManager : MonoBehaviour
         return (currentLevel + amount) * lifePerLevel;
     }
 
-    public void RegisterRoot(IRoot root)
+    public void RegisterFlower(IFlower root)
     {
         if (!rootData.Contains(root))
         {
@@ -68,7 +61,7 @@ public class LifeManager : MonoBehaviour
         }
     }
 
-    public void ApplyIncreaseRateToAllRoots(BigInteger rate)
+    public void ApplyIncreaseRateToAllFlowers(BigInteger rate)
     {
         foreach (var root in rootData)
         {

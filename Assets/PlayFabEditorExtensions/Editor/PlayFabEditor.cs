@@ -413,8 +413,8 @@ namespace PlayFab.PfEditor
             try
             {
                 window.Close();
-                var edExRoot = new DirectoryInfo(PlayFabEditorHelper.EDEX_ROOT);
-                FileUtil.DeleteFileOrDirectory(edExRoot.Parent.FullName);
+                var edExFlower = new DirectoryInfo(PlayFabEditorHelper.EDEX_ROOT);
+                FileUtil.DeleteFileOrDirectory(edExFlower.Parent.FullName);
                 AssetDatabase.Refresh();
             }
             catch (Exception ex)

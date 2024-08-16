@@ -1,4 +1,4 @@
-﻿// <copyright file="GPGSUpgrader.cs" company="Google Inc.">
+// <copyright file="GPGSUpgrader.cs" company="Google Inc.">
 // Copyright (C) 2014 Google Inc.
 //
 //  Licensed under the Apache License, Version 2.0 (the "License");
@@ -35,7 +35,7 @@ namespace GooglePlayGames.Editor
         {
             if (EditorApplication.isPlayingOrWillChangePlaymode)
                 return;
-            Debug.Log("GPGSUpgrader start");
+            //Debug.Log("GPGSUpgrader start");
 
             GPGSProjectSettings.Instance.Set(GPGSUtil.LASTUPGRADEKEY, PluginVersion.VersionKey);
             GPGSProjectSettings.Instance.Set(GPGSUtil.PLUGINVERSIONKEY,
@@ -54,7 +54,7 @@ namespace GooglePlayGames.Editor
             {
                 AssetDatabase.Refresh();
             }
-            Debug.Log("GPGSUpgrader done");
+            //Debug.Log("GPGSUpgrader done");
         }
     }
 }

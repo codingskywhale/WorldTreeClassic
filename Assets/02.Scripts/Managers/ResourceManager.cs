@@ -3,66 +3,55 @@ using System.Numerics;
 using UnityEngine;
 using Vector3 = UnityEngine.Vector3;
 
-public class ResourceManager : MonoBehaviour
+public class ResourceManager : Singleton<ResourceManager>
 {
-    public static ResourceManager Instance { get; private set; }
-
-    public List<RootBase> roots = new List<RootBase>();
+    public List<FlowerBase> flowers = new List<FlowerBase>();
     public ObjectPool objectPool;
     public BubbleGeneratorPool bubbleGeneratorPool;
     public BigInteger lifeGenerationRatePerSecond;
 
-    private void Awake()
+    protected override void Awake()
     {
-        // 싱글톤 인스턴스 설정
-        if (Instance == null)
-        {
-            Instance = this;
-            DontDestroyOnLoad(gameObject); // 인스턴스가 파괴되지 않도록 설정
-        }
-        else
-        {
-            Destroy(gameObject); // 이미 인스턴스가 존재하면 중복 생성된 객체 파괴
-        }
+        base.Awake();
 
         objectPool = GetComponent<ObjectPool>();
         bubbleGeneratorPool = GetComponent<BubbleGeneratorPool>();
     }
     private void Start()
     {
-        RegisterAllRoots();
-        LifeManager.Instance.OnWaterChanged += UpdateLifeUI;
+        RegisterAllFlowers();
+        LifeManager.Instance.OnLifeChanged += UpdateLifeUI;
 
         // 초당 생명력 생성률을 로드
         LoadLifeGenerationRate();
         UpdateUI();
     }
 
-    private void RegisterAllRoots()
+    private void RegisterAllFlowers()
     {
-        //RootBase[] rootBases = FindObjectsOfType<RootBase>();
-        foreach (var root in roots)
+        //FlowerBase[] flowerBases = FindObjectsOfType<FlowerBase>();
+        foreach (var flower in flowers)
         {
-            RegisterRoot(root);
+            RegisterFlower(flower);
         }
         UpdateLifeGenerationRatePerSecond();
     }
 
-    private void RegisterRoot(RootBase root)
+    private void RegisterFlower(FlowerBase flower)
     {
-        if (!roots.Contains(root))
+        if (!flowers.Contains(flower))
         {
-            roots.Add(root);
-            root.OnGenerationRateChanged += UpdateLifeGenerationRatePerSecond;
+            flowers.Add(flower);
+            flower.OnGenerationRateChanged += UpdateLifeGenerationRatePerSecond;
         }
     }
 
-    private void UnregisterRoot(RootBase root)
+    private void UnregisterFlower(FlowerBase flower)
     {
-        if (roots.Contains(root))
+        if (flowers.Contains(flower))
         {
-            roots.Remove(root);
-            root.OnGenerationRateChanged -= UpdateLifeGenerationRatePerSecond;
+            flowers.Remove(flower);
+            flower.OnGenerationRateChanged -= UpdateLifeGenerationRatePerSecond;
         }
     }
 
@@ -93,9 +82,9 @@ public class ResourceManager : MonoBehaviour
     public BigInteger GetTotalLifeGenerationPerSecond()
     {
         BigInteger totalLifeIncrease = 0;
-        foreach (var root in roots)
+        foreach (var flower in flowers)
         {
-            totalLifeIncrease += root.GetTotalLifeGeneration();
+            totalLifeIncrease += flower.GetTotalLifeGeneration();
         }
         return totalLifeIncrease;
     }
@@ -120,15 +109,6 @@ public class ResourceManager : MonoBehaviour
         else
         {
             UpdateLifeGenerationRatePerSecond();  // 초기 값을 계산
-        }
-    }
-
-    private void OnDestroy()
-    {
-        LifeManager.Instance.OnWaterChanged -= UpdateLifeUI;
-        foreach (var root in roots)
-        {
-            root.OnGenerationRateChanged -= UpdateLifeGenerationRatePerSecond;
         }
     }
 }

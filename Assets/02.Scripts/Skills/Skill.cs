@@ -36,7 +36,7 @@ public abstract class Skill : MonoBehaviour
     public TextMeshProUGUI lockText; // 해금 텍스트
     private bool isUnlocked = false; // 해금 상태를 나타내는 변수 추가
     public int unlockThreshold; // 해금에 필요한 세계수 레벨
-    public ADSkillManager adSkillManager;
+    public ADSkill adSkill;
 
     [Header("Skill Info Display")]
     public GameObject skillInfoObject; // 스킬 정보를 표시할 오브젝트
@@ -224,9 +224,9 @@ public abstract class Skill : MonoBehaviour
             return;
         }
         BigInteger upgradeCost = CalculateUpgradeCost(currentLevel);
-        if (DiamondManager.Instance.HasSufficientDiamond(upgradeCost))
+        if (LifeManager.Instance.diamond.HasSufficientDiamond(upgradeCost))
         {
-            DiamondManager.Instance.DecreaseDiamond(upgradeCost);
+            LifeManager.Instance.diamond.DecreaseDiamond(upgradeCost);
             currentLevel++;
             UpdateClickValues(); // 필요 시 업데이트
             UpdateUpgradeCostUI(); // 업그레이드 비용 UI 업데이트
@@ -245,7 +245,7 @@ public abstract class Skill : MonoBehaviour
 
     public virtual void UpdateUI()
     {
-        adSkillManager.UnlockCondition();
+        adSkill.UnlockCondition();
         UpdateUpgradeCostUI();
         NowskillInfoUI();
         LevelUI();

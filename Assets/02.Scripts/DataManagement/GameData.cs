@@ -8,7 +8,7 @@ public class GameData
     public int nowAnimalCount;
     public int maxAnimalCount;
     public int currentLevel;
-    public List<RootDataSave> roots = new List<RootDataSave>();
+    public List<FlowerDataSave> flowers = new List<FlowerDataSave>();
     public AnimalDataSave animalData;
     public TouchDataSave touchData;
     public string lastSaveTime;

@@ -58,7 +58,7 @@ namespace GooglePlayGames.Editor
             string[] fileLocations =
             {
                 mFile,
-                GPGSUtil.SlashesToPlatformSeparator(Path.Combine(GPGSUtil.RootPath, "Editor/projsettings.txt")),
+                GPGSUtil.SlashesToPlatformSeparator(Path.Combine(GPGSUtil.FlowerPath, "Editor/projsettings.txt")),
                 GPGSUtil.SlashesToPlatformSeparator("Assets/Editor/projsettings.txt")
             };
 

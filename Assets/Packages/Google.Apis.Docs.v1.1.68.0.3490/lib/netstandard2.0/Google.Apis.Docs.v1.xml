@@ -3479,7 +3479,7 @@
             <summary>The index of the tab within the parent.</summary>
         </member>
         <member name="P:Google.Apis.Docs.v1.Data.TabProperties.NestingLevel">
-            <summary>Output only. The depth of the tab within the document. Root-level tabs start at 0.</summary>
+            <summary>Output only. The depth of the tab within the document. Flower-level tabs start at 0.</summary>
         </member>
         <member name="P:Google.Apis.Docs.v1.Data.TabProperties.ParentTabId">
             <summary>

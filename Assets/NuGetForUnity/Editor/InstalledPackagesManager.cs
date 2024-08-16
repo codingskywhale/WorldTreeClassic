@@ -234,7 +234,7 @@ namespace NugetForUnity
             if (manuallyInstalledPackagesNumber == 0)
             {
                 // set root packages as manually installed if none are marked as such
-                foreach (var rootPackage in GetInstalledRootPackages())
+                foreach (var rootPackage in GetInstalledFlowerPackages())
                 {
                     PackagesConfigFile.SetManuallyInstalledFlag(rootPackage);
                 }
@@ -339,12 +339,12 @@ namespace NugetForUnity
 
         /// <summary>
         ///     Gets a list of all root packages that are installed in the project.
-        ///     Root packages are packages that are not depended on by any other package.
+        ///     Flower packages are packages that are not depended on by any other package.
         /// </summary>
         /// <returns>The root packages.</returns>
         [NotNull]
         [ItemNotNull]
-        internal static List<INugetPackage> GetInstalledRootPackages()
+        internal static List<INugetPackage> GetInstalledFlowerPackages()
         {
             // default all packages to being roots
             var roots = new List<INugetPackage>(InstalledPackages);

@@ -2,12 +2,12 @@ using System.Collections;
 using UnityEngine;
 using System.Numerics;
 
-public class RootBoostSkill : Skill
+public class FlowerBoostSkill : Skill
 {
     public BigInteger baseBoostMultiplier = 100; // 초기 부스트 배수
     public BigInteger boostMultiplier; // 현재 부스트 배수
     public float boostDuration = 300f; // 부스트 지속 시간 (5분)
-    public RootBase[] roots;
+    public FlowerBase[] roots;
 
     protected override void Start()
     {
@@ -15,8 +15,8 @@ public class RootBoostSkill : Skill
         cooldownTime = 7200f; // 스킬 쿨타임 120분 (2시간)
         //currentLevel = 0;
 
-        // IRoot 컴포넌트를 찾아서 참조합니다.
-        roots = FindObjectsOfType<RootBase>();
+        // IFlower 컴포넌트를 찾아서 참조합니다.
+        roots = FindObjectsOfType<FlowerBase>();
 
         // 초기 부스트 배수 설정
         boostMultiplier = baseBoostMultiplier;
