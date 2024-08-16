@@ -127,7 +127,7 @@ public class FlowerBase : MonoBehaviour, IFlower
         upgradeLifeCost = CalculateUpgradeCost();
         OnGenerationRateChanged?.Invoke();
 
-        AutoObjectManagerTest.Instance.CalculateTotalAutoGeneration();
+        AutoObjectManager.Instance.CalculateTotalAutoGeneration();
         UpdateUI();
     }
 
@@ -138,7 +138,7 @@ public class FlowerBase : MonoBehaviour, IFlower
         float baseRadius = brushSize / 4;  // 첫 번째 꽃의 위치를 위한 기본 반경
         float flowerRadius = 0; // 각 Flower에 고유한 반경
 
-        int flowerIndex = Array.IndexOf(AutoObjectManagerTest.Instance.flowers, this);
+        int flowerIndex = Array.IndexOf(AutoObjectManager.Instance.flowers, this);
 
         if (flowerIndex < 4)
         {

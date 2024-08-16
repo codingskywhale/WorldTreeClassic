@@ -4,7 +4,7 @@ using TMPro;
 using UnityEngine.UI;
 using System.Collections;
 
-public class ADSkillManager : MonoBehaviour
+public class ADSkill : MonoBehaviour
 {
     public Skill[] allSkills;
     public Image adCooldownFillImage; // 광고 스킬 쿨타임을 표시할 이미지

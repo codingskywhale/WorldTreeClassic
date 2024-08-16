@@ -229,7 +229,7 @@ public class UpgradeButton : MonoBehaviour
     private int GetMaxUpgradeCount()
     {
         int count = 0;
-        BigInteger cost = upgradeType == UpgradeType.Touch ? DataManager.Instance.touchData.upgradeLifeCost : AutoObjectManagerTest.Instance.flowers[buttonIdx].GetTotalLifeGeneration();
+        BigInteger cost = upgradeType == UpgradeType.Touch ? DataManager.Instance.touchData.upgradeLifeCost : AutoObjectManager.Instance.flowers[buttonIdx].GetTotalLifeGeneration();
         BigInteger totalCost = cost;
 
         while (LifeManager.Instance.lifeAmount >= totalCost)

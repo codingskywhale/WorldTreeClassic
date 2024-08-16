@@ -94,7 +94,7 @@ public class UIManager : Singleton<UIManager>
                             break;
                         case UnlockConditionType.PlantCount:
 
-                            if (AutoObjectManagerTest.Instance.flowers[condition.requiredPlantIndex - 1].flowerLevel > 0)
+                            if (AutoObjectManager.Instance.flowers[condition.requiredPlantIndex - 1].flowerLevel > 0)
                             {
                                 clearCount++;
                             }
