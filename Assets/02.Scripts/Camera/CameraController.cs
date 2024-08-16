@@ -18,11 +18,18 @@ public class CameraController : MonoBehaviour
     private CameraTransition cameraTransition;
     private GameObject currentMessage;
 
+    public float zoomSpeed = 0.5f; // 줌 속도
+    public float minZoomDistance = 2f; // 줌인의 최소 거리
+    public float maxZoomDistance = 10f;
+
     public bool isFreeCamera = false;
     private bool isDragging = false;
+    private Camera mainCamera;
 
     private void Start()
-    {        
+    {
+        mainCamera = Camera.main;
+
         cameraTargetHandler = GetComponent<CameraTargetHandler>();
         cameraTransition = GetComponent<CameraTransition>();
 
@@ -37,6 +44,7 @@ public class CameraController : MonoBehaviour
             if (isFreeCamera)
             {
                 HandleFreeCamera();
+                HandlePinchZoom();
             }
             else if (cameraTargetHandler.isObjectTarget && cameraTargetHandler.currentTarget != null)
             {
@@ -73,6 +81,41 @@ public class CameraController : MonoBehaviour
         }
     }
 
+    private void HandlePinchZoom()
+    {
+        // 터치가 두 개 이상일 때 핀치 제스처 처리
+        if (Input.touchCount == 2)
+        {
+            Touch touchZero = Input.GetTouch(0);
+            Touch touchOne = Input.GetTouch(1);
+
+            // 두 터치의 이전 위치와 현재 위치 사이의 거리 계산
+            Vector2 touchZeroPrevPos = touchZero.position - touchZero.deltaPosition;
+            Vector2 touchOnePrevPos = touchOne.position - touchOne.deltaPosition;
+
+            float prevTouchDeltaMag = (touchZeroPrevPos - touchOnePrevPos).magnitude;
+            float currentTouchDeltaMag = (touchZero.position - touchOne.position).magnitude;
+
+            // 이전 거리와 현재 거리의 차이
+            float deltaMagnitudeDiff = prevTouchDeltaMag - currentTouchDeltaMag;
+
+            // 카메라 줌을 적용
+            ZoomCamera(deltaMagnitudeDiff * zoomSpeed);
+        }
+    }
+
+    private void ZoomCamera(float increment)
+    {
+        // 카메라의 현재 거리에서 줌을 계산
+        float currentDistance = Vector3.Distance(mainCamera.transform.position, cameraTargetHandler.currentTarget.position);
+
+        // 새로운 줌 거리를 계산하고 제한 범위를 적용
+        float newDistance = Mathf.Clamp(currentDistance + increment, minZoomDistance, maxZoomDistance);
+
+        // 카메라의 위치 업데이트 (타겟을 기준으로)
+        mainCamera.transform.position = cameraTargetHandler.currentTarget.position + (mainCamera.transform.position - cameraTargetHandler.currentTarget.position).normalized * newDistance;
+    }
+
     private void RotateCamera()
     {
         float horizontal = Input.GetAxis("Mouse X") * rotationSpeed * Time.deltaTime;
@@ -80,20 +123,26 @@ public class CameraController : MonoBehaviour
 
         if (cameraTargetHandler.currentTarget != null)
         {
-            // 카메라의 기존 위치에서 회전 시도
+            // 카메라가 회전하려고 하는 각도를 저장
+            float desiredXRotation = Camera.main.transform.eulerAngles.x - vertical;
+
+            // 수직 각도가 제한 내에 있는 경우에만 회전 적용
+            if (desiredXRotation >= CameraSettings.Instance.minVerticalAngle && desiredXRotation <= CameraSettings.Instance.maxVerticalAngle)
+            {
+                Camera.main.transform.RotateAround(cameraTargetHandler.currentTarget.position, Camera.main.transform.right, -vertical);
+            }
+
+            // 수평 회전은 항상 허용
             Camera.main.transform.RotateAround(cameraTargetHandler.currentTarget.position, Vector3.up, horizontal);
-            Camera.main.transform.RotateAround(cameraTargetHandler.currentTarget.position, Camera.main.transform.right, -vertical);
 
-            // 각도 제한: 위쪽 회전을 제한 (예: -85도에서 85도 사이)
+            // 각도 제한: X축 각도 제한 적용
             Vector3 angles = Camera.main.transform.eulerAngles;
-
-            // X축 각도 제한 (위아래 회전)
             angles.x = Mathf.Clamp(angles.x, CameraSettings.Instance.minVerticalAngle, CameraSettings.Instance.maxVerticalAngle);
 
             // 제한된 각도를 적용
             Camera.main.transform.eulerAngles = angles;
 
-            // 타겟을 바라보도록 설정
+            // 카메라가 타겟을 계속 바라보도록 설정
             Camera.main.transform.LookAt(cameraTargetHandler.currentTarget);
         }
     }
@@ -126,33 +175,25 @@ public class CameraController : MonoBehaviour
 
     public void SwitchToFixedCameraMode()
     {
-        // 코루틴 중지
-        StopAllCoroutines();
+        if (CameraSettings.Instance.isZooming) return;
 
-        // 고정된 위치와 회전 설정
+        // 고정된 위치와 회전 값 설정
         Vector3 fixedPosition = CameraSettings.Instance.GetInitialPosition(DataManager.Instance.touchData.touchIncreaseLevel);
         Quaternion fixedRotation = CameraSettings.Instance.GetFinalRotation();
 
-        // 타겟을 고정시점모드의 타겟으로 설정
-        cameraTargetHandler.SetTarget(target);
-        cameraTargetHandler.isObjectTarget = false;
-
-        // 강제 위치와 회전 설정 (자유시점모드에서의 영향 무시)
+        // 고정시점모드로의 전환
         Camera.main.transform.position = fixedPosition;
         Camera.main.transform.rotation = fixedRotation;
 
-        // CameraSettings에 상태를 갱신
+        // CameraSettings에 위치와 회전 상태를 업데이트
         CameraSettings.Instance.currentCameraPosition = fixedPosition;
         CameraSettings.Instance.currentCameraRotation = fixedRotation;
 
-        // 디버그 로그 추가 (테스트용)
-        UnityEngine.Debug.Log($"[SwitchToFixedCameraMode] Position: {fixedPosition}, Rotation: {fixedRotation}");
-
-        ShowMessage("카메라가 나무에 고정됩니다.");
-
-        // 모드 플래그 설정
+        // 고정시점 모드 플래그 업데이트
         isFreeCamera = false;
         cameraTargetHandler.SetFreeCameraMode(isFreeCamera);
+
+        ShowMessage("카메라가 나무에 고정됩니다.");
 
         // 버튼 다시 활성화
         StartCoroutine(EnableButtonAfterDelay(1.0f));
@@ -160,24 +201,25 @@ public class CameraController : MonoBehaviour
 
     public void SwitchToFreeCameraMode()
     {
-        // 타겟을 자유시점모드의 타겟으로 설정 (필요시)
-        cameraTargetHandler.SetTarget(target);
-        cameraTargetHandler.isObjectTarget = false;
+        // 자유시점 모드로 전환되기 전에 모든 코루틴 중지
+        StopAllCoroutines();
 
-        // 자유시점모드로 전환 시 현재 위치와 회전 유지
+        // 자유시점 모드에서는 현재의 카메라 위치와 회전 값을 유지
         Vector3 currentPosition = Camera.main.transform.position;
         Quaternion currentRotation = Camera.main.transform.rotation;
 
-        // Camera.main.transform.position = currentPosition; // 줌 코루틴 제거
-        // Camera.main.transform.rotation = currentRotation; // 줌 코루틴 제거
+        // CameraSettings에 상태를 업데이트 (자유시점 모드)
+        CameraSettings.Instance.currentCameraPosition = currentPosition;
+        CameraSettings.Instance.currentCameraRotation = currentRotation;
 
-        ShowMessage("카메라 자유 조작이 활성화됩니다.");
-
-        // 모드 플래그 설정
+        // 자유시점 모드로 설정
         isFreeCamera = true;
         cameraTargetHandler.SetFreeCameraMode(isFreeCamera);
 
-        // 버튼 다시 활성화
+        // 자유시점 모드 설정 후 메시지 표시
+        ShowMessage("카메라 자유 조작이 활성화됩니다.");
+
+        // 1초 후 버튼 다시 활성화
         StartCoroutine(EnableButtonAfterDelay(1.0f));
     }
 
@@ -227,5 +269,4 @@ public class CameraController : MonoBehaviour
         Destroy(message);
         messageParent.gameObject.SetActive(false);
     }
-
 }

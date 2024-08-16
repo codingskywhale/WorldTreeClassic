@@ -39,10 +39,10 @@ public class CameraTransition : MonoBehaviour
         Vector3 startPosition = CameraSettings.Instance.currentCameraPosition;
         Quaternion startRotation = CameraSettings.Instance.currentCameraRotation;
 
-        while (elapsedTime < CameraSettings.Instance.zoomDuration)
+        while (elapsedTime < zoomDuration)
         {
             elapsedTime += Time.deltaTime;
-            float t = elapsedTime / CameraSettings.Instance.zoomDuration;
+            float t = elapsedTime / zoomDuration;
 
             CameraSettings.Instance.currentCameraPosition = Vector3.Lerp(startPosition, targetPosition, t);
             CameraSettings.Instance.currentCameraRotation = Quaternion.Slerp(startRotation, targetRotation, t);
@@ -53,20 +53,12 @@ public class CameraTransition : MonoBehaviour
             yield return null;
         }
 
-        // 카메라 위치와 회전을 목표값으로 설정
-        Camera.main.transform.position = targetPosition;
-        Camera.main.transform.rotation = targetRotation;
-
+        // 코루틴이 완료된 후 고정시점 모드 상태를 확인하고 필요 시 초기화
         CameraSettings.Instance.isZooming = false;
-
-        // 고정 시점 모드로 돌아올 때 이 값을 무시하고 초기화
         if (!CameraTargetHandler.Instance.isFreeCamera)
         {
-            Vector3 fixedPosition = CameraSettings.Instance.GetInitialPosition(DataManager.Instance.touchData.touchIncreaseLevel);
-            Quaternion fixedRotation = CameraSettings.Instance.GetFinalRotation();
-
-            Camera.main.transform.position = fixedPosition;
-            Camera.main.transform.rotation = fixedRotation;
+            Camera.main.transform.position = CameraSettings.Instance.GetInitialPosition(DataManager.Instance.touchData.touchIncreaseLevel);
+            Camera.main.transform.rotation = CameraSettings.Instance.GetFinalRotation();
         }
     }
 

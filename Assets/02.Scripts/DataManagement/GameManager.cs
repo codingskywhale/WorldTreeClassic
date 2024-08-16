@@ -154,7 +154,9 @@ public class GameManager : Singleton<GameManager>
             if (!isPaused)
             {
                 isPaused = true;
-                SaveGameIfLoggedIn();  // 백그라운드 전환 시 게임 저장 (기존 로직 유지)
+                SaveGameIfLoggedIn();  // 백그라운드 전환 시 게임 저장
+                PlayerPrefs.SetString("lastSaveTime", DateTime.UtcNow.ToString("o"));  // 로컬에 현재 시간 저장
+                PlayerPrefs.Save();
             }
         }
         else
@@ -162,33 +164,26 @@ public class GameManager : Singleton<GameManager>
             if (isPaused)
             {
                 isPaused = false;
-                FetchLastSaveTimeFromPlayFab();  // 포그라운드 복귀 시 lastSaveTime만 가져오기
+                UseLocalLastSaveTime();  // 로컬에 저장된 시간으로 오프라인 보상 처리
             }
         }
     }
 
-    private void FetchLastSaveTimeFromPlayFab()
+    private void UseLocalLastSaveTime()
     {
-        PlayFabClientAPI.GetUserData(new GetUserDataRequest(),  // PlayFab에서 사용자 데이터를 요청
-            result =>
-            {
-                if (result.Data != null && result.Data.ContainsKey("lastSaveTime"))
-                {
-                    string lastSaveTime = result.Data["lastSaveTime"].Value;  // lastSaveTime 가져오기
-                    ProcessOfflineRewards(lastSaveTime);  // 오프라인 보상 처리
-                }
-                else
-                {
-                    Debug.LogWarning("Failed to fetch lastSaveTime from PlayFab.");
-                }
-            },
-            error =>
-            {
-                Debug.LogError("Error fetching lastSaveTime from PlayFab: " + error.GenerateErrorReport());
-            });
+        // 로컬에 저장된 lastSaveTime 사용
+        if (PlayerPrefs.HasKey("lastSaveTime"))
+        {
+            string lastSaveTime = PlayerPrefs.GetString("lastSaveTime");
+            ProcessBackgroundRewards(lastSaveTime);  // 로컬 데이터를 사용하여 오프라인 보상 처리
+        }
+        else
+        {
+            Debug.LogWarning("No local lastSaveTime found.");
+        }
     }
 
-    private void ProcessOfflineRewards(string lastSaveTime)
+    private void ProcessBackgroundRewards(string lastSaveTime)
     {
         if (!string.IsNullOrEmpty(lastSaveTime))
         {

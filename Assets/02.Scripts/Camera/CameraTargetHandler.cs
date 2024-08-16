@@ -93,6 +93,13 @@ public class CameraTargetHandler : MonoBehaviour
     public void SetFreeCameraMode(bool isFree)
     {
         isFreeCamera = isFree;
+        if (!isFree)
+        {
+            // 고정시점 모드로 전환 시 타겟 해제 및 초기화
+            currentTarget = null;
+            CameraSettings.Instance.currentCameraPosition = CameraSettings.Instance.GetInitialPosition(DataManager.Instance.touchData.touchIncreaseLevel);
+            CameraSettings.Instance.currentCameraRotation = CameraSettings.Instance.GetFinalRotation();
+        }
     }
 
     public bool IsFreeCamera()
