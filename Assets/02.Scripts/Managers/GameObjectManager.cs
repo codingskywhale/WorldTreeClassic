@@ -6,11 +6,17 @@ public class GameObjectManager : MonoBehaviour
     public GameObject currentActiveObject; // 현재 활성화된 오브젝트
     public GameObject[] tabButtons; // 탭 버튼들을 저장할 배열
     private AlphaChanger alphaChanger;
+    public Intro introObject;
 
     private void Awake()
     {
         alphaChanger = gameObject.AddComponent<AlphaChanger>();
         InitializeTabs();
+    }
+
+    private void Start()
+    {
+        introObject.gameObject.SetActive(true);
     }
 
     private void InitializeTabs()

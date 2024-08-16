@@ -4,6 +4,7 @@ using System.Numerics;
 using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Playables;
 
 public class TouchData : MonoBehaviour
 {
@@ -55,5 +56,21 @@ public class TouchData : MonoBehaviour
         touchLevelText.text = $"외로운 나무 레벨:{touchIncreaseLevel}";
         touchIncreaseText.text = $"현재 터치당 얻는 생명력 : {BigIntegerUtils.FormatBigInteger(touchIncreaseAmount)}";
         upgradelifeCostText.text = $"{BigIntegerUtils.FormatBigInteger(upgradelifeCost)}";
+    }
+
+    public void SetTouchInfoByLoadedData(GameData gameData = null)
+    {
+        if (gameData != null)
+        {
+            DataManager.Instance.touchData.touchIncreaseLevel = gameData.touchData.touchIncreaseLevel;
+            DataManager.Instance.touchData.touchIncreaseAmount = string.IsNullOrEmpty(gameData.touchData.touchIncreaseAmount) ? BigInteger.Zero : BigInteger.Parse(gameData.touchData.touchIncreaseAmount);
+            DataManager.Instance.touchData.upgradeLifeCost = string.IsNullOrEmpty(gameData.touchData.upgradeLifeCost) ? BigInteger.Zero : BigInteger.Parse(gameData.touchData.upgradeLifeCost);
+        }
+        else
+        {
+            touchIncreaseLevel = 1;
+            touchIncreaseAmount = 10;
+            upgradeLifeCost = 20;
+        }
     }
 }

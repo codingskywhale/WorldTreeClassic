@@ -83,7 +83,7 @@ public class GoogleSheetsToJson : MonoBehaviour
             return;
         }
 
-        var animalList = new List<AnimalData>();
+        var animalList = new List<AnimalDataLoad>();
         for (int i = 1; i < values.Count; i++) // Skip the header row
         {
             var row = values[i];
