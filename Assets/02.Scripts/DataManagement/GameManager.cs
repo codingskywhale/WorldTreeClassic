@@ -29,17 +29,13 @@ public class GameManager : Singleton<GameManager>
     private OfflineRewardManager offlineRewardManager;
     private OfflineRewardSkill offlineRewardSkill;
     private OfflineRewardAmountSkill offlineRewardAmountSkill;
-    private int maxOfflineDurationMinutes = 120; // 최대 오프라인 기간 설정 (기본값 120분)
-    private int saveBufferCounter = 0; // 저장 버퍼 카운터
     private const int SaveBufferThreshold = 10; // 생명력 업그레이드 저장 버퍼 임계값
     private Coroutine exitCoroutine;
     private bool isPaused = false;
 
-    private float timeInBackground = 0f;
-
     public Tutorial TutorialObject;
 
-    private void Awake()
+    protected override void Awake()
     {
         base.Awake();
         InitializeGame();

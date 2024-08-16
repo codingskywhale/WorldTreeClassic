@@ -15,7 +15,7 @@ public class LoginManager : MonoBehaviour
     public TMP_Text loadingText;
     public GameObject loginPanel;
 
-    private string webClientId = "41547311661-himu41jj8sm40obegnj3g60rualr4j57.apps.googleusercontent.com";
+    //private string webClientId = "41547311661-himu41jj8sm40obegnj3g60rualr4j57.apps.googleusercontent.com";
 
     private void Start()
     { 

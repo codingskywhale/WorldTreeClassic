@@ -37,7 +37,7 @@ public class Tutorial : MonoBehaviour
     private bool isAnimalConditionEnd = false;
     private bool isAnimalTabConditionCleared = false;
 
-    private bool isCoroutineEnd = true;
+    public bool isCoroutineEnd = true;
 
     private Coroutine ReadTextCoroutine;
 
