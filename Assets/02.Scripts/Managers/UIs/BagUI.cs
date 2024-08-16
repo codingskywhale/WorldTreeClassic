@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class BagUIManager : MonoBehaviour
+public class BagUI : MonoBehaviour
 {
     public GameObject bagCanvas;
     public GameObject bagPopup;

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class UIOpenCloseManager : MonoBehaviour
+public class UIOpenClose : MonoBehaviour
 {
     public RectTransform bottomUIPanel1; // 강화창
     public RectTransform bottomUIPanel2; // 버튼부분

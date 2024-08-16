@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
-public class MusicUIManager : MonoBehaviour
+public class MusicUI : MonoBehaviour
 {
     public GameObject musicPanel; 
     public Button openMusicButton; 
@@ -23,7 +23,7 @@ public class MusicUIManager : MonoBehaviour
 
     private int currentIndex = 0;
 
-    public UIOpenCloseManager uiOpenCloseManager;
+    public UIOpenClose uiOpenCloseManager;
 
     private void Start()
     {

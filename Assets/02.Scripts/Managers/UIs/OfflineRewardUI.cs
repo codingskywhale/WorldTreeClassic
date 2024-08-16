@@ -5,7 +5,7 @@ using System.Numerics;
 using System;
 using GoogleMobileAds.Api;
 
-public class OfflineRewardUIManager : MonoBehaviour
+public class OfflineRewardUI : MonoBehaviour
 {
     public GameObject offlineUIPanel; // 오프라인 UI 패널
     public TextMeshProUGUI offlineRewardText; // 오프라인 보상 텍스트

@@ -19,7 +19,7 @@ public class GameManager : Singleton<GameManager>
     public List<Artifact> artifacts;
     public WorldTree worldTree;
     public TouchInput touchInput;
-    public OfflineRewardUIManager offlineRewardUIManager; // 오프라인 보상 UI 매니저
+    public OfflineRewardUI offlineRewardUIManager; // 오프라인 보상 UI 매니저
     public IntroManager introManager; // 인트로 매니저
     public CameraTransition cameraTransition; // 카메라 트랜지션
 

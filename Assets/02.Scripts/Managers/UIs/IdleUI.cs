@@ -5,7 +5,7 @@ using TMPro;
 using System;
 using UnityEngine.UIElements;
 
-public class IdleUIManager : MonoBehaviour
+public class IdleUI : MonoBehaviour
 {
     public GameObject mainUI;
     public GameObject mainUI2;
@@ -20,7 +20,7 @@ public class IdleUIManager : MonoBehaviour
     private float timer;
     private bool isIdle;
     private string currentSongTitle;
-    public UIOpenCloseManager uiOpenCloseManager;
+    public UIOpenClose uiOpenCloseManager;
 
     // 모든 UI 패널을 리스트로 관리
     public List<GameObject> NoneIdleuiPanels;
