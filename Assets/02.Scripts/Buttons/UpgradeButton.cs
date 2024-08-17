@@ -2,6 +2,7 @@ using System.Numerics;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using System.Collections;
 
 public class UpgradeButton : MonoBehaviour
 {
@@ -15,6 +16,7 @@ public class UpgradeButton : MonoBehaviour
     public TextMeshProUGUI x100Text;
     //public TouchInputManager touchInputManager;
     private int buttonIdx;
+    Coroutine buttonVisibleCoroutine;
 
     public enum UpgradeType
     {
@@ -217,6 +219,7 @@ public class UpgradeButton : MonoBehaviour
 
         x10Button.gameObject.SetActive(maxUpgradeCount > 1);
         x100Button.gameObject.SetActive(maxUpgradeCount > 10);
+        buttonVisibleCoroutine = StartCoroutine(DelayOffButton());
     }
 
     public void SetMultiTreeUpgradeText()
@@ -240,5 +243,16 @@ public class UpgradeButton : MonoBehaviour
         }
 
         return count;
+    }
+
+    IEnumerator DelayOffButton()
+    {
+        // 실행중인 코루틴이 있다면 꺼준다 (여러 번 꺼지는 것을 방지하기 위함.)
+        if(buttonVisibleCoroutine != null) StopCoroutine(buttonVisibleCoroutine);
+
+        yield return new WaitForSeconds(3f);
+
+        x10Button.gameObject.SetActive(false);
+        x100Button.gameObject.SetActive(false);
     }
 }
