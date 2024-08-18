@@ -1,42 +1,46 @@
-# 세계수 키우기
+![image](https://github.com/user-attachments/assets/cf24b90f-2992-4fcb-a748-71d5d82aa8fe)
+
 세계수를 성장시켜 거대하게 키우고,
+
 다양한 꽃을 구매해 화려한 꽃밭을 만들고,
+
 나만의 동물을 배치하여 감상해 보세요!
+
+[`홍보영상`](https://youtu.be/eV8vvz2bWnE?si=fTQnZzfiAFHHJ3tz)
 ## 게임 소개
-세계수 키우기 - 3D 방치형 힐링게임
+|게임명|세계수 키우기|
+|:---:|:---:|
+|장르|`방치형` `힐링` `시뮬레이션`|
+|개발엔진|`Unity(2022.3.17.f1)`|
+|협업툴|`Discord` `figma` `google sheets`|
+|플랫폼|`PC` `Web` `Android`|
+|개발 기간|`2024.6.27` ~ `2024.8.22`|
 ## 목차
 - [팀원 소개](#팀원-소개)
-- 개발 환경
 - [구현 기능](#구현-기능)
+- [게임 플레이 링크](게임-플레이-링크)
+- [사용 에셋](#사용-에셋)
 ## 팀원 소개
-- `허정(팀장)`
+- 팀장: `허정`
   - 게임 기획
   - 맵 제작
   - 데이터 테이블 작성
-- `이영대(부팀장)`
+- 부팀장: `이영대`
   - UI 제작
   - 카메라 기능
   - 사운드 기능
   - 서버 구축
-- `김보근(팀원)`
+- 팀원: `김보근`
   - 세계수 기능
   - 식물 기능
   - 스킬
   - 방치 보상 기능
   - 포그(안개)
-- `박도현(팀원)`
+- 팀원: `박도현`
   - 동물 기능
   - 도감 기능
   - 도전과제 기능
   - 빌드 및 리펙토링
-## 개발 환경
-- `개발 엔진`
-  - Unity(2022.3.17.f1)
-
-- `협업 사용 툴`
-  - Discord
-  - figma
-  - google sheets
 
 ## 구현 기능
 ### [세계수](https://github.com/codingskywhale/WorldTreeClassic/wiki/%EC%84%B8%EA%B3%84%EC%88%98)
@@ -63,10 +67,21 @@
 - 따라가기 버튼 다시 클릭 시 카메라가 기존 위치로 돌아와 고정된다.
 ### [배경음악](https://github.com/codingskywhale/WorldTreeClassic/wiki/%EB%B0%B0%EA%B2%BD%EC%9D%8C%EC%95%85)
 - 음악 버튼 클릭 시 배경음악을 변경할 수 있다.
-### 대기화면
+### [대기화면](https://github.com/codingskywhale/WorldTreeClassic/wiki/%EB%B0%A9%EC%B9%98-%EB%B3%B4%EC%83%81)
 - 10초 이상 게임 조작이 없을 시 대기화면으로 넘어가며, 화면상 UI를 비활성화한다.
 - 대기화면에서 화면 클릭 시 다시 화면으로 넘어온다.
 ### [방치보상](https://github.com/codingskywhale/WorldTreeClassic/wiki/%EB%B0%A9%EC%B9%98-%EB%B3%B4%EC%83%81)
 - 게임 종료 후 재접속 시 게임 방치 보상을 획득할 수 있다.
 ### [광고](https://github.com/codingskywhale/WorldTreeClassic/wiki/%EA%B4%91%EA%B3%A0-%EB%B3%B4%EC%83%81)
 - 광고 시청 시 보상을 획득할 수 있다.
+
+## 게임 플레이 링크
+[PC 플레이](https://pdhyeon.itch.io/worldtreeclassic)
+
+[모바일 다운로드](https://drive.google.com/file/d/1CdF-V_yx7O-nsc4Y3gh_RkqgGPTJRk8m/view?usp=drive_link)
+
+## 사용 에셋
+- 식물: [Low Poly Trees Pack - Flowers](https://assetstore.unity.com/packages/3d/vegetation/flowers/low-poly-trees-pack-flowers-178576)
+- 동물: [Low Poly Animated Animals](https://assetstore.unity.com/packages/3d/characters/animals/low-poly-animated-animals-93089)
+- 세계수/맵: [Grasslands - Stylized Nature](https://assetstore.unity.com/packages/3d/environments/fantasy/grasslands-stylized-nature-287353)
+- 세계수2: [Lemon Trees](https://assetstore.unity.com/packages/3d/vegetation/trees/lemon-trees-200372)
