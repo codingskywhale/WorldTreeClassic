@@ -63,13 +63,11 @@ public class CameraSettings : MonoBehaviour
 
     public Vector3 GetInitialPosition(int treeLevel)
     {
-        int levelFactor = treeLevel / 10;
-        Vector3 adjustedPosition = basePosition;
+        // 기본 위치에 WorldTree에서 계산된 positionOffset을 더함
+        Vector3 adjustedPosition = basePosition + worldTree.GetPositionOffset();
 
-        if (levelFactor > 0)
-        {
-            adjustedPosition -= Camera.main.transform.forward * (worldTree.positionIncrement * levelFactor);
-        }
+        // 디버깅 로그로 위치 확인
+        Debug.Log("GetInitialPosition: adjustedPosition = " + adjustedPosition);
 
         return adjustedPosition;
     }

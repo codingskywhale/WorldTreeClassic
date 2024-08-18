@@ -177,19 +177,25 @@ public class CameraController : MonoBehaviour
     {
         if (CameraSettings.Instance.isZooming) return;
 
-        // 고정된 위치와 회전 값 설정
-        Vector3 fixedPosition = CameraSettings.Instance.GetInitialPosition(DataManager.Instance.touchData.touchIncreaseLevel);
-        Quaternion fixedRotation = CameraSettings.Instance.GetFinalRotation();
+        // 나무 레벨에 따른 고정된 위치 계산
+        int treeLevel = DataManager.Instance.touchData.touchIncreaseLevel;
+        Vector3 fixedPosition = CameraSettings.Instance.GetInitialPosition(treeLevel);
 
-        // 고정시점모드로의 전환
+        // 고정된 회전 값 사용
+        Quaternion fixedRotation = CameraSettings.Instance.finalRotation;
+
+        // 카메라 위치와 회전 값을 명확하게 초기화
         Camera.main.transform.position = fixedPosition;
         Camera.main.transform.rotation = fixedRotation;
 
-        // CameraSettings에 위치와 회전 상태를 업데이트
-        CameraSettings.Instance.currentCameraPosition = fixedPosition;
-        CameraSettings.Instance.currentCameraRotation = fixedRotation;
+        // 나무를 정확히 바라보게 설정
+        Camera.main.transform.LookAt(CameraSettings.Instance.worldTree.transform);
 
-        // 고정시점 모드 플래그 업데이트
+        // 현재 상태 업데이트
+        CameraSettings.Instance.currentCameraPosition = fixedPosition;
+        CameraSettings.Instance.currentCameraRotation = Camera.main.transform.rotation;
+
+        // 모드 전환
         isFreeCamera = false;
         cameraTargetHandler.SetFreeCameraMode(isFreeCamera);
 
