@@ -239,7 +239,7 @@ MonoBehaviour:
     animationBool: isDead
   species: Pig
   stats: {fileID: 11400000, guid: 659979d62f38dc54286aee95c8190124, type: 2}
-  wanderZone: 25
+  wanderZone: 10
   constainedToWanderZone: 0
   nonAgressiveTowards: []
   matchSurfaceRotation: 0

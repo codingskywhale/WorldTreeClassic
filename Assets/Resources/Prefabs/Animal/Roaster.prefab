@@ -239,7 +239,7 @@ MonoBehaviour:
     animationBool: isDead
   species: Roaster
   stats: {fileID: 11400000, guid: 62686875ab1aa3944a389c110af7e113, type: 2}
-  wanderZone: 4.5
+  wanderZone: 5
   constainedToWanderZone: 0
   nonAgressiveTowards: []
   matchSurfaceRotation: 0

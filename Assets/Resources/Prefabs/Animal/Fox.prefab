@@ -1752,7 +1752,7 @@ MonoBehaviour:
   idleStates:
   - stateName: isBarking
     animationBool: isBarking
-    minStateTime: 1
+    minStateTime: 3
     maxStateTime: 6
     stateWeight: 7
   - stateName: isSitting
@@ -1779,7 +1779,7 @@ MonoBehaviour:
     animationBool: isSitting
   species: Fox
   stats: {fileID: 11400000, guid: 217a57f0e80c894409aaa77bc78dc2ac, type: 2}
-  wanderZone: 16.71
+  wanderZone: 15
   constainedToWanderZone: 0
   nonAgressiveTowards: []
   matchSurfaceRotation: 0

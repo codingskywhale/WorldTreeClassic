@@ -135,7 +135,7 @@ NavMeshAgent:
   m_AutoBraking: 1
   m_AutoRepath: 1
   m_Height: 0.1
-  m_BaseOffset: -0.05
+  m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
 --- !u!114 &5352012557972518038
@@ -153,7 +153,7 @@ MonoBehaviour:
   idleStates:
   - stateName: 
     animationBool: 
-    minStateTime: 3
+    minStateTime: 5
     maxStateTime: 10
     stateWeight: 0
   movementStates:
@@ -175,7 +175,7 @@ MonoBehaviour:
     animationBool: isDead
   species: Meerkat
   stats: {fileID: 11400000, guid: 56f9a7b7af4f94599b3eda271300f924, type: 2}
-  wanderZone: 16.71
+  wanderZone: 7
   constainedToWanderZone: 0
   nonAgressiveTowards: []
   matchSurfaceRotation: 0

@@ -28,6 +28,8 @@ public class AnimalGenerateData
 
     public Action OnAnimalGenerateEvent;
 
+    public int totalAnimalCount;
+
     public AnimalGenerateData()
     {
         nowCreateCost = createCostbase;
@@ -47,6 +49,7 @@ public class AnimalGenerateData
     public bool AddAnimal(bool isNew = false)
     {
         if(isNew) nowCreateCost = (BigInteger)((float)nowCreateCost * createCostMultiple);
+        totalAnimalCount++;
 
         // 카운트 늘리지 않기.
         if (nowAnimalCount >= maxAnimalCount) return false;

@@ -242,7 +242,7 @@ MonoBehaviour:
   idleStates:
   - stateName: ChestHit
     animationBool: isChestHit
-    minStateTime: 1
+    minStateTime: 3
     maxStateTime: 5
     stateWeight: 1
   movementStates:
@@ -264,7 +264,7 @@ MonoBehaviour:
     animationBool: isDead
   species: Gorilla
   stats: {fileID: 11400000, guid: fab80a603f4eb7b41b27a623da9de053, type: 2}
-  wanderZone: 5
+  wanderZone: 16
   constainedToWanderZone: 0
   nonAgressiveTowards: []
   matchSurfaceRotation: 0

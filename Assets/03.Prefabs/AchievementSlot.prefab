@@ -420,7 +420,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 13c07a20ced685c4f928f89e0593868f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  conditionProgressSlider: {fileID: 1883516416884445330}
   needCount: 0
+  nowCount: 0
+  nowLevel: 0
   starImages:
   - {fileID: 8907050874005427602}
   - {fileID: 8903416184769303324}
@@ -428,6 +431,7 @@ MonoBehaviour:
   - {fileID: 2804986123713677669}
   - {fileID: 5189665889620764882}
   explainText: {fileID: 6807128693660317488}
+  claimRewardButton: {fileID: 7449950528611851329}
 --- !u!1 &1871873540278356555
 GameObject:
   m_ObjectHideFlags: 0
@@ -1009,7 +1013,7 @@ GameObject:
   - component: {fileID: 8402847386791868835}
   - component: {fileID: 7449950528611851329}
   m_Layer: 5
-  m_Name: Button
+  m_Name: ClaimRewardButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1117,7 +1121,43 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 8402847386791868835}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 4738921717307289757}
+        m_TargetAssemblyTypeName: Achievement_Tab, Assembly-CSharp
+        m_MethodName: LevelUP
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 4738921717307289757}
+        m_TargetAssemblyTypeName: Achievement_Tab, Assembly-CSharp
+        m_MethodName: ApplyIconColorChange
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 4738921717307289757}
+        m_TargetAssemblyTypeName: Achievement_Tab, Assembly-CSharp
+        m_MethodName: SetButtonOnOff
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &5415174788018781854
 GameObject:
   m_ObjectHideFlags: 0

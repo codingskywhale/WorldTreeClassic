@@ -477,7 +477,7 @@ MonoBehaviour:
   idleStates:
   - stateName: isBarking
     animationBool: isBarking
-    minStateTime: 1
+    minStateTime: 3
     maxStateTime: 6
     stateWeight: 7
   - stateName: isSitting
@@ -502,7 +502,7 @@ MonoBehaviour:
     animationBool: isSitting
   species: GreatDane
   stats: {fileID: 11400000, guid: 9f3f059a29809ff43bb6115c7349536d, type: 2}
-  wanderZone: 8
+  wanderZone: 15
   constainedToWanderZone: 0
   nonAgressiveTowards: []
   matchSurfaceRotation: 0

@@ -1949,9 +1949,9 @@ MonoBehaviour:
   idleStates:
   - stateName: Idle
     animationBool: 
-    minStateTime: 0
-    maxStateTime: 0
-    stateWeight: 0
+    minStateTime: 3
+    maxStateTime: 5
+    stateWeight: 5
   movementStates:
   - stateName: Walking
     animationBool: isWalking
@@ -1971,7 +1971,7 @@ MonoBehaviour:
     animationBool: isDead
   species: Squirrel
   stats: {fileID: 11400000, guid: 7aee07b0e89d4ea4eaf29fb1db6344e2, type: 2}
-  wanderZone: 4.5
+  wanderZone: 5
   constainedToWanderZone: 0
   nonAgressiveTowards: []
   matchSurfaceRotation: 0

@@ -155,7 +155,7 @@ MonoBehaviour:
   - stateName: Walking
     animationBool: isWalking
     maxStateTime: 20
-    moveSpeed: 1
+    moveSpeed: 2
     turnSpeed: 120
   - stateName: Running
     animationBool: isRunning
@@ -170,7 +170,7 @@ MonoBehaviour:
     animationBool: isDead
   species: Ostrich
   stats: {fileID: 0}
-  wanderZone: 10
+  wanderZone: 18
   constainedToWanderZone: 0
   nonAgressiveTowards: []
   matchSurfaceRotation: 0

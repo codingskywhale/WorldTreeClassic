@@ -222,7 +222,7 @@ NavMeshAgent:
   m_AutoBraking: 1
   m_AutoRepath: 1
   m_Height: 0.1
-  m_BaseOffset: -0.05
+  m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
 --- !u!114 &114210507595430992
@@ -262,7 +262,7 @@ MonoBehaviour:
     animationBool: isDead
   species: Cat
   stats: {fileID: 11400000, guid: dbe9e93337452e549825f00a2450fc95, type: 2}
-  wanderZone: 3
+  wanderZone: 5
   constainedToWanderZone: 0
   nonAgressiveTowards: []
   matchSurfaceRotation: 0

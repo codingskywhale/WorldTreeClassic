@@ -13,6 +13,7 @@ public class BubbleGeneratorPool : MonoBehaviour
     private readonly int maxHeartCount = 2;
     public readonly float heartGenerateDelay = 3f;
     private readonly string bubbleTr = "BubblePosition";
+    public int bubbleClickCount = 0;
 
     public void GenerateNewHeart()
     {
@@ -53,6 +54,8 @@ public class BubbleGeneratorPool : MonoBehaviour
         go.transform.SetParent(DataManager.Instance.spawnData.animalObjectList[randomIdx].transform.Find(bubbleTr).transform);
         go.GetComponent<RectTransform>().localPosition = Vector3.zero;
         nowHeartBubbleList.Add(go);
+
+        bubbleClickCount++;
     }
 
     // 버블을 제거할 때 발생할 메서드

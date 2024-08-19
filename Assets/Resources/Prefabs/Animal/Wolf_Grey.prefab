@@ -362,7 +362,7 @@ MonoBehaviour:
     animationBool: isDead
   species: Wolf
   stats: {fileID: 11400000, guid: eb63abc8ed4638546b1db42f35c9b0b3, type: 2}
-  wanderZone: 8
+  wanderZone: 12
   constainedToWanderZone: 0
   nonAgressiveTowards: []
   matchSurfaceRotation: 1

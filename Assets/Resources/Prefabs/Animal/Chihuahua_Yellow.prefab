@@ -1165,8 +1165,8 @@ MonoBehaviour:
   idleStates:
   - stateName: isBarking
     animationBool: isBarking
-    minStateTime: 1
-    maxStateTime: 6
+    minStateTime: 5
+    maxStateTime: 8
     stateWeight: 7
   - stateName: isSitting
     animationBool: isSitting
@@ -1230,7 +1230,7 @@ NavMeshAgent:
   m_AutoBraking: 1
   m_AutoRepath: 1
   m_Height: 0.1
-  m_BaseOffset: -0.15
+  m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
 --- !u!114 &9177534833484228655

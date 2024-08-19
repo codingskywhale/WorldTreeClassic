@@ -512,7 +512,7 @@ MonoBehaviour:
     animationBool: isSitting
   species: GoldenRetriever
   stats: {fileID: 11400000, guid: 91ff9525a96dadf46b6ed6d11b429824, type: 2}
-  wanderZone: 3
+  wanderZone: 15
   constainedToWanderZone: 0
   nonAgressiveTowards: []
   matchSurfaceRotation: 0

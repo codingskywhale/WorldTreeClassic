@@ -395,6 +395,7 @@ public class SaveDataManager
         {
             GameObject animalObject = GameObject.Instantiate(animalData.animalPrefab, DataManager.Instance.spawnData.spawnTr); // 부모 설정 추가
             LifeManager.Instance.ApplyIncreaseRateToAllFlowers(1);
+            DataManager.Instance.animalGenerateData.totalAnimalCount++;
 
             if (animalObject != null)
             {

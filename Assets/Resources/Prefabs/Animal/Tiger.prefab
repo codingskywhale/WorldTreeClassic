@@ -239,7 +239,7 @@ MonoBehaviour:
     animationBool: isDead
   species: Tiger
   stats: {fileID: 11400000, guid: 5359099a6135c4047b79a9e24f45aa48, type: 2}
-  wanderZone: 25
+  wanderZone: 20
   constainedToWanderZone: 0
   nonAgressiveTowards: []
   matchSurfaceRotation: 0

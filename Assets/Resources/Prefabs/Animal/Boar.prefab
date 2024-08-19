@@ -1736,8 +1736,8 @@ MonoBehaviour:
   idleStates:
   - stateName: isLooking
     animationBool: isLooking
-    minStateTime: 1
-    maxStateTime: 6
+    minStateTime: 5
+    maxStateTime: 10
     stateWeight: 7
   movementStates:
   - stateName: Walking
@@ -1758,7 +1758,7 @@ MonoBehaviour:
     animationBool: isDead
   species: Boar
   stats: {fileID: 11400000, guid: 8dc925224dd075b43818dcea9bdf902b, type: 2}
-  wanderZone: 16.71
+  wanderZone: 15
   constainedToWanderZone: 0
   nonAgressiveTowards: []
   matchSurfaceRotation: 0

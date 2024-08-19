@@ -443,7 +443,7 @@ MonoBehaviour:
     animationBool: isDead_1
   species: Rabbit
   stats: {fileID: 11400000, guid: 7c5c1c5c9a5e94647b0e5e541b0b1e6b, type: 2}
-  wanderZone: 4.5
+  wanderZone: 5
   constainedToWanderZone: 0
   nonAgressiveTowards: []
   matchSurfaceRotation: 1

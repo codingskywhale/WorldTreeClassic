@@ -417,9 +417,9 @@ MonoBehaviour:
   idleStates:
   - stateName: Idle
     animationBool: 
-    minStateTime: 0
-    maxStateTime: 0
-    stateWeight: 0
+    minStateTime: 5
+    maxStateTime: 10
+    stateWeight: 7
   movementStates:
   - stateName: Walking
     animationBool: isWalking
@@ -439,7 +439,7 @@ MonoBehaviour:
     animationBool: isDead
   species: Goos
   stats: {fileID: 11400000, guid: 84fab043168fbec45aa08e624c827b07, type: 2}
-  wanderZone: 10
+  wanderZone: 12
   constainedToWanderZone: 0
   nonAgressiveTowards: []
   matchSurfaceRotation: 0

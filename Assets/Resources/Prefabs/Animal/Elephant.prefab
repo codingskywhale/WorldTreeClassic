@@ -282,7 +282,7 @@ MonoBehaviour:
     animationBool: isDead
   species: Elephant
   stats: {fileID: 11400000, guid: 75d498707d7abb34e9b0d76b6a71fb43, type: 2}
-  wanderZone: 30
+  wanderZone: 25
   constainedToWanderZone: 0
   nonAgressiveTowards: []
   matchSurfaceRotation: 1

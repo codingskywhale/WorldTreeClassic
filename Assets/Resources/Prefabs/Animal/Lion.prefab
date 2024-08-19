@@ -239,7 +239,7 @@ MonoBehaviour:
     animationBool: isDead
   species: Chimpanzee
   stats: {fileID: 11400000, guid: fb5b295c26be5384186694d0a0e46379, type: 2}
-  wanderZone: 25
+  wanderZone: 20
   constainedToWanderZone: 0
   nonAgressiveTowards: []
   matchSurfaceRotation: 0
