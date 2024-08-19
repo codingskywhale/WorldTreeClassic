@@ -39,9 +39,6 @@ public class CameraTargetHandler : MonoBehaviour
         // 기존 카메라 위치 초기화
         CameraSettings.Instance.currentCameraPosition = Vector3.zero;
 
-        // 디버깅 로그로 타겟 변경 후 카메라 위치 확인
-        Debug.Log("SetTarget: currentTarget = " + currentTarget.name);
-
         StartCoroutine(ZoomToTarget(newTarget));
     }
 

@@ -48,26 +48,16 @@ public class CameraSettings : MonoBehaviour
         currentCameraPosition = GetInitialPosition(treeLevel);
         currentCameraRotation = GetInitialRotation();
         currentCameraFOV = Camera.main.fieldOfView;
+
+        Camera.main.transform.position = currentCameraPosition;
+        Camera.main.transform.rotation = currentCameraRotation;
+               
     }
-
-
-    //private void AdjustOffsetBasedOnTreeLevel(int treeLevel)
-    //{
-    //    int levelFactor = treeLevel / 10;
-
-    //    if (levelFactor > 0)
-    //    {
-    //        basePosition -= Camera.main.transform.forward * (worldTree.positionIncrement * levelFactor);
-    //    }
-    //}
 
     public Vector3 GetInitialPosition(int treeLevel)
     {
         // 기본 위치에 WorldTree에서 계산된 positionOffset을 더함
         Vector3 adjustedPosition = basePosition + worldTree.GetPositionOffset();
-
-        // 디버깅 로그로 위치 확인
-        Debug.Log("GetInitialPosition: adjustedPosition = " + adjustedPosition);
 
         return adjustedPosition;
     }

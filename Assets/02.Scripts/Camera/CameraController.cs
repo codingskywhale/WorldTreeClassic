@@ -43,8 +43,12 @@ public class CameraController : MonoBehaviour
         {
             if (isFreeCamera)
             {
-                HandleFreeCamera();
-                HandlePinchZoom();
+                // UI 위에 포인터가 있지 않을 때만 카메라 조작 가능
+                if (!IsPointerOverUI())
+                {
+                    HandleFreeCamera();
+                    HandlePinchZoom();
+                }
             }
             else if (cameraTargetHandler.isObjectTarget && cameraTargetHandler.currentTarget != null)
             {
@@ -56,6 +60,11 @@ public class CameraController : MonoBehaviour
                 HandleClick();
             }
         }
+    }
+
+    private bool IsPointerOverUI()
+    {
+        return EventSystem.current.IsPointerOverGameObject();
     }
 
     private void HandleFreeCamera()
@@ -83,6 +92,13 @@ public class CameraController : MonoBehaviour
 
     private void HandlePinchZoom()
     {
+        // PC 환경에서 마우스 휠을 사용한 줌인/줌아웃 처리
+        float scroll = Input.GetAxis("Mouse ScrollWheel");
+        if (scroll != 0.0f)
+        {
+            ZoomCamera(-scroll * zoomSpeed * 20f); // 마우스 휠로 줌인/줌아웃
+        }
+
         // 터치가 두 개 이상일 때 핀치 제스처 처리
         if (Input.touchCount == 2)
         {
@@ -176,6 +192,7 @@ public class CameraController : MonoBehaviour
     public void SwitchToFixedCameraMode()
     {
         if (CameraSettings.Instance.isZooming) return;
+
 
         // 나무 레벨에 따른 고정된 위치 계산
         int treeLevel = DataManager.Instance.touchData.touchIncreaseLevel;
