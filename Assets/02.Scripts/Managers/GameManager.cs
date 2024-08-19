@@ -171,10 +171,6 @@ public class GameManager : Singleton<GameManager>
             string lastSaveTime = PlayerPrefs.GetString("lastSaveTime");
             ProcessBackgroundRewards(lastSaveTime);  // 로컬 데이터를 사용하여 오프라인 보상 처리
         }
-        else
-        {
-            Debug.LogWarning("No local lastSaveTime found.");
-        }
     }
 
     private void ProcessBackgroundRewards(string lastSaveTime)
@@ -200,4 +196,6 @@ public class GameManager : Singleton<GameManager>
             }
         }
     }
+
+
 }

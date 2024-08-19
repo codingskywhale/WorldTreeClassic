@@ -50,8 +50,7 @@ public class CameraSettings : MonoBehaviour
         currentCameraFOV = Camera.main.fieldOfView;
 
         Camera.main.transform.position = currentCameraPosition;
-        Camera.main.transform.rotation = currentCameraRotation;
-               
+        Camera.main.transform.rotation = currentCameraRotation;               
     }
 
     public Vector3 GetInitialPosition(int treeLevel)
