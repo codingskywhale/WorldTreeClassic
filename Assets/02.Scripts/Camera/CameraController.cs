@@ -272,15 +272,16 @@ public class CameraController : MonoBehaviour
 
     private void ShowMessage(string message)
     {
-        // 기존 메시지가 있다면 제거
+        // 기존 메시지가 있다면 제거하고 코루틴 중지
         if (currentMessage != null)
         {
+            StopCoroutine(FadeAndMoveMessage(currentMessage));
             Destroy(currentMessage);
         }
 
         messageParent.gameObject.SetActive(true);
 
-        // 메시지 생성
+        // 새로운 메시지 생성
         currentMessage = Instantiate(messagePrefab, messageParent);
         currentMessage.GetComponent<TMP_Text>().text = message;
 
@@ -291,6 +292,8 @@ public class CameraController : MonoBehaviour
     private IEnumerator FadeAndMoveMessage(GameObject message)
     {
         TMP_Text messageText = message.GetComponent<TMP_Text>();
+        if (messageText == null) yield break; // 메시지가 파괴되었다면 코루틴 종료
+
         Color originalColor = messageText.color;
         Vector3 originalPosition = message.transform.position;
 
@@ -299,15 +302,27 @@ public class CameraController : MonoBehaviour
 
         while (elapsed < duration)
         {
+            // 오브젝트가 null이거나 파괴되었는지 확인
+            if (message == null) yield break;
+
             elapsed += Time.deltaTime;
             float alpha = Mathf.Lerp(1.0f, 0.0f, elapsed / duration);
-            messageText.color = new Color(originalColor.r, originalColor.g, originalColor.b, alpha);
-            message.transform.position = originalPosition + new Vector3(0, elapsed * 10, 0); // 조금씩 위로 이동
+
+            // 메시지 텍스트가 파괴되지 않았을 경우 색상 및 위치 변경
+            if (messageText != null)
+            {
+                messageText.color = new Color(originalColor.r, originalColor.g, originalColor.b, alpha);
+                message.transform.position = originalPosition + new Vector3(0, elapsed * 10, 0);
+            }
 
             yield return null;
         }
 
-        Destroy(message);
-        messageParent.gameObject.SetActive(false);
+        // 코루틴 종료 전에 메시지가 존재하는지 다시 확인
+        if (message != null)
+        {
+            Destroy(message);
+            messageParent.gameObject.SetActive(false);
+        }
     }
 }
