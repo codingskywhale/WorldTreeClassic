@@ -36,29 +36,43 @@ public class CameraTransition : MonoBehaviour
     {
         CameraSettings.Instance.isZooming = true;
         float elapsedTime = 0f;
-        Vector3 startPosition = CameraSettings.Instance.currentCameraPosition;
-        Quaternion startRotation = CameraSettings.Instance.currentCameraRotation;
+        Vector3 startPosition = Camera.main.transform.position;  // 실제 카메라의 현재 위치를 가져옴
+        Quaternion startRotation = Camera.main.transform.rotation;  // 실제 카메라의 현재 회전 값을 가져옴
 
         while (elapsedTime < zoomDuration)
         {
             elapsedTime += Time.deltaTime;
             float t = elapsedTime / zoomDuration;
 
-            CameraSettings.Instance.currentCameraPosition = Vector3.Lerp(startPosition, targetPosition, t);
-            CameraSettings.Instance.currentCameraRotation = Quaternion.Slerp(startRotation, targetRotation, t);
+            // 부드럽게 카메라의 위치와 회전 값 전환
+            Vector3 newPosition = Vector3.Lerp(startPosition, targetPosition, t);
+            Quaternion newRotation = Quaternion.Slerp(startRotation, targetRotation, t);
 
-            Camera.main.transform.position = CameraSettings.Instance.currentCameraPosition;
-            Camera.main.transform.rotation = CameraSettings.Instance.currentCameraRotation;
+            Camera.main.transform.position = newPosition;
+            Camera.main.transform.rotation = newRotation;
 
             yield return null;
         }
 
-        // 코루틴이 완료된 후 고정시점 모드 상태를 확인하고 필요 시 초기화
+        // 전환 완료 후 정확한 위치와 회전 값 설정
+        Camera.main.transform.position = targetPosition;
+        Camera.main.transform.rotation = targetRotation;
+
+        // 코루틴 완료 후 고정시점 모드 확인
         CameraSettings.Instance.isZooming = false;
+
         if (!CameraTargetHandler.Instance.isFreeCamera)
         {
-            Camera.main.transform.position = CameraSettings.Instance.GetInitialPosition(DataManager.Instance.touchData.touchIncreaseLevel);
-            Camera.main.transform.rotation = CameraSettings.Instance.GetFinalRotation();
+            // 고정시점 모드로 돌아가는 경우
+            Vector3 fixedPosition = CameraSettings.Instance.GetInitialPosition(DataManager.Instance.touchData.touchIncreaseLevel);
+            Quaternion fixedRotation = CameraSettings.Instance.GetFinalRotation();
+
+            Camera.main.transform.position = fixedPosition;
+            Camera.main.transform.rotation = fixedRotation;
+
+            // CameraSettings에 위치와 회전 상태 업데이트
+            CameraSettings.Instance.currentCameraPosition = fixedPosition;
+            CameraSettings.Instance.currentCameraRotation = fixedRotation;
         }
     }
 

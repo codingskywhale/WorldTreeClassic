@@ -19,8 +19,8 @@ public class LoginManager : MonoBehaviour
 
     private void Start()
     { 
-    //    PlayerPrefs.DeleteKey("GuestLoggedIn");
-    //    PlayerPrefs.DeleteKey("GoogleLoggedIn");
+        //PlayerPrefs.DeleteKey("GuestLoggedIn");
+        //PlayerPrefs.DeleteKey("GoogleLoggedIn");
 
         googleLoginButton.onClick.AddListener(OnGoogleLoginButtonClicked);
         guestLoginButton.onClick.AddListener(OnGuestLoginButtonClicked);        
@@ -98,13 +98,21 @@ public class LoginManager : MonoBehaviour
 
     private IEnumerator StartIntroAndLoadData()
     {
-        var loadGameDataCoroutine = GameManager.Instance.saveDataManager.LoadGameDataCoroutine(GameManager.Instance.skills, GameManager.Instance.artifacts, GameManager.Instance.worldTree);
-        StartCoroutine(loadGameDataCoroutine);
+        // 데이터 로드가 끝날 때까지 대기
+        var loadGameDataCoroutine = GameManager.Instance.saveDataManager.LoadGameDataCoroutine(
+            GameManager.Instance.skills,
+            GameManager.Instance.artifacts,
+            GameManager.Instance.worldTree);
+        yield return StartCoroutine(loadGameDataCoroutine);
 
+        // 인트로 애니메이션 시작
         yield return StartCoroutine(GameManager.Instance.introManager.PlayIntro());
 
-        yield return loadGameDataCoroutine;
+        // 인트로와 데이터 로드가 모두 완료된 후 카메라 설정
+        Camera.main.transform.position = CameraSettings.Instance.GetInitialPosition(DataManager.Instance.touchData.touchIncreaseLevel);
+        Camera.main.transform.rotation = CameraSettings.Instance.GetFinalRotation();
 
+        // 다른 초기화 작업 진행
         GameManager.Instance.OnIntroAndOpeningCompleted();
     }
 

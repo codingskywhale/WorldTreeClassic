@@ -39,23 +39,52 @@ public class CameraController : MonoBehaviour
 
     private void Update()
     {
-        if (CameraSettings.Instance.animationCompleted)
-        {
-            if (isFreeCamera)
-            {
-                HandleFreeCamera();
-                HandlePinchZoom();
-            }
-            else if (cameraTargetHandler.isObjectTarget && cameraTargetHandler.currentTarget != null)
-            {
-                cameraTargetHandler.FollowObject();
-            }
+        if (!CameraSettings.Instance.animationCompleted)
+            return;
 
-            if (Input.GetMouseButtonDown(0) || (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Began))
+        if (isFreeCamera)
+        {
+            // UI 위에서 터치가 발생하지 않을 때만 카메라 조작 가능
+            if (!IsPointerOverUI())
             {
-                HandleClick();
+                if (Input.touchCount == 1)
+                {
+                    // 한 손가락으로 카메라 회전
+                    HandleFreeCamera();
+                }
+                else if (Input.touchCount == 2)
+                {
+                    // 두 손가락으로 핀치 줌
+                    HandlePinchZoom();
+                }
             }
         }
+        else if (cameraTargetHandler.isObjectTarget && cameraTargetHandler.currentTarget != null)
+        {
+            cameraTargetHandler.FollowObject();
+        }
+
+        if (Input.GetMouseButtonDown(0) ||
+           (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Began))
+        {
+            HandleClick();
+        }
+    }
+
+    private bool IsPointerOverUI()
+    {
+        if (Input.touchCount > 0)
+        {
+            for (int i = 0; i < Input.touchCount; i++)
+            {
+                Touch touch = Input.GetTouch(i);
+                if (EventSystem.current.IsPointerOverGameObject(touch.fingerId))
+                {
+                    return true;
+                }
+            }
+        }
+        return EventSystem.current.IsPointerOverGameObject(); // 마우스 입력에 대한 UI 체크
     }
 
     private void HandleFreeCamera()
@@ -83,6 +112,13 @@ public class CameraController : MonoBehaviour
 
     private void HandlePinchZoom()
     {
+        // PC 환경에서 마우스 휠을 사용한 줌인/줌아웃 처리
+        float scroll = Input.GetAxis("Mouse ScrollWheel");
+        if (scroll != 0.0f)
+        {
+            ZoomCamera(-scroll * zoomSpeed * 20f); // 마우스 휠로 줌인/줌아웃
+        }
+
         // 터치가 두 개 이상일 때 핀치 제스처 처리
         if (Input.touchCount == 2)
         {
@@ -177,25 +213,30 @@ public class CameraController : MonoBehaviour
     {
         if (CameraSettings.Instance.isZooming) return;
 
-        // 고정된 위치와 회전 값 설정
-        Vector3 fixedPosition = CameraSettings.Instance.GetInitialPosition(DataManager.Instance.touchData.touchIncreaseLevel);
+        // 나무 레벨에 따른 고정된 위치와 회전 계산
+        int treeLevel = DataManager.Instance.touchData.touchIncreaseLevel;
+        Vector3 fixedPosition = CameraSettings.Instance.GetInitialPosition(treeLevel);
         Quaternion fixedRotation = CameraSettings.Instance.GetFinalRotation();
 
-        // 고정시점모드로의 전환
+        // 카메라 위치와 회전을 즉시 고정
         Camera.main.transform.position = fixedPosition;
         Camera.main.transform.rotation = fixedRotation;
 
-        // CameraSettings에 위치와 회전 상태를 업데이트
+        // 카메라 상태를 명확히 갱신
         CameraSettings.Instance.currentCameraPosition = fixedPosition;
         CameraSettings.Instance.currentCameraRotation = fixedRotation;
 
-        // 고정시점 모드 플래그 업데이트
+        // 카메라가 나무를 바라보도록 설정
+        Camera.main.transform.LookAt(CameraSettings.Instance.worldTree.transform);
+
+        // 자유시점 모드 비활성화
         isFreeCamera = false;
         cameraTargetHandler.SetFreeCameraMode(isFreeCamera);
 
+        // 고정시점 모드 설정 후 메시지 표시
         ShowMessage("카메라가 나무에 고정됩니다.");
 
-        // 버튼 다시 활성화
+        // 1초 후 버튼 다시 활성화
         StartCoroutine(EnableButtonAfterDelay(1.0f));
     }
 
@@ -231,15 +272,16 @@ public class CameraController : MonoBehaviour
 
     private void ShowMessage(string message)
     {
-        // 기존 메시지가 있다면 제거
+        // 기존 메시지가 있다면 제거하고 코루틴 중지
         if (currentMessage != null)
         {
+            StopCoroutine(FadeAndMoveMessage(currentMessage));
             Destroy(currentMessage);
         }
 
         messageParent.gameObject.SetActive(true);
 
-        // 메시지 생성
+        // 새로운 메시지 생성
         currentMessage = Instantiate(messagePrefab, messageParent);
         currentMessage.GetComponent<TMP_Text>().text = message;
 
@@ -250,6 +292,8 @@ public class CameraController : MonoBehaviour
     private IEnumerator FadeAndMoveMessage(GameObject message)
     {
         TMP_Text messageText = message.GetComponent<TMP_Text>();
+        if (messageText == null) yield break; // 메시지가 파괴되었다면 코루틴 종료
+
         Color originalColor = messageText.color;
         Vector3 originalPosition = message.transform.position;
 
@@ -258,15 +302,27 @@ public class CameraController : MonoBehaviour
 
         while (elapsed < duration)
         {
+            // 오브젝트가 null이거나 파괴되었는지 확인
+            if (message == null) yield break;
+
             elapsed += Time.deltaTime;
             float alpha = Mathf.Lerp(1.0f, 0.0f, elapsed / duration);
-            messageText.color = new Color(originalColor.r, originalColor.g, originalColor.b, alpha);
-            message.transform.position = originalPosition + new Vector3(0, elapsed * 10, 0); // 조금씩 위로 이동
+
+            // 메시지 텍스트가 파괴되지 않았을 경우 색상 및 위치 변경
+            if (messageText != null)
+            {
+                messageText.color = new Color(originalColor.r, originalColor.g, originalColor.b, alpha);
+                message.transform.position = originalPosition + new Vector3(0, elapsed * 10, 0);
+            }
 
             yield return null;
         }
 
-        Destroy(message);
-        messageParent.gameObject.SetActive(false);
+        // 코루틴 종료 전에 메시지가 존재하는지 다시 확인
+        if (message != null)
+        {
+            Destroy(message);
+            messageParent.gameObject.SetActive(false);
+        }
     }
 }

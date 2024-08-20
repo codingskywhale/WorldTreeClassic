@@ -57,13 +57,16 @@ public class GameManager : Singleton<GameManager>
                                                         offlineRewardSkill, offlineRewardAmountSkill);
         touchInput = GetComponent<TouchInput>();
         offlineRewardUIManager.Initialize(offlineRewardManager); // UI 매니저 초기화        
-    }    
+    }
 
     public void OnIntroAndOpeningCompleted()
     {
+        // 중복된 카메라 설정 제거
+
         saveDataManager.animalDataList = animalDataList;
         UIManager.Instance.CreateAnimalButtons();
         UIManager.Instance.bag.CreateSlot();
+
         PlayFabManager.Instance.LoadGameData(OnGameDataLoaded);
         UIManager.Instance.LoadAnimalBuyStatus();
         uiUpdater.UpdateAllUI();
@@ -77,6 +80,7 @@ public class GameManager : Singleton<GameManager>
             worldTree.MoveCameraBackwards();
         }
 
+        // 주기적인 자동 저장 시작
         InvokeRepeating(nameof(AutoSaveGame), 180f, 180f);
     }
 
@@ -174,10 +178,6 @@ public class GameManager : Singleton<GameManager>
             string lastSaveTime = PlayerPrefs.GetString("lastSaveTime");
             ProcessBackgroundRewards(lastSaveTime);  // 로컬 데이터를 사용하여 오프라인 보상 처리
         }
-        else
-        {
-            Debug.LogWarning("No local lastSaveTime found.");
-        }
     }
 
     private void ProcessBackgroundRewards(string lastSaveTime)
@@ -203,4 +203,6 @@ public class GameManager : Singleton<GameManager>
             }
         }
     }
+
+
 }

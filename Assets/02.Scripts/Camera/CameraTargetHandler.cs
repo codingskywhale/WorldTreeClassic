@@ -29,20 +29,14 @@ public class CameraTargetHandler : MonoBehaviour
 
     public void SetTarget(Transform newTarget)
     {
-        if (!isFreeCamera) // 자유시점 모드가 아닌 경우 타겟 변경 무시
-        {
-            return;
-        }
+        if (!isFreeCamera) return;
 
-        if (currentTarget == newTarget) // 이미 타겟이 설정된 경우 이벤트 무시
-        {
-            return;
-        }
+        if (currentTarget == newTarget) return;
 
         currentTarget = newTarget;
         isObjectTarget = true;
 
-        // 여기에 기존 카메라 위치를 초기화하여 누적 오프셋을 방지
+        // 기존 카메라 위치 초기화
         CameraSettings.Instance.currentCameraPosition = Vector3.zero;
 
         StartCoroutine(ZoomToTarget(newTarget));
