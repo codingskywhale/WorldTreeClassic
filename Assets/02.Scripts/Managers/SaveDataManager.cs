@@ -321,12 +321,6 @@ public class SaveDataManager
         worldTree.UpdateTreeMeshes(DataManager.Instance.touchData.touchIncreaseLevel);
         DataManager.Instance.animalSpawnTr.transform.position = new UnityEngine.Vector3(0, 0, (DataManager.Instance.touchData.touchIncreaseLevel / 10) * 0.1f);
 
-        for (int i = 10; i <= DataManager.Instance.touchData.touchIncreaseLevel; i += 10)
-        {
-            worldTree.IncrementCameraFOV();
-            worldTree.MoveCameraBackwards();
-        }
-
         if (gameData.achievementData != null)
         {
             if (gameData.achievementData.nowLevelList.Count != 0)
