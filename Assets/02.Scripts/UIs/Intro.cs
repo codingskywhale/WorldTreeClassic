@@ -26,13 +26,16 @@ public class Intro : MonoBehaviour
         "긍정적인 생각은 \n긍정적인 결과를 가져옵니다. \n힘내세요!"
     };
 
-    public IEnumerator PlayIntro()
+    private void Start()
     {
-        introCanvas.SetActive(true);
-
         // 메시지를 랜덤으로 선택
         string randomMessage = messages[Random.Range(0, messages.Count)];
         introText.text = randomMessage;
+    }
+
+    public IEnumerator PlayIntro()
+    {
+        introCanvas.SetActive(true);
 
         // 4초 동안 글귀와 배경 패널을 그대로 유지합니다.
         yield return new WaitForSeconds(introDisplayDuration);

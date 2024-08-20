@@ -4,7 +4,7 @@ using UnityEngine.UI;
 [System.Serializable]
 public class BGMClip
 {
-    public AudioClip clip; 
+    public AudioClip clip;
     public string Idletitle;
     public string title;
     public string artist;
@@ -14,26 +14,26 @@ public class BGMClip
 [System.Serializable]
 public class SFXClip
 {
-    public AudioClip clip; 
+    public AudioClip clip;
 }
 
 public class SoundManager : MonoBehaviour
 {
     public static SoundManager instance = null;
 
-    public AudioSource bgmSource;  
-    public AudioSource sfxSource;  
+    public AudioSource bgmSource;
+    public AudioSource sfxSource;
 
-    public BGMClip[] bgmClips;     
-    public SFXClip[] sfxClips;     
+    public BGMClip[] bgmClips;
+    public SFXClip[] sfxClips;
 
-    public Slider bgmVolumeSlider; 
-    public Slider sfxVolumeSlider; 
+    public Slider bgmVolumeSlider;
+    public Slider sfxVolumeSlider;
 
-    private BGMClip currentBGM;    
+    private BGMClip currentBGM;
 
     private void Awake()
-    {        
+    {
         if (instance == null)
         {
             instance = this;
@@ -68,20 +68,20 @@ public class SoundManager : MonoBehaviour
     }
 
     public void PlaySFX(SFXClip sfxClip)
-    {        
+    {
         sfxSource.PlayOneShot(sfxClip.clip);
     }
-        
+
     public void SetBGMVolume(float volume)
     {
         bgmSource.volume = volume;
     }
-        
+
     public void SetSFXVolume(float volume)
     {
         sfxSource.volume = volume;
     }
-        
+
     public string GetCurrentBGMTitle()
     {
         return currentBGM != null ? currentBGM.Idletitle : "";
