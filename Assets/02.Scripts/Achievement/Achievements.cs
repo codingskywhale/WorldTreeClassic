@@ -48,7 +48,7 @@ public class Achievements : MonoBehaviour
         achievements[7].conditionProgressSlider.value = Mathf.Min(1, achievements[7].nowCount / achievements[7].NeedCount());
 
         achievements[8].SetText($"게임 접속 3회");
-        achievements[8].conditionProgressSlider.value = 1/3;
+        achievements[8].conditionProgressSlider.value = 1f / 3f;
 
         CheckButtonCondition();
         SaveAchievementData();
