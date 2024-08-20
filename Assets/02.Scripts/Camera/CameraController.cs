@@ -39,32 +39,52 @@ public class CameraController : MonoBehaviour
 
     private void Update()
     {
-        if (CameraSettings.Instance.animationCompleted)
+        if (!CameraSettings.Instance.animationCompleted)
+            return;
+
+        if (isFreeCamera)
         {
-            if (isFreeCamera)
+            // UI 위에서 터치가 발생하지 않을 때만 카메라 조작 가능
+            if (!IsPointerOverUI())
             {
-                // UI 위에 포인터가 있지 않을 때만 카메라 조작 가능
-                if (!IsPointerOverUI())
+                if (Input.touchCount == 1)
                 {
+                    // 한 손가락으로 카메라 회전
                     HandleFreeCamera();
+                }
+                else if (Input.touchCount == 2)
+                {
+                    // 두 손가락으로 핀치 줌
                     HandlePinchZoom();
                 }
             }
-            else if (cameraTargetHandler.isObjectTarget && cameraTargetHandler.currentTarget != null)
-            {
-                cameraTargetHandler.FollowObject();
-            }
+        }
+        else if (cameraTargetHandler.isObjectTarget && cameraTargetHandler.currentTarget != null)
+        {
+            cameraTargetHandler.FollowObject();
+        }
 
-            if (Input.GetMouseButtonDown(0) || (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Began))
-            {
-                HandleClick();
-            }
+        if (Input.GetMouseButtonDown(0) ||
+           (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Began))
+        {
+            HandleClick();
         }
     }
 
     private bool IsPointerOverUI()
     {
-        return EventSystem.current.IsPointerOverGameObject();
+        if (Input.touchCount > 0)
+        {
+            for (int i = 0; i < Input.touchCount; i++)
+            {
+                Touch touch = Input.GetTouch(i);
+                if (EventSystem.current.IsPointerOverGameObject(touch.fingerId))
+                {
+                    return true;
+                }
+            }
+        }
+        return EventSystem.current.IsPointerOverGameObject(); // 마우스 입력에 대한 UI 체크
     }
 
     private void HandleFreeCamera()
@@ -193,32 +213,30 @@ public class CameraController : MonoBehaviour
     {
         if (CameraSettings.Instance.isZooming) return;
 
-
-        // 나무 레벨에 따른 고정된 위치 계산
+        // 나무 레벨에 따른 고정된 위치와 회전 계산
         int treeLevel = DataManager.Instance.touchData.touchIncreaseLevel;
         Vector3 fixedPosition = CameraSettings.Instance.GetInitialPosition(treeLevel);
+        Quaternion fixedRotation = CameraSettings.Instance.GetFinalRotation();
 
-        // 고정된 회전 값 사용
-        Quaternion fixedRotation = CameraSettings.Instance.finalRotation;
-
-        // 카메라 위치와 회전 값을 명확하게 초기화
+        // 카메라 위치와 회전을 즉시 고정
         Camera.main.transform.position = fixedPosition;
         Camera.main.transform.rotation = fixedRotation;
 
-        // 나무를 정확히 바라보게 설정
+        // 카메라 상태를 명확히 갱신
+        CameraSettings.Instance.currentCameraPosition = fixedPosition;
+        CameraSettings.Instance.currentCameraRotation = fixedRotation;
+
+        // 카메라가 나무를 바라보도록 설정
         Camera.main.transform.LookAt(CameraSettings.Instance.worldTree.transform);
 
-        // 현재 상태 업데이트
-        CameraSettings.Instance.currentCameraPosition = fixedPosition;
-        CameraSettings.Instance.currentCameraRotation = Camera.main.transform.rotation;
-
-        // 모드 전환
+        // 자유시점 모드 비활성화
         isFreeCamera = false;
         cameraTargetHandler.SetFreeCameraMode(isFreeCamera);
 
+        // 고정시점 모드 설정 후 메시지 표시
         ShowMessage("카메라가 나무에 고정됩니다.");
 
-        // 버튼 다시 활성화
+        // 1초 후 버튼 다시 활성화
         StartCoroutine(EnableButtonAfterDelay(1.0f));
     }
 
