@@ -113,7 +113,8 @@ public class FlowerBase : MonoBehaviour, IFlower
     {
         if (!isUnlocked) return; // 잠금 해제된 경우에만 업그레이드 가능
         flowerLevel++;
-        //ActivateNextPlantObject();
+        if (flowerLevel == 1)
+            ParticleShapeModifier.Instance.FogMoveMent();
         if (flowerLevel == 1 || flowerLevel % 25 == 0)
         {
             UIManager.Instance.CheckConditionCleared();
