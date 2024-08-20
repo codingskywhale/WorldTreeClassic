@@ -51,7 +51,6 @@ public class Achievements : MonoBehaviour
         achievements[8].conditionProgressSlider.value = 1f / 3f;
 
         CheckButtonCondition();
-        SaveAchievementData();
     }
 
     private float GetFlowerTotalLevel()
@@ -81,7 +80,7 @@ public class Achievements : MonoBehaviour
         }
     }
 
-    private void SaveAchievementData()
+    public void SaveAchieveData()
     {
         for(int i = 0; i < achievements.Length; i++)
         {

@@ -392,6 +392,8 @@ public class SaveDataManager
             flower.UpdateUI();
         }
 
+        DataManager.Instance.achievements.achievementData = new AchievementData();
+
         ResourceManager.Instance.SetLifeGenerationRatePerSecond(BigInteger.Zero); // 초기 값 설정
     }
 
