@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class Diamond : MonoBehaviour
 {
-    public BigInteger diamondAmount = 10000000; // 초기 다이아몬드 양
+    public BigInteger diamondAmount = 0; // 초기 다이아몬드 양
     public delegate void DiamondChanged(BigInteger newAmount);
     public event DiamondChanged OnDiamondChanged;
 
