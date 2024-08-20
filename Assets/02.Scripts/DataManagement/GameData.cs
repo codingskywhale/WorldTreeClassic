@@ -19,4 +19,5 @@ public class GameData
     public int createObjectButtonUnlockCount = 0;
     public List<SkillDataSave> skillDataList = new List<SkillDataSave>();
     public List<ArtifactDataSave> artifactDataList = new List<ArtifactDataSave>();
+    public AchievementDataSave achievementData;
 }

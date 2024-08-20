@@ -43,6 +43,7 @@ public class ADSkill : MonoBehaviour
                 // 광고가 성공적으로 표시된 후 실행되는 콜백
                 ResetAllSkillCooldowns();
                 SetAdCooldown(adCooldownTime); // 광고 스킬 쿨타임을 30분으로 설정
+                DataManager.Instance.achievements.ADCount++;
             });
         }
     }

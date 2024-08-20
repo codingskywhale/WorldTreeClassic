@@ -13,6 +13,7 @@ public class DataManager : Singleton<DataManager>
     public Bag bag;
     public List<AnimalDataSO> animalDataList = new List<AnimalDataSO>();
     public Transform animalSpawnTr;
+    public Achievements achievements;
 
     protected override void Awake()
     {

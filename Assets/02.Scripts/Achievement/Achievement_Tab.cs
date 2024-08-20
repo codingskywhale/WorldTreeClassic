@@ -13,6 +13,7 @@ public class Achievement_Tab : MonoBehaviour
     public int nowLevel;
     public Image[] starImages;
     public TextMeshProUGUI explainText;
+    public TextMeshProUGUI rewardText;
 
     public Button claimRewardButton;
     public BigInteger claimRewardAmount = 200;
@@ -20,6 +21,12 @@ public class Achievement_Tab : MonoBehaviour
     private int nowStarImageIdx = 0;
     private int nowColorIdx;
     private Color[] colors = { Color.red, Color.yellow, Color.green, Color.blue, Color.cyan };
+
+    private void Start()
+    {
+        for(int i = 0; i < nowLevel; i++) 
+            ApplyIconColorChange();
+    }
 
     // 도전 과제 달성 시 표시되는 이미지의 색상을 변경
     public void ApplyIconColorChange()
@@ -44,7 +51,7 @@ public class Achievement_Tab : MonoBehaviour
 
     public float NeedCount()
     {
-        return needCount * nowLevel;
+        return needCount * (nowLevel + 1);
     }
 
     public void LevelUP()
@@ -71,6 +78,7 @@ public class Achievement_Tab : MonoBehaviour
     {
         if (nowLevel > 5)
         {
+            rewardText.text = "400";
             claimRewardAmount = 400;
         }
 

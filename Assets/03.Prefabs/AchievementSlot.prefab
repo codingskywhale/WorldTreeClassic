@@ -431,6 +431,7 @@ MonoBehaviour:
   - {fileID: 2804986123713677669}
   - {fileID: 5189665889620764882}
   explainText: {fileID: 6807128693660317488}
+  rewardText: {fileID: 7279096130212654422}
   claimRewardButton: {fileID: 7449950528611851329}
 --- !u!1 &1871873540278356555
 GameObject:

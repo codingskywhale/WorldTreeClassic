@@ -15,6 +15,7 @@ public class GameManager : Singleton<GameManager>
     public List<AnimalDataSO> animalDataList;
     public List<SkillCoolDownReduction> skillCoolDownReductions; 
     public List<Skill> skills;
+    public int skillUseCount;
     public List<Artifact> artifacts;
     public WorldTree worldTree;
     public TouchInput touchInput;
@@ -31,6 +32,7 @@ public class GameManager : Singleton<GameManager>
     private const int SaveBufferThreshold = 10; // 생명력 업그레이드 저장 버퍼 임계값
     private Coroutine exitCoroutine;
     private bool isPaused = false;
+    public float playTime = 0f;
 
     public Tutorial TutorialObject;
 
@@ -96,7 +98,8 @@ public class GameManager : Singleton<GameManager>
 
     private void AutoSaveGame()
     {
-        saveDataManager.SaveGameData(skills, artifacts);        
+        saveDataManager.SaveGameData(skills, artifacts);
+        playTime += 3f;
     }
 
     private void CalculateOfflineProgress(GameData gameData)

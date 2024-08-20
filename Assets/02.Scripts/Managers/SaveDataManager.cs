@@ -139,8 +139,16 @@ public class SaveDataManager
             createObjectButtonUnlockCount = UIManager.Instance.createObjectButtonUnlockCount,
             skillDataList = skillDataList,
             artifactDataList = artifactDataList,
-            lastSkillSaveTime = DateTime.UtcNow.ToString("o")
-        };
+            lastSkillSaveTime = DateTime.UtcNow.ToString("o"),
+            achievementData = new AchievementDataSave
+            {
+                nowLevelList = DataManager.Instance.achievements.achievementData.nowLevelList,
+                ADCount = DataManager.Instance.achievements.achievementData.ADCount,
+                bubbleClickCount = ResourceManager.Instance.bubbleGeneratorPool.bubbleClickCount,
+                skillUseCount = GameManager.Instance.skillUseCount,
+                playTime = GameManager.Instance.playTime
+            }
+        }; 
         PlayFabManager.Instance.SaveGameData(gameData);
     }
 
@@ -317,6 +325,24 @@ public class SaveDataManager
         {
             worldTree.IncrementCameraFOV();
             worldTree.MoveCameraBackwards();
+        }
+
+        if (gameData.achievementData != null)
+        {
+            if (gameData.achievementData.nowLevelList.Count != 0)
+            {
+                DataManager.Instance.achievements.achievementData = new AchievementData(gameData.achievementData.nowLevelList);
+            }
+            else
+            {
+                DataManager.Instance.achievements.achievementData = new AchievementData();
+            }
+            DataManager.Instance.achievements.achievementData.ADCount = gameData.achievementData.ADCount;
+            ResourceManager.Instance.bubbleGeneratorPool.bubbleClickCount = gameData.achievementData.bubbleClickCount;
+            GameManager.Instance.skillUseCount = gameData.achievementData.skillUseCount;
+            GameManager.Instance.playTime = gameData.achievementData.playTime;
+
+            DataManager.Instance.achievements.SetNowLevelByLoadedData();
         }
 
         UIManager.Instance.createObjectButtonUnlockCount = gameData.createObjectButtonUnlockCount > 0 ? gameData.createObjectButtonUnlockCount : 1;

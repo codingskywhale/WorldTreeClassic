@@ -224,12 +224,12 @@ MonoBehaviour:
   - stateName: Walk
     animationBool: isWalking
     maxStateTime: 10
-    moveSpeed: 2
+    moveSpeed: 0.5
     turnSpeed: 100
   - stateName: Running
     animationBool: isRunning
     maxStateTime: 20
-    moveSpeed: 6
+    moveSpeed: 4
     turnSpeed: 200
   attackingStates:
   - stateName: Attack

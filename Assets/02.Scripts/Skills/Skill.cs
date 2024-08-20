@@ -156,6 +156,7 @@ public abstract class Skill : MonoBehaviour
     protected IEnumerator SkillEffect()
     {
         onCooldown = true;
+        GameManager.Instance.skillUseCount++;
         cooldownRemaining = cooldownTime;
         skillTimeRemaining = skillDuration;
 

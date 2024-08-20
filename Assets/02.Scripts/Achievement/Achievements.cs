@@ -6,11 +6,8 @@ public class Achievements : MonoBehaviour
 {
     public Achievement_Tab[] achievements;
     public AchievementData achievementData;
+    public int ADCount;
 
-    private void Awake()
-    {
-        achievementData = new AchievementData();
-    }
     //창을 켰을 때 데이터를 불러와서 적용해주자.
     private void OnEnable()
     {
@@ -31,10 +28,11 @@ public class Achievements : MonoBehaviour
         achievements[2].nowCount = GetFlowerTotalLevel();
         achievements[2].conditionProgressSlider.value = Mathf.Min(1, GetFlowerTotalLevel() / achievements[2].NeedCount());
 
+        achievements[3].SetText($"게임 접속시간 {achievements[3].NeedCount()}분 달성");
+        achievements[3].nowCount = GameManager.Instance.playTime;
+        achievements[3].conditionProgressSlider.value = Mathf.Min(1, achievements[3].nowCount / achievements[3].NeedCount());
 
-        //achievements[3].SetText($"게임 접속시간 100분 달성");
-
-        achievements[4].SetText($"버블 터치 {achievements[4].NeedCount()} 달성");
+        achievements[4].SetText($"버블 터치 {achievements[4].NeedCount()}회 달성");
         achievements[4].nowCount = ResourceManager.Instance.bubbleGeneratorPool.bubbleClickCount;
         achievements[4].conditionProgressSlider.value = Mathf.Min(1, achievements[4].nowCount / achievements[4].NeedCount());
 
@@ -42,13 +40,18 @@ public class Achievements : MonoBehaviour
         achievements[5].nowCount = DataManager.Instance.animalGenerateData.allTypeCountDic.Keys.Count;
         achievements[5].conditionProgressSlider.value = Mathf.Min(1, achievements[5].nowCount / achievements[5].NeedCount());
 
-        /*
-        achievements[6].SetText($"광고 10회 보기");
-        achievements[7].SetText($"스킬 20회 사용");
+        achievements[6].SetText($"광고 {achievements[6].NeedCount()}회 보기");
+        achievements[6].conditionProgressSlider.value = Mathf.Min(1, ADCount / achievements[6].NeedCount());
+        
+        achievements[7].SetText($"스킬 {achievements[7].NeedCount()}회 사용");
+        achievements[7].nowCount = GameManager.Instance.skillUseCount;
+        achievements[7].conditionProgressSlider.value = Mathf.Min(1, achievements[7].nowCount / achievements[7].NeedCount());
+
         achievements[8].SetText($"게임 접속 3회");
-        */
+        achievements[8].conditionProgressSlider.value = 1/3;
 
         CheckButtonCondition();
+        SaveAchievementData();
     }
 
     private float GetFlowerTotalLevel()
@@ -68,5 +71,25 @@ public class Achievements : MonoBehaviour
         {
             achievement.SetButtonOnOff();
         }
+    }
+
+    public void SetNowLevelByLoadedData()
+    {
+        for (int i = 0; i < achievements.Length; i++) 
+        {
+            achievements[i].nowLevel = (int)achievementData.nowLevelList[i];
+        }
+    }
+
+    private void SaveAchievementData()
+    {
+        for(int i = 0; i < achievements.Length; i++)
+        {
+            achievementData.SetachievementList(i, achievements[i].nowLevel);
+        }
+        achievementData.bubbleClickCount = ResourceManager.Instance.bubbleGeneratorPool.bubbleClickCount;
+        achievementData.ADCount = this.ADCount;
+        achievementData.skillUseCount = GameManager.Instance.skillUseCount;
+        achievementData.playTime = GameManager.Instance.playTime;
     }
 }

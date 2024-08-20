@@ -48,7 +48,6 @@ public class Bag : MonoBehaviour
         float margin = layoutGroup.spacing.x;
 
         Debug.Log(slots[0].GetComponentInChildren<RectTransform>().name + height);
-        Debug.Log(margin);
         // 정사각임.
 
         this.GetComponent<RectTransform>().sizeDelta = new Vector2((height + margin) * 4, (height + margin) * heightCount);
