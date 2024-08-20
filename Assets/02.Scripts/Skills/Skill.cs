@@ -156,8 +156,15 @@ public abstract class Skill : MonoBehaviour
     protected IEnumerator SkillEffect()
     {
         onCooldown = true;
+        float startTime = Time.time;  // 시작 시간 기록
+        float endTime = startTime + cooldownTime;  // 종료 시간 계산
         cooldownRemaining = cooldownTime;
         skillTimeRemaining = skillDuration;
+
+        if (cooldownImage != null)
+        {
+            cooldownImage.gameObject.SetActive(true);
+        }
 
         // 스킬 정보 오브젝트 활성화
         if (skillInfoObject != null)
@@ -180,15 +187,18 @@ public abstract class Skill : MonoBehaviour
         }
 
         // 쿨다운 시간 동안 대기
-        while (cooldownRemaining > 0)
+        while (Time.time < endTime)
         {
-            cooldownRemaining -= Time.deltaTime;
+            cooldownRemaining = endTime - Time.time;
+            UpdateCooldownUI(cooldownRemaining);
             yield return null;
         }
 
         onCooldown = false;
+        cooldownImage.gameObject.SetActive(false);
         UpdateCooldownUI(0);
     }
+
 
 
     public void UpdateCooldownUI(float remaining)
@@ -209,7 +219,7 @@ public abstract class Skill : MonoBehaviour
 
         if (cooldownImage != null)
         {
-            float fillAmount = 1 - (remaining / cooldownTime);
+            float fillAmount = (remaining / cooldownTime);
             cooldownImage.fillAmount = fillAmount;
         }
     }
