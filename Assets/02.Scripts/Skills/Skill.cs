@@ -29,6 +29,7 @@ public abstract class Skill : MonoBehaviour
     [Header("Upgrade")]
     public TextMeshProUGUI upgradeCostText; // 업그레이드 비용을 표시할 텍스트
     public TextMeshProUGUI upgradeCostText2; // 업그레이드 비용을 표시할 텍스트
+    public Button upgradeButton; //스킬 업그레이드 버튼
     public BigInteger unlockCost = 200; // 해금 비용
 
     [Header("UnlockInfo")]
@@ -270,6 +271,7 @@ public abstract class Skill : MonoBehaviour
             if (currentLevel >= 21)
             {
                 upgradeCostText.text = "최대 레벨";
+                upgradeButton.interactable = false;
             }
             else
             {
@@ -277,6 +279,8 @@ public abstract class Skill : MonoBehaviour
                 upgradeCostText.text = currentLevel > 0
                     ? $" {BigIntegerUtils.FormatBigInteger(nextCost)}"
                     : $"{BigIntegerUtils.FormatBigInteger(nextCost)}";
+                bool hasSufficientDiamond = LifeManager.Instance.diamond.HasSufficientDiamond(nextCost);
+                upgradeButton.interactable = hasSufficientDiamond;
             }
         }
     }

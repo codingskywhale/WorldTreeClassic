@@ -11,7 +11,7 @@ public abstract class Artifact : MonoBehaviour
     public TextMeshProUGUI currentLevelText; // 현재 스킬 레벨 텍스트
     public TextMeshProUGUI skillInfoText; // 현재 스킬 설명 텍스트
     public BigInteger unlockCost = 100; // 해금 비용
-    //public Button upgradeButton; // 해금/업그레이드 버튼
+    public Button upgradeButton; // 해금/업그레이드 버튼
     public GameObject unlockObject; // 해금시 활성화 오브젝트
     public GameObject skillPopup; // 팝업 오브젝트
     public TextMeshProUGUI skillPopupInfoText; // 팝업에 표시될 텍스트
@@ -110,6 +110,7 @@ public abstract class Artifact : MonoBehaviour
             if (currentLevel >= 10)
             {
                 upgradeCostText.text = "최대 레벨";
+                upgradeButton.interactable = false;
             }
             else
             {
@@ -117,6 +118,10 @@ public abstract class Artifact : MonoBehaviour
                 upgradeCostText.text = currentLevel > 0
                     ? $"{BigIntegerUtils.FormatBigInteger(nextCost)}"
                     : $"{BigIntegerUtils.FormatBigInteger(nextCost)}";
+                // 다이아몬드가 충분한지 확인하고 버튼의 활성화 상태를 설정
+                bool hasSufficientDiamond = LifeManager.Instance.diamond.HasSufficientDiamond(nextCost);
+                upgradeButton.interactable = hasSufficientDiamond;
+
             }
         }
     }
