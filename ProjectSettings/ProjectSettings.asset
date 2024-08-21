@@ -261,7 +261,7 @@ PlayerSettings:
   AndroidTargetDevices: 0
   AndroidSplashScreenScale: 0
   androidSplashScreen: {fileID: 0}
-  AndroidKeystoreName: C:/Users/82107/Desktop/keystore/WorldTree.keystore
+  AndroidKeystoreName: '{dedicated}: Downloads/WorldTree.keystore'
   AndroidKeyaliasName: worldtree
   AndroidEnableArmv9SecurityFeatures: 0
   AndroidBuildApkPerCpuArchitecture: 0
