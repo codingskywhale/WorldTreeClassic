@@ -32,7 +32,7 @@ public class GoogleSheetsToJson : MonoBehaviour
     {
         GoogleCredential credential;
         // StreamingAssets 폴더 내의 파일을 Android에서도 접근할 수 있게 함
-        string path = Path.Combine(Application.streamingAssetsPath, "helical-ion-430902-s8-4dbd501b3ae0.json");
+        string path = Path.Combine(Application.streamingAssetsPath, "worldtree-456111-cb7089d9455b.json");
 
         if (Application.platform == RuntimePlatform.Android)
         {
@@ -72,7 +72,8 @@ public class GoogleSheetsToJson : MonoBehaviour
 
     void GetSheetDataAsSO()
     {
-        var range = $"{SheetName}!A:G"; // Adjust the range according to your sheet
+        //var range = $"{SheetName}!A:G";
+        var range = $"'{SheetName}'!A:G"; // 시트 이름에 공백 있을 경우 반드시 따옴표로 감싸야 함
         SpreadsheetsResource.ValuesResource.GetRequest request = service.Spreadsheets.Values.Get(SpreadsheetId, range);
 
         ValueRange response = request.Execute();
