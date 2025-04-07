@@ -17,8 +17,8 @@ public enum HeaderType
 public class GoogleSheetsToJson : MonoBehaviour
 {
     static readonly string[] Scopes = { SheetsService.Scope.SpreadsheetsReadonly };
-    static readonly string ApplicationName = "PDH";
-    static readonly string SpreadsheetId = "1mEknbjlDYE7dJZ1p5O7YxJBcL2YqoLBaLk_c40Wwu7I";
+    static readonly string ApplicationName = "KBG";
+    static readonly string SpreadsheetId = "162v2HEcrI98OvLPWkMjfQswDCMa3OJ3LJy2ooFHx8Qs";
     static readonly string SheetName = "동물 종류"; // Change to your sheet name
     SheetsService service;
 
