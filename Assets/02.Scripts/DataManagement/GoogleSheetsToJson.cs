@@ -91,6 +91,7 @@ public class GoogleSheetsToJson : MonoBehaviour
 
             // Checking if each column exists and converting to string
             string animalIdx = row.Count > 0 ? row[0].ToString() : "0";
+            string animalNameEN = row.Count > 1 ? row[1].ToString() : "Unknown_EN";
             string animalNameKR = row.Count > 2 ? row[2].ToString() : "Unknown_KR";
             string animalType = row.Count > 3 ? row[3].ToString() : "UnknownType";
             string unlockCondition = row.Count > 4 ? row[4].ToString() : "";
