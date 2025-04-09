@@ -54,6 +54,7 @@ public abstract class Skill : MonoBehaviour
 
     private float skillTimeRemaining;
     private Coroutine disableCoroutine;
+    
     protected virtual void Start()
     {
         // 각 스킬의 지속시간과 쿨타임은 서브 클래스에서 설정됩니다.
@@ -246,10 +247,12 @@ public abstract class Skill : MonoBehaviour
     public virtual void UpdateUI()
     {
         adSkill.UnlockCondition();
+        
         UpdateUpgradeCostUI();
         NowskillInfoUI();
         LevelUI();
         UpdateUnlockUI(); // 해금 상태 UI 업데이트
+        UIManager.Instance.flower.CheckUnlockCondition();
     }
 
     protected void UpdateUpgradeCostUI()
