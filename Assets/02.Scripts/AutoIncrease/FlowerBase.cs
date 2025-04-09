@@ -375,7 +375,7 @@ public class FlowerBase : MonoBehaviour, IFlower
         UpdateUI();
     }
 
-    private void CheckUnlockCondition()
+    public void CheckUnlockCondition()
     {
         if (!isUnlocked && DataManager.Instance.touchData != null
             && DataManager.Instance.touchData.touchIncreaseLevel >= unlockThreshold)

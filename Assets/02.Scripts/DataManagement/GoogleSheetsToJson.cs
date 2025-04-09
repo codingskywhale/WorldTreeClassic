@@ -17,8 +17,8 @@ public enum HeaderType
 public class GoogleSheetsToJson : MonoBehaviour
 {
     static readonly string[] Scopes = { SheetsService.Scope.SpreadsheetsReadonly };
-    static readonly string ApplicationName = "PDH";
-    static readonly string SpreadsheetId = "1mEknbjlDYE7dJZ1p5O7YxJBcL2YqoLBaLk_c40Wwu7I";
+    static readonly string ApplicationName = "KBG";
+    static readonly string SpreadsheetId = "162v2HEcrI98OvLPWkMjfQswDCMa3OJ3LJy2ooFHx8Qs";
     static readonly string SheetName = "동물 종류"; // Change to your sheet name
     SheetsService service;
 
@@ -32,7 +32,7 @@ public class GoogleSheetsToJson : MonoBehaviour
     {
         GoogleCredential credential;
         // StreamingAssets 폴더 내의 파일을 Android에서도 접근할 수 있게 함
-        string path = Path.Combine(Application.streamingAssetsPath, "helical-ion-430902-s8-4dbd501b3ae0.json");
+        string path = Path.Combine(Application.streamingAssetsPath, "worldtree-456111-cb7089d9455b.json");
 
         if (Application.platform == RuntimePlatform.Android)
         {
@@ -72,72 +72,73 @@ public class GoogleSheetsToJson : MonoBehaviour
 
     void GetSheetDataAsSO()
     {
-        var range = $"{SheetName}!A:G"; // Adjust the range according to your sheet
+        var range = $"'{SheetName}'!A:G"; // 시트 이름에 공백 있을 경우 반드시 따옴표로 감싸야 함
         SpreadsheetsResource.ValuesResource.GetRequest request = service.Spreadsheets.Values.Get(SpreadsheetId, range);
 
         ValueRange response = request.Execute();
         IList<IList<object>> values = response.Values;
 
         if (values == null || values.Count == 0)
-        {
             return;
-        }
 
         var animalList = new List<AnimalDataLoad>();
-        for (int i = 1; i < values.Count; i++) // Skip the header row
+
+        int startIndex = IsHeaderRow(values[0]) ? 1 : 0; // 첫줄이 헤더인지 감지기능
+
+        for (int i = startIndex; i < values.Count; i++) // Skip the header row
         {
             var row = values[i];
+
             int conditionCount = Regex.Matches(row[4].ToString(), "\n").Count + 1;
 
             // Checking if each column exists and converting to string
-            string animalIdx = row.Count > 0 ? row[0].ToString() : "번호 없음";
-            string animalNameEN = row.Count > 1 ? row[1].ToString() : "영어 이름 없음";
-            string animalNameKR = row.Count > 2 ? row[2].ToString() : "한글 이름 없음";
-            string animalType = row.Count > 3 ? row[3].ToString() : "타입 없음";
-            string unlockCondition = row.Count > 4 ? row[4].ToString() : "해금조건 없음";
-            string simpleStoryText = row.Count > 5 ? row[5].ToString() : "설명 없음";
-            string fullStoryText = row.Count > 6 ? row[6].ToString() : "풀 스토리 없음";
-            string[] eachConditions = unlockCondition.ToString().Split('\n');
+            string animalIdx = row.Count > 0 ? row[0].ToString() : "0";
+            string animalNameEN = row.Count > 1 ? row[1].ToString() : "Unknown_EN";
+            string animalNameKR = row.Count > 2 ? row[2].ToString() : "Unknown_KR";
+            string animalType = row.Count > 3 ? row[3].ToString() : "UnknownType";
+            string unlockCondition = row.Count > 4 ? row[4].ToString() : "";
+            string simpleStoryText = row.Count > 5 ? row[5].ToString() : "";
+            string fullStoryText = row.Count > 6 ? row[6].ToString() : "";
+            string[] eachConditions = unlockCondition.Split('\n');
 
-            // 해금 조건에 대한 세부 설정 적용
             UnlockCondition[] unlockConditions = new UnlockCondition[conditionCount];
 
             for (int j = 0; j < conditionCount; j++)
             {
                 UnlockCondition condition = new UnlockCondition();
-                int lastUnderscoreIndex = 0;
-                // 조건이 여러개인 경우에 대응
-                for (int k = 0; k < unlockConditions.Length; k++)
+
+                if (eachConditions[j].Contains("Animal"))
                 {
-                    // 동물 조건일 경우 (단일 동물일 경우, 여러 마리가 필요할 경우)
-                    if (eachConditions[j].Contains("Animal"))
+                    condition.conditionType = UnlockConditionType.AnimalCount;
+                    int lastUnderscoreIndex = eachConditions[j].LastIndexOf('_');
+                    condition.requiredAnimalIndex = int.Parse(GetDataBetweenFirstAndSecondUnderscore(eachConditions[j]));
+                    condition.requiredAnimalCount = int.Parse(eachConditions[j].Substring(lastUnderscoreIndex + 1));
+
+                    int index = condition.requiredAnimalIndex - 1;
+                    if (index >= 0 && index < GameManager.Instance.animalDataList.Count)
                     {
-                        condition.conditionType = UnlockConditionType.AnimalCount;
-
-                        // 마지막 문자를 가져오기
-                        lastUnderscoreIndex = eachConditions[j].ToString().LastIndexOf('_');
-                        condition.requiredAnimalIndex = int.Parse(GetDataBetweenFirstAndSecondUnderscore(eachConditions[j]));
-                        condition.targetName = GameManager.Instance.animalDataList[condition.requiredAnimalIndex - 1].animalNameKR;
-                        condition.requiredAnimalCount = int.Parse(eachConditions[j].ToString().Substring(lastUnderscoreIndex + 1));
+                        condition.targetName = GameManager.Instance.animalDataList[index].animalNameKR;
                     }
-
-                    else if (eachConditions[j].Contains("Plant"))
+                    else
                     {
-                        condition.conditionType = UnlockConditionType.PlantCount;
-                        lastUnderscoreIndex = eachConditions[j].ToString().LastIndexOf('_');
-                        condition.requiredPlantIndex = int.Parse(eachConditions[j].ToString().Substring(lastUnderscoreIndex + 1));
+                        Debug.LogWarning($"[GoogleSheet] 동물 인덱스 범위를 벗어났습니다: {index}");
+                        condition.targetName = "알 수 없음";
                     }
-
-                    else if (eachConditions[j].Contains("Tree"))
-                    {
-                        condition.conditionType = UnlockConditionType.LevelReached;
-                        lastUnderscoreIndex = eachConditions[j].ToString().LastIndexOf('_');
-                        condition.requiredWorldTreeLevel = int.Parse(eachConditions[j].ToString().Substring(lastUnderscoreIndex + 1));
-                    }
-
-                    // 실제 조건 넣어주기
-                    unlockConditions[j] = condition;
                 }
+                else if (eachConditions[j].Contains("Plant"))
+                {
+                    condition.conditionType = UnlockConditionType.PlantCount;
+                    int lastUnderscoreIndex = eachConditions[j].LastIndexOf('_');
+                    condition.requiredPlantIndex = int.Parse(eachConditions[j].Substring(lastUnderscoreIndex + 1));
+                }
+                else if (eachConditions[j].Contains("Tree"))
+                {
+                    condition.conditionType = UnlockConditionType.LevelReached;
+                    int lastUnderscoreIndex = eachConditions[j].LastIndexOf('_');
+                    condition.requiredWorldTreeLevel = int.Parse(eachConditions[j].Substring(lastUnderscoreIndex + 1));
+                }
+
+                unlockConditions[j] = condition;
             }
 
             AnimalDataSO animalDataSO = ScriptableObject.CreateInstance<AnimalDataSO>();
@@ -153,9 +154,8 @@ public class GoogleSheetsToJson : MonoBehaviour
 
             GameManager.Instance.animalDataList.Add(animalDataSO);
         }
-
-        return;
     }
+
 
     private UnlockCondition[] GetConditionArray(string str)
     {
@@ -215,4 +215,17 @@ public class GoogleSheetsToJson : MonoBehaviour
         }
         return string.Empty; // 두 번째 언더바가 없는 경우 빈 문자열 반환
     }
+    bool IsHeaderRow(IList<object> firstRow)
+    {
+        if (firstRow == null || firstRow.Count == 0)
+            return false;
+
+        // Index가 숫자가 아니면 헤더일 가능성이 높음
+        if (!int.TryParse(firstRow[0].ToString(), out _))
+            return true;
+
+        // 또는 열 이름들이 포함돼 있는지 확인
+        return firstRow.Contains("AnimalName") || firstRow.Contains("AnimalType") || firstRow.Contains("UnlockConditions");
+    }
+
 }

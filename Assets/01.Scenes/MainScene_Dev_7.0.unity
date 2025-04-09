@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.33512115, g: 0.679411, b: 0.98869795, a: 1}
+  m_IndirectSpecularColor: {r: 0, g: 0, b: 0, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -29942,17 +29942,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 176620fe835c25348aa05b4c97308a55, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  flowers:
-  - {fileID: 293305725}
-  - {fileID: 213962922}
-  - {fileID: 1181477353}
-  - {fileID: 7881861}
-  - {fileID: 959746643}
-  - {fileID: 1952956628}
-  - {fileID: 1297178773}
-  - {fileID: 542323906}
-  - {fileID: 684505695}
-  - {fileID: 1409113695}
+  flowers: []
   generationInterval: 1
 --- !u!4 &1020432714
 Transform:
