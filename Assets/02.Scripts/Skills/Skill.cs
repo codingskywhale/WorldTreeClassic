@@ -252,7 +252,7 @@ public abstract class Skill : MonoBehaviour
         NowskillInfoUI();
         LevelUI();
         UpdateUnlockUI(); // 해금 상태 UI 업데이트
-        UIManager.Instance.flower.CheckUnlockCondition();
+        //UIManager.Instance.flower.CheckUnlockCondition();
     }
 
     protected void UpdateUpgradeCostUI()
