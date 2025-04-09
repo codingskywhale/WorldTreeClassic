@@ -83,7 +83,9 @@ public class GoogleSheetsToJson : MonoBehaviour
 
         var animalList = new List<AnimalDataLoad>();
 
-        for (int i = 1; i < values.Count; i++) // Skip the header row
+        int startIndex = IsHeaderRow(values[0]) ? 1 : 0; // 첫줄이 헤더인지 감지기능
+
+        for (int i = startIndex; i < values.Count; i++) // Skip the header row
         {
             var row = values[i];
 
@@ -213,4 +215,17 @@ public class GoogleSheetsToJson : MonoBehaviour
         }
         return string.Empty; // 두 번째 언더바가 없는 경우 빈 문자열 반환
     }
+    bool IsHeaderRow(IList<object> firstRow)
+    {
+        if (firstRow == null || firstRow.Count == 0)
+            return false;
+
+        // Index가 숫자가 아니면 헤더일 가능성이 높음
+        if (!int.TryParse(firstRow[0].ToString(), out _))
+            return true;
+
+        // 또는 열 이름들이 포함돼 있는지 확인
+        return firstRow.Contains("AnimalName") || firstRow.Contains("AnimalType") || firstRow.Contains("UnlockConditions");
+    }
+
 }
