@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using System.Numerics;
 using UnityEngine;
 using UnityEngine.UI;
@@ -85,7 +86,7 @@ public class UIManager : Singleton<UIManager>
                         case UnlockConditionType.AnimalCount:
 
                             Dictionary<string, Dictionary<EachCountType, int>> dic = DataManager.Instance.animalGenerateData.allTypeCountDic;
-                            string name = GameManager.Instance.animalDataList[condition.requiredAnimalIndex - 1].animalNameEN;
+                            string name = GameManager.Instance.animalDataList[condition.requiredAnimalIndex].animalNameEN;
                             if (dic.ContainsKey(name) && dic[name][EachCountType.Total] >= condition.requiredAnimalCount)
                             {
                                 clearCount++;
@@ -94,9 +95,20 @@ public class UIManager : Singleton<UIManager>
                             break;
                         case UnlockConditionType.PlantCount:
 
-                            if (AutoObjectManager.Instance.flowers[condition.requiredPlantIndex - 1].flowerLevel > 0)
+                            //if (AutoObjectManager.Instance.flowers[condition.requiredPlantIndex].flowerLevel > 0)
+                            //{
+                            //    clearCount++;
+                            //}
+                            if (condition.requiredPlantIndex >= 0 && condition.requiredPlantIndex < AutoObjectManager.Instance.flowers.Length)
                             {
-                                clearCount++;
+                                if (AutoObjectManager.Instance.flowers[condition.requiredPlantIndex].flowerLevel > 0)
+                                {
+                                    clearCount++;
+                                }
+                            }
+                            else
+                            {
+                                Debug.LogWarning($"[CheckConditionCleared] 잘못된 requiredPlantIndex: {condition.requiredPlantIndex}, flowers.Length: {AutoObjectManager.Instance.flowers.Length}");
                             }
 
                             break;

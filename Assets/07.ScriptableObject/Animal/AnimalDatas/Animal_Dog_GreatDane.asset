@@ -15,6 +15,8 @@ MonoBehaviour:
   animalIndex: 3
   animalIcon: {fileID: 21300000, guid: e8d4d70e36d992c4690188f9840c8e30, type: 3}
   animalName: "\uAC1C : \uADF8\uB808\uC774\uD2B8 \uB370\uC778"
+  animalNameEN: 
+  animalNameKR: 
   animalUnlockConditions:
   - conditionType: 0
     targetName: "\uB9AC\uD2B8\uB9AC\uBC84"
@@ -28,3 +30,4 @@ MonoBehaviour:
     \uD55C \uB54C \uC774\uB984\uC744 \uB0A0\uB9B0 \uD22C\uACAC\uC774\uC5C8\uC73C\uB098,
     \uB098\uC774\uAC00\uB4E4\uC5B4 \uC740\uD1F4\uD588\uB2E4. \uACE8\uB4E0\uB9AC\uD2B8\uB9AC\uBC84\uAC00
     \uD30C\uC218\uAFBC \uAD50\uC721\uC744 \uC704\uD574 \uBAA8\uC154\uC654\uB2E4."
+  fullStoryText: 
