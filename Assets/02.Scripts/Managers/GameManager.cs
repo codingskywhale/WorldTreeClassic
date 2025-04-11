@@ -138,7 +138,7 @@ public class GameManager : Singleton<GameManager>
 
     private void OnApplicationQuit()
     {
-        SaveGameIfLoggedIn();
+        //SaveGameIfLoggedIn();
     }
 
     private void OnApplicationPause(bool pauseStatus)

@@ -61,12 +61,14 @@ public class UpgradeButton : MonoBehaviour
                                               DataManager.Instance.touchData.touchIncreaseLevel >= flower.unlockThreshold &&
                                               LifeManager.Instance.HasSufficientWater(flower.CalculateUpgradeCost())) ||
                                               (flower.isUnlocked && LifeManager.Instance.HasSufficientWater(flower.CalculateUpgradeCost()));
+                UIManager.Instance.CheckConditionCleared();
                 break;
             case UpgradeType.Touch:
                 canUpgrade = LifeManager.Instance.HasSufficientWater(DataManager.Instance.touchData.upgradeLifeCost);
                 break;
             case UpgradeType.Tree:
                 canUpgrade = LifeManager.Instance.HasSufficientWater(LifeManager.Instance.CalculateWaterNeededForUpgrade(upgradeAmount));
+                UIManager.Instance.CheckConditionCleared();
                 break;
         }
 

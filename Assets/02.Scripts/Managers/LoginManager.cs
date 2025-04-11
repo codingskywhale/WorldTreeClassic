@@ -106,6 +106,7 @@ public class LoginManager : MonoBehaviour
         yield return loadGameDataCoroutine;
 
         GameManager.Instance.OnIntroAndOpeningCompleted();
+        PlayFabManager.Instance.DeleteGameData();
     }
 
     private void OnDestroy()

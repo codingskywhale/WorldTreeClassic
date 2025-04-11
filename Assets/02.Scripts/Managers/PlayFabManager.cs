@@ -24,9 +24,10 @@ public class PlayFabManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
-
         //PlayerPrefs.DeleteAll();
         //PlayerPrefs.Save();
+
+        ResetAllGameData();
     }
        
     public void LoginWithGuest()
@@ -99,5 +100,31 @@ public class PlayFabManager : MonoBehaviour
     {
         var request = new LoginWithCustomIDRequest { CustomId = SystemInfo.deviceUniqueIdentifier, CreateAccount = true };
         PlayFabClientAPI.LoginWithCustomID(request, OnLoginSuccess, OnLoginFailure);
-    }        
+    }
+    public void DeleteGameData()
+    {
+        if (PlayFabClientAPI.IsClientLoggedIn())
+        {
+            var request = new UpdateUserDataRequest
+            {
+                KeysToRemove = new List<string> { "gameData" }
+            };
+
+            PlayFabClientAPI.UpdateUserData(request,
+                result => Debug.Log("Game data deleted from PlayFab."),
+                error => Debug.LogError("Failed to delete game data: " + error.GenerateErrorReport()));
+        }
+        else
+        {
+            Debug.LogWarning("Cannot delete data: Not logged in to PlayFab.");
+        }
+    }
+
+    public void ResetAllGameData()
+    {
+        PlayerPrefs.DeleteAll();
+        DeleteGameData();
+    }
+
+
 }
