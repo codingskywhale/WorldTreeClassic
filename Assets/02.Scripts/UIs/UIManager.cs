@@ -25,7 +25,6 @@ public class UIManager : Singleton<UIManager>
         LifeManager.Instance.OnLifeChanged += CheckEnoughCost;
         SetAnimalCountStatus();
     }
-
     public void SetAnimalCountStatus()
     {
         status.animalCountText.text = $"{DataManager.Instance.animalGenerateData.nowAnimalCount} / {DataManager.Instance.animalGenerateData.maxAnimalCount}";
@@ -75,56 +74,95 @@ public class UIManager : Singleton<UIManager>
     public void CheckConditionCleared()
     {
         int clearCount = 0;
+
         for (int i = 0; i < createAnimalButtons.Count; i++)
         {
+            Debug.Log($"[{i}] conditionCleared: {createAnimalButtons[i].conditionCleared}");
+
             if (!createAnimalButtons[i].conditionCleared)
             {
-                foreach (var condition in createAnimalButtons[i].animalData.animalUnlockConditions)
+                var conditions = createAnimalButtons[i].animalData.animalUnlockConditions;
+                Debug.Log($"[Check] Button {i}: 조건 개수 = {conditions.Length}");
+
+                foreach (var condition in conditions)
                 {
                     switch (condition.conditionType)
                     {
                         case UnlockConditionType.AnimalCount:
-
                             Dictionary<string, Dictionary<EachCountType, int>> dic = DataManager.Instance.animalGenerateData.allTypeCountDic;
                             string name = GameManager.Instance.animalDataList[condition.requiredAnimalIndex].animalNameEN;
-                            if (dic.ContainsKey(name) && dic[name][EachCountType.Total] >= condition.requiredAnimalCount)
-                            {
-                                clearCount++;
-                            }
 
-                            break;
-                        case UnlockConditionType.PlantCount:
+                            Debug.Log($"[Check] AnimalCount 조건 확인 중 - 대상: {name}, 필요 수량: {condition.requiredAnimalCount}");
 
-                            //if (AutoObjectManager.Instance.flowers[condition.requiredPlantIndex].flowerLevel > 0)
-                            //{
-                            //    clearCount++;
-                            //}
-                            if (condition.requiredPlantIndex >= 0 && condition.requiredPlantIndex < AutoObjectManager.Instance.flowers.Length)
+                            if (dic.ContainsKey(name))
                             {
-                                if (AutoObjectManager.Instance.flowers[condition.requiredPlantIndex].flowerLevel > 0)
+                                int current = dic[name][EachCountType.Total];
+                                Debug.Log($"[Check] 현재 {name} 수량: {current}");
+
+                                if (current >= condition.requiredAnimalCount)
                                 {
+                                    Debug.Log($"[UnlockCheck] AnimalCount 조건 만족 - {name} ({current}/{condition.requiredAnimalCount})");
                                     clearCount++;
+                                }
+                                else
+                                {
+                                    Debug.Log($"[UnlockCheck] AnimalCount 조건 불충족 - {name} ({current}/{condition.requiredAnimalCount})");
                                 }
                             }
                             else
                             {
-                                Debug.LogWarning($"[CheckConditionCleared] 잘못된 requiredPlantIndex: {condition.requiredPlantIndex}, flowers.Length: {AutoObjectManager.Instance.flowers.Length}");
+                                Debug.LogWarning($"[Check] allTypeCountDic에 {name} 없음!");
                             }
 
                             break;
-                        case UnlockConditionType.LevelReached:
 
-                            if (DataManager.Instance.touchData.touchIncreaseLevel > condition.requiredWorldTreeLevel)
+                        case UnlockConditionType.PlantCount:
+                            int index = condition.requiredPlantIndex;
+                            if (index >= 0 && index < AutoObjectManager.Instance.flowers.Length)
                             {
+                                int level = AutoObjectManager.Instance.flowers[index].flowerLevel;
+                                Debug.Log($"[Check] Plant 조건 확인 - index: {index}, 현재 레벨: {level}");
+
+                                if (level > 0)
+                                {
+                                    Debug.Log($"[UnlockCheck] PlantCount 조건 만족");
+                                    clearCount++;
+                                }
+                                else
+                                {
+                                    Debug.Log($"[UnlockCheck] PlantCount 조건 불충족");
+                                }
+                            }
+                            else
+                            {
+                                Debug.LogWarning($"[CheckConditionCleared] 잘못된 requiredPlantIndex: {index}, flowers.Length: {AutoObjectManager.Instance.flowers.Length}");
+                            }
+
+                            break;
+
+                        case UnlockConditionType.LevelReached:
+                            int treeLevel = DataManager.Instance.touchData.touchIncreaseLevel;
+                            Debug.Log($"[Check] WorldTree 조건 확인 - 현재 레벨: {treeLevel}, 필요 레벨: {condition.requiredWorldTreeLevel}");
+
+                            if (treeLevel > condition.requiredWorldTreeLevel)
+                            {
+                                Debug.Log($"[UnlockCheck] LevelReached 조건 만족");
                                 clearCount++;
+                            }
+                            else
+                            {
+                                Debug.Log($"[UnlockCheck] LevelReached 조건 불충족");
                             }
 
                             break;
                     }
                 }
 
+                Debug.Log($"[Check] Button {i}: clearCount = {clearCount}, 필요 조건 수 = {createAnimalButtons[i].animalData.animalUnlockConditions.Length}");
+
                 if (clearCount == createAnimalButtons[i].animalData.animalUnlockConditions.Length)
                 {
+                    Debug.Log($"[Unlock] Button {i} 해제됨!");
                     createAnimalButtons[i].conditionCleared = true;
                     createAnimalButtons[i].SetLockImageOff();
                     createObjectButtonUnlockCount++;
@@ -134,6 +172,7 @@ public class UIManager : Singleton<UIManager>
             }
         }
     }
+
 
     public void CreateAnimalButtons()
     {
