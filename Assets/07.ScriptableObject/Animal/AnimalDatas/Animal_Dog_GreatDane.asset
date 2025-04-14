@@ -19,8 +19,8 @@ MonoBehaviour:
   animalNameKR: 
   animalUnlockConditions:
   - conditionType: 0
-    targetName: "\uB9AC\uD2B8\uB9AC\uBC84"
-    requiredAnimalIndex: 2
+    targetName: GoldenRetriever
+    requiredAnimalIndex: 1
     requiredAnimalCount: 3
     requiredPlantIndex: 0
     requiredWorldTreeLevel: 0

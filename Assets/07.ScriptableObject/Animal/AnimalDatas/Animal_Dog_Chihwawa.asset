@@ -15,9 +15,11 @@ MonoBehaviour:
   animalIndex: 4
   animalIcon: {fileID: 21300000, guid: 5a4dfffbf85206c46b38c1f67b4161d9, type: 3}
   animalName: "\uAC1C : \uCE58\uC640\uC640"
+  animalNameEN: 
+  animalNameKR: 
   animalUnlockConditions:
   - conditionType: 0
-    targetName: "\uB9AC\uD2B8\uB9AC\uBC84"
+    targetName: GoldenRetriever
     requiredAnimalIndex: 2
     requiredAnimalCount: 3
     requiredPlantIndex: 0
@@ -27,3 +29,4 @@ MonoBehaviour:
     \uC18C\uC2EC\uD558\uACE0 \uAC81\uC774 \uB9CE\uB2E4. \uB2E4\uB978 \uB3D9\uBB3C\uB4E4\uC774
     \uC790\uC2E0\uC744 \uC0AC\uB0A9\uB2E4\uACE0 \uC0DD\uAC01\uD558\uACE0 \uC788\uC5B4
     \uC2AC\uD504\uB2E4\uACE0 \uD55C\uB2E4."
+  fullStoryText: 

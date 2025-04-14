@@ -139,6 +139,7 @@ public class GameManager : Singleton<GameManager>
     private void OnApplicationQuit()
     {
         //SaveGameIfLoggedIn();
+        PlayFabManager.Instance.DeleteGameData();
     }
 
     private void OnApplicationPause(bool pauseStatus)
