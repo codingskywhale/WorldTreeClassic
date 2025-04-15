@@ -114,7 +114,7 @@ public class GoogleSheetsToJson : MonoBehaviour
                     condition.requiredAnimalIndex = int.Parse(GetDataBetweenFirstAndSecondUnderscore(eachConditions[j]));
                     condition.requiredAnimalCount = int.Parse(eachConditions[j].Substring(lastUnderscoreIndex + 1));
 
-                    int index = condition.requiredAnimalIndex - 1;
+                    int index = condition.requiredAnimalIndex;
                     if (index >= 0 && index < GameManager.Instance.animalDataList.Count)
                     {
                         condition.targetName = GameManager.Instance.animalDataList[index].animalNameKR;
