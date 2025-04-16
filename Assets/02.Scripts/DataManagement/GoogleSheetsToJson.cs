@@ -123,9 +123,11 @@ public class GoogleSheetsToJson : MonoBehaviour
                 else if (eachConditions[j].Contains("Plant"))
                 {
                     condition.conditionType = UnlockConditionType.PlantCount;
-                    int lastUnderscoreIndex = eachConditions[j].LastIndexOf('_');
-                    condition.requiredPlantIndex = int.Parse(eachConditions[j].Substring(lastUnderscoreIndex + 1));
+                    string[] parts = eachConditions[j].Split('_');
+
+                    condition.requiredPlantIndex = int.Parse(parts[2]) - 1;
                 }
+
                 else if (eachConditions[j].Contains("Tree"))
                 {
                     condition.conditionType = UnlockConditionType.LevelReached;
