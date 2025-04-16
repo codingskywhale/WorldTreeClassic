@@ -119,11 +119,6 @@ public class GoogleSheetsToJson : MonoBehaviour
                     {
                         condition.targetName = GameManager.Instance.animalDataList[index].animalNameKR;
                     }
-                    else
-                    {
-                        Debug.LogWarning($"[GoogleSheet] 동물 인덱스 범위를 벗어났습니다: {index}");
-                        condition.targetName = "알 수 없음";
-                    }
                 }
                 else if (eachConditions[j].Contains("Plant"))
                 {

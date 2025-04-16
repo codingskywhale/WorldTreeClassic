@@ -19,7 +19,7 @@ public class DataManager : Singleton<DataManager>
         base.Awake();
         animalGenerateData = new AnimalGenerateData();
 
-        touchData = GetComponent<TouchData>();
+
     }
 
     // 지정 동물을 파괴하는 기능

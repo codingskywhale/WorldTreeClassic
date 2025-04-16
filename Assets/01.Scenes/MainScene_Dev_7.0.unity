@@ -29942,7 +29942,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 176620fe835c25348aa05b4c97308a55, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  flowers: []
+  flowers:
+  - {fileID: 293305725}
+  - {fileID: 213962922}
+  - {fileID: 1181477353}
+  - {fileID: 7881861}
+  - {fileID: 959746643}
+  - {fileID: 1952956628}
+  - {fileID: 1297178773}
+  - {fileID: 542323906}
+  - {fileID: 684505695}
+  - {fileID: 1409113695}
   generationInterval: 1
 --- !u!4 &1020432714
 Transform:
@@ -45751,7 +45761,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spawnData: {fileID: 1864715110}
-  touchData: {fileID: 0}
+  touchData: {fileID: 1783155105}
   bag: {fileID: 81755808}
   animalDataList: []
   animalSpawnTr: {fileID: 1864715111}
