@@ -16,7 +16,13 @@ public class LoginManager : MonoBehaviour
     public GameObject loginPanel;
 
     //private string webClientId = "41547311661-himu41jj8sm40obegnj3g60rualr4j57.apps.googleusercontent.com";
-
+    private void Awake()
+    {
+        PlayGamesClientConfiguration config = new PlayGamesClientConfiguration.Builder().Build();
+        PlayGamesPlatform.InitializeInstance(config);
+        PlayGamesPlatform.DebugLogEnabled = true;
+        PlayGamesPlatform.Activate();
+    }
     private void Start()
     { 
         //PlayerPrefs.DeleteKey("GuestLoggedIn");
@@ -28,13 +34,15 @@ public class LoginManager : MonoBehaviour
         PlayFabManager.Instance.OnLoginSuccessEvent += OnLoginSuccess;
                 
         // Google Play Games Services 초기화
-        PlayGamesClientConfiguration config = new PlayGamesClientConfiguration.Builder()
-            .RequestServerAuthCode(false) // 요청하지 않음
-            .RequestIdToken()
-            .Build();
+        //PlayGamesClientConfiguration config = new PlayGamesClientConfiguration.Builder()
+        //    .RequestServerAuthCode(false) // 요청하지 않음
+        //    .RequestIdToken()
+        //    .Build();
 
-        PlayGamesPlatform.InitializeInstance(config);
-        PlayGamesPlatform.Activate();
+
+
+        //PlayGamesPlatform.InitializeInstance(config);
+        //PlayGamesPlatform.Activate();
 
         // 자동 로그인 시도
         if (PlayerPrefs.HasKey("GuestLoggedIn"))
