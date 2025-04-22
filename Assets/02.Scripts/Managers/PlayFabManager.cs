@@ -36,11 +36,18 @@ public class PlayFabManager : MonoBehaviour
         PlayFabClientAPI.LoginWithCustomID(request, OnLoginSuccess, OnLoginFailure);
     }
 
-    public void LoginWithGoogle(string idToken)
+    public void LoginWithGoogle(string serverAuthCode)
     {
-        var request = new LoginWithGoogleAccountRequest { ServerAuthCode = idToken, CreateAccount = true };
+        var request = new LoginWithGoogleAccountRequest
+        {
+            ServerAuthCode = serverAuthCode,
+            CreateAccount = true
+        };
+
         PlayFabClientAPI.LoginWithGoogleAccount(request, OnLoginSuccess, OnLoginFailure);
     }
+
+
 
     private void OnLoginSuccess(LoginResult result)
     {

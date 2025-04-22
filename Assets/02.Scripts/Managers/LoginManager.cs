@@ -18,20 +18,22 @@ public class LoginManager : MonoBehaviour
     //private string webClientId = "41547311661-himu41jj8sm40obegnj3g60rualr4j57.apps.googleusercontent.com";
     private void Awake()
     {
-        PlayGamesClientConfiguration config = new PlayGamesClientConfiguration.Builder().Build();
+        PlayGamesClientConfiguration config = new PlayGamesClientConfiguration.Builder()
+        //.RequestServerAuthCode(false) // false로 하면 캐싱된 걸 써서 실패할 수 있음. true 권장
+        .Build();
+
         PlayGamesPlatform.InitializeInstance(config);
         PlayGamesPlatform.DebugLogEnabled = true;
         PlayGamesPlatform.Activate();
+
+        PlayFabManager.Instance.OnLoginSuccessEvent += OnLoginSuccess;
     }
     private void Start()
     { 
-        //PlayerPrefs.DeleteKey("GuestLoggedIn");
-        //PlayerPrefs.DeleteKey("GoogleLoggedIn");
-
         googleLoginButton.onClick.AddListener(OnGoogleLoginButtonClicked);
         guestLoginButton.onClick.AddListener(OnGuestLoginButtonClicked);        
 
-        PlayFabManager.Instance.OnLoginSuccessEvent += OnLoginSuccess;
+        
                 
         // Google Play Games Services 초기화
         //PlayGamesClientConfiguration config = new PlayGamesClientConfiguration.Builder()
@@ -63,22 +65,27 @@ public class LoginManager : MonoBehaviour
         {
             if (success)
             {
-                string idToken = PlayGamesPlatform.Instance.GetIdToken();
-                Debug.Log("Google Play Games Sign-In successful, ID Token: " + idToken);
-                PlayFabManager.Instance.LoginWithGoogle(idToken);
+                PlayGamesPlatform.Instance.GetAnotherServerAuthCode(false, (serverAuthCode) =>
+                {
+                    if (!string.IsNullOrEmpty(serverAuthCode))
+                    {
+                        Debug.Log("Google Sign-In 성공, ServerAuthCode: " + serverAuthCode);
+                        PlayFabManager.Instance.LoginWithGoogle(serverAuthCode);
+                    }
+                    else
+                    {
+                        Debug.LogError("ServerAuthCode 받아오기 실패");
+                    }
+                });
             }
             else
             {
                 Debug.LogError("Google Play Games Sign-In Failed");
-
-                // 로그인 실패 원인 출력
-                PlayGamesPlatform.Instance.GetAnotherServerAuthCode(false, code =>
-                {
-                    Debug.LogError("Failed to retrieve server auth code, reason: " + code);
-                });
             }
         });
     }
+
+
 
     private void OnGuestLoginButtonClicked()
     {
