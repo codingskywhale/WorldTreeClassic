@@ -6,6 +6,7 @@ using PlayFab.ClientModels;
 using GooglePlayGames;
 using GooglePlayGames.BasicApi;
 using System.Collections.Generic;
+using Unity.VisualScripting.Antlr3.Runtime;
 
 public class LoginManager : MonoBehaviour
 {
@@ -27,6 +28,17 @@ public class LoginManager : MonoBehaviour
         PlayGamesPlatform.Activate();
 
         PlayFabManager.Instance.OnLoginSuccessEvent += OnLoginSuccess;
+
+        //컨피그된 정보로 GPGS를 초기화한다.
+        PlayGamesPlatform.InitializeInstance(config);
+        loadingText.text = ("GPGS초기화 완료");
+
+        // recommended for debugging:
+        PlayGamesPlatform.DebugLogEnabled = true;
+
+        //GPGS 시작.
+        PlayGamesPlatform.Activate();
+        loadingText.text = ("GPGS시작.");        
     }
     private void Start()
     { 
@@ -65,7 +77,8 @@ public class LoginManager : MonoBehaviour
         {
             if (success)
             {
-                PlayGamesPlatform.Instance.GetAnotherServerAuthCode(false, (serverAuthCode) =>
+                string serverAuthCode = PlayGamesPlatform.Instance.GetServerAuthCode();
+                //PlayGamesPlatform.Instance.GetAnotherServerAuthCode(false, (serverAuthCode) =>
                 {
                     if (!string.IsNullOrEmpty(serverAuthCode))
                     {
@@ -76,7 +89,7 @@ public class LoginManager : MonoBehaviour
                     {
                         Debug.LogError("ServerAuthCode 받아오기 실패");
                     }
-                });
+                }//);
             }
             else
             {
