@@ -8,7 +8,7 @@ public class PlayFabManager : MonoBehaviour
     public static PlayFabManager Instance { get; private set; }
     public event Action<LoginResult> OnLoginSuccessEvent;
 
-    private string playFabTitleId = "295EF";
+    private string playFabTitleId = "14ACD0";
     private const string GameDataKey = "gameData";
 
     private void Awake()
@@ -29,12 +29,19 @@ public class PlayFabManager : MonoBehaviour
 
         ResetAllGameData();
     }
-       
+
     public void LoginWithGuest()
     {
-        var request = new LoginWithCustomIDRequest { CustomId = SystemInfo.deviceUniqueIdentifier, CreateAccount = true };
+        Debug.Log("Trying to login with guest ID...");
+        var request = new LoginWithCustomIDRequest
+        {
+            CustomId = SystemInfo.deviceUniqueIdentifier,
+            CreateAccount = true
+        };
+        Debug.Log("Custom ID: " + request.CustomId);
         PlayFabClientAPI.LoginWithCustomID(request, OnLoginSuccess, OnLoginFailure);
     }
+
 
     public void LoginWithGoogle(string serverAuthCode)
     {
