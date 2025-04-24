@@ -17,25 +17,20 @@ public class LoginManager : MonoBehaviour
     public TMP_Text loadingText;
     public GameObject loginPanel;
     public static string User_ID = null;
-    private string webClientId = "1094607343649-se0b7ljkebsobsbf03gv0d6tn48kpd91.apps.googleusercontent.com";
     private void Awake()
     {
-        PlayGamesClientConfiguration config = new PlayGamesClientConfiguration.Builder()
-            .AddOauthScope("profile")
-            .RequestServerAuthCode(false)
-            .Build();
-        PlayGamesPlatform.InitializeInstance(config);
-        PlayGamesPlatform.Activate();
+        
 
         PlayFabManager.Instance.OnLoginSuccessEvent += OnLoginSuccess;
+
     }
     private void Start()
     { 
         googleLoginButton.onClick.AddListener(OnGoogleLoginButtonClicked);
-        guestLoginButton.onClick.AddListener(OnGuestLoginButtonClicked);        
+        guestLoginButton.onClick.AddListener(OnGuestLoginButtonClicked);
 
-        
-                
+
+
         // Google Play Games Services 초기화
         //PlayGamesClientConfiguration config = new PlayGamesClientConfiguration.Builder()
         //    .RequestServerAuthCode(false) // 요청하지 않음
@@ -46,6 +41,16 @@ public class LoginManager : MonoBehaviour
 
         //PlayGamesPlatform.InitializeInstance(config);
         //PlayGamesPlatform.Activate();
+
+        PlayGamesClientConfiguration config = new PlayGamesClientConfiguration.Builder()
+            .RequestServerAuthCode(false)
+            .Build();
+        //.RequestEmail()
+        //커스텀 된 정보로 GPGS 초기화
+        PlayGamesPlatform.InitializeInstance(config);
+        PlayGamesPlatform.DebugLogEnabled = true;
+        //GPGS 시작.
+        PlayGamesPlatform.Activate();
 
         // 자동 로그인 시도
         if (PlayerPrefs.HasKey("GuestLoggedIn"))
@@ -66,57 +71,42 @@ public class LoginManager : MonoBehaviour
             if (success)
             {
                 var serverAuthCode = PlayGamesPlatform.Instance.GetServerAuthCode();
-                Debug.Log("Server Auth Code: " + serverAuthCode);
+
+                //디버깅용 로그
+                if (string.IsNullOrEmpty(serverAuthCode))
+                {
+                    Debug.LogError(" ServerAuthCode가 null 또는 비어있습니다!");
+                    return;
+                }
+                else
+                {
+                    Debug.Log($"ServerAuthCode 받음: {serverAuthCode}");
+                }
 
                 PlayFabClientAPI.LoginWithGoogleAccount(new LoginWithGoogleAccountRequest()
                 {
                     TitleId = PlayFabSettings.TitleId,
                     ServerAuthCode = serverAuthCode,
                     CreateAccount = true
-                }, (result) =>
+                },
+                (result) =>
                 {
+                    Debug.Log("PlayFab 로그인 성공!");
                     User_ID = result.PlayFabId;
-                    //SceneManager.LoadScene("LobbyScene");
-
-                }, (error) =>
+                },
+                (error) =>
                 {
-                    Debug.Log(error);
-                    return;
-                }
-                );
+                    Debug.LogError($"PlayFab 로그인 실패: {error.GenerateErrorReport()}");
+                });
             }
             else
             {
-                Debug.Log("Login Failed!");
+                Debug.LogError("Google 로그인 실패!");
             }
 
         });
-
-        //Social.localUser.Authenticate((bool success) =>
-        //{
-        //    if (success)
-        //    {
-        //        Debug.Log("Google 로그인 성공");
-        //        //string serverAuthCode = PlayGamesPlatform.Instance.GetServerAuthCode();
-        //        var serverAuthCode = PlayGamesPlatform.Instance.GetServerAuthCode();
-        //        if (!string.IsNullOrEmpty(serverAuthCode))
-        //        {
-        //            Debug.Log("Auth Code 받음: " + serverAuthCode);
-        //            PlayFabManager.Instance.LoginWithGoogle(serverAuthCode);
-        //        }
-        //        else
-        //        {
-        //            Debug.LogError("ServerAuthCode 받아오기 실패");
-        //        }
-        //    }
-        //    else
-        //    {
-        //        Debug.LogError("Google 로그인 실패");
-        //        Debug.Log("LocalUser.authenticated: " + Social.localUser.authenticated);
-        //        Debug.Log("LocalUser.userName: " + Social.localUser.userName);
-        //    }
-        //});
     }
+
 
 
 
