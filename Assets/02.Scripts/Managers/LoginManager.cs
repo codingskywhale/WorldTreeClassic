@@ -1,48 +1,41 @@
 using UnityEngine;
 using TMPro;
-using System.Collections;
 using UnityEngine.UI;
+using PlayFab;
 using PlayFab.ClientModels;
 using GooglePlayGames;
 using GooglePlayGames.BasicApi;
-using System.Collections.Generic;
-using Unity.VisualScripting.Antlr3.Runtime;
-using PlayFab;
-using Unity.VisualScripting.FullSerializer;
+using System.Collections;
 
 public class LoginManager : MonoBehaviour
 {
     public Button googleLoginButton;
     public Button guestLoginButton;
-    public Button resetLoginButton; // 로그인 초기화 버튼 추가
     public TMP_Text loadingText;
     public GameObject loginPanel;
+
     public static string User_ID = null;
+
     private void Awake()
     {
-        //PlayGamesClientConfiguration config = new PlayGamesClientConfiguration.Builder()
-        //    .RequestServerAuthCode(false)
-        //    .RequestIdToken()
-        //    .Build();
-        ////커스텀 된 정보로 GPGS 초기화
-        ////PlayGamesPlatform.InitializeInstance(config);
-        //PlayGamesPlatform.DebugLogEnabled = true;
-        ////GPGS 시작.
-        //PlayGamesPlatform.Activate();
+        PlayGamesClientConfiguration config = new PlayGamesClientConfiguration.Builder()
+            //.RequestIdToken()
+            //.RequestServerAuthCode(false) 
+            .Build();
+
+        PlayGamesPlatform.InitializeInstance(config);
+        PlayGamesPlatform.Activate();
+
+
+
 
         PlayFabManager.Instance.OnLoginSuccessEvent += OnLoginSuccess;
-
     }
+
     private void Start()
     {
         googleLoginButton.onClick.AddListener(OnGoogleLoginButtonClicked);
         guestLoginButton.onClick.AddListener(OnGuestLoginButtonClicked);
-
-        //PlayGamesClientConfiguration config = new PlayGamesClientConfiguration.Builder()
-        //    .RequestIdToken()
-        //    .Build();
-        //.RequestEmail()
-
 
         // 자동 로그인 시도
         if (PlayerPrefs.HasKey("GuestLoggedIn"))
@@ -54,27 +47,34 @@ public class LoginManager : MonoBehaviour
             OnGoogleLoginButtonClicked();
         }
     }
+
     public void OnGoogleLoginButtonClicked()
     {
+        loadingText.text = "Google로 로그인 중...";
         PlayGamesPlatform.Instance.Authenticate(SignInInteractivity.CanPromptOnce, ProcessAuthentication);
     }
-    internal void ProcessAuthentication(SignInStatus status)
+
+    private void ProcessAuthentication(SignInStatus status)
     {
         if (status == SignInStatus.Success)
         {
-            string idToken = PlayGamesPlatform.Instance.GetIdToken();
-            string displayName = PlayGamesPlatform.Instance.GetUserDisplayName();
-            string userId = PlayGamesPlatform.Instance.GetUserId();
-            Debug.Log("Google 로그인 성공, ID Token: " + idToken);
-            Debug.Log("Google 로그인 성공, user ID" + userId);
+            string serverAuthCode = PlayGamesPlatform.Instance.GetServerAuthCode();
+            Debug.Log("Google 로그인 성공. ServerAuthCode: " + serverAuthCode);
 
-            // PlayFab 로그인 연결
-            PlayFabClientAPI.LoginWithGooglePlayGamesServices(new LoginWithGooglePlayGamesServicesRequest()
+            if (string.IsNullOrEmpty(serverAuthCode))
+            {
+                Debug.LogError("ServerAuthCode가 null이거나 비어있습니다.");
+                return;
+            }
+
+            var request = new LoginWithGooglePlayGamesServicesRequest
             {
                 TitleId = PlayFabSettings.TitleId,
-                ServerAuthCode = idToken,
+                ServerAuthCode = serverAuthCode,  // idToken 아니라 ServerAuthCode 사용!!
                 CreateAccount = true
-            },
+            };
+
+            PlayFabClientAPI.LoginWithGooglePlayGamesServices(request,
             (result) =>
             {
                 Debug.Log("PlayFab 로그인 성공!");
@@ -87,13 +87,9 @@ public class LoginManager : MonoBehaviour
         }
         else
         {
-            Debug.LogError($"Google 로그인 실패! 상태: {status}");
+            Debug.LogError("Google 로그인 실패: " + status);
         }
     }
-
-
-
-
 
 
     private void OnGuestLoginButtonClicked()
@@ -108,7 +104,7 @@ public class LoginManager : MonoBehaviour
         loginPanel.SetActive(false);
         StartCoroutine(StartIntroAndLoadData());
 
-        // 로그인 성공 시 PlayerPrefs에 저장
+        // 로그인 성공 기록
         if (PlayGamesPlatform.Instance.IsAuthenticated())
         {
             PlayerPrefs.SetInt("GoogleLoggedIn", 1);
@@ -122,15 +118,17 @@ public class LoginManager : MonoBehaviour
 
     private IEnumerator StartIntroAndLoadData()
     {
-        var loadGameDataCoroutine = GameManager.Instance.saveDataManager.LoadGameDataCoroutine(GameManager.Instance.skills, GameManager.Instance.artifacts, GameManager.Instance.worldTree);
+        var loadGameDataCoroutine = GameManager.Instance.saveDataManager.LoadGameDataCoroutine(
+            GameManager.Instance.skills,
+            GameManager.Instance.artifacts,
+            GameManager.Instance.worldTree
+        );
         StartCoroutine(loadGameDataCoroutine);
 
         yield return StartCoroutine(GameManager.Instance.introManager.PlayIntro());
-
         yield return loadGameDataCoroutine;
 
         GameManager.Instance.OnIntroAndOpeningCompleted();
-
     }
 
     private void OnDestroy()
@@ -138,4 +136,3 @@ public class LoginManager : MonoBehaviour
         PlayFabManager.Instance.OnLoginSuccessEvent -= OnLoginSuccess;
     }
 }
-
