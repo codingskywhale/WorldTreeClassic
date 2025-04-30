@@ -43,16 +43,18 @@ public class PlayFabManager : MonoBehaviour
     }
 
 
-    public void LoginWithGoogle(string serverAuthCode)
+    public void LoginWithGooglePlayGamesServices(string serverAuthCode)
     {
-        var request = new LoginWithGoogleAccountRequest
+        var request = new LoginWithGooglePlayGamesServicesRequest
         {
+            TitleId = PlayFabSettings.TitleId,
             ServerAuthCode = serverAuthCode,
             CreateAccount = true
         };
 
-        PlayFabClientAPI.LoginWithGoogleAccount(request, OnLoginSuccess, OnLoginFailure);
+        PlayFabClientAPI.LoginWithGooglePlayGamesServices(request, OnLoginSuccess, OnLoginFailure);
     }
+
 
 
 

@@ -51,45 +51,27 @@ public class LoginManager : MonoBehaviour
     public void OnGoogleLoginButtonClicked()
     {
         loadingText.text = "Google로 로그인 중...";
-        PlayGamesPlatform.Instance.Authenticate(SignInInteractivity.CanPromptOnce, ProcessAuthentication);
-    }
-
-    private void ProcessAuthentication(SignInStatus status)
-    {
-        if (status == SignInStatus.Success)
+        PlayGamesPlatform.Instance.Authenticate(SignInInteractivity.CanPromptOnce, status =>
         {
-            string serverAuthCode = PlayGamesPlatform.Instance.GetServerAuthCode();
-            Debug.Log("Google 로그인 성공. ServerAuthCode: " + serverAuthCode);
-
-            if (string.IsNullOrEmpty(serverAuthCode))
+            if (status == SignInStatus.Success)
             {
-                Debug.LogError("ServerAuthCode가 null이거나 비어있습니다.");
-                return;
+                string serverAuthCode = PlayGamesPlatform.Instance.GetServerAuthCode();
+                if (string.IsNullOrEmpty(serverAuthCode))
+                {
+                    Debug.LogError("ServerAuthCode가 null이거나 비어있습니다.");
+                    return;
+                }
+
+                Debug.Log("Google 로그인 성공. ServerAuthCode: " + serverAuthCode);
+                PlayFabManager.Instance.LoginWithGooglePlayGamesServices(serverAuthCode); // 여기로 위임
             }
-
-            var request = new LoginWithGooglePlayGamesServicesRequest
+            else
             {
-                TitleId = PlayFabSettings.TitleId,
-                ServerAuthCode = serverAuthCode,  // idToken 아니라 ServerAuthCode 사용!!
-                CreateAccount = true
-            };
-
-            PlayFabClientAPI.LoginWithGooglePlayGamesServices(request,
-            (result) =>
-            {
-                Debug.Log("PlayFab 로그인 성공!");
-                User_ID = result.PlayFabId;
-            },
-            (error) =>
-            {
-                Debug.LogError($"PlayFab 로그인 실패: {error.GenerateErrorReport()}");
-            });
-        }
-        else
-        {
-            Debug.LogError("Google 로그인 실패: " + status);
-        }
+                Debug.LogError("Google 로그인 실패: " + status);
+            }
+        });
     }
+
 
 
     private void OnGuestLoginButtonClicked()
