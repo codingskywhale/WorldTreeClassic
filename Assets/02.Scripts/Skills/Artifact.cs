@@ -52,7 +52,8 @@ public abstract class Artifact : MonoBehaviour
         if (LifeManager.Instance.diamond.HasSufficientDiamond(unlockCost))
         {
             LifeManager.Instance.diamond.DecreaseDiamond(unlockCost);
-            currentLevel = 1;
+            if (currentLevel == 0)  // 이미 레벨 있으면 덮어쓰지 않기
+                currentLevel = 1;
             ActiveObject();
             UpdateUpgradeCostUI(); // 업그레이드 비용 UI 업데이트
             UpdateUI(); // UI 업데이트

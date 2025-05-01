@@ -76,6 +76,17 @@ public class GameManager : Singleton<GameManager>
         }
 
         InvokeRepeating(nameof(AutoSaveGame), 180f, 180f);
+        StartCoroutine(CheckSkillLevelLater());
+    }
+    
+
+    IEnumerator CheckSkillLevelLater()
+    {
+        yield return new WaitForSeconds(1f);
+        foreach (var skill in skills)
+        {
+            Debug.Log($"[AFTER LOAD] Skill: {skill.skillName}, Level: {skill.currentLevel}");
+        }
     }
 
     private void OnGameDataLoaded(GameData gameData)

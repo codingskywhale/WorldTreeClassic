@@ -140,7 +140,8 @@ public abstract class Skill : MonoBehaviour
         {
             isUnlocked = true;
             SetLockImangeOff();
-            currentLevel = 1;
+            if (currentLevel == 0)  // 이미 레벨 있으면 덮어쓰지 않기
+                currentLevel = 1;
             UpdateClickValues();
             UpdateUpgradeCostUI(); // 업그레이드 비용 UI 업데이트
             UpdateUI(); // UI 업데이트
@@ -228,6 +229,7 @@ public abstract class Skill : MonoBehaviour
         if (LifeManager.Instance.diamond.HasSufficientDiamond(upgradeCost))
         {
             LifeManager.Instance.diamond.DecreaseDiamond(upgradeCost);
+            GameManager.Instance.saveDataManager.SaveGameData(GameManager.Instance.skills,GameManager.Instance.artifacts);
             currentLevel++;
             UpdateClickValues(); // 필요 시 업데이트
             UpdateUpgradeCostUI(); // 업그레이드 비용 UI 업데이트
