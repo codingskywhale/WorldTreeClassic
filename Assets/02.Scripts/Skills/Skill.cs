@@ -22,7 +22,7 @@ public abstract class Skill : MonoBehaviour
     public TextMeshProUGUI cooldownText; // 쿨타임을 표시할 텍스트
     public Image cooldownImage; // 회전할 이미지
 
-    public int currentLevel = 0; // 현재 스킬 레벨 (0 = 잠금 상태)
+    public int currentLevel; // 현재 스킬 레벨 (0 = 잠금 상태)
     public TextMeshProUGUI currentLevelText; // 현재 스킬 레벨 텍스트
     public TextMeshProUGUI skillInfoText; // 현재 스킬 설명 텍스트
 

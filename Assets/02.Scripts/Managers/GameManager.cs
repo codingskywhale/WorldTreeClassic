@@ -82,6 +82,19 @@ public class GameManager : Singleton<GameManager>
     {
         if (gameData != null)
         {
+            // 불러온 데이터 skills에 적용
+            foreach (SkillDataSave skillData in gameData.skillDataList)
+            {
+                Debug.Log($"[LOAD] Skill: {skillData.skillName}, Level: {skillData.currentLevel}, Cost: {skillData.upgradeCost}, Cooldown: {skillData.cooldownRemaining}");
+                Skill skill = skills.Find(s => s.skillName == skillData.skillName);
+                if (skill != null)
+                {
+                    skill.currentLevel = skillData.currentLevel;
+                    skill.unlockCost = BigInteger.Parse(skillData.upgradeCost);
+                    skill.cooldownRemaining = skillData.cooldownRemaining;
+                }
+            }
+
             CalculateOfflineProgress(gameData);
             uiUpdater.UpdateAllUI();
         }
