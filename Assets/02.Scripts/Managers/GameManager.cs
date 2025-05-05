@@ -75,6 +75,15 @@ public class GameManager : Singleton<GameManager>
             worldTree.MoveCameraBackwards();
         }
 
+        //카메라 방향 및 위치 명확히 고정
+        Camera.main.transform.rotation = CameraSettings.Instance.GetFinalRotation();
+        Camera.main.transform.position = CameraSettings.Instance.GetInitialPosition(DataManager.Instance.touchData.touchIncreaseLevel);
+        CameraSettings.Instance.currentCameraRotation = CameraSettings.Instance.GetFinalRotation();
+        CameraSettings.Instance.currentCameraPosition = Camera.main.transform.position;
+
+
+
+
         InvokeRepeating(nameof(AutoSaveGame), 180f, 180f);
         StartCoroutine(CheckSkillLevelLater());
     }
