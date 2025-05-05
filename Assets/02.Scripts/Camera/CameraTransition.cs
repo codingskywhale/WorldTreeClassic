@@ -28,8 +28,11 @@ public class CameraTransition : MonoBehaviour
 
             yield return null;
         }
+        Debug.Log("OpeningCamera 종료 직후 위치: " + Camera.main.transform.position);
+        Debug.Log("OpeningCamera 종료 직후 회전: " + Camera.main.transform.rotation.eulerAngles);
 
         CameraSettings.Instance.animationCompleted = true;
+
     }
 
     public IEnumerator ZoomCamera(Vector3 targetPosition, Quaternion targetRotation, float zoomDuration)
