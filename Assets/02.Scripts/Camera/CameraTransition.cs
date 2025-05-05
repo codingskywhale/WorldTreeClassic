@@ -15,25 +15,34 @@ public class CameraTransition : MonoBehaviour
     public IEnumerator OpeningCamera()
     {
         float elapsedTime = 0f;
-        Vector3 startPosition = CameraSettings.Instance.currentCameraPosition;
-        Quaternion startRotation = CameraSettings.Instance.currentCameraRotation;
+        Vector3 startPosition = Camera.main.transform.position; // 실제 위치
+        Quaternion startRotation = Camera.main.transform.rotation;
+
+        Vector3 endPosition = CameraSettings.Instance.GetInitialPosition(DataManager.Instance.touchData.touchIncreaseLevel);
+        Quaternion endRotation = CameraSettings.Instance.GetFinalRotation();
 
         while (elapsedTime < CameraSettings.Instance.duration)
         {
             elapsedTime += Time.deltaTime;
             float t = elapsedTime / CameraSettings.Instance.duration;
 
-            CameraSettings.Instance.currentCameraRotation = Quaternion.Slerp(startRotation, CameraSettings.Instance.GetFinalRotation(), t);
-            Camera.main.transform.rotation = CameraSettings.Instance.currentCameraRotation;
+            Camera.main.transform.position = Vector3.Lerp(startPosition, endPosition, t);
+            Camera.main.transform.rotation = Quaternion.Slerp(startRotation, endRotation, t);
 
             yield return null;
         }
-        Debug.Log("OpeningCamera 종료 직후 위치: " + Camera.main.transform.position);
-        Debug.Log("OpeningCamera 종료 직후 회전: " + Camera.main.transform.rotation.eulerAngles);
+
+        Camera.main.transform.position = endPosition;
+        Camera.main.transform.rotation = endRotation;
+
+        CameraSettings.Instance.currentCameraPosition = endPosition;
+        CameraSettings.Instance.currentCameraRotation = endRotation;
+        Debug.Log($"OpeningCamera 종료 직후 위치: {Camera.main.transform.position}");
+        Debug.Log($"OpeningCamera 종료 직후 회전: {Camera.main.transform.eulerAngles}");
 
         CameraSettings.Instance.animationCompleted = true;
-
     }
+
 
     public IEnumerator ZoomCamera(Vector3 targetPosition, Quaternion targetRotation, float zoomDuration)
     {
