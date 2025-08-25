@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Numerics;
@@ -17,13 +18,18 @@ public class TouchData : MonoBehaviour
     public TextMeshProUGUI touchIncreaseText; // 추가된 텍스트 UI 요소
     public TextMeshProUGUI upgradelifeCostText;
 
+
+    public Action<int> OnworldTreeLevel; 
+
     private void Start()
     {
         UpdateUI();
+        OnworldTreeLevel?.Invoke(touchIncreaseLevel);
     }
     public void UpgradeTouchGeneration()
     {
         touchIncreaseLevel++;
+        OnworldTreeLevel?.Invoke(touchIncreaseLevel);
         if (touchIncreaseLevel % 25 == 0)
         {
             touchIncreaseAmount *= 2; // 25레벨마다 두 배로 증가

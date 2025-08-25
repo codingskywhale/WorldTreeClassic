@@ -11,6 +11,8 @@ public class AutoObjectManager : Singleton<AutoObjectManager>
     public Action<BigInteger> OnLifeGenerated;
     private float timer;
 
+
+   
     private void Start()
     {
         OnLifeGenerated -= LifeManager.Instance.IncreaseWater;
